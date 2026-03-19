@@ -5,18 +5,28 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Wasatch Front Traffic Crash Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300..700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-:root{--bg:#08090d;--card:#0f1118;--border:#1c1f2e;--text:#e8eaf0;--text-dim:#8b90a8;--text-faint:#555873;--red:#ff4d4d;--amber:#ffb347;--blue:#4da6ff;--green:#4dff91;--purple:#b07dff;--cyan:#67e8f9}
+:root{--bg:#08090d;--card:#0f1118;--border:#1c1f2e;--text:#e8eaf0;--text-dim:#8b90a8;--text-faint:#555873;--red:#ff4d4d;--amber:#ffb347;--blue:#4da6ff;--green:#4dff91;--purple:#b07dff;--cyan:#67e8f9;--accent:#67e8f9;--accent-dim:rgba(103,232,249,.12)}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
-.hero{padding:3rem 1.5rem 2.5rem;text-align:center;background:linear-gradient(180deg,#0f1118 0%,#08090d 100%)}
-.hero-label{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-faint);margin-bottom:1rem}
-.hero h1{font-size:clamp(1.8rem,4vw,3rem);font-weight:700;line-height:1.15;margin-bottom:1rem}
-.hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--red),var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero-sub{max-width:680px;margin:0 auto;color:var(--text-dim);font-size:.92rem}
-.stats-strip{display:flex;justify-content:center;gap:2rem;margin-top:2rem;flex-wrap:wrap}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* Back link */
+.back-link{max-width:1100px;margin:0 auto;padding:.75rem 1.5rem;font-family:'JetBrains Mono',monospace;font-size:.68rem}
+.back-link a{color:var(--text-faint);text-decoration:none;transition:color .15s}
+.back-link a:hover{color:var(--accent)}
+
+.hero{padding:2rem 1.5rem 2.5rem;text-align:center;background:linear-gradient(180deg,#0f1118 0%,#08090d 100%)}
+.hero-label{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:500;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;background:var(--accent-dim);border:1px solid rgba(103,232,249,.2);border-radius:100px;margin-bottom:1.5rem;animation:fadeIn .6s ease}
+.hero-label::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 2s ease infinite}
+.hero h1{font-family:'Instrument Serif',serif;font-size:clamp(2.2rem,5.5vw,4.2rem);font-weight:400;line-height:1.08;letter-spacing:.01em;margin-bottom:1.5rem;animation:fadeUp .8s ease .1s both}
+.hero h1 em{font-style:normal;background:linear-gradient(135deg, #67e8f9, #4da6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{max-width:600px;margin:0 auto;color:var(--text-dim);font-size:.92rem;animation:fadeUp .8s ease .25s both}
+.stats-strip{display:flex;justify-content:center;gap:2rem;margin-top:2rem;flex-wrap:wrap;animation:fadeUp .8s ease .4s both}
 .stat-cell{text-align:center}.stat-val{font-family:'JetBrains Mono',monospace;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700}
 .stat-val.red{color:var(--red)}.stat-val.amber{color:var(--amber)}.stat-val.blue{color:var(--blue)}.stat-val.purple{color:var(--purple)}.stat-val.green{color:var(--green)}
 .stat-lbl{font-size:.68rem;color:var(--text-dim);margin-top:.25rem}
@@ -24,13 +34,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 /* Sticky nav */
 .sticky-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,9,13,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);transform:translateY(-100%);transition:transform .25s;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .sticky-nav.visible{transform:translateY(0)}
-.sticky-nav-inner{display:flex;gap:0;max-width:1100px;margin:0 auto;padding:0 .5rem;white-space:nowrap}
+.sticky-nav-inner{display:flex;gap:0;max-width:1100px;margin:0 auto;padding:0 .5rem;white-space:nowrap;align-items:center}
+.sticky-nav .nav-home{padding:.65rem .8rem;font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--text-faint);text-decoration:none;border-right:1px solid var(--border);margin-right:.25rem;flex-shrink:0}
+.sticky-nav .nav-home:hover{color:var(--accent)}
 .sticky-nav a{padding:.65rem .8rem;font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--text-dim);text-decoration:none;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;flex-shrink:0}
-.sticky-nav a:hover,.sticky-nav a.active{color:var(--text);border-bottom-color:var(--red)}
+.sticky-nav a:hover,.sticky-nav a.active{color:var(--text);border-bottom-color:var(--accent)}
 
 main{max-width:1100px;margin:0 auto;padding:0 1rem 4rem}
 .rule{height:1px;background:var(--border);margin:2.5rem 0}
-.sec-hdr{margin-bottom:1.5rem}.sec-num{font-family:'JetBrains Mono',monospace;font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);margin-bottom:.5rem}
+.sec-hdr{margin-bottom:1.5rem}.sec-num{font-family:'JetBrains Mono',monospace;font-size:.65rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
 .sec-title{font-size:clamp(1.3rem,3vw,1.8rem);font-weight:700;line-height:1.2;margin-bottom:.5rem}
 .sec-desc{color:var(--text-dim);font-size:.88rem;max-width:720px}
 .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1rem}
@@ -61,8 +73,9 @@ footer a{color:var(--text-dim);text-decoration:none}
 </style>
 </head>
 <body>
+<div class="back-link"><a href="../">&larr; crashmaps</a></div>
 <section class="hero" id="hero"><div>
-    <div class="hero-label">Wasatch Front Crash Analysis &middot; UDOT &middot; 2024</div>
+    <div class="hero-label">Wasatch Front &middot; UDOT &middot; 2024</div>
     <h1>Crashes, Speed &amp;&nbsp;<em>Dangerous Roads</em></h1>
     <p class="hero-sub">Where, when, and why traffic crashes happen across Salt Lake City, West Valley City, West Jordan, Sandy, South Jordan, Taylorsville, Murray, Draper, Riverton, Herriman, South Salt Lake, Midvale, Millcreek, Holladay, Cottonwood Heights, Kearns, and Magna &mdash; built from UDOT statewide crash data.</p>
     <div class="stats-strip">
@@ -74,6 +87,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 </div></section>
 
 <nav class="sticky-nav" id="stickyNav"><div class="sticky-nav-inner">
+    <a class="nav-home" href="../">crashmaps</a>
     <a href="#sec-01">01 Overview</a>
     <a href="#sec-02">02 When</a>
     <a href="#sec-03">03 Year/Year</a>
