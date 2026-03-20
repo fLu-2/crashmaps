@@ -667,16 +667,22 @@ const corridors=[
     // === SHERIDAN BLVD (Westminster south) ===
     {name:'Sheridan Blvd',color:'#f97316',coords:[[39.86358,-105.05317],[39.82731,-105.05339],[39.74036,-105.05322]]}
 ];
-function drawCorridors(){
+async function drawCorridors(){
     corridorLayer.clearLayers();
-    corridors.forEach(c=>{
-        // White halo for contrast on light basemap
-        L.polyline(c.coords,{color:'#ffffff',weight:10,opacity:0.5,lineCap:'round',lineJoin:'round'}).addTo(corridorLayer);
-        // Color glow
-        L.polyline(c.coords,{color:c.color,weight:6,opacity:0.25,lineCap:'round',lineJoin:'round'}).addTo(corridorLayer);
-        // Crisp center
-        L.polyline(c.coords,{color:c.color,weight:2.5,opacity:0.75,lineCap:'round',lineJoin:'round'}).addTo(corridorLayer);
-    });
+    for(const c of corridors){
+        let coords=c.coords;
+        try{
+            const wp=c.coords.map(p=>p[1]+','+p[0]).join(';');
+            const r=await fetch('https://router.project-osrm.org/route/v1/driving/'+wp+'?overview=full&geometries=geojson');
+            const d=await r.json();
+            if(d.routes&&d.routes.length){
+                coords=d.routes[0].geometry.coordinates.map(p=>[p[1],p[0]]);
+            }
+        }catch(e){}
+        L.polyline(coords,{color:'#ffffff',weight:10,opacity:0.5,lineCap:'round',lineJoin:'round'}).addTo(corridorLayer);
+        L.polyline(coords,{color:c.color,weight:6,opacity:0.25,lineCap:'round',lineJoin:'round'}).addTo(corridorLayer);
+        L.polyline(coords,{color:c.color,weight:2.5,opacity:0.75,lineCap:'round',lineJoin:'round'}).addTo(corridorLayer);
+    }
 }
 drawCorridors();
 
