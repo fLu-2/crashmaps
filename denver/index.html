@@ -1406,7 +1406,7 @@ new Chart(document.getElementById('metroChart'),{type:'bar',data:{labels:['Denve
 (function(){
     const nav=document.getElementById('stickyNav');
     const hero=document.querySelector('.hero');
-    const links=[...nav.querySelectorAll('a')];
+    const links=[...nav.querySelectorAll('a:not(.nav-home)')];
     const sectionIds=links.map(a=>a.getAttribute('href').slice(1));
     const sections=sectionIds.map(id=>document.getElementById(id)).filter(Boolean);
     let ticking=false;

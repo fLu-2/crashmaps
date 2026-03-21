@@ -923,7 +923,7 @@ renderIntersectionTable();
 (function(){
     const nav=document.getElementById('stickyNav');
     const hero=document.getElementById('hero');
-    const links=[...nav.querySelectorAll('a')];
+    const links=[...nav.querySelectorAll('a:not(.nav-home)')];
     const sectionIds=['sec-01','sec-02','sec-03','sec-04','sec-05','sec-06','sec-07','sec-08','sec-09','sec-10','sec-11','sec-12'];
     const sections=sectionIds.map(id=>document.getElementById(id)).filter(Boolean);
     let ticking=false;
