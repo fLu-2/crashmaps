@@ -441,9 +441,8 @@ footer a{color:var(--text-dim);text-decoration:none}
 
 <!-- 09 HIT-AND-RUN -->
 <div class="rule"></div>
-<div class="sec-hdr" id="sec-09"><div class="sec-num">09 &mdash; Hit-and-Run</div><h2 class="sec-title">13.5% of Drivers Flee the Scene</h2><p class="sec-desc">2,443 hit-and-run crashes across the metro. Kearns leads at 24.1%.</p></div>
-<div class="grid-2">
-    <div class="card"><div class="card-top"><div><div class="card-title">Hit-and-Run Rate by Hour</div><div class="card-sub" id="hrHourSub">% of crashes that are H&amp;R &middot; All Metro</div></div><select class="chart-metro" id="selHrHour"><option value="all" selected>All Metro</option><option value="Salt Lake City">Salt Lake City</option>
+<div class="sec-hdr" id="sec-09"><div class="sec-num">09 &mdash; Hit-and-Run</div><h2 class="sec-title">13.5% of Drivers Flee the Scene</h2><p class="sec-desc">13.5% of crashes are hit-and-run. Kearns leads at 24.1%.</p></div>
+<div class="grid-2"><div class="card"><div class="card-top"><div><div class="card-title">Hit-and-Run Rate by Hour</div><div class="card-sub" id="hrHourSub">% of crashes that are H&amp;R &middot; All Metro</div></div><select class="chart-metro" id="selHrHour"><option value="all" selected>All Metro</option><option value="Salt Lake City">Salt Lake City</option>
 <option value="West Valley City">West Valley City</option>
 <option value="West Jordan">West Jordan</option>
 <option value="Sandy">Sandy</option>
@@ -459,9 +458,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <option value="Holladay">Holladay</option>
 <option value="Cottonwood Heights">Cottonwood Heights</option>
 <option value="Kearns">Kearns</option>
-<option value="Magna">Magna</option></select></div><div class="chart-box"><canvas id="hrHourChart"></canvas></div></div>
-    <div class="card"><div class="card-top"><div><div class="card-title">Hit-and-Run Rate by City</div><div class="card-sub">% of crashes &middot; UDOT 2024</div></div></div><div class="chart-box"><canvas id="hrCityChart"></canvas></div></div>
-</div>
+<option value="Magna">Magna</option></select></div><div class="chart-box"><canvas id="hrHourChart"></canvas></div></div><div class="card"><div class="card-top"><div><div class="card-title">Hit-and-Run Rate by City</div><div class="card-sub">% of crashes &middot; UDOT 2024</div></div></div><div class="chart-box"><canvas id="hrCityChart"></canvas></div></div></div>
 
 <!-- 10 PEDESTRIANS & CYCLISTS -->
 <div class="rule"></div>
@@ -478,18 +475,18 @@ footer a{color:var(--text-dim);text-decoration:none}
 <div class="rule"></div>
 <div class="sec-hdr" id="sec-11"><div class="sec-num">11 &mdash; Sources</div><h2 class="sec-title">Where This Data Comes From</h2></div>
 <div class="meth-grid">
-    <div class="meth-card"><div class="meth-title"><div class="dot" style="background:var(--amber)"></div>UDOT Crash Data</div><div class="meth-text">Statewide crash locations via ArcGIS MapServer, refreshed nightly. 18,099 Salt Lake County records for 2024.<br><br><a href="https://maps.udot.utah.gov/central/rest/services/TrafficAndSafety/Crash_Locations/MapServer" target="_blank">UDOT MapServer &rarr;</a></div></div>
-    <div class="meth-card"><div class="meth-title"><div class="dot" style="background:var(--blue)"></div>SLC Vision Zero</div><div class="meth-text">Salt Lake City&rsquo;s crash maps and pedestrian/bicycle dashboards.<br><br><a href="https://www.slc.gov/transportation/safety/crash-data/" target="_blank">SLC Crash Data &rarr;</a></div></div>
-    <div class="meth-card"><div class="meth-title"><div class="dot" style="background:var(--green)"></div>Zero Fatalities</div><div class="meth-text">Utah&rsquo;s statewide traffic safety program. 281 deaths statewide in 2024.<br><br><a href="https://zerofatalities.com" target="_blank">Zero Fatalities &rarr;</a></div></div>
+<div class="meth-card"><div class="meth-title"><div class="dot" style="background:var(--amber)"></div>UDOT Crash Data</div><div class="meth-text">Statewide crash locations via ArcGIS MapServer, refreshed nightly. 18,099 Salt Lake County records for 2024.<br><br><a href="https://maps.udot.utah.gov/central/rest/services/TrafficAndSafety/Crash_Locations/MapServer" target="_blank">UDOT MapServer &rarr;</a></div></div>
+<div class="meth-card"><div class="meth-title"><div class="dot" style="background:var(--blue)"></div>SLC Vision Zero</div><div class="meth-text">Salt Lake City&rsquo;s crash maps and pedestrian/bicycle dashboards.<br><br><a href="https://www.slc.gov/transportation/safety/crash-data/" target="_blank">SLC Crash Data &rarr;</a></div></div>
+<div class="meth-card"><div class="meth-title"><div class="dot" style="background:var(--green)"></div>Zero Fatalities</div><div class="meth-text">Utah&rsquo;s statewide traffic safety program. 281 deaths statewide in 2024.<br><br><a href="https://zerofatalities.com" target="_blank">Zero Fatalities &rarr;</a></div></div>
 </div>
 
 <!-- 12 METHODOLOGY -->
 <div class="rule"></div>
 <div class="sec-hdr" id="sec-12"><div class="sec-num">12 &mdash; Methodology</div><h2 class="sec-title">How I Built This</h2></div>
 <div class="meth-grid">
-    <div class="meth-card"><div class="meth-text"><strong style="color:var(--amber)">Data pipeline:</strong> Crash records queried from UDOT&rsquo;s ArcGIS REST API (layer 13, 2024), paginated at 2,000 records per call. 18,099 Salt Lake County records processed. Coordinates reprojected from UTM Zone 12N (EPSG:26912) to WGS84 via pyproj.</div></div>
-    <div class="meth-card"><div class="meth-text"><strong style="color:var(--amber)">City assignment:</strong> UDOT data has no city field. Cities are assigned from crash coordinates using bounding boxes. Crashes outside defined city boundaries are excluded from the dashboard.</div></div>
-    <div class="meth-card"><div class="meth-text"><strong style="color:var(--amber)">Rollup fields:</strong> UDOT pre-computes behavioral flags (DUI, SPEED_RELATED, HIT_AND_RUN, etc.) at the crash level. These are used directly. Substance breakdown (alcohol vs. marijuana) requires the People table and is not included in this release.</div></div>
+<div class="meth-card"><div class="meth-text"><strong style="color:var(--amber)">Data pipeline:</strong> Crash records queried from UDOT&rsquo;s ArcGIS REST API (layer 13, 2024), paginated at 2,000 records per call. 18,099 Salt Lake County records processed. Coordinates reprojected from UTM Zone 12N (EPSG:26912) to WGS84 via pyproj.</div></div>
+<div class="meth-card"><div class="meth-text"><strong style="color:var(--amber)">City assignment:</strong> UDOT data has no city field. Cities are assigned from crash coordinates using bounding boxes. Crashes outside defined city boundaries are excluded from the dashboard.</div></div>
+<div class="meth-card"><div class="meth-text"><strong style="color:var(--amber)">Rollup fields:</strong> UDOT pre-computes behavioral flags (DUI, SPEED_RELATED, HIT_AND_RUN, etc.) at the crash level. These are used directly. Substance breakdown (alcohol vs. marijuana) requires the People table and is not included in this release.</div></div>
 </div>
 
 </main>
@@ -830,7 +827,8 @@ searchInput.addEventListener('input',function(){
 function doSearch(query){
     if(!query) return;
     const lower=query.toLowerCase();
-    if(!lower.includes('salt lake')&&!lower.includes('utah')&&!lower.includes('ut')&&!lower.includes('slc')){
+    const kw=["salt lake", "utah", "ut", "slc"];
+    if(!kw.some(k=>lower.includes(k))){
         query+=' Salt Lake City UT';
     }
     fetch('https://nominatim.openstreetmap.org/search?format=json&q='+encodeURIComponent(query)+'&viewbox='+searchViewbox+'&bounded=1&limit=1')
@@ -879,7 +877,8 @@ document.getElementById('commuteTo').addEventListener('keydown',e=>{if(e.key==='
 
 async function geocode(q){
     const lower=q.toLowerCase();
-    if(!lower.includes('salt lake')&&!lower.includes('utah')&&!lower.includes('ut')&&!lower.includes('slc')) q+=' Salt Lake City UT';
+    const gkw=["salt lake", "utah", "ut", "slc"];
+    if(!gkw.some(k=>lower.includes(k))) q+=' Salt Lake City UT';
     const r=await fetch('https://nominatim.openstreetmap.org/search?format=json&q='+encodeURIComponent(q)+'&viewbox='+searchViewbox+'&bounded=1&limit=1');
     const d=await r.json();
     if(!d.length) return null;
@@ -894,7 +893,7 @@ async function doCommute(){
     result.textContent='Finding route...';result.classList.add('show');
     try{
         const[fromPt,toPt]=await Promise.all([geocode(fromQ),geocode(toQ)]);
-        if(!fromPt||!toPt){result.textContent='Could not find one or both addresses. Try adding "Salt Lake City" or a cross street.';return}
+        if(!fromPt||!toPt){result.textContent='Could not find one or both addresses. Try adding "Salt Lake City UT" or a cross street.';return}
         clearCommute(true);
         const url='https://router.project-osrm.org/route/v1/driving/'+fromPt[1]+','+fromPt[0]+';'+toPt[1]+','+toPt[0]+'?overview=full&geometries=geojson';
         const rr=await fetch(url);

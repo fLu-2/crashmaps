@@ -214,8 +214,8 @@ footer a{color:var(--text-dim);text-decoration:none}
             <button class="commute-toggle" id="commuteToggle">&#128663; My Commute</button>
         </div>
         <div class="commute-panel" id="commutePanel">
-            <div class="commute-field"><label>From (home)</label><input type="text" id="commuteFrom" placeholder="e.g. 200 S State St, Salt Lake City"></div>
-            <div class="commute-field"><label>To (work)</label><input type="text" id="commuteTo" placeholder="e.g. University of Utah"></div>
+            <div class="commute-field"><label>From (home)</label><input type="text" id="commuteFrom" placeholder="e.g. Times Square, Manhattan"></div>
+            <div class="commute-field"><label>To (work)</label><input type="text" id="commuteTo" placeholder="e.g. Brooklyn Bridge"></div>
             <button class="commute-go" id="commuteGo">Find Crashes</button>
             <button class="commute-clear" id="commuteClear">Clear</button>
             <div class="commute-result" id="commuteResult"></div>
@@ -346,7 +346,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 
 <!-- 07 DUI -->
 <div class="rule"></div>
-<div class="sec-hdr" id="sec-07"><div class="sec-num">07 &mdash; Impaired Driving</div><h2 class="sec-title">DUI Crashes Across the Metro</h2><p class="sec-desc">Utah has the nation&rsquo;s strictest DUI limit at .05% BAC. Even so, 1438 crashes in 2024 involved impairment &mdash; 2.2% of the total.</p></div>
+<div class="sec-hdr" id="sec-07"><div class="sec-num">07 &mdash; Impaired Driving</div><h2 class="sec-title">DUI Crashes Across the Metro</h2><p class="sec-desc">Alcohol and drug involvement contributed to 1438 crashes in 2024 across the five boroughs &mdash; 2.2% of the total. Late-night hours see the highest impairment rates.</p></div>
 <div class="grid-2">
     <div class="card"><div class="card-top"><div><div class="card-title">DUI Rate by Hour</div><div class="card-sub" id="impHourSub">% of crashes involving DUI &middot; All Metro</div></div><select class="chart-metro" id="selImpHour"><option value="all" selected>All Metro</option><option value="Manhattan">Manhattan</option>
 <option value="Brooklyn">Brooklyn</option>
@@ -358,7 +358,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 
 <!-- 08 SPEED -->
 <div class="rule"></div>
-<div class="sec-hdr" id="sec-08"><div class="sec-num">08 &mdash; Speed</div><h2 class="sec-title">Speed Kills Disproportionately</h2><p class="sec-desc">3.7% of crashes are speed-related &mdash; far higher than Denver&rsquo;s 5%. Bronx has the highest rate at 5.1%.</p></div>
+<div class="sec-hdr" id="sec-08"><div class="sec-num">08 &mdash; Speed</div><h2 class="sec-title">Speed Kills Disproportionately</h2><p class="sec-desc">3.7% of crashes are speed-related. Bronx has the highest rate at 5.1%.</p></div>
 <div class="grid-2">
     <div class="card"><div class="card-top"><div><div class="card-title">Speed Rate by Hour</div><div class="card-sub" id="speedHourSub">% of crashes involving speed &middot; All Metro</div></div><select class="chart-metro" id="selSpeedHour"><option value="all" selected>All Metro</option><option value="Manhattan">Manhattan</option>
 <option value="Brooklyn">Brooklyn</option>
@@ -370,15 +370,8 @@ footer a{color:var(--text-dim);text-decoration:none}
 
 <!-- 09 HIT-AND-RUN -->
 <div class="rule"></div>
-<div class="sec-hdr" id="sec-09"><div class="sec-num">09 &mdash; Hit-and-Run</div><h2 class="sec-title">0.0% of Drivers Flee the Scene</h2><p class="sec-desc">0 hit-and-run crashes across the metro. Manhattan leads at 0.0%.</p></div>
-<div class="grid-2">
-    <div class="card"><div class="card-top"><div><div class="card-title">Hit-and-Run Rate by Hour</div><div class="card-sub" id="hrHourSub">% of crashes that are H&amp;R &middot; All Metro</div></div><select class="chart-metro" id="selHrHour"><option value="all" selected>All Metro</option><option value="Manhattan">Manhattan</option>
-<option value="Brooklyn">Brooklyn</option>
-<option value="Queens">Queens</option>
-<option value="Bronx">Bronx</option>
-<option value="Staten Island">Staten Island</option></select></div><div class="chart-box"><canvas id="hrHourChart"></canvas></div></div>
-    <div class="card"><div class="card-top"><div><div class="card-title">Hit-and-Run Rate by City</div><div class="card-sub">% of crashes &middot; NYC Open Data 2024</div></div></div><div class="chart-box"><canvas id="hrCityChart"></canvas></div></div>
-</div>
+<div class="sec-hdr" id="sec-09"><div class="sec-num">09 &mdash; Hit-and-Run</div><h2 class="sec-title">Hit-and-Run Data Unavailable</h2><p class="sec-desc">NYC Open Data does not include a hit-and-run flag. This section is unavailable for New York City.</p></div>
+
 
 <!-- 10 PEDESTRIANS & CYCLISTS -->
 <div class="rule"></div>
@@ -387,7 +380,7 @@ footer a{color:var(--text-dim);text-decoration:none}
     <div class="card"><div class="card-top"><div><div class="card-title">Pedestrian Crashes by City</div><div class="card-sub">NYC Open Data 2024</div></div></div><div class="chart-box"><canvas id="pedCityChart"></canvas></div></div>
     <div class="card callout" style="border:1px solid var(--border);border-radius:12px;background:var(--card)">
         <div class="callout-val" style="color:var(--blue)">7413</div>
-        <div class="callout-desc">pedestrian crashes in 2024. Salt Lake City accounts for 0 &mdash; 0% of the metro total despite having 2% of the population.</div>
+        <div class="callout-desc">pedestrian crashes in 2024. Brooklyn accounts for 2,536 &mdash; 34% of the metro total despite having 31% of the population.</div>
     </div>
 </div>
 
@@ -395,22 +388,22 @@ footer a{color:var(--text-dim);text-decoration:none}
 <div class="rule"></div>
 <div class="sec-hdr" id="sec-11"><div class="sec-num">11 &mdash; Sources</div><h2 class="sec-title">Where This Data Comes From</h2></div>
 <div class="meth-grid">
-    <div class="meth-card"><div class="meth-title"><div class="dot" style="background:var(--amber)"></div>UDOT Crash Data</div><div class="meth-text">Statewide crash locations via ArcGIS MapServer, refreshed nightly. 64,047 Salt Lake County records for 2024.<br><br><a href="https://maps.udot.utah.gov/central/rest/services/TrafficAndSafety/Crash_Locations/MapServer" target="_blank">UDOT MapServer &rarr;</a></div></div>
-    <div class="meth-card"><div class="meth-title"><div class="dot" style="background:var(--blue)"></div>SLC Vision Zero</div><div class="meth-text">Salt Lake City&rsquo;s crash maps and pedestrian/bicycle dashboards.<br><br><a href="https://www.slc.gov/transportation/safety/crash-data/" target="_blank">SLC Crash Data &rarr;</a></div></div>
-    <div class="meth-card"><div class="meth-title"><div class="dot" style="background:var(--green)"></div>Zero Fatalities</div><div class="meth-text">Utah&rsquo;s statewide traffic safety program. 281 deaths statewide in 2024.<br><br><a href="https://zerofatalities.com" target="_blank">Zero Fatalities &rarr;</a></div></div>
+<div class="meth-card"><div class="meth-title"><div class="dot" style="background:var(--amber)"></div>NYC Open Data</div><div class="meth-text">Motor Vehicle Collisions dataset from NYPD, updated daily. 64,047 citywide crash records for 2024.<br><br><a href="https://data.cityofnewyork.us/Public-Safety/Motor-Vehicle-Collisions-Crashes/h9gi-nx95" target="_blank">NYC Open Data &rarr;</a></div></div>
+<div class="meth-card"><div class="meth-title"><div class="dot" style="background:var(--blue)"></div>NYC Vision Zero</div><div class="meth-text">New York City adopted Vision Zero in 2014 &mdash; the first major US city to do so. Fatalities dropped from 299 (2013) to 231 (2023).<br><br><a href="https://www.nyc.gov/content/visionzero/pages/" target="_blank">Vision Zero &rarr;</a></div></div>
+<div class="meth-card"><div class="meth-title"><div class="dot" style="background:var(--green)"></div>NYPD Traffic Data</div><div class="meth-text">Crash reports filed via NYPD form MV-104AN for collisions involving injury, death, or property damage exceeding $1,000.<br><br><a href="https://www.nyc.gov/site/nypd/stats/traffic-data/traffic-data-landing.page" target="_blank">NYPD Traffic &rarr;</a></div></div>
 </div>
 
 <!-- 12 METHODOLOGY -->
 <div class="rule"></div>
 <div class="sec-hdr" id="sec-12"><div class="sec-num">12 &mdash; Methodology</div><h2 class="sec-title">How I Built This</h2></div>
 <div class="meth-grid">
-    <div class="meth-card"><div class="meth-text"><strong style="color:var(--amber)">Data pipeline:</strong> Crash records queried from UDOT&rsquo;s ArcGIS REST API (layer 13, 2024), paginated at 2,000 records per call. 64,047 Salt Lake County records processed. Coordinates reprojected from UTM Zone 12N (EPSG:26912) to WGS84 via pyproj.</div></div>
-    <div class="meth-card"><div class="meth-text"><strong style="color:var(--amber)">City assignment:</strong> UDOT data has no city field. Cities are assigned from crash coordinates using bounding boxes. Crashes outside defined city boundaries are excluded from the dashboard.</div></div>
-    <div class="meth-card"><div class="meth-text"><strong style="color:var(--amber)">Rollup fields:</strong> UDOT pre-computes behavioral flags (DUI, SPEED_RELATED, HIT_AND_RUN, etc.) at the crash level. These are used directly. Substance breakdown (alcohol vs. marijuana) requires the People table and is not included in this release.</div></div>
+<div class="meth-card"><div class="meth-text"><strong style="color:var(--amber)">Data pipeline:</strong> Crash records queried from NYC Open Data Socrata API (dataset h9gi-nx95), paginated at 50,000 records per call. 64,047 citywide records for 2024. Coordinates are native WGS84 &mdash; no reprojection needed.</div></div>
+<div class="meth-card"><div class="meth-text"><strong style="color:var(--amber)">Borough assignment:</strong> NYC data includes a borough field directly. Records without a borough or coordinates are excluded (records without borough or coordinates excluded).</div></div>
+<div class="meth-card"><div class="meth-text"><strong style="color:var(--amber)">Behavioral flags:</strong> Impairment and speed derived from contributing factor fields (5 per crash). "Alcohol Involvement" and "Drugs (illegal)" map to impairment; "Unsafe Speed" maps to speed-related. Hit-and-run data is not available in this dataset.</div></div>
 </div>
 
 </main>
-<footer><p>Data: <a href="https://maps.udot.utah.gov" target="_blank">UDOT</a> &middot; <a href="https://www.slc.gov/transportation/safety/crash-data/" target="_blank">SLC Transportation</a> &middot; <a href="https://zerofatalities.com" target="_blank">Zero Fatalities</a><br>Built for <a href="https://www.reddit.com/r/nyc" target="_blank">r/nyc</a></p></footer>
+<footer><p>Data: <a href="https://data.cityofnewyork.us" target="_blank">NYC Open Data</a> &middot; <a href="https://www.nyc.gov/content/visionzero/pages/" target="_blank">Vision Zero</a> &middot; <a href="https://www.nyc.gov/site/nypd/stats/traffic-data/traffic-data-landing.page" target="_blank">NYPD Traffic</a><br>Built for <a href="https://www.reddit.com/r/nyc" target="_blank">r/nyc</a></p></footer>
 
 <script>
 Chart.defaults.color='#8b90a8';Chart.defaults.borderColor='#1c1f2e';Chart.defaults.font.family="'DM Sans',sans-serif";
@@ -747,8 +740,9 @@ searchInput.addEventListener('input',function(){
 function doSearch(query){
     if(!query) return;
     const lower=query.toLowerCase();
-    if(!lower.includes('salt lake')&&!lower.includes('utah')&&!lower.includes('ut')&&!lower.includes('slc')){
-        query+=' Salt Lake City UT';
+    const kw=["new york", "nyc", "manhattan", "brooklyn", "queens", "bronx", "staten island", "ny"];
+    if(!kw.some(k=>lower.includes(k))){
+        query+=' New York City NY';
     }
     fetch('https://nominatim.openstreetmap.org/search?format=json&q='+encodeURIComponent(query)+'&viewbox='+searchViewbox+'&bounded=1&limit=1')
     .then(r=>r.json()).then(data=>{
@@ -796,7 +790,8 @@ document.getElementById('commuteTo').addEventListener('keydown',e=>{if(e.key==='
 
 async function geocode(q){
     const lower=q.toLowerCase();
-    if(!lower.includes('salt lake')&&!lower.includes('utah')&&!lower.includes('ut')&&!lower.includes('slc')) q+=' Salt Lake City UT';
+    const gkw=["new york", "nyc", "manhattan", "brooklyn", "queens", "bronx", "staten island", "ny"];
+    if(!gkw.some(k=>lower.includes(k))) q+=' New York City NY';
     const r=await fetch('https://nominatim.openstreetmap.org/search?format=json&q='+encodeURIComponent(q)+'&viewbox='+searchViewbox+'&bounded=1&limit=1');
     const d=await r.json();
     if(!d.length) return null;
@@ -811,7 +806,7 @@ async function doCommute(){
     result.textContent='Finding route...';result.classList.add('show');
     try{
         const[fromPt,toPt]=await Promise.all([geocode(fromQ),geocode(toQ)]);
-        if(!fromPt||!toPt){result.textContent='Could not find one or both addresses. Try adding "Salt Lake City" or a cross street.';return}
+        if(!fromPt||!toPt){result.textContent='Could not find one or both addresses. Try adding "New York City NY" or a cross street.';return}
         clearCommute(true);
         const url='https://router.project-osrm.org/route/v1/driving/'+fromPt[1]+','+fromPt[0]+';'+toPt[1]+','+toPt[0]+'?overview=full&geometries=geojson';
         const rr=await fetch(url);
