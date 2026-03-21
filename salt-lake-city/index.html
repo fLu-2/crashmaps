@@ -554,7 +554,7 @@ buildMonthly('all');
 document.getElementById('selMonthly').addEventListener('change',function(){buildMonthly(this.value)});
 
 // === SEVERITY ===
-new Chart(document.getElementById('sevChart'),{type:'doughnut',data:{labels:['Fatal','Injury','Property Damage Only'],datasets:[{data:[54,6281,11764],backgroundColor:['rgba(255,77,77,.8)','rgba(255,179,71,.6)','rgba(85,88,115,.5)'],borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{legend:{position:'right',labels:{padding:12,usePointStyle:true,pointStyle:'rectRounded',font:{size:11}}},tooltip:{...TT,callbacks:{label:c=>c.label+': '+c.raw.toLocaleString()+' crashes'}}}}});
+new Chart(document.getElementById('sevChart'),{type:'doughnut',data:{labels:['Fatal','Injury','Property Damage Only'],datasets:[{data:[54,6096,11949],backgroundColor:['rgba(255,77,77,.8)','rgba(255,179,71,.6)','rgba(85,88,115,.5)'],borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{legend:{position:'right',labels:{padding:12,usePointStyle:true,pointStyle:'rectRounded',font:{size:11}}},tooltip:{...TT,callbacks:{label:c=>c.label+': '+c.raw.toLocaleString()+' crashes'}}}}});
 
 // Fatalities by city
 new Chart(document.getElementById('fatalCityChart'),{type:'bar',data:{labels:cities,datasets:[{data:cities.map(c=>cityData[c]?.fatal||0),backgroundColor:cities.map(c=>(cityData[c]?.fatal||0)>=5?'rgba(255,77,77,.75)':'rgba(255,77,77,.4)'),borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+' fatalities'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false}}}}});
