@@ -178,6 +178,8 @@
         .sticky-nav.visible{transform:translateY(0);pointer-events:auto}
         .sticky-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;padding:0 1rem}
         .sticky-nav-inner::-webkit-scrollbar{display:none}
+        .sticky-nav .nav-home{padding:.7rem .85rem;font-size:.62rem;font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--text-faint);text-decoration:none;letter-spacing:.04em;border-right:1px solid var(--border);margin-right:.25rem;flex-shrink:0;white-space:nowrap}
+        .sticky-nav .nav-home:hover{color:var(--red)}
         .sticky-nav a{flex-shrink:0;padding:.7rem .85rem;font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:500;color:var(--text-faint);text-decoration:none;letter-spacing:.04em;white-space:nowrap;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
         .sticky-nav a:hover{color:var(--text-dim)}
         .sticky-nav a.active{color:var(--red);border-bottom-color:var(--red)}
@@ -318,6 +320,7 @@
 
 <nav class="sticky-nav" id="stickyNav">
     <div class="sticky-nav-inner">
+        <a class="nav-home" href="../">crashmaps</a>
         <a href="#sec-01">01 Map</a>
         <a href="#sec-02">02 Top 10</a>
         <a href="#sec-03">03 When</a>
