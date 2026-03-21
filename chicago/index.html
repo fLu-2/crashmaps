@@ -170,7 +170,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <section class="hero" id="hero"><div class="hero-inner">
     <div class="hero-label">Chicago Crash Analysis &middot; Chicago Open Data &middot; 2022&ndash;2024</div>
     <h1>Crashes, Corridors &amp;&nbsp;<em>Dangerous Streets</em></h1>
-    <p class="hero-sub">Where, when, and why traffic crashes happen across Loop, Near North, Near West, North Side, Far North, and 5 more cities &mdash; built from Chicago Open Data statewide crash data.</p>
+    <p class="hero-sub">Where, when, and why traffic crashes happen across Loop, Near North, Near West, North Side, Far North, and 5 more regions &mdash; built from Chicago Open Data statewide crash data.</p>
     <div class="stats-strip">
         <div class="stat-cell"><div class="stat-val red">96,412</div><div class="stat-lbl">Reported crashes (metro, 2024)</div></div>
         <div class="stat-cell"><div class="stat-val amber">94</div><div class="stat-lbl">Traffic fatalities (metro, 2024)</div></div>
@@ -202,7 +202,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <div class="sec-hdr" id="sec-01"><div class="sec-num">01 &mdash; Crash Map</div><h2 class="sec-title">Where It Happens</h2><p class="sec-desc">Search an address, filter by crash type, compare years, or enter your commute to see every crash hotspot along your route.</p></div>
 <div class="card map-card">
     <div class="card-top">
-        <div><div class="card-title">Chicago Crash Map</div><div class="card-sub">65 intersections &middot; 10 cities &middot; Chicago Open Data 2022&ndash;2024</div></div>
+        <div><div class="card-title">Chicago Crash Map</div><div class="card-sub">65 intersections &middot; 10 regions &middot; Chicago Open Data 2022&ndash;2024</div></div>
         <div class="tag tag-red">Interactive</div>
     </div>
     <div class="map-toolbar">
@@ -273,7 +273,7 @@ footer a{color:var(--text-dim);text-decoration:none}
         <div class="map-legend-item"><svg width="16" height="16"><circle cx="8" cy="8" r="5.5" fill="#dc2626" fill-opacity=".85" stroke="white" stroke-width="2"/></svg> Top 10</div>
         <div class="map-legend-item"><svg width="16" height="16"><circle cx="8" cy="8" r="4.5" fill="#f97316" fill-opacity=".85" stroke="white" stroke-width="1.5"/></svg> Hotspot</div>
         <div class="map-legend-item"><svg width="20" height="8"><line x1="1" y1="4" x2="19" y2="4" stroke="#dc2626" stroke-width="2.5" stroke-opacity=".75"/></svg> Interstate</div>
-<div class="map-legend-item"><svg width="20" height="8"><line x1="1" y1="4" x2="19" y2="4" stroke="#f97316" stroke-width="2.5" stroke-opacity=".75"/></svg> Chicago Arterial</div>
+<div class="map-legend-item"><svg width="20" height="8"><line x1="1" y1="4" x2="19" y2="4" stroke="#f97316" stroke-width="2.5" stroke-opacity=".75"/></svg> Chicago arterial</div>
 <div class="map-legend-item"><svg width="20" height="8"><line x1="1" y1="4" x2="19" y2="4" stroke="#4da6ff" stroke-width="2.5" stroke-opacity=".75"/></svg> Metro arterial</div>
         <div class="map-legend-item"><svg width="20" height="8"><line x1="1" y1="4" x2="19" y2="4" stroke="#16a34a" stroke-width="2.5"/></svg> Commute</div>
         <div class="map-legend-item" style="margin-left:auto;color:var(--text-faint);font-size:.68rem">Size = crash volume &middot; Click markers for details</div>
@@ -285,7 +285,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 
 <!-- 02 DANGEROUS INTERSECTIONS -->
 <div class="rule"></div>
-<div class="sec-hdr" id="sec-02"><div class="sec-num">02 &mdash; Dangerous Intersections</div><h2 class="sec-title">The Top 10 Crash Sites</h2><p class="sec-desc">Ranked by total crash volume across the Chicago. Freeway interchanges dominate due to high traffic volumes &mdash; use the Per Vehicle toggle to normalize by traffic count.</p></div>
+<div class="sec-hdr" id="sec-02"><div class="sec-num">02 &mdash; Dangerous Intersections</div><h2 class="sec-title">The Top 10 Crash Sites</h2><p class="sec-desc">Ranked by total crash volume across Chicago. Freeway interchanges dominate due to high traffic volumes &mdash; use the Per Vehicle toggle to normalize by traffic count.</p></div>
 <div class="card">
     <div class="card-top">
         <div>
@@ -305,9 +305,9 @@ footer a{color:var(--text-dim);text-decoration:none}
 
 <!-- 03 CITY OVERVIEW -->
 <div class="rule"></div>
-<div class="sec-hdr" id="sec-03"><div class="sec-num">03 &mdash; City Overview</div><h2 class="sec-title">Crash Rates Across the Metro</h2><p class="sec-desc">How each city in the Chicago compares on total crashes, fatalities, and behavioral factors.</p></div>
-<div class="card"><div class="card-top"><div><div class="card-title">City Comparison</div><div class="card-sub">All cities &middot; Chicago Open Data 2024</div></div><div class="tag tag-red">Overview</div></div>
-<table class="city-table"><thead><tr><th>City</th><th>Crashes</th><th>Fatal</th><th>DUI</th><th>Speed</th><th>Hit &amp; Run</th><th>Ped</th></tr></thead><tbody id="cityTableBody"></tbody></table></div>
+<div class="sec-hdr" id="sec-03"><div class="sec-num">03 &mdash; Region Overview</div><h2 class="sec-title">Crash Rates Across the Metro</h2><p class="sec-desc">How each region in Chicago compares on total crashes, fatalities, and behavioral factors.</p></div>
+<div class="card"><div class="card-top"><div><div class="card-title">Region Comparison</div><div class="card-sub">All regions &middot; Chicago Open Data 2024</div></div><div class="tag tag-red">Overview</div></div>
+<table class="city-table"><thead><tr><th>Region</th><th>Crashes</th><th>Fatal</th><th>DUI</th><th>Speed</th><th>Hit &amp; Run</th><th>Ped</th></tr></thead><tbody id="cityTableBody"></tbody></table></div>
 
 <!-- 04 WHEN IT HAPPENS -->
 <div class="rule"></div>
@@ -348,7 +348,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 
 <!-- 05 YEAR OVER YEAR -->
 <div class="rule"></div>
-<div class="sec-hdr" id="sec-05"><div class="sec-num">05 &mdash; Year Over Year</div><h2 class="sec-title">Is the Metro Getting Safer?</h2><p class="sec-desc">Three years of Chicago Open Data data show how crashes, fatalities, and behavioral factors are trending across the Chicago.</p></div>
+<div class="sec-hdr" id="sec-05"><div class="sec-num">05 &mdash; Year Over Year</div><h2 class="sec-title">Is the Metro Getting Safer?</h2><p class="sec-desc">Three years of Chicago Open Data records show how crashes, fatalities, and behavioral factors are trending across Chicago.</p></div>
 <div class="grid-2">
     <div class="card"><div class="card-top"><div><div class="card-title">Total Crashes</div><div class="card-sub">Metro-wide &middot; Chicago Open Data 2022&ndash;2024</div></div></div><div class="chart-box"><canvas id="yoyTotalChart"></canvas></div></div>
     <div class="card"><div class="card-top"><div><div class="card-title">Fatalities &amp; Pedestrian Crashes</div><div class="card-sub">Metro-wide &middot; Chicago Open Data 2022&ndash;2024</div></div></div><div class="chart-box"><canvas id="yoySevChart"></canvas></div></div>
@@ -360,7 +360,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <div class="sec-hdr" id="sec-06"><div class="sec-num">06 &mdash; Severity</div><h2 class="sec-title">How Bad Are the Crashes?</h2><p class="sec-desc">94 people died on Chicago roads in 2024. The severity breakdown tells us how crashes distribute between fatal, serious, minor, and property-damage-only.</p></div>
 <div class="grid-2">
     <div class="card"><div class="card-top"><div><div class="card-title">Severity Distribution</div><div class="card-sub">All Metro &middot; Chicago Open Data 2024</div></div></div><div class="chart-box"><canvas id="sevChart"></canvas></div></div>
-    <div class="card"><div class="card-top"><div><div class="card-title">Fatalities by City</div><div class="card-sub">Chicago Open Data 2024</div></div><div class="tag tag-red">Fatal</div></div><div class="chart-box"><canvas id="fatalCityChart"></canvas></div></div>
+    <div class="card"><div class="card-top"><div><div class="card-title">Fatalities by Region</div><div class="card-sub">Chicago Open Data 2024</div></div><div class="tag tag-red">Fatal</div></div><div class="chart-box"><canvas id="fatalCityChart"></canvas></div></div>
 </div>
 
 <!-- 07 DUI -->
@@ -377,7 +377,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <option value="Southwest Side">Southwest Side</option>
 <option value="South Side">South Side</option>
 <option value="Far South">Far South</option></select></div><div class="chart-box"><canvas id="impHourChart"></canvas></div></div>
-    <div class="card"><div class="card-top"><div><div class="card-title">DUI by City</div><div class="card-sub">Total DUI crashes &middot; Chicago Open Data 2024</div></div></div><div class="chart-box"><canvas id="impCityChart"></canvas></div></div>
+    <div class="card"><div class="card-top"><div><div class="card-title">DUI by Region</div><div class="card-sub">Total DUI crashes &middot; Chicago Open Data 2024</div></div></div><div class="chart-box"><canvas id="impCityChart"></canvas></div></div>
 </div>
 
 <!-- 08 SPEED -->
@@ -394,7 +394,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <option value="Southwest Side">Southwest Side</option>
 <option value="South Side">South Side</option>
 <option value="Far South">Far South</option></select></div><div class="chart-box"><canvas id="speedHourChart"></canvas></div></div>
-    <div class="card"><div class="card-top"><div><div class="card-title">Speed&rsquo;s Share of Fatalities</div><div class="card-sub">By city &middot; Chicago Open Data 2024</div></div><div class="tag tag-red">Fatal</div></div><div class="chart-box"><canvas id="speedFatalChart"></canvas></div></div>
+    <div class="card"><div class="card-top"><div><div class="card-title">Speed&rsquo;s Share of Fatalities</div><div class="card-sub">By region &middot; Chicago Open Data 2024</div></div><div class="tag tag-red">Fatal</div></div><div class="chart-box"><canvas id="speedFatalChart"></canvas></div></div>
 </div>
 
 <!-- 09 HIT-AND-RUN -->
@@ -409,13 +409,13 @@ footer a{color:var(--text-dim);text-decoration:none}
 <option value="West Side">West Side</option>
 <option value="Southwest Side">Southwest Side</option>
 <option value="South Side">South Side</option>
-<option value="Far South">Far South</option></select></div><div class="chart-box"><canvas id="hrHourChart"></canvas></div></div><div class="card"><div class="card-top"><div><div class="card-title">Hit-and-Run Rate by City</div><div class="card-sub">% of crashes &middot; Chicago Open Data 2024</div></div></div><div class="chart-box"><canvas id="hrCityChart"></canvas></div></div></div>
+<option value="Far South">Far South</option></select></div><div class="chart-box"><canvas id="hrHourChart"></canvas></div></div><div class="card"><div class="card-top"><div><div class="card-title">Hit-and-Run Rate by {region_label_cap}</div><div class="card-sub">% of crashes &middot; Chicago Open Data 2024</div></div></div><div class="chart-box"><canvas id="hrCityChart"></canvas></div></div></div>
 
 <!-- 10 PEDESTRIANS & CYCLISTS -->
 <div class="rule"></div>
 <div class="sec-hdr" id="sec-10"><div class="sec-num">10 &mdash; Pedestrians &amp; Cyclists</div><h2 class="sec-title">The Most Vulnerable on Metro Streets</h2><p class="sec-desc">2706 pedestrian crashes and 1998 cyclist crashes across the metro in 2024.</p></div>
 <div class="grid-2">
-    <div class="card"><div class="card-top"><div><div class="card-title">Pedestrian Crashes by City</div><div class="card-sub">Chicago Open Data 2024</div></div></div><div class="chart-box"><canvas id="pedCityChart"></canvas></div></div>
+    <div class="card"><div class="card-top"><div><div class="card-title">Pedestrian Crashes by Region</div><div class="card-sub">Chicago Open Data 2024</div></div></div><div class="chart-box"><canvas id="pedCityChart"></canvas></div></div>
     <div class="card callout" style="border:1px solid var(--border);border-radius:12px;background:var(--card)">
         <div class="callout-val" style="color:var(--blue)">2706</div>
         <div class="callout-desc">pedestrian crashes in 2024. Southwest Side accounts for 459 &mdash; 17% of the metro total despite having 16% of the population.</div>
@@ -464,11 +464,11 @@ function aggW(fn,wFn){ const tot=cities.reduce((s,c)=>(cityData[c]?s+wFn(c):s),0
 // === TABLE ===
 const tbody=document.getElementById('cityTableBody');
 cities.forEach(c=>{const d=cityData[c];if(!d)return;const tr=document.createElement('tr');
-tr.innerHTML=`<td>${c}</td><td class="mono">${d.total.toLocaleString()}</td><td class="mono">${d.fatal}</td><td class="mono">${d.impaired}</td><td class="mono">${d.speed.toLocaleString()}</td><td class="mono">${d.hitrun.toLocaleString()}</td><td class="mono">${d.pedestrian}</td>`;
+tr.innerHTML=`<td>${c}</td><td class="mono">${d.total.toLocaleString()}</td><td class="mono">${d.fatal}</td><td class="mono">${d.impaired}</td><td class="mono">${d.speed.toLocaleString()}</td><td class="mono">${{d.hitrun.toLocaleString()}}</td><td class="mono">${d.pedestrian}</td>`;
 tbody.appendChild(tr)});
 const totRow=document.createElement('tr');totRow.style.fontWeight='600';
 const _t=96412,_f=94,_i=591,_sp=6453,_hr=29840,_p=2706;
-totRow.innerHTML=`<td>All Metro</td><td class="mono">${_t.toLocaleString()}</td><td class="mono">${_f}</td><td class="mono">${_i}</td><td class="mono">${_sp.toLocaleString()}</td><td class="mono">${_hr.toLocaleString()}</td><td class="mono">${_p}</td>`;
+totRow.innerHTML=`<td>All Metro</td><td class="mono">${_t.toLocaleString()}</td><td class="mono">${_f}</td><td class="mono">${_i}</td><td class="mono">${_sp.toLocaleString()}</td><td class="mono">${{_hr.toLocaleString()}}</td><td class="mono">${_p}</td>`;
 tbody.appendChild(totRow);
 
 // === HOURLY ===
@@ -513,7 +513,7 @@ new Chart(document.getElementById('fatalCityChart'),{type:'bar',data:{labels:cit
 // === DUI HOURLY ===
 let chImpHour;
 function buildImpHour(city){
-    const d=city==='all'?cities.map(c=>cityData[c]?.impRate||Array(24).fill(0)).reduce((a,b)=>a.map((v,i)=>v+b[i]/cities.length)):(cityData[city]?.impRate||Array(24).fill(0));
+    const d=city==='all'?cities.map(c=>cityData[c]?.impRate||Array(24).fill(0)).reduce((a,b)=>a.map((v,i)=>v+b[i])).map(v=>v/cities.length):(cityData[city]?.impRate||Array(24).fill(0));
     if(chImpHour)chImpHour.destroy();
     document.getElementById('impHourSub').textContent='% DUI · '+getMetroLabel(city);
     chImpHour=new Chart(document.getElementById('impHourChart'),{type:'line',data:{labels:hourLabels,datasets:[{data:d.map(v=>Math.round(v*10)/10),borderColor:'#ffb347',backgroundColor:'rgba(255,179,71,.1)',borderWidth:2.5,pointRadius:0,pointHoverRadius:5,tension:.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+'% DUI rate'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},ticks:{callback:v=>v+'%'}},x:{grid:{display:false},ticks:{maxTicksLimit:isMobile?8:24}}}}});
@@ -527,7 +527,7 @@ new Chart(document.getElementById('impCityChart'),{type:'bar',data:{labels:citie
 // === SPEED HOURLY ===
 let chSpeedHour;
 function buildSpeedHour(city){
-    const d=city==='all'?cities.map(c=>cityData[c]?.speedRate||Array(24).fill(0)).reduce((a,b)=>a.map((v,i)=>v+b[i]/cities.length)):(cityData[city]?.speedRate||Array(24).fill(0));
+    const d=city==='all'?cities.map(c=>cityData[c]?.speedRate||Array(24).fill(0)).reduce((a,b)=>a.map((v,i)=>v+b[i])).map(v=>v/cities.length):(cityData[city]?.speedRate||Array(24).fill(0));
     if(chSpeedHour)chSpeedHour.destroy();
     document.getElementById('speedHourSub').textContent='% speed · '+getMetroLabel(city);
     chSpeedHour=new Chart(document.getElementById('speedHourChart'),{type:'line',data:{labels:hourLabels,datasets:[{data:d.map(v=>Math.round(v*10)/10),borderColor:'#ff4d4d',backgroundColor:'rgba(255,77,77,.1)',borderWidth:2.5,pointRadius:0,pointHoverRadius:5,tension:.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+'% speed-related'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},ticks:{callback:v=>v+'%'}},x:{grid:{display:false},ticks:{maxTicksLimit:isMobile?8:24}}}}});
@@ -543,9 +543,9 @@ new Chart(document.getElementById('speedFatalChart'),{type:'bar',data:{labels:ci
 // === H&R HOURLY ===
 let chHrHour;
 function buildHrHour(city){
-    const d=city==='all'?cities.map(c=>cityData[c]?.hrRate||Array(24).fill(0)).reduce((a,b)=>a.map((v,i)=>v+b[i]/cities.length)):(cityData[city]?.hrRate||Array(24).fill(0));
+    const d=city==='all'?cities.map(c=>cityData[c]?.hrRate||Array(24).fill(0)).reduce((a,b)=>a.map((v,i)=>v+b[i])).map(v=>v/cities.length):(cityData[city]?.hrRate||Array(24).fill(0));
     if(chHrHour)chHrHour.destroy();
-    document.getElementById('hrHourSub').textContent='% H&R · '+getMetroLabel(city);
+    document.getElementById('hrHourSub').textContent='% H&R \u00b7 '+getMetroLabel(city);
     chHrHour=new Chart(document.getElementById('hrHourChart'),{type:'line',data:{labels:hourLabels,datasets:[{data:d.map(v=>Math.round(v*10)/10),borderColor:'#b07dff',backgroundColor:'rgba(176,125,255,.1)',borderWidth:2.5,pointRadius:0,pointHoverRadius:5,tension:.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+'% hit-and-run'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},ticks:{callback:v=>v+'%'}},x:{grid:{display:false},ticks:{maxTicksLimit:isMobile?8:24}}}}});
 }
 buildHrHour('all');
@@ -567,7 +567,7 @@ new Chart(document.getElementById('yoyTotalChart'),{type:'line',data:{labels:yoy
 
 new Chart(document.getElementById('yoySevChart'),{type:'line',data:{labels:yoyLabels,datasets:[{label:'Fatalities',data:getYoYAll('fatals'),borderColor:'#ffb347',backgroundColor:'rgba(255,179,71,.08)',borderWidth:2.5,pointRadius:5,pointBackgroundColor:'#ffb347',pointBorderColor:'#08090d',pointBorderWidth:2,tension:.3,fill:true},{label:'Ped Crashes',data:getYoYAll('peds'),borderColor:'#4da6ff',backgroundColor:'rgba(77,166,255,.06)',borderWidth:2,pointRadius:4,pointBackgroundColor:'#4da6ff',pointBorderColor:'#08090d',pointBorderWidth:2,tension:.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'circle',padding:14,font:{size:11}}},tooltip:TT},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},x:{grid:{display:false}}}}});
 
-new Chart(document.getElementById('yoyBehaviorChart'),{type:'bar',data:{labels:yoyLabels,datasets:[{label:'DUI',data:getYoYAll('impaired'),backgroundColor:'rgba(255,179,71,.6)',borderRadius:6},{label:'Speed',data:getYoYAll('speed'),backgroundColor:'rgba(255,77,77,.6)',borderRadius:6},{label:'Hit & Run',data:getYoYAll('hitrun'),backgroundColor:'rgba(176,125,255,.6)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'rectRounded',padding:14,font:{size:10}}},tooltip:TT},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},x:{grid:{display:false}}}}});
+new Chart(document.getElementById('yoyBehaviorChart'),{type:'bar',data:{labels:yoyLabels,datasets:[{label:'DUI',data:getYoYAll('impaired'),backgroundColor:'rgba(255,179,71,.6)',borderRadius:6},{label:'Speed',data:getYoYAll('speed'),backgroundColor:'rgba(255,77,77,.6)',borderRadius:6},{{label:"Hit & Run",data:getYoYAll("hitrun"),backgroundColor:"rgba(176,125,255,.6)",borderRadius:6}}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'rectRounded',padding:14,font:{size:10}}},tooltip:TT},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},x:{grid:{display:false}}}}});
 
 
 // =========================================================================
