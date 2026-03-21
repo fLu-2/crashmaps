@@ -49,7 +49,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 
 /* Map */
 .map-card{position:relative;overflow:hidden;padding-bottom:1rem}
-#crashMap{width:100%;height:620px;border-radius:0 0 12px 12px;z-index:1;background:#e8e0d8}
+#crashMap{width:100%;height:620px;border-radius:0 0 12px 12px;z-index:1;background:#08090d}
 @media(max-width:768px){#crashMap{height:350px}}
 .leaflet-container{font-family:'DM Sans',sans-serif!important}
 .map-fallback{display:none;position:absolute;inset:0;z-index:10;background:rgba(15,17,24,0.92);border-radius:12px;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;gap:1rem}
@@ -409,7 +409,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <option value="West Side">West Side</option>
 <option value="Southwest Side">Southwest Side</option>
 <option value="South Side">South Side</option>
-<option value="Far South">Far South</option></select></div><div class="chart-box"><canvas id="hrHourChart"></canvas></div></div><div class="card"><div class="card-top"><div><div class="card-title">Hit-and-Run Rate by {region_label_cap}</div><div class="card-sub">% of crashes &middot; Chicago Open Data 2024</div></div></div><div class="chart-box"><canvas id="hrCityChart"></canvas></div></div></div>
+<option value="Far South">Far South</option></select></div><div class="chart-box"><canvas id="hrHourChart"></canvas></div></div><div class="card"><div class="card-top"><div><div class="card-title">Hit-and-Run Rate by Region</div><div class="card-sub">% of crashes &middot; Chicago Open Data 2024</div></div></div><div class="chart-box"><canvas id="hrCityChart"></canvas></div></div></div>
 
 <!-- 10 PEDESTRIANS & CYCLISTS -->
 <div class="rule"></div>
@@ -464,11 +464,11 @@ function aggW(fn,wFn){ const tot=cities.reduce((s,c)=>(cityData[c]?s+wFn(c):s),0
 // === TABLE ===
 const tbody=document.getElementById('cityTableBody');
 cities.forEach(c=>{const d=cityData[c];if(!d)return;const tr=document.createElement('tr');
-tr.innerHTML=`<td>${c}</td><td class="mono">${d.total.toLocaleString()}</td><td class="mono">${d.fatal}</td><td class="mono">${d.impaired}</td><td class="mono">${d.speed.toLocaleString()}</td><td class="mono">${{d.hitrun.toLocaleString()}}</td><td class="mono">${d.pedestrian}</td>`;
+tr.innerHTML=`<td>${c}</td><td class="mono">${d.total.toLocaleString()}</td><td class="mono">${d.fatal}</td><td class="mono">${d.impaired}</td><td class="mono">${d.speed.toLocaleString()}</td><td class="mono">${d.hitrun.toLocaleString()}</td><td class="mono">${d.pedestrian}</td>`;
 tbody.appendChild(tr)});
 const totRow=document.createElement('tr');totRow.style.fontWeight='600';
 const _t=96412,_f=94,_i=591,_sp=6453,_hr=29840,_p=2706;
-totRow.innerHTML=`<td>All Metro</td><td class="mono">${_t.toLocaleString()}</td><td class="mono">${_f}</td><td class="mono">${_i}</td><td class="mono">${_sp.toLocaleString()}</td><td class="mono">${{_hr.toLocaleString()}}</td><td class="mono">${_p}</td>`;
+totRow.innerHTML=`<td>All Metro</td><td class="mono">${_t.toLocaleString()}</td><td class="mono">${_f}</td><td class="mono">${_i}</td><td class="mono">${_sp.toLocaleString()}</td><td class="mono">${_hr.toLocaleString()}</td><td class="mono">${_p}</td>`;
 tbody.appendChild(totRow);
 
 // === HOURLY ===
@@ -559,7 +559,7 @@ new Chart(document.getElementById('pedCityChart'),{type:'bar',data:{labels:citie
 
 
 // === YEAR OVER YEAR ===
-const yoyLabels=['2022','2023','2024'];
+const yoyLabels=["2022", "2023", "2024"];
 const yoyData=yoyD;
 function getYoYAll(field){ return [0,1,2].map(i=>cities.reduce((s,c)=>(yoyData[c]?s+(yoyData[c][field]?yoyData[c][field][i]:0):s),0)); }
 
@@ -595,7 +595,7 @@ let commuteMarkers=L.layerGroup();
 let nearbyHighlights=L.layerGroup();
 
 const map=L.map('crashMap',{scrollWheelZoom:true,zoomControl:true}).setView(mapCenter,isMobile?9:mapZoom);
-const tiles=L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
+const tiles=L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
     attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
     subdomains:'abcd',maxZoom:19
 }).addTo(map);
