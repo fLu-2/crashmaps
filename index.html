@@ -68,12 +68,13 @@ header nav a:hover{color:var(--text)}
 
 /* Compare section */
 .compare{max-width:1200px;margin:4rem auto 0;padding:0 2rem}
-.compare-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.compare-grid{display:grid;grid-template-columns:repeat(9,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden}
 .nyc-col .cmp-val{color:var(--amber)}
 .chi-col .cmp-val{color:var(--purple)}
 .dc-col .cmp-val{color:#10b981}
 .pdx-col .cmp-val{color:#f472b6}
 .atx-col .cmp-val{color:#0ea5e9}
+.det-col .cmp-val{color:#f43f5e}
 @media(max-width:700px){.compare-grid{grid-template-columns:1fr}}
 .cmp-cell{background:var(--bg-card);padding:1.25rem;text-align:center}
 .cmp-cell.header{background:var(--bg)}
@@ -112,9 +113,9 @@ footer a:hover{color:var(--text)}
         <h1>Every crash on <em>every road</em></h1>
         <p class="hero-sub">Interactive, verifiable traffic crash dashboards built from <strong>public DOT data</strong>. No ads. No law firms. No affiliation. Just the numbers.</p>
         <div class="stat-bar">
-            <div class="sb-cell"><div class="sb-val" style="color:var(--red)">975K+</div><div class="sb-lbl">Crash records processed</div></div>
-            <div class="sb-cell"><div class="sb-val" style="color:var(--amber)">830</div><div class="sb-lbl">Fatalities (latest yr)</div></div>
-            <div class="sb-cell"><div class="sb-val" style="color:var(--blue)">7</div><div class="sb-lbl">Metro areas</div></div>
+            <div class="sb-cell"><div class="sb-val" style="color:var(--red)">1.03M</div><div class="sb-lbl">Crash records processed</div></div>
+            <div class="sb-cell"><div class="sb-val" style="color:var(--amber)">902</div><div class="sb-lbl">Fatalities (latest yr)</div></div>
+            <div class="sb-cell"><div class="sb-val" style="color:var(--blue)">8</div><div class="sb-lbl">Metro areas</div></div>
             <div class="sb-cell"><div class="sb-val" style="color:var(--green)">$0</div><div class="sb-lbl">Cost to access</div></div>
         </div>
     </div>
@@ -193,6 +194,16 @@ footer a:hover{color:var(--text)}
             </div>
             <svg class="city-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
+        <a href="detroit/" class="city-row">
+            <div class="city-dot" style="background:#f43f5e"></div>
+            <div class="city-name">Detroit<small>Detroit Open Data &middot; 2022&ndash;2024</small></div>
+            <div class="city-stats">
+                <div class="cs-cell"><div class="cs-val">17,323</div><div class="cs-lbl">crashes</div></div>
+                <div class="cs-cell"><div class="cs-val">72</div><div class="cs-lbl">fatal</div></div>
+                <div class="cs-cell"><div class="cs-val">300</div><div class="cs-lbl">ped</div></div>
+            </div>
+            <svg class="city-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
     </div>
 </section>
 
@@ -207,6 +218,7 @@ footer a:hover{color:var(--text)}
         <div class="cmp-cell header dc-col"><div class="cmp-metric">Washington DC</div></div>
         <div class="cmp-cell header pdx-col"><div class="cmp-metric">Portland Metro</div><div class="cmp-sub">(2023)</div></div>
         <div class="cmp-cell header atx-col"><div class="cmp-metric">Austin</div></div>
+        <div class="cmp-cell header det-col"><div class="cmp-metric">Detroit</div></div>
 
         <div class="cmp-cell"><div class="cmp-metric">Total crashes</div></div>
         <div class="cmp-cell denver-col"><div class="cmp-val">56,697</div></div>
@@ -216,6 +228,7 @@ footer a:hover{color:var(--text)}
         <div class="cmp-cell dc-col"><div class="cmp-val">20,247</div></div>
         <div class="cmp-cell pdx-col"><div class="cmp-val">14,025</div></div>
         <div class="cmp-cell atx-col"><div class="cmp-val">11,855</div></div>
+        <div class="cmp-cell det-col"><div class="cmp-val">17,323</div></div>
 
         <div class="cmp-cell"><div class="cmp-metric">Crashes per 1K residents</div></div>
         <div class="cmp-cell denver-col"><div class="cmp-val">34.5</div><div class="cmp-sub">pop 1.65M</div></div>
@@ -225,6 +238,7 @@ footer a:hover{color:var(--text)}
         <div class="cmp-cell dc-col"><div class="cmp-val">29.3</div><div class="cmp-sub">pop 690K</div></div>
         <div class="cmp-cell pdx-col"><div class="cmp-val">11.0</div><div class="cmp-sub">pop 1.28M</div></div>
         <div class="cmp-cell atx-col"><div class="cmp-val">11.3</div><div class="cmp-sub">pop 1.05M</div></div>
+        <div class="cmp-cell det-col"><div class="cmp-val">27.1</div><div class="cmp-sub">pop 640K</div></div>
 
         <div class="cmp-cell"><div class="cmp-metric">Fatalities</div></div>
         <div class="cmp-cell denver-col"><div class="cmp-val">293</div><div class="cmp-sub">17.8 per 100K</div></div>
@@ -234,6 +248,7 @@ footer a:hover{color:var(--text)}
         <div class="cmp-cell dc-col"><div class="cmp-val">49</div><div class="cmp-sub">7.1 per 100K</div></div>
         <div class="cmp-cell pdx-col"><div class="cmp-val">103</div><div class="cmp-sub">8.1 per 100K</div></div>
         <div class="cmp-cell atx-col"><div class="cmp-val">92</div><div class="cmp-sub">8.8 per 100K</div></div>
+        <div class="cmp-cell det-col"><div class="cmp-val">72</div><div class="cmp-sub">11.3 per 100K</div></div>
 
         <div class="cmp-cell"><div class="cmp-metric">Speed-related</div></div>
         <div class="cmp-cell denver-col"><div class="cmp-val">4.9%</div><div class="cmp-sub">1,517 crashes</div></div>
@@ -243,6 +258,7 @@ footer a:hover{color:var(--text)}
         <div class="cmp-cell dc-col"><div class="cmp-val">3.0%</div><div class="cmp-sub">610 crashes</div></div>
         <div class="cmp-cell pdx-col"><div class="cmp-val">7.0%</div><div class="cmp-sub">980 crashes</div></div>
         <div class="cmp-cell atx-col"><div class="cmp-val">&mdash;</div><div class="cmp-sub">not available</div></div>
+        <div class="cmp-cell det-col"><div class="cmp-val">8.5%</div><div class="cmp-sub">1,464 crashes</div></div>
 
         <div class="cmp-cell"><div class="cmp-metric">DUI / Impairment</div></div>
         <div class="cmp-cell denver-col"><div class="cmp-val">6.3%</div><div class="cmp-sub">3,589 crashes</div></div>
@@ -252,6 +268,7 @@ footer a:hover{color:var(--text)}
         <div class="cmp-cell dc-col"><div class="cmp-val">1.7%</div><div class="cmp-sub">349 crashes</div></div>
         <div class="cmp-cell pdx-col"><div class="cmp-val">4.4%</div><div class="cmp-sub">613 crashes</div></div>
         <div class="cmp-cell atx-col"><div class="cmp-val">&mdash;</div><div class="cmp-sub">not available</div></div>
+        <div class="cmp-cell det-col"><div class="cmp-val">2.6%</div><div class="cmp-sub">458 crashes</div></div>
 
         <div class="cmp-cell"><div class="cmp-metric">Pedestrian crashes</div></div>
         <div class="cmp-cell denver-col"><div class="cmp-val">1,248</div><div class="cmp-sub">75.9 per 100K</div></div>
@@ -261,6 +278,7 @@ footer a:hover{color:var(--text)}
         <div class="cmp-cell dc-col"><div class="cmp-val">880</div><div class="cmp-sub">127.5 per 100K</div></div>
         <div class="cmp-cell pdx-col"><div class="cmp-val">279</div><div class="cmp-sub">21.8 per 100K</div></div>
         <div class="cmp-cell atx-col"><div class="cmp-val">317</div><div class="cmp-sub">30.2 per 100K</div></div>
+        <div class="cmp-cell det-col"><div class="cmp-val">300</div><div class="cmp-sub">46.9 per 100K</div></div>
 
         <div class="cmp-cell"><div class="cmp-metric">Cyclist crashes</div></div>
         <div class="cmp-cell denver-col"><div class="cmp-val">810</div><div class="cmp-sub">49.2 per 100K</div></div>
@@ -270,6 +288,7 @@ footer a:hover{color:var(--text)}
         <div class="cmp-cell dc-col"><div class="cmp-val">605</div><div class="cmp-sub">87.6 per 100K</div></div>
         <div class="cmp-cell pdx-col"><div class="cmp-val">183</div><div class="cmp-sub">14.3 per 100K</div></div>
         <div class="cmp-cell atx-col"><div class="cmp-val">194</div><div class="cmp-sub">18.5 per 100K</div></div>
+        <div class="cmp-cell det-col"><div class="cmp-val">111</div><div class="cmp-sub">17.3 per 100K</div></div>
 
         <div class="cmp-cell"><div class="cmp-metric">Data source</div></div>
         <div class="cmp-cell denver-col"><div class="cmp-val" style="font-size:.9rem">CDOT</div><div class="cmp-sub">Excel &middot; 101K rows</div></div>
@@ -279,6 +298,7 @@ footer a:hover{color:var(--text)}
         <div class="cmp-cell dc-col"><div class="cmp-val" style="font-size:.9rem">DCGIS</div><div class="cmp-sub">ArcGIS API &middot; 20K rows</div></div>
         <div class="cmp-cell pdx-col"><div class="cmp-val" style="font-size:.9rem">ODOT</div><div class="cmp-sub">ArcGIS API &middot; 40K rows</div></div>
         <div class="cmp-cell atx-col"><div class="cmp-val" style="font-size:.9rem">Austin OD</div><div class="cmp-sub">Socrata API &middot; 38K rows</div></div>
+        <div class="cmp-cell det-col"><div class="cmp-val" style="font-size:.9rem">Detroit OD</div><div class="cmp-sub">ArcGIS API &middot; 71K rows</div></div>
     </div>
 </section>
 
@@ -292,6 +312,7 @@ footer a:hover{color:var(--text)}
     <p>Washington DC's dashboard queries the <strong>DCGIS ArcGIS API</strong> &mdash; the same crash data from MPD that powers Vision Zero DC. 20,247 crashes in 2024 across all 8 wards, with direct impairment and speeding flags.</p>
     <p>Portland Metro's dashboard pulls from the <strong>ODOT OTSDE ArcGIS API</strong> covering three counties (Multnomah, Washington, Clackamas). 14,025 crashes in 2023 across 17 cities, with separate alcohol, marijuana, and drug involvement flags.</p>
     <p>Austin's dashboard uses the <strong>Austin Open Data</strong> Socrata API &mdash; the same Vision Zero crash report data from APD. 11,855 crashes in 2024 across all 10 council districts, with detailed pedestrian and cyclist breakdowns including micromobility.</p>
+    <p>Detroit's dashboard queries the <strong>SEMCOG ArcGIS FeatureServer</strong> &mdash; Michigan State Police crash reports compiled by the Southeast Michigan Council of Governments. 17,323 crashes in 2024 across 8 city regions, with a 32% hit-and-run rate &mdash; the highest on the platform.</p>
     <p>The goal is to make crash data accessible to the people who live on these roads &mdash; not just the engineers and bureaucrats who control them. If your city publishes crash data, it can be added to the platform.</p>
     <p style="color:var(--text-faint);font-size:.78rem;margin-top:2rem;font-weight:300">No affiliation with any law firm, insurance company, or government agency. No ads. No analytics. No cookies.</p>
 </section>
@@ -306,7 +327,8 @@ footer a:hover{color:var(--text)}
         <a href="https://www.reddit.com/r/chicago/" target="_blank">r/chicago</a> &nbsp;&middot;&nbsp;
         <a href="https://www.reddit.com/r/washingtondc/" target="_blank">r/washingtondc</a> &nbsp;&middot;&nbsp;
         <a href="https://www.reddit.com/r/Portland/" target="_blank">r/Portland</a> &nbsp;&middot;&nbsp;
-        <a href="https://www.reddit.com/r/Austin/" target="_blank">r/Austin</a>
+        <a href="https://www.reddit.com/r/Austin/" target="_blank">r/Austin</a> &nbsp;&middot;&nbsp;
+        <a href="https://www.reddit.com/r/Detroit/" target="_blank">r/Detroit</a>
     </div>
 </footer>
 
