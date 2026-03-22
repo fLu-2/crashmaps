@@ -189,7 +189,7 @@ footer a{color:var(--text-dim);text-decoration:none}
     <a href="#sec-06">06 Severity</a>
     <a href="#sec-07">07 DUI</a>
     <a href="#sec-08">08 Speed</a>
-    <a href="#sec-09">09 Hit &amp; Run</a>
+    
     <a href="#sec-10">10 Ped/Bike</a>
     <a href="#sec-11">11 Sources</a>
     <a href="#sec-12">12 Methodology</a>
@@ -345,28 +345,18 @@ footer a{color:var(--text-dim);text-decoration:none}
 </div>
 
 <!-- 07 DUI -->
-<div class="rule"></div>
-<div class="sec-hdr" id="sec-07"><div class="sec-num">07 &mdash; Impaired Driving</div><h2 class="sec-title">DUI Crashes Across the Metro</h2><p class="sec-desc">Alcohol and drug involvement contributed to 1,438 crashes in 2024 across the five boroughs &mdash; 2.2% of the total. Late-night hours see the highest impairment rates.</p></div>
-<div class="grid-2">
-    <div class="card"><div class="card-top"><div><div class="card-title">DUI Rate by Hour</div><div class="card-sub" id="impHourSub">% of crashes involving DUI &middot; All Metro</div></div><select class="chart-metro" id="selImpHour"><option value="all" selected>All Metro</option><option value="Manhattan">Manhattan</option>
+<div class="rule"></div><div class="sec-hdr" id="sec-07"><div class="sec-num">07 &mdash; Impaired Driving</div><h2 class="sec-title">DUI Crashes Across the Metro</h2><p class="sec-desc">Alcohol and drug involvement contributed to 1,438 crashes in 2024 across the five boroughs &mdash; 2.2% of the total. Late-night hours see the highest impairment rates.</p></div><div class="grid-2"><div class="card"><div class="card-top"><div><div class="card-title">DUI Rate by Hour</div><div class="card-sub" id="impHourSub">% of crashes involving DUI &middot; All Metro</div></div><select class="chart-metro" id="selImpHour"><option value="all" selected>All Metro</option><option value="Manhattan">Manhattan</option>
 <option value="Brooklyn">Brooklyn</option>
 <option value="Queens">Queens</option>
 <option value="Bronx">Bronx</option>
-<option value="Staten Island">Staten Island</option></select></div><div class="chart-box"><canvas id="impHourChart"></canvas></div></div>
-    <div class="card"><div class="card-top"><div><div class="card-title">DUI by Borough</div><div class="card-sub">Total DUI crashes &middot; NYC Open Data 2024</div></div></div><div class="chart-box"><canvas id="impCityChart"></canvas></div></div>
-</div>
+<option value="Staten Island">Staten Island</option></select></div><div class="chart-box"><canvas id="impHourChart"></canvas></div></div><div class="card"><div class="card-top"><div><div class="card-title">DUI by Borough</div><div class="card-sub">Total DUI crashes &middot; NYC Open Data 2024</div></div></div><div class="chart-box"><canvas id="impCityChart"></canvas></div></div></div>
 
 <!-- 08 SPEED -->
-<div class="rule"></div>
-<div class="sec-hdr" id="sec-08"><div class="sec-num">08 &mdash; Speed</div><h2 class="sec-title">Speed Kills Disproportionately</h2><p class="sec-desc">3.7% of crashes are speed-related. Bronx has the highest rate at 5.1%.</p></div>
-<div class="grid-2">
-    <div class="card"><div class="card-top"><div><div class="card-title">Speed Rate by Hour</div><div class="card-sub" id="speedHourSub">% of crashes involving speed &middot; All Metro</div></div><select class="chart-metro" id="selSpeedHour"><option value="all" selected>All Metro</option><option value="Manhattan">Manhattan</option>
+<div class="rule"></div><div class="sec-hdr" id="sec-08"><div class="sec-num">08 &mdash; Speed</div><h2 class="sec-title">Speed Kills Disproportionately</h2><p class="sec-desc">3.7% of crashes are speed-related. Bronx has the highest rate at 5.1%.</p></div><div class="grid-2"><div class="card"><div class="card-top"><div><div class="card-title">Speed Rate by Hour</div><div class="card-sub" id="speedHourSub">% of crashes involving speed &middot; All Metro</div></div><select class="chart-metro" id="selSpeedHour"><option value="all" selected>All Metro</option><option value="Manhattan">Manhattan</option>
 <option value="Brooklyn">Brooklyn</option>
 <option value="Queens">Queens</option>
 <option value="Bronx">Bronx</option>
-<option value="Staten Island">Staten Island</option></select></div><div class="chart-box"><canvas id="speedHourChart"></canvas></div></div>
-    <div class="card"><div class="card-top"><div><div class="card-title">Speed&rsquo;s Share of Fatalities</div><div class="card-sub">By borough &middot; NYC Open Data 2024</div></div><div class="tag tag-red">Fatal</div></div><div class="chart-box"><canvas id="speedFatalChart"></canvas></div></div>
-</div>
+<option value="Staten Island">Staten Island</option></select></div><div class="chart-box"><canvas id="speedHourChart"></canvas></div></div><div class="card"><div class="card-top"><div><div class="card-title">Speed&#x27;s Share of Fatalities</div><div class="card-sub">By borough &middot; NYC Open Data 2024</div></div><div class="tag tag-red">Fatal</div></div><div class="chart-box"><canvas id="speedFatalChart"></canvas></div></div></div>
 
 <!-- 09 HIT-AND-RUN -->
 <div class="rule"></div>
@@ -477,7 +467,7 @@ let chImpHour;
 function buildImpHour(city){
     const d=city==='all'?cities.map(c=>cityData[c]?.impRate||Array(24).fill(0)).reduce((a,b)=>a.map((v,i)=>v+b[i])).map(v=>v/cities.length):(cityData[city]?.impRate||Array(24).fill(0));
     if(chImpHour)chImpHour.destroy();
-    document.getElementById('impHourSub').textContent='% DUI · '+getMetroLabel(city);
+    document.getElementById('impHourSub').textContent='% DUI \u00b7 '+getMetroLabel(city);
     chImpHour=new Chart(document.getElementById('impHourChart'),{type:'line',data:{labels:hourLabels,datasets:[{data:d.map(v=>Math.round(v*10)/10),borderColor:'#ffb347',backgroundColor:'rgba(255,179,71,.1)',borderWidth:2.5,pointRadius:0,pointHoverRadius:5,tension:.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+'% DUI rate'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},ticks:{callback:v=>v+'%'}},x:{grid:{display:false},ticks:{maxTicksLimit:isMobile?8:24}}}}});
 }
 buildImpHour('all');
@@ -491,7 +481,7 @@ let chSpeedHour;
 function buildSpeedHour(city){
     const d=city==='all'?cities.map(c=>cityData[c]?.speedRate||Array(24).fill(0)).reduce((a,b)=>a.map((v,i)=>v+b[i])).map(v=>v/cities.length):(cityData[city]?.speedRate||Array(24).fill(0));
     if(chSpeedHour)chSpeedHour.destroy();
-    document.getElementById('speedHourSub').textContent='% speed · '+getMetroLabel(city);
+    document.getElementById('speedHourSub').textContent='% speed \u00b7 '+getMetroLabel(city);
     chSpeedHour=new Chart(document.getElementById('speedHourChart'),{type:'line',data:{labels:hourLabels,datasets:[{data:d.map(v=>Math.round(v*10)/10),borderColor:'#ff4d4d',backgroundColor:'rgba(255,77,77,.1)',borderWidth:2.5,pointRadius:0,pointHoverRadius:5,tension:.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+'% speed-related'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},ticks:{callback:v=>v+'%'}},x:{grid:{display:false},ticks:{maxTicksLimit:isMobile?8:24}}}}});
 }
 buildSpeedHour('all');
@@ -517,7 +507,7 @@ new Chart(document.getElementById('yoyTotalChart'),{type:'line',data:{labels:yoy
 
 new Chart(document.getElementById('yoySevChart'),{type:'line',data:{labels:yoyLabels,datasets:[{label:'Fatalities',data:getYoYAll('fatals'),borderColor:'#ffb347',backgroundColor:'rgba(255,179,71,.08)',borderWidth:2.5,pointRadius:5,pointBackgroundColor:'#ffb347',pointBorderColor:'#08090d',pointBorderWidth:2,tension:.3,fill:true},{label:'Ped Crashes',data:getYoYAll('peds'),borderColor:'#4da6ff',backgroundColor:'rgba(77,166,255,.06)',borderWidth:2,pointRadius:4,pointBackgroundColor:'#4da6ff',pointBorderColor:'#08090d',pointBorderWidth:2,tension:.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'circle',padding:14,font:{size:11}}},tooltip:TT},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},x:{grid:{display:false}}}}});
 
-new Chart(document.getElementById('yoyBehaviorChart'),{type:'bar',data:{labels:yoyLabels,datasets:[{label:'DUI',data:getYoYAll('impaired'),backgroundColor:'rgba(255,179,71,.6)',borderRadius:6},{label:'Speed',data:getYoYAll('speed'),backgroundColor:'rgba(255,77,77,.6)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'rectRounded',padding:14,font:{size:10}}},tooltip:TT},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},x:{grid:{display:false}}}}});
+new Chart(document.getElementById("yoyBehaviorChart"),{type:"bar",data:{labels:yoyLabels,datasets:[{label:'DUI',data:getYoYAll('impaired'),backgroundColor:'rgba(255,179,71,.6)',borderRadius:6},{label:'Speed',data:getYoYAll('speed'),backgroundColor:'rgba(255,77,77,.6)',borderRadius:6},]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"top",align:"start",labels:{usePointStyle:true,pointStyle:"rectRounded",padding:14,font:{size:10}}},tooltip:TT},scales:{y:{beginAtZero:true,grid:{color:"rgba(28,31,46,.5)"}},x:{grid:{display:false}}}}});
 
 
 // =========================================================================
