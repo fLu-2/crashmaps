@@ -299,11 +299,17 @@ footer a{color:var(--text-dim);text-decoration:none}
             <div class="card-title" id="tableTitle">Top 10 Crash Intersections &mdash; All Metro</div>
             <div class="card-sub" id="tableSub">UDOT 2022&ndash;2024 &middot; 65 locations tracked</div>
         </div>
-        <div class="map-filter-group">
-            <span class="map-filter-group-label">Rank by</span>
-            <div class="map-filters sort-toggle-sync">
-                <button class="map-btn active-blue" data-sort="total">Total</button>
-                <button class="map-btn" data-sort="rate">Per Vehicle</button>
+        <div style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap">
+            <div class="map-filter-group">
+                <span class="map-filter-group-label">Year</span>
+                <div class="map-filters" id="tableYearGroup"><button class="map-btn" data-year="2022">2022</button><button class="map-btn" data-year="2023">2023</button><button class="map-btn" data-year="2024">2024</button><button class="map-btn active-blue" data-year="all">All</button></div>
+            </div>
+            <div class="map-filter-group">
+                <span class="map-filter-group-label">Rank by</span>
+                <div class="map-filters sort-toggle-sync">
+                    <button class="map-btn active-blue" data-sort="total">Total</button>
+                    <button class="map-btn" data-sort="rate">Per Vehicle</button>
+                </div>
             </div>
         </div>
     </div>
@@ -622,6 +628,7 @@ const searchViewbox = '-112.12,40.83,-111.78,40.48';
 const searchCity = 'Wasatch Front';
 
 let currentYear='all';
+let currentTableYear='all';
 let currentType='all';
 let currentSort='total';
 let currentCity='all';
@@ -774,9 +781,18 @@ document.getElementById('yearGroup').addEventListener('click',function(e){
     btn.classList.add('active-blue');
     currentYear=btn.dataset.year;
     renderMarkers();
+});
+
+// === TABLE YEAR TOGGLE ===
+document.getElementById('tableYearGroup').addEventListener('click',function(e){
+    const btn=e.target.closest('.map-btn');
+    if(!btn) return;
+    this.querySelectorAll('.map-btn').forEach(b=>b.classList.remove('active-blue'));
+    btn.classList.add('active-blue');
+    currentTableYear=btn.dataset.year;
     renderIntersectionTable();
     const sub=document.getElementById('tableSub');
-    if(sub) sub.textContent='UDOT '+(currentYear==='all'?'2022–2024':currentYear)+' · 65 locations tracked';
+    if(sub) sub.textContent='UDOT '+(currentTableYear==='all'?'2022–2024':currentTableYear)+' · 65 locations tracked';
 });
 
 // === SORT TOGGLE (synced) ===
@@ -940,7 +956,7 @@ function clearCommute(keepPanel){
 
 // === INTERSECTION TABLE ===
 function renderIntersectionTable(){
-    const yr=currentYear;
+    const yr=currentTableYear;
     const cityFiltered=currentCity==='all'?spots:spots.filter(s=>s.city===currentCity);
     const all=cityFiltered.map(s=>{
         const c=yr==='all'?s.count:((s.by_year&&s.by_year[yr])?s.by_year[yr]:0);
