@@ -250,7 +250,7 @@ footer a{color:var(--text-dim);text-decoration:none}
             <div class="map-filter-sep"></div>
             <div class="map-filter-group">
                 <span class="map-filter-group-label">Year</span>
-                <div class="map-filters" id="yearGroup"><button class="map-btn" data-year="2022">2022</button><button class="map-btn" data-year="2023">2023</button><button class="map-btn active-blue" data-year="2024">2024</button></div>
+                <div class="map-filters" id="yearGroup"><button class="map-btn" data-year="2022">2022</button><button class="map-btn" data-year="2023">2023</button><button class="map-btn" data-year="2024">2024</button><button class="map-btn active-blue" data-year="all">All</button></div>
             </div>
             <div class="map-filter-sep"></div>
             <div class="map-filter-group">
@@ -290,7 +290,7 @@ footer a{color:var(--text-dim);text-decoration:none}
     <div class="card-top">
         <div>
             <div class="card-title" id="tableTitle">Top 10 Crash Intersections &mdash; All Metro</div>
-            <div class="card-sub">Austin Open Data 2022&ndash;2024 &middot; 65 locations tracked</div>
+            <div class="card-sub" id="tableSub">Austin Open Data 2022&ndash;2024 &middot; 65 locations tracked</div>
         </div>
         <div class="map-filter-group">
             <span class="map-filter-group-label">Rank by</span>
@@ -404,7 +404,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 </div>
 
 </main>
-<footer><p>Data: <a href="https://data.austintexas.gov" target="_blank">Austin Open Data</a> &middot; <a href="https://www.austintexas.gov/department/vision-zero" target="_blank">Vision Zero ATX</a> &middot; <a href="https://www.austintexas.gov/department/transportation-public-works" target="_blank">ATX Transportation</a><br>Built for <a href="https://www.reddit.com/r/Austin" target="_blank">r/Austin</a></p></footer>
+<footer><p>Data: <a href="https://data.austintexas.gov" target="_blank">Austin Open Data</a> &middot; <a href="https://www.austintexas.gov/department/vision-zero" target="_blank">Vision Zero ATX</a> &middot; <a href="https://www.austintexas.gov/department/transportation-public-works" target="_blank">ATX Transportation</a><br>Built for <a href="https://www.reddit.com/r/Austin" target="_blank">r/Austin</a> &middot; <a href="https://buymeacoffee.com/flu.2" target="_blank">Buy me a coffee</a></p></footer>
 
 <script>
 Chart.defaults.color='#8b90a8';Chart.defaults.borderColor='#1c1f2e';Chart.defaults.font.family="'DM Sans',sans-serif";
@@ -507,7 +507,7 @@ const corridorData = [{"name": "I-35", "color": "#dc2626", "type": "interstate",
 const searchViewbox = '-98.10,30.55,-97.40,30.05';
 const searchCity = 'Austin TX';
 
-let currentYear='2024';
+let currentYear='all';
 let currentType='all';
 let currentSort='total';
 let currentCity='all';
@@ -566,7 +566,7 @@ function renderMarkers(){
     });
 
     const ranked=filtered.map(s=>{
-        const crashes=(s.by_year && s.by_year[yr])?s.by_year[yr]:s.count;
+        const crashes=yr==='all'?s.count:((s.by_year && s.by_year[yr])?s.by_year[yr]:0);
         const rate=parseFloat(crashRate(crashes,s.aadt));
         return {...s,crashes,rate};
     }).sort((a,b)=>currentSort==='rate'?(b.rate-a.rate):(b.crashes-a.crashes));
@@ -593,13 +593,15 @@ function renderMarkers(){
 
         // Popup
         let trendStr='';
-        const prevYr=String(Number(yr)-1);
-        const prevCount=s.by_year?s.by_year[prevYr]:null;
-        if(prevCount){
-            const pct=Math.round(((s.crashes-prevCount)/prevCount)*100);
-            const arrow=pct>0?'&#9650;':'&#9660;';
-            const tColor=pct>0?'#ff4d4d':'#4dff91';
-            trendStr='<div class="popup-trend" style="color:'+tColor+'">'+arrow+' '+(pct>0?'+':'')+pct+'% vs '+prevYr+'</div>';
+        if(yr!=='all'){
+            const prevYr=String(Number(yr)-1);
+            const prevCount=s.by_year?s.by_year[prevYr]:null;
+            if(prevCount){
+                const pct=Math.round(((s.crashes-prevCount)/prevCount)*100);
+                const arrow=pct>0?'&#9650;':'&#9660;';
+                const tColor=pct>0?'#ff4d4d':'#4dff91';
+                trendStr='<div class="popup-trend" style="color:'+tColor+'">'+arrow+' '+(pct>0?'+':'')+pct+'% vs '+prevYr+'</div>';
+            }
         }
 
         const rateVal=crashRate(s.crashes,s.aadt);
@@ -622,7 +624,8 @@ function renderMarkers(){
         if(s.ped) noteItems.push(s.ped+' pedestrian');
         const noteStr=noteItems.length?noteItems.join(' &middot; '):'Crash cluster &mdash; '+s.count+' total over 3 years';
 
-        const popup='<div class="popup-rank">'+(isTop10?'#'+dynRank+' '+sortLabel:'Notable Hotspot')+'</div>'+cityTag+'<div class="popup-name">'+s.name+'</div><div class="popup-count">'+s.crashes+' crashes ('+yr+')</div>'+rateHTML+trendStr+'<div class="popup-note">'+noteStr+'</div>'+tagHTML;
+        const yrLabel=yr==='all'?'2022–2024':yr;
+        const popup='<div class="popup-rank">'+(isTop10?'#'+dynRank+' '+sortLabel:'Notable Hotspot')+'</div>'+cityTag+'<div class="popup-name">'+s.name+'</div><div class="popup-count">'+s.crashes+' crashes ('+yrLabel+')</div>'+rateHTML+trendStr+'<div class="popup-note">'+noteStr+'</div>'+tagHTML;
         marker.bindPopup(popup,{className:'crash-popup',maxWidth:isMobile?240:260,closeButton:true});
 
         // Numbered label for top 10
@@ -657,6 +660,9 @@ document.getElementById('yearGroup').addEventListener('click',function(e){
     btn.classList.add('active-blue');
     currentYear=btn.dataset.year;
     renderMarkers();
+    renderIntersectionTable();
+    const sub=document.getElementById('tableSub');
+    if(sub) sub.textContent='Austin Open Data '+(currentYear==='all'?'2022–2024':currentYear)+' · 65 locations tracked';
 });
 
 // === SORT TOGGLE (synced) ===
@@ -730,8 +736,8 @@ function highlightNearby(lat,lng,threshold){
         L.circleMarker([s.lat,s.lon],{radius:26,fillColor:'rgba(37,99,235,0.06)',fillOpacity:1,color:'#2563eb',weight:2.5,opacity:.85,dashArray:'6,4'}).addTo(nearbyHighlights);
     });
     if(nearby.length){
-        const best=nearby.reduce((a,b)=>{const yr=currentYear;const ac=(a.by_year&&a.by_year[yr])||a.count;const bc=(b.by_year&&b.by_year[yr])||b.count;return bc>ac?b:a});
-        const ct=(best.by_year&&best.by_year[currentYear])||best.count;
+        const best=nearby.reduce((a,b)=>{const yr=currentYear;const ac=yr==='all'?a.count:((a.by_year&&a.by_year[yr])||0);const bc=yr==='all'?b.count:((b.by_year&&b.by_year[yr])||0);return bc>ac?b:a});
+        const ct=currentYear==='all'?best.count:((best.by_year&&best.by_year[currentYear])||0);
         L.popup({className:'crash-popup',maxWidth:isMobile?200:220})
             .setLatLng([best.lat,best.lon])
             .setContent('<div class="popup-name">'+best.name+'</div><div class="popup-count">'+ct+' crashes nearby</div>')
@@ -787,7 +793,7 @@ async function doCommute(){
         L.marker(toPt,{icon:pinIcon('B')}).addTo(commuteMarkers);
         const nearRoute=[];
         spots.forEach(s=>{
-            const crashes=(s.by_year&&s.by_year[currentYear])||s.count;
+            const crashes=currentYear==='all'?s.count:((s.by_year&&s.by_year[currentYear])||0);
             if(!crashes) return;
             for(let i=0;i<coords.length;i+=3){
                 const d=Math.sqrt(Math.pow(s.lat-coords[i][0],2)+Math.pow(s.lon-coords[i][1],2));
@@ -798,8 +804,9 @@ async function doCommute(){
             L.circleMarker([s.lat,s.lon],{radius:20,fillColor:'transparent',fillOpacity:0,color:'rgba(255,255,255,0.8)',weight:5,opacity:1,interactive:false}).addTo(commuteMarkers);
             L.circleMarker([s.lat,s.lon],{radius:20,fillColor:'rgba(220,38,38,.08)',fillOpacity:1,color:'#dc2626',weight:2.5,opacity:.85,dashArray:'6,4'}).addTo(commuteMarkers);
         });
-        const totalCrashes=nearRoute.reduce((sum,s)=>sum+((s.by_year&&s.by_year[currentYear])||s.count),0);
-        result.innerHTML='&#9989; Found <strong>'+nearRoute.length+' hotspot'+(nearRoute.length!==1?'s':'')+'</strong> with <strong>'+totalCrashes+' total crashes</strong> ('+currentYear+') within &frac14; mile of your commute.';
+        const totalCrashes=nearRoute.reduce((sum,s)=>sum+(currentYear==='all'?s.count:((s.by_year&&s.by_year[currentYear])||0)),0);
+        const yrLabel=currentYear==='all'?'2022–2024':currentYear;
+        result.innerHTML='&#9989; Found <strong>'+nearRoute.length+' hotspot'+(nearRoute.length!==1?'s':'')+'</strong> with <strong>'+totalCrashes+' total crashes</strong> ('+yrLabel+') within &frac14; mile of your commute.';
         map.fitBounds(commuteRoute.getBounds().pad(0.15));
     }catch(err){
         result.textContent='Error finding route. Try more specific addresses.';
@@ -822,7 +829,7 @@ function renderIntersectionTable(){
     const yr=currentYear;
     const cityFiltered=currentCity==='all'?spots:spots.filter(s=>s.city===currentCity);
     const all=cityFiltered.map(s=>{
-        const c=(s.by_year&&s.by_year[yr])?s.by_year[yr]:s.count;
+        const c=yr==='all'?s.count:((s.by_year&&s.by_year[yr])?s.by_year[yr]:0);
         const rate=s.aadt?parseFloat(((c/(s.aadt*365))*1000000).toFixed(1)):0;
         return {n:s.name,c,rate,aadt:s.aadt,city:s.city};
     }).sort((a,b)=>currentSort==='rate'?(b.rate-a.rate):(b.c-a.c)).slice(0,10);
