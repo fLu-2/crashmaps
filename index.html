@@ -46,24 +46,20 @@ header nav a:hover{color:var(--text)}
 /* City cards */
 .cities{max-width:1200px;margin:0 auto;padding:0 2rem 0}
 .section-label{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);margin-bottom:1.25rem}
-.city-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden}
-@media(max-width:700px){.city-grid{grid-template-columns:1fr}}
+.city-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+@media(max-width:900px){.city-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.city-grid{grid-template-columns:1fr}}
 @media(max-width:700px){.stat-bar{grid-template-columns:repeat(2,1fr)}}
-.city-card{background:var(--bg-card);padding:2.25rem;display:flex;flex-direction:column;gap:1.25rem;transition:background .2s}
+.city-card{background:var(--bg-card);padding:1.5rem 1.5rem 1.5rem 1.75rem;display:flex;flex-direction:column;gap:.9rem;transition:background .2s;border-left:3px solid var(--border)}
 .city-card:hover{background:#13141f}
 .city-top{display:flex;justify-content:space-between;align-items:flex-start}
-.city-name{font-family:'Playfair Display',serif;font-size:1.65rem;font-weight:700;line-height:1.15}
-.city-name small{display:block;font-family:'DM Sans',sans-serif;font-size:.72rem;color:var(--text-dim);font-weight:400;margin-top:.3rem}
-.city-badge{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:100px;border:1px solid var(--border-hover)}
-.city-badge.live{border-color:var(--green);color:var(--green)}
-.city-badge.beta{border-color:var(--amber);color:var(--amber)}
-.city-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem}
-.cs-cell .cs-val{font-family:'JetBrains Mono',monospace;font-size:1.05rem;font-weight:500}
-.cs-cell .cs-lbl{font-size:.65rem;color:var(--text-dim);margin-top:.1rem}
+.city-name{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;line-height:1.15}
+.city-name small{display:block;font-family:'DM Sans',sans-serif;font-size:.68rem;color:var(--text-dim);font-weight:400;margin-top:.25rem}
+.city-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}
+.cs-cell .cs-val{font-family:'JetBrains Mono',monospace;font-size:.95rem;font-weight:500}
+.cs-cell .cs-lbl{font-size:.6rem;color:var(--text-dim);margin-top:.1rem}
 .cs-val.r{color:var(--red)}.cs-val.a{color:var(--amber)}.cs-val.b{color:var(--blue)}.cs-val.p{color:var(--purple)}
-.city-row{display:flex;gap:.5rem;flex-wrap:wrap}
-.city-tag{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--text-dim);padding:3px 8px;border:1px solid var(--border);border-radius:4px}
-.city-link{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text);margin-top:auto;padding-top:.5rem;opacity:.7;transition:opacity .2s}
+.city-link{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text);margin-top:auto;opacity:.5;transition:opacity .2s}
 .city-card:hover .city-link{opacity:1}
 .city-link svg{transition:transform .2s}
 .city-card:hover .city-link svg{transform:translateX(3px)}
@@ -124,119 +120,71 @@ footer a:hover{color:var(--text)}
 <section class="cities" id="cities">
     <div class="section-label">Active Dashboards</div>
     <div class="city-grid">
-        <a href="denver/" class="city-card">
+        <a href="denver/" class="city-card" style="border-left-color:var(--red)">
             <div class="city-top">
-                <div class="city-name">Denver Metro<small>Colorado &middot; CDOT &middot; 2022&ndash;2024</small></div>
-                <div class="city-badge live">Live</div>
+                <div class="city-name">Denver Metro<small>CDOT &middot; 2022&ndash;2024</small></div>
             </div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val r">56,697</div><div class="cs-lbl">Crashes</div></div>
                 <div class="cs-cell"><div class="cs-val a">293</div><div class="cs-lbl">Fatalities</div></div>
-                <div class="cs-cell"><div class="cs-val b">1,248</div><div class="cs-lbl">Ped crashes</div></div>
-                <div class="cs-cell"><div class="cs-val p">25.6%</div><div class="cs-lbl">Hit &amp; run</div></div>
+                <div class="cs-cell"><div class="cs-val b">1,248</div><div class="cs-lbl">Pedestrian</div></div>
             </div>
-            <div class="city-row">
-                <span class="city-tag">65 intersections</span>
-                <span class="city-tag">12 corridors</span>
-                <span class="city-tag">12 sections</span>
-                <span class="city-tag">21 charts</span>
-            </div>
-            <div class="city-link">Explore dashboard <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            <div class="city-link">Explore <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
         </a>
-        <a href="salt-lake-city/" class="city-card">
+        <a href="nyc/" class="city-card" style="border-left-color:var(--amber)">
             <div class="city-top">
-                <div class="city-name">Wasatch Front<small>Utah &middot; UDOT &middot; 2022&ndash;2024</small></div>
-                <div class="city-badge live">Live</div>
-            </div>
-            <div class="city-stats">
-                <div class="cs-cell"><div class="cs-val r">18,099</div><div class="cs-lbl">Crashes</div></div>
-                <div class="cs-cell"><div class="cs-val a">54</div><div class="cs-lbl">Fatalities</div></div>
-                <div class="cs-cell"><div class="cs-val b">422</div><div class="cs-lbl">Ped crashes</div></div>
-                <div class="cs-cell"><div class="cs-val p">14.9%</div><div class="cs-lbl">Speed rate</div></div>
-            </div>
-            <div class="city-row">
-                <span class="city-tag">65 intersections</span>
-                <span class="city-tag">8 corridors</span>
-                <span class="city-tag">12 sections</span>
-                <span class="city-tag">17 cities</span>
-            </div>
-            <div class="city-link">Explore dashboard <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-        </a>
-        <a href="nyc/" class="city-card">
-            <div class="city-top">
-                <div class="city-name">New York City<small>New York &middot; NYC Open Data &middot; 2022&ndash;2024</small></div>
-                <div class="city-badge live">Live</div>
+                <div class="city-name">New York City<small>NYC Open Data &middot; 2022&ndash;2024</small></div>
             </div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val r">64,475</div><div class="cs-lbl">Crashes</div></div>
                 <div class="cs-cell"><div class="cs-val a">146</div><div class="cs-lbl">Fatalities</div></div>
-                <div class="cs-cell"><div class="cs-val b">7,465</div><div class="cs-lbl">Ped crashes</div></div>
-                <div class="cs-cell"><div class="cs-val p">4,032</div><div class="cs-lbl">Cyclist</div></div>
+                <div class="cs-cell"><div class="cs-val b">7,465</div><div class="cs-lbl">Pedestrian</div></div>
             </div>
-            <div class="city-row">
-                <span class="city-tag">65 intersections</span>
-                <span class="city-tag">10 corridors</span>
-                <span class="city-tag">5 boroughs</span>
-                <span class="city-tag">12 sections</span>
-            </div>
-            <div class="city-link">Explore dashboard <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            <div class="city-link">Explore <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
         </a>
-        <a href="chicago/" class="city-card">
+        <a href="chicago/" class="city-card" style="border-left-color:var(--purple)">
             <div class="city-top">
-                <div class="city-name">Chicago<small>Illinois &middot; Chicago Open Data &middot; 2022&ndash;2024</small></div>
-                <div class="city-badge live">Live</div>
+                <div class="city-name">Chicago<small>Chicago Data Portal &middot; 2022&ndash;2024</small></div>
             </div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val r">96,412</div><div class="cs-lbl">Crashes</div></div>
                 <div class="cs-cell"><div class="cs-val a">94</div><div class="cs-lbl">Fatalities</div></div>
-                <div class="cs-cell"><div class="cs-val b">2,706</div><div class="cs-lbl">Ped crashes</div></div>
-                <div class="cs-cell"><div class="cs-val p">31.0%</div><div class="cs-lbl">Hit &amp; run</div></div>
+                <div class="cs-cell"><div class="cs-val b">2,706</div><div class="cs-lbl">Pedestrian</div></div>
             </div>
-            <div class="city-row">
-                <span class="city-tag">65 intersections</span>
-                <span class="city-tag">8 corridors</span>
-                <span class="city-tag">10 regions</span>
-                <span class="city-tag">12 sections</span>
-            </div>
-            <div class="city-link">Explore dashboard <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            <div class="city-link">Explore <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
         </a>
-        <a href="dc/" class="city-card">
+        <a href="salt-lake-city/" class="city-card" style="border-left-color:var(--cyan)">
             <div class="city-top">
-                <div class="city-name">Washington DC<small>District of Columbia &middot; DC Open Data &middot; 2022&ndash;2024</small></div>
-                <div class="city-badge live">Live</div>
+                <div class="city-name">Wasatch Front<small>UDOT &middot; 2022&ndash;2024</small></div>
+            </div>
+            <div class="city-stats">
+                <div class="cs-cell"><div class="cs-val r">18,099</div><div class="cs-lbl">Crashes</div></div>
+                <div class="cs-cell"><div class="cs-val a">54</div><div class="cs-lbl">Fatalities</div></div>
+                <div class="cs-cell"><div class="cs-val b">422</div><div class="cs-lbl">Pedestrian</div></div>
+            </div>
+            <div class="city-link">Explore <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </a>
+        <a href="dc/" class="city-card" style="border-left-color:#10b981">
+            <div class="city-top">
+                <div class="city-name">Washington DC<small>DCGIS &middot; 2022&ndash;2024</small></div>
             </div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val r">20,247</div><div class="cs-lbl">Crashes</div></div>
                 <div class="cs-cell"><div class="cs-val a">49</div><div class="cs-lbl">Fatalities</div></div>
-                <div class="cs-cell"><div class="cs-val b">880</div><div class="cs-lbl">Ped crashes</div></div>
-                <div class="cs-cell"><div class="cs-val p">605</div><div class="cs-lbl">Cyclist</div></div>
+                <div class="cs-cell"><div class="cs-val b">880</div><div class="cs-lbl">Pedestrian</div></div>
             </div>
-            <div class="city-row">
-                <span class="city-tag">65 intersections</span>
-                <span class="city-tag">8 corridors</span>
-                <span class="city-tag">8 wards</span>
-                <span class="city-tag">12 sections</span>
-            </div>
-            <div class="city-link">Explore dashboard <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            <div class="city-link">Explore <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
         </a>
-        <a href="portland/" class="city-card">
+        <a href="portland/" class="city-card" style="border-left-color:#f472b6">
             <div class="city-top">
-                <div class="city-name">Portland Metro<small>Oregon &middot; ODOT &middot; 2021&ndash;2023</small></div>
-                <div class="city-badge live">Live</div>
+                <div class="city-name">Portland Metro<small>ODOT &middot; 2021&ndash;2023</small></div>
             </div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val r">14,025</div><div class="cs-lbl">Crashes</div></div>
                 <div class="cs-cell"><div class="cs-val a">103</div><div class="cs-lbl">Fatalities</div></div>
-                <div class="cs-cell"><div class="cs-val b">279</div><div class="cs-lbl">Ped crashes</div></div>
-                <div class="cs-cell"><div class="cs-val p">7.0%</div><div class="cs-lbl">Speed rate</div></div>
+                <div class="cs-cell"><div class="cs-val b">279</div><div class="cs-lbl">Pedestrian</div></div>
             </div>
-            <div class="city-row">
-                <span class="city-tag">65 intersections</span>
-                <span class="city-tag">10 corridors</span>
-                <span class="city-tag">17 cities</span>
-                <span class="city-tag">13 sections</span>
-            </div>
-            <div class="city-link">Explore dashboard <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            <div class="city-link">Explore <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
         </a>
     </div>
 </section>
