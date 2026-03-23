@@ -271,7 +271,7 @@ footer a{color:var(--text-dim);text-decoration:none}
         <div class="map-legend-item"><svg width="16" height="16"><circle cx="8" cy="8" r="5.5" fill="#dc2626" fill-opacity=".85" stroke="white" stroke-width="2"/></svg> Top 10</div>
         <div class="map-legend-item"><svg width="16" height="16"><circle cx="8" cy="8" r="4.5" fill="#f97316" fill-opacity=".85" stroke="white" stroke-width="1.5"/></svg> Hotspot</div>
         <div class="map-legend-item"><svg width="20" height="8"><line x1="1" y1="4" x2="19" y2="4" stroke="#dc2626" stroke-width="2.5" stroke-opacity=".75"/></svg> Interstate</div>
-<div class="map-legend-item"><svg width="20" height="8"><line x1="1" y1="4" x2="19" y2="4" stroke="#f97316" stroke-width="2.5" stroke-opacity=".75"/></svg> Dc arterial</div>
+<div class="map-legend-item"><svg width="20" height="8"><line x1="1" y1="4" x2="19" y2="4" stroke="#f97316" stroke-width="2.5" stroke-opacity=".75"/></svg> DC arterial</div>
 <div class="map-legend-item"><svg width="20" height="8"><line x1="1" y1="4" x2="19" y2="4" stroke="#4da6ff" stroke-width="2.5" stroke-opacity=".75"/></svg> Metro arterial</div>
         <div class="map-legend-item"><svg width="20" height="8"><line x1="1" y1="4" x2="19" y2="4" stroke="#16a34a" stroke-width="2.5"/></svg> Commute</div>
         <div class="map-legend-item" style="margin-left:auto;color:var(--text-faint);font-size:.68rem">Size = crash volume &middot; Click markers for details</div>
@@ -460,7 +460,7 @@ const cities=["Ward 1", "Ward 2", "Ward 3", "Ward 4", "Ward 5", "Ward 6", "Ward 
 
 function getMetroLabel(c){ return c==='all'?'All Metro':c; }
 function agg(fn){ return cities.map(c=>fn(c)).reduce((a,b)=>a.map((v,i)=>v+(b[i]||0))); }
-function aggW(fn,wFn){ const tot=cities.reduce((s,c)=>(cityData[c]?s+wFn(c):s),0); return cities.map(c=>fn(c)).reduce((a,b)=>{const w=(cityData[cities[a._idx=(a._idx||0)]]?wFn(cities[a._idx]):0)/tot;a._idx++;return a.map? a.map((v,i)=>v+b[i]*w):a}); }
+
 
 // === TABLE ===
 const tbody=document.getElementById('cityTableBody');
