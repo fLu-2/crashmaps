@@ -406,6 +406,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 </div>
 <div class="card"><div class="card-top"><div><div class="card-title">Behavioral Trends</div><div class="card-sub">DUI, speed, and hit-and-run crashes &middot; 2022&ndash;2024</div></div></div><div class="chart-box short"><canvas id="yoyBehaviorChart"></canvas></div></div>
 
+
 <!-- 06 SEVERITY -->
 <div class="rule"></div>
 <div class="sec-hdr" id="sec-06"><div class="sec-num">06 &mdash; Severity</div><h2 class="sec-title">How Bad Are the Crashes?</h2><p class="sec-desc">54 people died on Wasatch Front roads in 2024. The severity breakdown tells us how crashes distribute between fatal, serious, minor, and property-damage-only.</p></div>
@@ -739,6 +740,8 @@ new Chart(document.getElementById('yoySevChart'),{type:'line',data:{labels:yoyLa
 
 new Chart(document.getElementById("yoyBehaviorChart"),{type:"bar",data:{labels:yoyLabels,datasets:[{label:'DUI',data:getYoYAll('impaired'),backgroundColor:'rgba(255,179,71,.6)',borderRadius:6},{label:'Speed',data:getYoYAll('speed'),backgroundColor:'rgba(255,77,77,.6)',borderRadius:6},{label:"Hit & Run",data:getYoYAll("hitrun"),backgroundColor:"rgba(176,125,255,.6)",borderRadius:6},]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"top",align:"start",labels:{usePointStyle:true,pointStyle:"rectRounded",padding:14,font:{size:10}}},tooltip:TT},scales:{y:{beginAtZero:true,grid:{color:"rgba(28,31,46,.5)"}},x:{grid:{display:false}}}}});
 
+
+// Vision Zero chart skipped — no VZ config
 
 // =========================================================================
 // === CRASH MAP ENGINE ===

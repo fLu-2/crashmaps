@@ -350,6 +350,7 @@ footer a{color:var(--text-dim);text-decoration:none}
     <div class="card"><div class="card-top"><div><div class="card-title">Fatalities &amp; Pedestrian Crashes</div><div class="card-sub">Metro-wide &middot; CDOT 2022&ndash;2024</div></div></div><div class="chart-box"><canvas id="yoySevChart"></canvas></div></div>
 </div>
 <div class="card"><div class="card-top"><div><div class="card-title">Behavioral Trends</div><div class="card-sub">DUI, speed, and hit-and-run crashes &middot; 2022&ndash;2024</div></div></div><div class="chart-box short"><canvas id="yoyBehaviorChart"></canvas></div></div>
+<div class="card"><div class="card-top"><div><div class="card-title">Vision Zero Accountability</div><div class="card-sub">Adopted 2017 &middot; 51 fatalities at baseline &middot; Target: zero by 2030</div></div><div class="tag tag-red">Policy</div></div><div class="chart-box"><canvas id="vzChart"></canvas></div></div>
 
 <!-- 06 SEVERITY -->
 <div class="rule"></div>
@@ -647,6 +648,9 @@ new Chart(document.getElementById('yoySevChart'),{type:'line',data:{labels:yoyLa
 
 new Chart(document.getElementById("yoyBehaviorChart"),{type:"bar",data:{labels:yoyLabels,datasets:[{label:'DUI',data:getYoYAll('impaired'),backgroundColor:'rgba(255,179,71,.6)',borderRadius:6},{label:'Speed',data:getYoYAll('speed'),backgroundColor:'rgba(255,77,77,.6)',borderRadius:6},{label:"Hit & Run",data:getYoYAll("hitrun"),backgroundColor:"rgba(176,125,255,.6)",borderRadius:6},]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"top",align:"start",labels:{usePointStyle:true,pointStyle:"rectRounded",padding:14,font:{size:10}}},tooltip:TT},scales:{y:{beginAtZero:true,grid:{color:"rgba(28,31,46,.5)"}},x:{grid:{display:false}}}}});
 
+
+// === VISION ZERO ===
+new Chart(document.getElementById('vzChart'),{type:'line',data:{labels:[2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030],datasets:[{label:'Actual Fatalities',data:[51, null, null, null, null, 308, 293, 293, null, null, null, null, null, null],borderColor:'rgba(255,77,77,.8)',backgroundColor:'rgba(255,77,77,.1)',borderWidth:2.5,pointRadius:4,pointHoverRadius:6,tension:.2,fill:true,spanGaps:false},{label:'Vision Zero Goal',data:[51, 47, 43, 39, 35, 31, 27, 24, 20, 16, 12, 8, 4, 0],borderColor:'rgba(77,255,145,.6)',backgroundColor:'rgba(77,255,145,.05)',borderWidth:2,borderDash:[8,4],pointRadius:0,tension:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'circle',padding:12}},tooltip:{...TT,callbacks:{label:c=>c.dataset.label+': '+c.raw+' fatalities'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Fatalities',color:'#555873',font:{size:11}}},x:{grid:{display:false}}}}});
 
 // =========================================================================
 // === CRASH MAP ENGINE ===
