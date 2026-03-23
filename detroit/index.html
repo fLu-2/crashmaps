@@ -312,6 +312,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <div class="sec-hdr" id="sec-03"><div class="sec-num">03 &mdash; Region Overview</div><h2 class="sec-title">Crash Rates Across the Metro</h2><p class="sec-desc">How each region in Detroit compares on total crashes, fatalities, and behavioral factors.</p></div>
 <div class="card"><div class="card-top"><div><div class="card-title">Region Comparison</div><div class="card-sub">All regions &middot; Detroit Open Data 2024</div></div><div class="tag tag-red">Overview</div></div>
 <table class="city-table"><thead><tr><th>Region</th><th>Crashes</th><th>Fatal</th><th>DUI</th><th>Speed</th><th>Hit &amp; Run</th><th>Ped</th></tr></thead><tbody id="cityTableBody"></tbody></table></div>
+<div class="card"><div class="card-top"><div><div class="card-title">Crashes Per 1,000 Residents</div><div class="card-sub">Population-adjusted crash rate &middot; Detroit Open Data 2024</div></div></div><div class="chart-box"><canvas id="perCapitaChart"></canvas></div></div>
 
 <!-- 04 WHEN IT HAPPENS -->
 <div class="rule"></div>
@@ -342,7 +343,14 @@ footer a{color:var(--text-dim);text-decoration:none}
 <option value="Northeast">Northeast</option>
 <option value="Northwest">Northwest</option>
 <option value="Downriver">Downriver</option></select></div><div class="chart-box short"><canvas id="monthlyChart"></canvas></div></div>
-
+<div class="card"><div class="card-top"><div><div class="card-title">Weekday vs Weekend by Hour</div><div class="card-sub" id="wdweSub">All Metro &middot; Detroit Open Data 2024</div></div><select class="chart-metro" id="selWdWe"><option value="all" selected>All Metro</option><option value="Downtown">Downtown</option>
+<option value="Midtown">Midtown</option>
+<option value="Southwest">Southwest</option>
+<option value="East Side">East Side</option>
+<option value="West Side">West Side</option>
+<option value="Northeast">Northeast</option>
+<option value="Northwest">Northwest</option>
+<option value="Downriver">Downriver</option></select></div><div class="chart-box short"><canvas id="wdweChart"></canvas></div></div>
 
 <!-- 05 YEAR OVER YEAR -->
 <div class="rule"></div>
@@ -360,6 +368,21 @@ footer a{color:var(--text-dim);text-decoration:none}
     <div class="card"><div class="card-top"><div><div class="card-title">Severity Distribution</div><div class="card-sub">All Metro &middot; Detroit Open Data 2024</div></div></div><div class="chart-box"><canvas id="sevChart"></canvas></div></div>
     <div class="card"><div class="card-top"><div><div class="card-title">Fatalities by Region</div><div class="card-sub">Detroit Open Data 2024</div></div><div class="tag tag-red">Fatal</div></div><div class="chart-box"><canvas id="fatalCityChart"></canvas></div></div>
 </div>
+<div class="grid-2"><div class="card"><div class="card-top"><div><div class="card-title">Crash Type Breakdown</div><div class="card-sub" id="typeSub">All Metro &middot; Detroit Open Data 2024</div></div><select class="chart-metro" id="selCrashType"><option value="all" selected>All Metro</option><option value="Downtown">Downtown</option>
+<option value="Midtown">Midtown</option>
+<option value="Southwest">Southwest</option>
+<option value="East Side">East Side</option>
+<option value="West Side">West Side</option>
+<option value="Northeast">Northeast</option>
+<option value="Northwest">Northwest</option>
+<option value="Downriver">Downriver</option></select></div><div class="chart-box"><canvas id="crashTypeChart"></canvas></div></div><div class="card"><div class="card-top"><div><div class="card-title">Contributing Factors</div><div class="card-sub" id="factorSub">All Metro &middot; Detroit Open Data 2024</div></div><select class="chart-metro" id="selFactors"><option value="all" selected>All Metro</option><option value="Downtown">Downtown</option>
+<option value="Midtown">Midtown</option>
+<option value="Southwest">Southwest</option>
+<option value="East Side">East Side</option>
+<option value="West Side">West Side</option>
+<option value="Northeast">Northeast</option>
+<option value="Northwest">Northwest</option>
+<option value="Downriver">Downriver</option></select></div><div class="chart-box"><canvas id="factorsChart"></canvas></div></div></div>
 
 <!-- 07 DUI -->
 <div class="rule"></div><div class="sec-hdr" id="sec-07"><div class="sec-num">07 &mdash; Impaired Driving</div><h2 class="sec-title">DUI Crashes Across the Metro</h2><p class="sec-desc">458 crashes in 2024 involved an impaired driver &mdash; 2.6% of the total. Late-night hours on the east and west sides see the highest impairment rates.</p></div><div class="grid-2"><div class="card"><div class="card-top"><div><div class="card-title">DUI Rate by Hour</div><div class="card-sub" id="impHourSub">% of crashes involving DUI &middot; All Metro</div></div><select class="chart-metro" id="selImpHour"><option value="all" selected>All Metro</option><option value="Downtown">Downtown</option>
@@ -436,7 +459,7 @@ const monthLabels=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','
 
 const cityData={"Downtown": {"total": 2406, "fatal": 6, "impaired": 55, "impairedPct": 2.3, "impairedFatal": 2, "speed": 164, "speedPct": 6.8, "speedFatal": 0, "hitrun": 658, "hitrunPct": 27.3, "hrPed": 15, "pedestrian": 54, "cyclist": 22, "impRate": [11.0, 3.9, 9.6, 9.1, 13.6, 3.4, 3.1, 0.0, 0.0, 0.0, 1.1, 0.0, 0.9, 0.8, 0.8, 0.0, 0.0, 2.2, 1.3, 2.2, 1.3, 5.0, 5.0, 3.6], "speedRate": [7.3, 13.2, 12.8, 12.1, 18.2, 27.6, 18.8, 13.7, 3.8, 4.6, 4.5, 2.3, 4.3, 4.7, 2.4, 2.8, 2.7, 3.8, 8.3, 7.6, 2.6, 13.9, 12.0, 7.2], "hrRate": [32.9, 39.5, 41.5, 45.5, 40.9, 20.7, 31.2, 19.2, 20.8, 21.1, 30.3, 23.3, 26.1, 21.1, 24.8, 23.9, 22.8, 25.8, 24.8, 33.7, 29.9, 27.7, 38.0, 31.3], "topTypes": [["Sideswipe-Same", 766], ["Rear End", 511], ["Angle", 412], ["Single Vehicle", 252], ["Other", 106], ["Backing", 82], ["Head On-Left Turn", 62], ["Pedestrian", 54]], "topFactors": [["Speeding", 164], ["Red Light Violation", 142], ["Distracted Driving", 112], ["Impaired Driver", 55]]}, "Midtown": {"total": 1435, "fatal": 3, "impaired": 31, "impairedPct": 2.2, "impairedFatal": 1, "speed": 113, "speedPct": 7.9, "speedFatal": 1, "hitrun": 356, "hitrunPct": 24.8, "hrPed": 4, "pedestrian": 17, "cyclist": 7, "impRate": [12.0, 9.5, 8.1, 14.3, 7.1, 12.0, 3.4, 2.9, 0.0, 0.0, 1.7, 0.0, 0.0, 1.2, 0.0, 0.8, 0.0, 0.0, 2.9, 3.7, 0.0, 0.0, 4.9, 6.5], "speedRate": [16.0, 4.8, 24.3, 28.6, 28.6, 24.0, 20.7, 5.8, 12.3, 5.2, 6.9, 5.1, 6.7, 2.4, 5.9, 4.9, 3.0, 2.9, 3.9, 11.1, 9.1, 4.5, 14.6, 22.6], "hrRate": [28.0, 33.3, 35.1, 42.9, 21.4, 36.0, 20.7, 27.5, 15.4, 22.4, 19.0, 13.9, 22.2, 25.6, 18.8, 20.5, 23.7, 18.6, 25.2, 29.6, 40.9, 45.5, 39.0, 41.9], "topTypes": [["Rear End", 497], ["Sideswipe-Same", 440], ["Single Vehicle", 166], ["Angle", 147], ["Other", 61], ["Head On-Left Turn", 27], ["Backing", 24], ["Pedestrian", 17]], "topFactors": [["Speeding", 113], ["Distracted Driving", 50], ["Red Light Violation", 41], ["Impaired Driver", 31]]}, "Southwest": {"total": 1203, "fatal": 1, "impaired": 23, "impairedPct": 1.9, "impairedFatal": 0, "speed": 111, "speedPct": 9.2, "speedFatal": 0, "hitrun": 389, "hitrunPct": 32.3, "hrPed": 7, "pedestrian": 16, "cyclist": 6, "impRate": [8.0, 18.5, 2.6, 7.7, 0.0, 3.2, 0.0, 1.5, 1.2, 0.0, 2.4, 0.0, 0.0, 0.0, 0.0, 2.4, 1.0, 1.1, 0.0, 1.7, 2.8, 0.0, 0.0, 10.3], "speedRate": [8.0, 14.8, 7.9, 15.4, 12.5, 29.0, 10.3, 10.8, 4.9, 10.9, 9.8, 3.9, 7.4, 17.4, 10.2, 3.5, 4.2, 7.4, 5.6, 12.1, 16.7, 18.8, 5.4, 3.4], "hrRate": [40.0, 40.7, 42.1, 38.5, 37.5, 35.5, 46.2, 29.2, 28.0, 23.9, 31.7, 29.4, 18.5, 17.4, 27.1, 29.4, 37.5, 19.1, 37.5, 37.9, 25.0, 56.2, 45.9, 34.5], "topTypes": [["Sideswipe-Same", 328], ["Rear End", 295], ["Angle", 195], ["Single Vehicle", 158], ["Other", 69], ["Head On-Left Turn", 32], ["Sideswipe-Opposite", 30], ["Backing", 24]], "topFactors": [["Speeding", 111], ["Red Light Violation", 38], ["Distracted Driving", 38], ["Impaired Driver", 23]]}, "East Side": {"total": 3147, "fatal": 18, "impaired": 87, "impairedPct": 2.8, "impairedFatal": 5, "speed": 273, "speedPct": 8.7, "speedFatal": 3, "hitrun": 1032, "hitrunPct": 32.8, "hrPed": 31, "pedestrian": 54, "cyclist": 17, "impRate": [5.2, 13.1, 4.0, 7.8, 6.3, 2.0, 5.1, 0.9, 0.7, 0.0, 1.6, 0.0, 1.4, 2.0, 1.6, 1.4, 1.5, 1.7, 2.1, 2.2, 4.5, 4.5, 0.0, 8.0], "speedRate": [20.0, 16.8, 14.9, 7.8, 17.5, 18.0, 10.3, 1.9, 8.5, 8.0, 8.1, 10.1, 4.7, 6.7, 4.7, 3.8, 3.1, 2.6, 5.5, 9.6, 15.3, 10.7, 13.0, 17.0], "hrRate": [42.6, 43.0, 40.6, 35.9, 38.1, 30.0, 26.9, 25.0, 27.0, 30.1, 34.1, 31.8, 27.0, 32.2, 30.4, 30.5, 28.6, 28.3, 31.5, 25.2, 35.1, 43.8, 46.3, 46.4], "topTypes": [["Rear End", 884], ["Sideswipe-Same", 718], ["Angle", 575], ["Single Vehicle", 363], ["Other", 181], ["Head On-Left Turn", 93], ["Sideswipe-Opposite", 70], ["Head On", 66]], "topFactors": [["Speeding", 273], ["Distracted Driving", 175], ["Red Light Violation", 137], ["Impaired Driver", 87]]}, "West Side": {"total": 4347, "fatal": 18, "impaired": 149, "impairedPct": 3.4, "impairedFatal": 4, "speed": 459, "speedPct": 10.6, "speedFatal": 4, "hitrun": 1477, "hitrunPct": 34.0, "hrPed": 47, "pedestrian": 80, "cyclist": 28, "impRate": [5.6, 9.2, 12.0, 7.7, 8.8, 1.1, 2.4, 0.8, 0.5, 0.5, 1.2, 3.3, 0.5, 0.5, 2.8, 1.2, 1.8, 3.8, 1.5, 3.0, 8.3, 4.3, 6.1, 7.5], "speedRate": [10.6, 18.3, 14.3, 16.5, 19.1, 26.4, 21.4, 16.5, 9.7, 10.7, 12.7, 9.4, 7.1, 8.8, 9.8, 5.9, 6.0, 5.7, 6.2, 12.2, 12.7, 9.3, 12.2, 14.3], "hrRate": [38.7, 47.5, 40.6, 52.7, 36.8, 31.0, 34.5, 30.1, 22.1, 32.1, 29.7, 28.2, 29.9, 28.9, 32.5, 28.7, 29.5, 30.5, 35.4, 37.1, 36.3, 41.4, 47.7, 40.1], "topTypes": [["Rear End", 1211], ["Sideswipe-Same", 1007], ["Angle", 731], ["Single Vehicle", 562], ["Other", 206], ["Head On-Left Turn", 109], ["Head On", 96], ["Unknown", 94]], "topFactors": [["Speeding", 459], ["Red Light Violation", 227], ["Distracted Driving", 176], ["Impaired Driver", 149]]}, "Northeast": {"total": 1921, "fatal": 18, "impaired": 48, "impairedPct": 2.5, "impairedFatal": 4, "speed": 96, "speedPct": 5.0, "speedFatal": 1, "hitrun": 706, "hitrunPct": 36.8, "hrPed": 20, "pedestrian": 39, "cyclist": 11, "impRate": [3.6, 4.2, 5.4, 0.0, 7.1, 3.3, 2.1, 1.6, 2.5, 1.6, 2.7, 1.3, 1.6, 1.8, 0.0, 0.0, 3.4, 2.9, 3.7, 0.0, 3.6, 4.8, 4.6, 1.6], "speedRate": [9.5, 7.0, 8.9, 10.6, 7.1, 20.0, 2.1, 3.2, 3.7, 9.4, 6.8, 2.6, 3.3, 1.8, 4.1, 1.7, 4.8, 0.7, 1.9, 5.9, 7.1, 2.4, 9.2, 4.8], "hrRate": [38.1, 60.6, 48.2, 31.9, 57.1, 53.3, 38.3, 45.2, 29.6, 26.6, 25.7, 31.2, 27.9, 32.1, 30.6, 29.6, 32.9, 30.2, 37.0, 35.6, 34.5, 50.0, 50.6, 46.8], "topTypes": [["Angle", 518], ["Rear End", 439], ["Sideswipe-Same", 382], ["Single Vehicle", 148], ["Other", 108], ["Head On-Left Turn", 69], ["Head On", 63], ["Sideswipe-Opposite", 57]], "topFactors": [["Red Light Violation", 142], ["Distracted Driving", 107], ["Speeding", 96], ["Impaired Driver", 48]]}, "Northwest": {"total": 2473, "fatal": 7, "impaired": 57, "impairedPct": 2.3, "impairedFatal": 1, "speed": 188, "speedPct": 7.6, "speedFatal": 2, "hitrun": 830, "hitrunPct": 33.6, "hrPed": 11, "pedestrian": 35, "cyclist": 17, "impRate": [6.7, 6.5, 13.7, 6.2, 0.0, 0.0, 0.0, 1.4, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.7, 0.0, 1.0, 1.1, 1.3, 2.0, 3.8, 5.6, 9.5, 6.3], "speedRate": [8.9, 9.7, 6.8, 6.2, 20.5, 11.1, 23.1, 6.8, 9.9, 7.5, 5.9, 10.5, 11.1, 12.1, 8.8, 2.9, 2.5, 4.2, 5.8, 4.9, 7.7, 6.7, 10.8, 7.9], "hrRate": [37.8, 43.0, 53.4, 48.4, 47.7, 33.3, 23.1, 31.1, 28.7, 31.2, 35.3, 23.7, 33.3, 39.5, 31.1, 27.3, 23.0, 27.9, 27.6, 35.3, 44.2, 40.4, 40.5, 39.7], "topTypes": [["Rear End", 658], ["Angle", 577], ["Sideswipe-Same", 548], ["Single Vehicle", 227], ["Other", 142], ["Head On", 66], ["Head On-Left Turn", 48], ["Backing", 46]], "topFactors": [["Red Light Violation", 193], ["Speeding", 188], ["Distracted Driving", 111], ["Impaired Driver", 57]]}, "Downriver": {"total": 391, "fatal": 1, "impaired": 8, "impairedPct": 2.0, "impairedFatal": 0, "speed": 60, "speedPct": 15.3, "speedFatal": 0, "hitrun": 99, "hitrunPct": 25.3, "hrPed": 2, "pedestrian": 5, "cyclist": 3, "impRate": [9.1, 0, 0, 0, 0, 0, 0.0, 0.0, 0.0, 6.7, 0.0, 0.0, 0.0, 0.0, 3.4, 0.0, 0.0, 3.7, 4.2, 0.0, 0, 4.8, 0.0, 0], "speedRate": [0.0, 0, 0, 0, 0, 0, 23.1, 20.0, 27.6, 20.0, 7.7, 22.2, 15.8, 10.0, 17.2, 4.3, 13.0, 14.8, 12.5, 8.3, 0, 9.5, 20.0, 0], "hrRate": [27.3, 0, 0, 0, 0, 0, 30.8, 25.0, 13.8, 26.7, 7.7, 22.2, 26.3, 20.0, 27.6, 17.4, 17.4, 14.8, 25.0, 20.8, 0, 28.6, 33.3, 0], "topTypes": [["Rear End", 110], ["Sideswipe-Same", 92], ["Single Vehicle", 76], ["Angle", 45], ["Other", 20], ["Sideswipe-Opposite", 9], ["Head On", 8], ["Unknown", 7]], "topFactors": [["Speeding", 60], ["Distracted Driving", 14], ["Red Light Violation", 14], ["Impaired Driver", 8]]}};
 const yoyD={"Downtown": {"totals": [2295, 2443, 2406], "fatals": [2, 8, 6], "peds": [51, 63, 54], "impaired": [56, 65, 55], "hitrun": [631, 647, 658], "speed": [156, 155, 164]}, "Midtown": {"totals": [1226, 1202, 1435], "fatals": [1, 3, 3], "peds": [20, 9, 17], "impaired": [32, 25, 31], "hitrun": [326, 333, 356], "speed": [122, 104, 113]}, "Southwest": {"totals": [1284, 1202, 1203], "fatals": [7, 10, 1], "peds": [19, 22, 16], "impaired": [28, 26, 23], "hitrun": [432, 386, 389], "speed": [130, 134, 111]}, "East Side": {"totals": [3298, 3098, 3147], "fatals": [30, 15, 18], "peds": [46, 57, 54], "impaired": [81, 86, 87], "hitrun": [1162, 1024, 1032], "speed": [301, 317, 273]}, "West Side": {"totals": [4301, 4277, 4347], "fatals": [20, 17, 18], "peds": [74, 80, 80], "impaired": [113, 122, 149], "hitrun": [1516, 1424, 1477], "speed": [531, 488, 459]}, "Northeast": {"totals": [2197, 2062, 1921], "fatals": [15, 13, 18], "peds": [42, 48, 39], "impaired": [36, 42, 48], "hitrun": [878, 789, 706], "speed": [101, 137, 96]}, "Northwest": {"totals": [2551, 2636, 2473], "fatals": [13, 11, 7], "peds": [35, 36, 35], "impaired": [57, 57, 57], "hitrun": [907, 897, 830], "speed": [168, 246, 188]}, "Downriver": {"totals": [345, 396, 391], "fatals": [4, 3, 1], "peds": [5, 4, 5], "impaired": [11, 9, 8], "hitrun": [120, 119, 99], "speed": [38, 42, 60]}};
-const temporal={"Downtown": {"hourly": [82, 76, 94, 33, 22, 29, 32, 73, 106, 109, 89, 129, 115, 128, 125, 176, 184, 182, 157, 92, 77, 101, 100, 83], "dow": [316, 302, 297, 344, 386, 396, 365], "monthly": [213, 156, 186, 232, 233, 225, 216, 199, 204, 202, 180, 160]}, "Midtown": {"hourly": [25, 21, 37, 21, 14, 25, 29, 69, 65, 58, 58, 79, 90, 82, 101, 122, 135, 102, 103, 54, 22, 44, 41, 31], "dow": [195, 230, 229, 223, 245, 187, 126], "monthly": [125, 90, 101, 114, 104, 127, 136, 117, 117, 151, 142, 111]}, "Southwest": {"hourly": [25, 27, 38, 26, 16, 31, 39, 65, 82, 46, 41, 51, 54, 46, 59, 85, 96, 94, 72, 58, 36, 48, 37, 29], "dow": [161, 196, 166, 165, 180, 180, 155], "monthly": [97, 67, 82, 110, 122, 111, 119, 95, 97, 113, 110, 80]}, "East Side": {"hourly": [115, 107, 101, 64, 63, 50, 78, 108, 141, 113, 123, 129, 148, 149, 191, 213, 259, 233, 146, 135, 111, 112, 108, 112], "dow": [445, 410, 438, 471, 523, 449, 411], "monthly": [243, 187, 248, 254, 337, 291, 274, 233, 266, 267, 302, 245]}, "West Side": {"hourly": [142, 120, 133, 91, 68, 87, 84, 133, 195, 187, 165, 181, 197, 194, 246, 320, 332, 318, 274, 197, 157, 162, 197, 147], "dow": [589, 611, 570, 667, 713, 621, 576], "monthly": [383, 282, 372, 321, 378, 365, 366, 387, 400, 355, 385, 353]}, "Northeast": {"hourly": [84, 71, 56, 47, 28, 30, 47, 62, 81, 64, 74, 77, 61, 109, 98, 115, 146, 139, 108, 101, 84, 84, 87, 62], "dow": [230, 266, 248, 261, 340, 302, 274], "monthly": [154, 141, 159, 169, 206, 178, 155, 154, 145, 155, 148, 157]}, "Northwest": {"hourly": [90, 93, 73, 64, 44, 36, 39, 74, 101, 93, 102, 114, 117, 124, 148, 172, 204, 190, 156, 102, 104, 89, 74, 63], "dow": [334, 344, 317, 380, 401, 358, 339], "monthly": [215, 167, 194, 185, 250, 210, 224, 197, 211, 213, 202, 205]}, "Downriver": {"hourly": [11, 6, 7, 10, 3, 5, 13, 20, 29, 15, 13, 18, 19, 20, 29, 23, 23, 27, 24, 24, 10, 21, 15, 5], "dow": [59, 51, 39, 63, 71, 44, 64], "monthly": [31, 34, 31, 24, 41, 36, 22, 50, 38, 25, 34, 25]}};
+const temporal={"Downtown": {"hourly": [82, 76, 94, 33, 22, 29, 32, 73, 106, 109, 89, 129, 115, 128, 125, 176, 184, 182, 157, 92, 77, 101, 100, 83], "hourlyWd": [2.1, 1.7, 2.3, 1.1, 0.9, 1.3, 1.7, 4.2, 5.6, 5.9, 4.3, 5.7, 5.0, 6.0, 5.5, 7.7, 8.4, 8.7, 6.2, 3.8, 2.7, 3.4, 3.1, 2.8], "hourlyWe": [6.4, 6.4, 7.6, 2.0, 1.1, 0.9, 0.5, 0.5, 1.9, 1.7, 2.5, 4.6, 4.4, 4.0, 4.6, 6.5, 6.1, 5.3, 7.4, 3.9, 4.2, 6.0, 6.5, 4.9], "dow": [316, 302, 297, 344, 386, 396, 365], "monthly": [213, 156, 186, 232, 233, 225, 216, 199, 204, 202, 180, 160]}, "Midtown": {"hourly": [25, 21, 37, 21, 14, 25, 29, 69, 65, 58, 58, 79, 90, 82, 101, 122, 135, 102, 103, 54, 22, 44, 41, 31], "hourlyWd": [1.2, 1.2, 1.5, 0.7, 0.9, 1.8, 2.2, 5.3, 5.6, 4.2, 4.4, 5.7, 6.0, 6.1, 7.6, 9.0, 11.0, 8.0, 6.6, 3.2, 1.5, 2.4, 2.1, 1.9], "hourlyWe": [3.8, 2.6, 6.4, 4.2, 1.3, 1.6, 1.6, 3.2, 1.0, 3.5, 2.9, 4.8, 7.4, 4.5, 5.1, 7.1, 3.8, 4.2, 9.3, 5.8, 1.6, 5.4, 5.8, 3.2], "dow": [195, 230, 229, 223, 245, 187, 126], "monthly": [125, 90, 101, 114, 104, 127, 136, 117, 117, 151, 142, 111]}, "Southwest": {"hourly": [25, 27, 38, 26, 16, 31, 39, 65, 82, 46, 41, 51, 54, 46, 59, 85, 96, 94, 72, 58, 36, 48, 37, 29], "hourlyWd": [1.0, 1.6, 1.5, 1.2, 1.3, 2.1, 3.7, 6.9, 8.5, 3.6, 3.6, 4.4, 5.0, 3.9, 4.8, 8.3, 8.7, 8.2, 6.6, 4.6, 2.2, 3.5, 2.8, 2.1], "hourlyWe": [4.8, 3.9, 7.5, 4.8, 1.5, 3.9, 2.1, 1.5, 2.4, 4.5, 3.0, 3.9, 3.3, 3.6, 5.1, 3.9, 6.3, 6.9, 4.5, 5.4, 5.1, 5.4, 3.9, 3.3], "dow": [161, 196, 166, 165, 180, 180, 155], "monthly": [97, 67, 82, 110, 122, 111, 119, 95, 97, 113, 110, 80]}, "East Side": {"hourly": [115, 107, 101, 64, 63, 50, 78, 108, 141, 113, 123, 129, 148, 149, 191, 213, 259, 233, 146, 135, 111, 112, 108, 112], "hourlyWd": [3.0, 2.8, 2.0, 1.4, 1.8, 1.7, 2.6, 4.2, 5.3, 3.7, 4.0, 4.2, 4.7, 4.5, 6.9, 7.6, 9.3, 8.7, 4.7, 4.0, 3.1, 3.2, 3.1, 3.5], "hourlyWe": [5.6, 5.2, 6.5, 3.9, 2.6, 1.4, 2.3, 1.4, 2.5, 3.3, 3.9, 4.0, 5.0, 5.6, 4.0, 4.8, 5.6, 4.3, 4.6, 5.4, 4.9, 4.8, 4.5, 3.8], "dow": [445, 410, 438, 471, 523, 449, 411], "monthly": [243, 187, 248, 254, 337, 291, 274, 233, 266, 267, 302, 245]}, "West Side": {"hourly": [142, 120, 133, 91, 68, 87, 84, 133, 195, 187, 165, 181, 197, 194, 246, 320, 332, 318, 274, 197, 157, 162, 197, 147], "hourlyWd": [2.5, 2.1, 1.8, 1.3, 1.1, 1.7, 2.1, 3.7, 5.5, 4.7, 4.0, 4.4, 4.3, 4.9, 5.9, 8.1, 8.6, 8.5, 6.8, 4.2, 3.4, 3.3, 4.0, 3.0], "hourlyWe": [5.3, 4.6, 6.6, 4.2, 2.8, 2.8, 1.4, 1.5, 1.8, 3.5, 3.2, 3.6, 5.2, 3.5, 5.1, 5.5, 5.1, 4.3, 5.1, 5.6, 4.3, 4.9, 6.0, 4.4], "dow": [589, 611, 570, 667, 713, 621, 576], "monthly": [383, 282, 372, 321, 378, 365, 366, 387, 400, 355, 385, 353]}, "Northeast": {"hourly": [84, 71, 56, 47, 28, 30, 47, 62, 81, 64, 74, 77, 61, 109, 98, 115, 146, 139, 108, 101, 84, 84, 87, 62], "hourlyWd": [3.4, 2.4, 1.6, 1.2, 1.0, 1.3, 2.8, 3.9, 5.1, 3.8, 4.1, 4.2, 2.5, 6.2, 5.2, 6.9, 8.6, 8.1, 5.8, 6.0, 4.7, 4.3, 4.0, 2.9], "hourlyWe": [6.8, 6.8, 5.9, 5.4, 2.6, 2.1, 1.7, 1.7, 2.1, 2.3, 3.3, 3.7, 4.9, 4.5, 4.9, 3.8, 5.4, 5.2, 5.2, 3.5, 3.7, 4.5, 5.8, 4.0], "dow": [230, 266, 248, 261, 340, 302, 274], "monthly": [154, 141, 159, 169, 206, 178, 155, 154, 145, 155, 148, 157]}, "Northwest": {"hourly": [90, 93, 73, 64, 44, 36, 39, 74, 101, 93, 102, 114, 117, 124, 148, 172, 204, 190, 156, 102, 104, 89, 74, 63], "hourlyWd": [2.5, 3.1, 1.6, 1.9, 1.4, 1.6, 1.4, 3.6, 4.9, 3.9, 4.2, 4.7, 4.7, 5.5, 6.0, 7.9, 9.3, 8.6, 6.6, 4.0, 4.1, 3.5, 2.9, 2.2], "hourlyWe": [6.6, 5.6, 6.5, 4.5, 2.7, 1.1, 2.0, 1.6, 2.2, 3.4, 4.0, 4.5, 4.9, 3.9, 6.0, 4.6, 5.6, 5.3, 5.6, 4.5, 4.5, 3.9, 3.2, 3.4], "dow": [334, 344, 317, 380, 401, 358, 339], "monthly": [215, 167, 194, 185, 250, 210, 224, 197, 211, 213, 202, 205]}, "Downriver": {"hourly": [11, 6, 7, 10, 3, 5, 13, 20, 29, 15, 13, 18, 19, 20, 29, 23, 23, 27, 24, 24, 10, 21, 15, 5], "hourlyWd": [2.1, 1.1, 1.1, 1.1, 0.4, 1.1, 3.5, 5.7, 8.1, 3.9, 3.9, 4.2, 4.6, 6.0, 8.1, 7.8, 6.0, 7.4, 5.7, 5.7, 2.1, 4.6, 4.6, 1.4], "hourlyWe": [4.7, 2.8, 3.7, 6.5, 1.9, 1.9, 2.8, 3.7, 5.6, 3.7, 1.9, 5.6, 5.6, 2.8, 5.6, 0.9, 5.6, 5.6, 7.5, 7.5, 3.7, 7.5, 1.9, 0.9], "dow": [59, 51, 39, 63, 71, 44, 64], "monthly": [31, 34, 31, 24, 41, 36, 22, 50, 38, 25, 34, 25]}};
 const cities=["Downtown", "Midtown", "Southwest", "East Side", "West Side", "Northeast", "Northwest", "Downriver"];
 
 function getMetroLabel(c){ return c==='all'?'All Metro':c; }
@@ -486,11 +509,82 @@ function buildMonthly(city){
 buildMonthly('all');
 document.getElementById('selMonthly').addEventListener('change',function(){buildMonthly(this.value)});
 
+// === WEEKDAY VS WEEKEND ===
+let chWdWe;
+function buildWdWe(city){
+    let wd,we;
+    if(city==='all'){
+        const wdArrs=cities.map(c=>temporal[c]?.hourlyWd||Array(24).fill(0));
+        const weArrs=cities.map(c=>temporal[c]?.hourlyWe||Array(24).fill(0));
+        const wdTot=wdArrs.reduce((a,b)=>a.map((v,i)=>v+b[i]));
+        const weTot=weArrs.reduce((a,b)=>a.map((v,i)=>v+b[i]));
+        const wdSum=wdTot.reduce((a,b)=>a+b,0);
+        const weSum=weTot.reduce((a,b)=>a+b,0);
+        wd=wdTot.map(v=>wdSum?parseFloat((v/wdSum*100).toFixed(1)):0);
+        we=weTot.map(v=>weSum?parseFloat((v/weSum*100).toFixed(1)):0);
+    } else {
+        wd=temporal[city]?.hourlyWd||Array(24).fill(0);
+        we=temporal[city]?.hourlyWe||Array(24).fill(0);
+    }
+    if(chWdWe)chWdWe.destroy();
+    document.getElementById('wdweSub').textContent=(city==='all'?'All Metro':city)+' \u00b7 Detroit Open Data 2024';
+    chWdWe=new Chart(document.getElementById('wdweChart'),{type:'line',data:{labels:hourLabels,datasets:[{label:'Weekday',data:wd,borderColor:'rgba(77,166,255,.8)',backgroundColor:'rgba(77,166,255,.1)',fill:true,tension:.3,pointRadius:2},{label:'Weekend',data:we,borderColor:'rgba(255,179,71,.8)',backgroundColor:'rgba(255,179,71,.1)',fill:true,tension:.3,pointRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'circle',padding:12}},tooltip:{...TT,callbacks:{label:c=>c.dataset.label+': '+c.raw+'% of daily crashes'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'% of daily crashes',color:'#555873',font:{size:11}}},x:{grid:{display:false},ticks:{maxTicksLimit:12}}}}});
+}
+buildWdWe('all');
+document.getElementById('selWdWe').addEventListener('change',function(){buildWdWe(this.value)});
+
 // === SEVERITY ===
 new Chart(document.getElementById('sevChart'),{type:'doughnut',data:{labels:['Fatal','Injury','Property Damage Only'],datasets:[{data:[72,4303,12948],backgroundColor:['rgba(255,77,77,.8)','rgba(255,179,71,.6)','rgba(85,88,115,.5)'],borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{legend:{position:'right',labels:{padding:12,usePointStyle:true,pointStyle:'rectRounded',font:{size:11}}},tooltip:{...TT,callbacks:{label:c=>c.label+': '+c.raw.toLocaleString()+' crashes'}}}}});
 
 // Fatalities by city
 new Chart(document.getElementById('fatalCityChart'),{type:'bar',data:{labels:cities,datasets:[{data:cities.map(c=>cityData[c]?.fatal||0),backgroundColor:cities.map(c=>(cityData[c]?.fatal||0)>=5?'rgba(255,77,77,.75)':'rgba(255,77,77,.4)'),borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+' fatalities'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false}}}}});
+
+// === CRASH TYPE ===
+let chType;
+function buildCrashType(city){
+    const d=city==='all'?null:cityData[city];
+    let labels,vals;
+    if(d && d.topTypes && d.topTypes.length){
+        labels=d.topTypes.map(t=>t[0]);vals=d.topTypes.map(t=>t[1]);
+    } else {
+        // Aggregate across all cities
+        const merged={};
+        cities.forEach(c=>{const cd=cityData[c];if(cd&&cd.topTypes)cd.topTypes.forEach(t=>{merged[t[0]]=(merged[t[0]]||0)+t[1]})});
+        const sorted=Object.entries(merged).sort((a,b)=>b[1]-a[1]).slice(0,8);
+        labels=sorted.map(s=>s[0]);vals=sorted.map(s=>s[1]);
+    }
+    if(chType)chType.destroy();
+    document.getElementById('typeSub').textContent=(city==='all'?'All Metro':city)+' \u00b7 Detroit Open Data 2024';
+    chType=new Chart(document.getElementById('crashTypeChart'),{type:'bar',data:{labels,datasets:[{data:vals,backgroundColor:'rgba(255,179,71,.55)',borderRadius:6,maxBarThickness:30}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw.toLocaleString()+' crashes'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false}}}}});
+}
+buildCrashType('all');
+document.getElementById('selCrashType').addEventListener('change',function(){buildCrashType(this.value)});
+
+// === CONTRIBUTING FACTORS ===
+let chFactors;
+function buildFactors(city){
+    const d=city==='all'?null:cityData[city];
+    let labels,vals;
+    if(d && d.topFactors && d.topFactors.length){
+        labels=d.topFactors.map(t=>t[0]);vals=d.topFactors.map(t=>t[1]);
+    } else {
+        const merged={};
+        cities.forEach(c=>{const cd=cityData[c];if(cd&&cd.topFactors)cd.topFactors.forEach(t=>{merged[t[0]]=(merged[t[0]]||0)+t[1]})});
+        const sorted=Object.entries(merged).sort((a,b)=>b[1]-a[1]).slice(0,8);
+        labels=sorted.map(s=>s[0]);vals=sorted.map(s=>s[1]);
+    }
+    if(chFactors)chFactors.destroy();
+    document.getElementById('factorSub').textContent=(city==='all'?'All Metro':city)+' \u00b7 Detroit Open Data 2024';
+    chFactors=new Chart(document.getElementById('factorsChart'),{type:'bar',data:{labels,datasets:[{data:vals,backgroundColor:'rgba(77,166,255,.55)',borderRadius:6,maxBarThickness:30}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw.toLocaleString()+' crashes'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false}}}}});
+}
+buildFactors('all');
+document.getElementById('selFactors').addEventListener('change',function(){buildFactors(this.value)});
+
+// === PER CAPITA ===
+const popData={"Downtown": 12000, "Midtown": 18000, "Southwest": 65000, "East Side": 145000, "West Side": 130000, "Northeast": 95000, "Northwest": 100000, "Downriver": 75000};
+const pcLabels=cities.filter(c=>popData[c]&&cityData[c]);
+const pcVals=pcLabels.map(c=>parseFloat(((cityData[c].total/popData[c])*1000).toFixed(1)));
+new Chart(document.getElementById('perCapitaChart'),{type:'bar',data:{labels:pcLabels,datasets:[{data:pcVals,backgroundColor:pcVals.map(v=>v>=20?'rgba(255,77,77,.7)':'rgba(103,232,249,.55)'),borderRadius:6,maxBarThickness:36}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+' per 1,000 residents'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Crashes per 1,000 residents',color:'#555873',font:{size:11}}},y:{grid:{display:false}}}}});
 
 // === DUI HOURLY ===
 let chImpHour;
