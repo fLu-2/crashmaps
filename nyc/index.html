@@ -78,6 +78,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .map-btn.active{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.2);color:var(--accent)}
 .map-btn.active-blue{background:rgba(77,166,255,.12);border-color:rgba(77,166,255,0.3);color:var(--blue)}
 .commute-toggle{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:500;padding:7px 14px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer;transition:all .15s;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.map-filter-toggle{display:none}
 .commute-toggle:hover{border-color:var(--green);color:var(--green)}
 .commute-toggle.open{background:rgba(77,255,145,.12);border-color:rgba(77,255,145,0.3);color:var(--green)}
 .commute-panel{display:none;padding:.85rem 1rem;background:#0d0f19;border-bottom:1px solid var(--border);gap:.6rem;align-items:flex-end;flex-wrap:wrap}
@@ -136,16 +137,19 @@ main{max-width:1200px;margin:0 auto;padding:4rem 2rem 6rem}
 .sticky-nav a{padding:.6rem .7rem;font-size:.65rem;min-height:44px;display:inline-flex;align-items:center}
 .sticky-nav .nav-home{padding:.6rem .7rem;font-size:.65rem;min-height:44px;display:inline-flex;align-items:center}
 #crashMap{height:360px}
-.map-btn{font-size:.62rem;padding:8px 10px;min-height:36px}
-.map-filter-group-label{font-size:.58rem}
-.map-filter-strip{flex-wrap:wrap;gap:.4rem .25rem;padding:.5rem .75rem}
+.map-btn{font-size:.62rem;padding:7px 9px;min-height:36px}
+.map-filter-group-label{font-size:.56rem}
+.map-filter-strip{display:none;flex-wrap:wrap;gap:.35rem;padding:.5rem .75rem;border-top:1px solid rgba(255,255,255,.04)}
+.map-filter-strip.show{display:flex}
 .map-filter-sep{display:none}
-.map-filter-group{gap:4px}
+.map-filter-group{gap:3px}
+.map-filter-toggle{display:inline-flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:.65rem;font-weight:500;padding:7px 12px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer;white-space:nowrap}
+.map-filter-toggle.open{border-color:var(--blue);color:var(--blue)}
 .map-search input{font-size:.8rem;padding:8px 12px 8px 32px}
-.map-metro-select{min-width:120px;font-size:.68rem;padding:7px 24px 7px 8px}
+.map-metro-select{min-width:120px;font-size:.65rem;padding:6px 22px 6px 8px}
 .commute-field{min-width:0}
-.map-legend-row{display:grid;grid-template-columns:repeat(2,1fr);gap:.4rem .75rem;font-size:.7rem;padding:0 .75rem}
-.map-legend-row .map-legend-item:last-child{grid-column:1/-1;text-align:center;justify-content:center}
+.map-legend-row{display:grid;grid-template-columns:repeat(2,1fr);gap:.35rem .6rem;font-size:.68rem;padding:.5rem .75rem}
+.map-legend-row .map-legend-item:last-child{grid-column:1/-1;text-align:center;justify-content:center;font-size:.6rem}
 .chart-metro{padding:6px 10px;font-size:.68rem;min-height:36px}
 .chart-box{height:220px}.chart-box.tall{height:280px}.chart-box.short{height:180px}
 .rank-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -227,6 +231,7 @@ footer a{color:var(--text-dim);text-decoration:none}
                 <input type="text" id="mapSearchInput" placeholder="Search address or intersection..." autocomplete="off">
             </div>
             <button class="commute-toggle" id="commuteToggle">&#128663; My Commute</button>
+            <button class="map-filter-toggle" id="filterToggle">&#9881; Filters</button>
         </div>
         <div class="commute-panel" id="commutePanel">
             <div class="commute-field"><label>From (home)</label><input type="text" id="commuteFrom" placeholder="e.g. Times Square, Manhattan"></div>
@@ -895,6 +900,14 @@ commuteToggle.addEventListener('click',function(){
     const open=commutePanel.classList.toggle('show');
     this.classList.toggle('open',open);
 });
+const filterToggle=document.getElementById('filterToggle');
+const filterStrip=document.querySelector('.map-filter-strip');
+if(filterToggle&&filterStrip){
+    filterToggle.addEventListener('click',function(){
+        const open=filterStrip.classList.toggle('show');
+        this.classList.toggle('open',open);
+    });
+}
 document.getElementById('commuteGo').addEventListener('click',doCommute);
 document.getElementById('commuteClear').addEventListener('click',clearCommute);
 document.getElementById('commuteFrom').addEventListener('keydown',e=>{if(e.key==='Enter')doCommute()});
