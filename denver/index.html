@@ -448,7 +448,7 @@ const cities=["Denver", "Aurora", "Lakewood", "Arvada", "Westminster/Thornton", 
 
 function getMetroLabel(c){ return c==='all'?'All Metro':c; }
 function agg(fn){ return cities.map(c=>fn(c)).reduce((a,b)=>a.map((v,i)=>v+(b[i]||0))); }
-function aggW(fn,wFn){ const tot=cities.reduce((s,c)=>(cityData[c]?s+wFn(c):s),0); return cities.map(c=>fn(c)).reduce((a,b)=>{const w=(cityData[cities[a._idx=(a._idx||0)]]?wFn(cities[a._idx]):0)/tot;a._idx++;return a.map? a.map((v,i)=>v+b[i]*w):a}); }
+
 
 // === TABLE ===
 const tbody=document.getElementById('cityTableBody');
@@ -687,6 +687,7 @@ tiles.on('tileload',()=>{tileOk=true});
 setTimeout(()=>{if(!tileOk)document.getElementById('mapFallback').classList.add('show')},3000);
 
 markerLayer.addTo(map);labelLayer.addTo(map);corridorLayer.addTo(map);commuteMarkers.addTo(map);nearbyHighlights.addTo(map);
+map.on('zoomend',function(){renderMarkers()});
 
 // Fit map to show all hotspot markers
 if(spots.length){
@@ -729,23 +730,26 @@ function renderMarkers(){
         return {...s,crashes,rate};
     }).sort((a,b)=>currentSort==='rate'?(b.rate-a.rate):(b.crashes-a.crashes));
 
+    const zoom=map.getZoom();
+    const zoomScale=Math.max(0.4,Math.min(1.2,(zoom-8)/6));
     ranked.forEach((s,idx)=>{
         if(s.crashes===0) return;
         const isTop10=idx<10 && currentType==='all';
         const dynRank=idx+1;
 
-        const radius=Math.max(6,7+((s.crashes-5)/50)*14);
+        const baseRadius=Math.max(6,7+((s.crashes-5)/50)*14);
+        const radius=Math.max(4,Math.round(baseRadius*zoomScale));
         const color=isTop10?'#dc2626':'#f97316';
 
         // Shadow ring
         L.circleMarker([s.lat,s.lon],{
-            radius:Math.max(6,radius)+2,fillColor:'transparent',fillOpacity:0,
+            radius:radius+2,fillColor:'transparent',fillOpacity:0,
             color:'rgba(0,0,0,0.2)',weight:3,opacity:1,interactive:false
         }).addTo(markerLayer);
 
         // Main marker
         const marker=L.circleMarker([s.lat,s.lon],{
-            radius:Math.max(6,radius),fillColor:color,fillOpacity:0.85,
+            radius:radius,fillColor:color,fillOpacity:0.85,
             color:'#ffffff',weight:2.5,opacity:1
         }).addTo(markerLayer);
 
