@@ -79,6 +79,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .map-btn.active-blue{background:rgba(77,166,255,.12);border-color:rgba(77,166,255,0.3);color:var(--blue)}
 .commute-toggle{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:500;padding:7px 14px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer;transition:all .15s;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
 .map-filter-toggle{display:none}
+.map-filter-mobile{display:none}
 .commute-toggle:hover{border-color:var(--green);color:var(--green)}
 .commute-toggle.open{background:rgba(77,255,145,.12);border-color:rgba(77,255,145,0.3);color:var(--green)}
 .commute-panel{display:none;padding:.85rem 1rem;background:#0d0f19;border-bottom:1px solid var(--border);gap:.6rem;align-items:flex-end;flex-wrap:wrap}
@@ -139,10 +140,13 @@ main{max-width:1200px;margin:0 auto;padding:4rem 2rem 6rem}
 #crashMap{height:360px}
 .map-btn{font-size:.62rem;padding:7px 9px;min-height:36px}
 .map-filter-group-label{font-size:.56rem}
-.map-filter-strip{display:none;flex-wrap:wrap;gap:.35rem;padding:.5rem .75rem;border-top:1px solid rgba(255,255,255,.04)}
-.map-filter-strip.show{display:flex}
-.map-filter-sep{display:none}
-.map-filter-group{gap:3px}
+.map-filter-desktop{display:none}
+.map-filter-mobile{display:none;padding:.6rem .75rem;border-top:1px solid rgba(255,255,255,.04)}
+.map-filter-mobile.show{display:block}
+.mf-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.mf-field label{display:block;font-family:'JetBrains Mono',monospace;font-size:.56rem;font-weight:600;color:var(--text-faint);letter-spacing:.07em;text-transform:uppercase;margin-bottom:3px}
+.mf-select{width:100%;background:#161929;color:var(--text);border:1px solid var(--border);border-radius:8px;padding:8px 28px 8px 10px;font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:500;cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7094'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+.mf-select:focus{border-color:var(--blue);outline:none}
 .map-filter-toggle{display:inline-flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:.65rem;font-weight:500;padding:7px 12px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer;white-space:nowrap}
 .map-filter-toggle.open{border-color:var(--blue);color:var(--blue)}
 .map-search input{font-size:.8rem;padding:8px 12px 8px 32px}
@@ -240,7 +244,7 @@ footer a{color:var(--text-dim);text-decoration:none}
             <button class="commute-clear" id="commuteClear">Clear</button>
             <div class="commute-result" id="commuteResult"></div>
         </div>
-        <div class="map-filter-strip">
+        <div class="map-filter-strip map-filter-desktop">
             <div class="map-filter-group">
                 <span class="map-filter-group-label">Metro</span>
                 <select id="cityFilter" class="map-metro-select">
@@ -277,6 +281,21 @@ footer a{color:var(--text-dim);text-decoration:none}
                     <button class="map-btn active-blue" data-sort="total">Total</button>
                     <button class="map-btn" data-sort="rate">Per Vehicle</button>
                 </div>
+            </div>
+        </div>
+        <div class="map-filter-mobile">
+            <div class="mf-grid">
+                <div class="mf-field"><label>Metro</label><select id="cityFilterMob" class="mf-select"><option value="all" selected>All Metro</option><option value="Downtown">Downtown</option>
+<option value="Midtown">Midtown</option>
+<option value="Southwest">Southwest</option>
+<option value="East Side">East Side</option>
+<option value="West Side">West Side</option>
+<option value="Northeast">Northeast</option>
+<option value="Northwest">Northwest</option>
+<option value="Downriver">Downriver</option></select></div>
+                <div class="mf-field"><label>Show</label><select id="typeFilterMob" class="mf-select"><option value="all" selected>All Crashes</option><option value="ped">Pedestrian</option><option value="cyclist">Cyclist</option><option value="fatal">Fatal</option></select></div>
+                <div class="mf-field"><label>Year</label><select id="yearFilterMob" class="mf-select"><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="all" selected>All Years</option></select></div>
+                <div class="mf-field"><label>Rank by</label><select id="sortFilterMob" class="mf-select"><option value="total" selected>Total Crashes</option><option value="rate">Per Vehicle</option></select></div>
             </div>
         </div>
     </div>
@@ -969,11 +988,30 @@ commuteToggle.addEventListener('click',function(){
     this.classList.toggle('open',open);
 });
 const filterToggle=document.getElementById('filterToggle');
-const filterStrip=document.querySelector('.map-filter-strip');
-if(filterToggle&&filterStrip){
+const filterMobile=document.querySelector('.map-filter-mobile');
+if(filterToggle&&filterMobile){
     filterToggle.addEventListener('click',function(){
-        const open=filterStrip.classList.toggle('show');
+        const open=filterMobile.classList.toggle('show');
         this.classList.toggle('open',open);
+    });
+    // Sync mobile dropdowns to map state
+    document.getElementById('cityFilterMob').addEventListener('change',function(){
+        document.getElementById('cityFilter').value=this.value;
+        currentCity=this.value;renderMarkers();
+    });
+    document.getElementById('typeFilterMob').addEventListener('change',function(){
+        currentType=this.value;
+        document.querySelectorAll('#typeFilters .map-btn').forEach(b=>b.classList.toggle('active',b.dataset.type===this.value));
+        renderMarkers();
+    });
+    document.getElementById('yearFilterMob').addEventListener('change',function(){
+        currentYear=this.value;
+        document.querySelectorAll('#yearGroup .map-btn').forEach(b=>b.classList.toggle('active-blue',b.dataset.year===this.value));
+        renderMarkers();
+    });
+    document.getElementById('sortFilterMob').addEventListener('change',function(){
+        currentSort=this.value;
+        renderMarkers();renderIntersectionTable();
     });
 }
 document.getElementById('commuteGo').addEventListener('click',doCommute);
