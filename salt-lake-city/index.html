@@ -151,7 +151,11 @@ main{max-width:1200px;margin:0 auto;padding:4rem 2rem 6rem}
 .map-filter-toggle.open{border-color:var(--blue);color:var(--blue)}
 .map-search input{font-size:.8rem;padding:8px 12px 8px 32px}
 .map-metro-select{min-width:120px;font-size:.65rem;padding:6px 22px 6px 8px}
-.commute-field{min-width:0}
+.commute-panel{flex-direction:column;padding:.75rem;gap:.5rem}
+.commute-field{min-width:0;flex:none;width:100%}
+.commute-field input{font-size:.8rem}
+.commute-go{width:100%;text-align:center;padding:10px}
+.commute-clear{width:100%;text-align:center;padding:10px}
 .map-legend-row{display:grid;grid-template-columns:repeat(2,1fr);gap:.35rem .6rem;font-size:.68rem;padding:.5rem .75rem}
 .map-legend-row .map-legend-item:last-child{grid-column:1/-1;text-align:center;justify-content:center;font-size:.6rem}
 .chart-metro{padding:6px 10px;font-size:.68rem;min-height:36px}
