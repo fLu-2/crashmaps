@@ -138,6 +138,14 @@ main{max-width:1200px;margin:0 auto;padding:4rem 2rem 6rem}
 #crashMap{height:360px}
 .map-btn{font-size:.62rem;padding:8px 10px;min-height:36px}
 .map-filter-group-label{font-size:.58rem}
+.map-filter-strip{flex-wrap:wrap;gap:.4rem .25rem;padding:.5rem .75rem}
+.map-filter-sep{display:none}
+.map-filter-group{gap:4px}
+.map-search input{font-size:.8rem;padding:8px 12px 8px 32px}
+.map-metro-select{min-width:120px;font-size:.68rem;padding:7px 24px 7px 8px}
+.commute-field{min-width:0}
+.map-legend-row{display:grid;grid-template-columns:repeat(2,1fr);gap:.4rem .75rem;font-size:.7rem;padding:0 .75rem}
+.map-legend-row .map-legend-item:last-child{grid-column:1/-1;text-align:center;justify-content:center}
 .chart-metro{padding:6px 10px;font-size:.68rem;min-height:36px}
 .chart-box{height:220px}.chart-box.tall{height:280px}.chart-box.short{height:180px}
 .rank-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -695,26 +703,26 @@ function renderMarkers(){
     }).sort((a,b)=>currentSort==='rate'?(b.rate-a.rate):(b.crashes-a.crashes));
 
     const zoom=map.getZoom();
-    const zoomScale=Math.max(0.4,Math.min(1.2,(zoom-8)/6));
+    const zoomScale=Math.max(0.35,Math.min(1,(zoom-9)/5));
     ranked.forEach((s,idx)=>{
         if(s.crashes===0) return;
         const isTop10=idx<10 && currentType==='all';
         const dynRank=idx+1;
 
-        const baseRadius=Math.max(6,7+((s.crashes-5)/50)*14);
-        const radius=Math.max(4,Math.round(baseRadius*zoomScale));
+        const baseRadius=Math.max(4,4+((s.crashes-5)/80)*10);
+        const radius=Math.max(3,Math.round(baseRadius*zoomScale));
         const color=isTop10?'#dc2626':'#f97316';
 
         // Shadow ring
         L.circleMarker([s.lat,s.lon],{
-            radius:radius+2,fillColor:'transparent',fillOpacity:0,
-            color:'rgba(0,0,0,0.2)',weight:3,opacity:1,interactive:false
+            radius:radius+1.5,fillColor:'transparent',fillOpacity:0,
+            color:'rgba(0,0,0,0.2)',weight:2,opacity:1,interactive:false
         }).addTo(markerLayer);
 
         // Main marker
         const marker=L.circleMarker([s.lat,s.lon],{
             radius:radius,fillColor:color,fillOpacity:0.85,
-            color:'#ffffff',weight:2.5,opacity:1
+            color:'#ffffff',weight:1.5,opacity:1
         }).addTo(markerLayer);
 
         // Popup
@@ -757,7 +765,7 @@ function renderMarkers(){
         // Numbered label for top 10
         if(isTop10){
             const icon=L.divIcon({
-                html:'<div style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:rgba(20,23,38,0.88);border:2px solid rgba(255,255,255,0.9);box-shadow:0 1px 4px rgba(0,0,0,.4);font-family:JetBrains Mono,monospace;font-size:11px;font-weight:700;color:#fff;line-height:1">'+dynRank+'</div>',
+                html:'<div style="display:flex;align-items:center;justify-content:center;width:'+(isMobile?16:20)+'px;height:'+(isMobile?16:20)+'px;border-radius:50%;background:rgba(20,23,38,0.88);border:1.5px solid rgba(255,255,255,0.9);box-shadow:0 1px 4px rgba(0,0,0,.4);font-family:JetBrains Mono,monospace;font-size:'+(isMobile?8:10)+'px;font-weight:700;color:#fff;line-height:1">'+dynRank+'</div>',
                 className:'',iconSize:[22,22],iconAnchor:[11,11]
             });
             L.marker([s.lat,s.lon],{icon:icon,interactive:false}).addTo(labelLayer);
