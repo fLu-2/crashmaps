@@ -73,7 +73,6 @@ header nav a:hover{color:var(--text)}
     .compare{padding:0 1rem}
     .about{padding:0 1.25rem}
     footer{padding:2rem 1.25rem 3rem}
-    .compare-grid .cmp-cell:nth-child(9n+1){position:sticky;left:0;z-index:2;border-right:1px solid var(--border)}
 }
 
 /* Compare section */
@@ -85,7 +84,19 @@ header nav a:hover{color:var(--text)}
 .pdx-col .cmp-val{color:#f472b6}
 .atx-col .cmp-val{color:#0ea5e9}
 .det-col .cmp-val{color:#f43f5e}
-@media(max-width:768px){.compare{overflow-x:auto;-webkit-overflow-scrolling:touch}.compare-grid{min-width:900px}}
+@media(max-width:768px){.compare-grid{display:none}.compare-cards{display:flex;flex-direction:column;gap:1rem}}
+.compare-cards{display:none}
+.cmp-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.cmp-card-hdr{padding:.85rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.6rem}
+.cmp-card-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.cmp-card-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700}
+.cmp-card-name small{display:block;font-family:'DM Sans',sans-serif;font-size:.65rem;color:var(--text-dim);font-weight:400;margin-top:.1rem}
+.cmp-card-rows{padding:.5rem 0}
+.cmp-card-row{display:flex;justify-content:space-between;align-items:baseline;padding:.4rem 1rem}
+.cmp-card-row:nth-child(odd){background:rgba(255,255,255,.015)}
+.cmp-card-lbl{font-size:.72rem;color:var(--text-dim);font-family:'JetBrains Mono',monospace}
+.cmp-card-val{font-family:'JetBrains Mono',monospace;font-size:.88rem;font-weight:500}
+.cmp-card-val small{font-size:.62rem;color:var(--text-faint);font-weight:400;margin-left:.35rem}
 .cmp-cell{background:var(--bg-card);padding:1.25rem;text-align:center}
 .cmp-cell.header{background:var(--bg)}
 .cmp-metric{font-size:.72rem;color:var(--text-dim);margin-bottom:.4rem;font-family:'JetBrains Mono',monospace;letter-spacing:.04em}
@@ -309,6 +320,80 @@ footer a:hover{color:var(--text)}
         <div class="cmp-cell pdx-col"><div class="cmp-val" style="font-size:.9rem">ODOT</div><div class="cmp-sub">ArcGIS API &middot; 40K rows</div></div>
         <div class="cmp-cell atx-col"><div class="cmp-val" style="font-size:.9rem">Austin OD</div><div class="cmp-sub">Socrata API &middot; 38K rows</div></div>
         <div class="cmp-cell det-col"><div class="cmp-val" style="font-size:.9rem">Detroit OD</div><div class="cmp-sub">ArcGIS API &middot; 71K rows</div></div>
+    </div>
+    <div class="compare-cards">
+        <div class="cmp-card"><div class="cmp-card-hdr"><div class="cmp-card-dot" style="background:var(--red)"></div><div class="cmp-card-name">Denver Metro<small>CDOT &middot; Excel &middot; 101K rows</small></div></div><div class="cmp-card-rows">
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Total crashes</div><div class="cmp-card-val" style="color:var(--red)">56,697</div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Per 1K residents</div><div class="cmp-card-val" style="color:var(--red)">34.5<small>pop 1.65M</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Fatalities</div><div class="cmp-card-val" style="color:var(--red)">293<small>17.8 per 100K</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Speed-related</div><div class="cmp-card-val" style="color:var(--red)">4.9%<small>1,517</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">DUI / Impairment</div><div class="cmp-card-val" style="color:var(--red)">6.3%<small>3,589</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Pedestrian</div><div class="cmp-card-val" style="color:var(--red)">1,248<small>75.9 per 100K</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Cyclist</div><div class="cmp-card-val" style="color:var(--red)">810<small>49.2 per 100K</small></div></div>
+        </div></div>
+        <div class="cmp-card"><div class="cmp-card-hdr"><div class="cmp-card-dot" style="background:var(--cyan)"></div><div class="cmp-card-name">Wasatch Front<small>UDOT &middot; ArcGIS API &middot; 55K rows</small></div></div><div class="cmp-card-rows">
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Total crashes</div><div class="cmp-card-val" style="color:var(--cyan)">18,099</div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Per 1K residents</div><div class="cmp-card-val" style="color:var(--cyan)">18.5<small>pop 978K</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Fatalities</div><div class="cmp-card-val" style="color:var(--cyan)">54<small>5.5 per 100K</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Speed-related</div><div class="cmp-card-val" style="color:var(--cyan)">14.9%<small>2,691</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">DUI / Impairment</div><div class="cmp-card-val" style="color:var(--cyan)">1.7%<small>309</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Pedestrian</div><div class="cmp-card-val" style="color:var(--cyan)">422<small>43.1 per 100K</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Cyclist</div><div class="cmp-card-val" style="color:var(--cyan)">178<small>18.2 per 100K</small></div></div>
+        </div></div>
+        <div class="cmp-card"><div class="cmp-card-hdr"><div class="cmp-card-dot" style="background:var(--amber)"></div><div class="cmp-card-name">New York City<small>NYC Open Data &middot; Socrata API &middot; 91K rows</small></div></div><div class="cmp-card-rows">
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Total crashes</div><div class="cmp-card-val" style="color:var(--amber)">64,047</div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Per 1K residents</div><div class="cmp-card-val" style="color:var(--amber)">7.3<small>pop 8.80M</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Fatalities</div><div class="cmp-card-val" style="color:var(--amber)">145<small>1.6 per 100K</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Speed-related</div><div class="cmp-card-val" style="color:var(--amber)">3.7%<small>2,378</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">DUI / Impairment</div><div class="cmp-card-val" style="color:var(--amber)">2.2%<small>1,438</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Pedestrian</div><div class="cmp-card-val" style="color:var(--amber)">7,413<small>84.2 per 100K</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Cyclist</div><div class="cmp-card-val" style="color:var(--amber)">4,010<small>45.5 per 100K</small></div></div>
+        </div></div>
+        <div class="cmp-card"><div class="cmp-card-hdr"><div class="cmp-card-dot" style="background:var(--purple)"></div><div class="cmp-card-name">Chicago<small>Chicago Portal &middot; Socrata API &middot; 112K rows</small></div></div><div class="cmp-card-rows">
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Total crashes</div><div class="cmp-card-val" style="color:var(--purple)">96,412</div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Per 1K residents</div><div class="cmp-card-val" style="color:var(--purple)">34.6<small>pop 2.79M</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Fatalities</div><div class="cmp-card-val" style="color:var(--purple)">94<small>3.4 per 100K</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Speed-related</div><div class="cmp-card-val" style="color:var(--purple)">6.7%<small>6,453</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">DUI / Impairment</div><div class="cmp-card-val" style="color:var(--purple)">0.6%<small>591</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Pedestrian</div><div class="cmp-card-val" style="color:var(--purple)">2,706<small>97.1 per 100K</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Cyclist</div><div class="cmp-card-val" style="color:var(--purple)">1,998<small>71.7 per 100K</small></div></div>
+        </div></div>
+        <div class="cmp-card"><div class="cmp-card-hdr"><div class="cmp-card-dot" style="background:#10b981"></div><div class="cmp-card-name">Washington DC<small>DCGIS &middot; ArcGIS API &middot; 20K rows</small></div></div><div class="cmp-card-rows">
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Total crashes</div><div class="cmp-card-val" style="color:#10b981">20,247</div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Per 1K residents</div><div class="cmp-card-val" style="color:#10b981">29.3<small>pop 690K</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Fatalities</div><div class="cmp-card-val" style="color:#10b981">49<small>7.1 per 100K</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Speed-related</div><div class="cmp-card-val" style="color:#10b981">3.0%<small>610</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">DUI / Impairment</div><div class="cmp-card-val" style="color:#10b981">1.7%<small>349</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Pedestrian</div><div class="cmp-card-val" style="color:#10b981">880<small>127.5 per 100K</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Cyclist</div><div class="cmp-card-val" style="color:#10b981">605<small>87.6 per 100K</small></div></div>
+        </div></div>
+        <div class="cmp-card"><div class="cmp-card-hdr"><div class="cmp-card-dot" style="background:#f472b6"></div><div class="cmp-card-name">Portland Metro<small>ODOT &middot; ArcGIS API &middot; 40K rows &middot; 2023</small></div></div><div class="cmp-card-rows">
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Total crashes</div><div class="cmp-card-val" style="color:#f472b6">14,025</div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Per 1K residents</div><div class="cmp-card-val" style="color:#f472b6">11.0<small>pop 1.28M</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Fatalities</div><div class="cmp-card-val" style="color:#f472b6">103<small>8.1 per 100K</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Speed-related</div><div class="cmp-card-val" style="color:#f472b6">7.0%<small>980</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">DUI / Impairment</div><div class="cmp-card-val" style="color:#f472b6">4.4%<small>613</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Pedestrian</div><div class="cmp-card-val" style="color:#f472b6">279<small>21.8 per 100K</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Cyclist</div><div class="cmp-card-val" style="color:#f472b6">183<small>14.3 per 100K</small></div></div>
+        </div></div>
+        <div class="cmp-card"><div class="cmp-card-hdr"><div class="cmp-card-dot" style="background:#0ea5e9"></div><div class="cmp-card-name">Austin<small>Austin Open Data &middot; Socrata API &middot; 38K rows</small></div></div><div class="cmp-card-rows">
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Total crashes</div><div class="cmp-card-val" style="color:#0ea5e9">11,855</div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Per 1K residents</div><div class="cmp-card-val" style="color:#0ea5e9">11.3<small>pop 1.05M</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Fatalities</div><div class="cmp-card-val" style="color:#0ea5e9">92<small>8.8 per 100K</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Speed-related</div><div class="cmp-card-val" style="color:#0ea5e9">&mdash;<small>not available</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">DUI / Impairment</div><div class="cmp-card-val" style="color:#0ea5e9">&mdash;<small>not available</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Pedestrian</div><div class="cmp-card-val" style="color:#0ea5e9">317<small>30.2 per 100K</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Cyclist</div><div class="cmp-card-val" style="color:#0ea5e9">194<small>18.5 per 100K</small></div></div>
+        </div></div>
+        <div class="cmp-card"><div class="cmp-card-hdr"><div class="cmp-card-dot" style="background:#f43f5e"></div><div class="cmp-card-name">Detroit<small>Detroit Open Data &middot; ArcGIS API &middot; 71K rows</small></div></div><div class="cmp-card-rows">
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Total crashes</div><div class="cmp-card-val" style="color:#f43f5e">17,323</div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Per 1K residents</div><div class="cmp-card-val" style="color:#f43f5e">27.1<small>pop 640K</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Fatalities</div><div class="cmp-card-val" style="color:#f43f5e">72<small>11.3 per 100K</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Speed-related</div><div class="cmp-card-val" style="color:#f43f5e">8.5%<small>1,464</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">DUI / Impairment</div><div class="cmp-card-val" style="color:#f43f5e">2.6%<small>458</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Pedestrian</div><div class="cmp-card-val" style="color:#f43f5e">300<small>46.9 per 100K</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Cyclist</div><div class="cmp-card-val" style="color:#f43f5e">111<small>17.3 per 100K</small></div></div>
+        </div></div>
     </div>
 </section>
 
