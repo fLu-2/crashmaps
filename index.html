@@ -79,7 +79,7 @@ header nav a:hover{color:var(--text)}
 
 /* Compare section */
 .compare{max-width:1200px;margin:4rem auto 0;padding:0 2rem}
-.compare-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.compare-grid{display:grid;grid-template-columns:repeat(11,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden}
 .nyc-col .cmp-val{color:var(--amber)}
 .chi-col .cmp-val{color:var(--purple)}
 .dc-col .cmp-val{color:#10b981}
@@ -87,6 +87,7 @@ header nav a:hover{color:var(--text)}
 .atx-col .cmp-val{color:#0ea5e9}
 .det-col .cmp-val{color:#f43f5e}
 .sea-col .cmp-val{color:#818cf8}
+.la-col .cmp-val{color:#f59e0b}
 .compare-cards{display:none}
 @media(max-width:768px){.compare-grid{display:none}.compare-cards{display:flex;flex-direction:column;gap:.75rem}}
 .cmp-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
@@ -137,9 +138,9 @@ footer a:hover{color:var(--text)}
         <h1>Every crash on <em>every road</em></h1>
         <p class="hero-sub">Interactive, verifiable traffic crash dashboards built from <strong>public DOT data</strong>. No ads. No law firms. No affiliation. Just the numbers.</p>
         <div class="stat-bar">
-            <div class="sb-cell"><div class="sb-val" style="color:var(--red)">1.05M</div><div class="sb-lbl">Crash records processed</div></div>
-            <div class="sb-cell"><div class="sb-val" style="color:var(--amber)">930</div><div class="sb-lbl">Fatalities (latest yr)</div></div>
-            <div class="sb-cell"><div class="sb-val" style="color:var(--blue)">9</div><div class="sb-lbl">Metro areas</div></div>
+            <div class="sb-cell"><div class="sb-val" style="color:var(--red)">1.14M</div><div class="sb-lbl">Crash records processed</div></div>
+            <div class="sb-cell"><div class="sb-val" style="color:var(--amber)">1,116</div><div class="sb-lbl">Fatalities (latest yr)</div></div>
+            <div class="sb-cell"><div class="sb-val" style="color:var(--blue)">10</div><div class="sb-lbl">Metro areas</div></div>
             <div class="sb-cell"><div class="sb-val" style="color:var(--green)">$0</div><div class="sb-lbl">Cost to access</div></div>
         </div>
     </div>
@@ -238,6 +239,16 @@ footer a:hover{color:var(--text)}
             </div>
             <svg class="city-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
+        <a href="la/" class="city-row">
+            <div class="city-dot" style="background:#f59e0b"></div>
+            <div class="city-name">Los Angeles County<small>CHP CCRS &middot; 2022&ndash;2024</small></div>
+            <div class="city-stats">
+                <div class="cs-cell"><div class="cs-val">33,717</div><div class="cs-lbl">crashes</div></div>
+                <div class="cs-cell"><div class="cs-val">186</div><div class="cs-lbl">fatal</div></div>
+                <div class="cs-cell"><div class="cs-val">776</div><div class="cs-lbl">ped</div></div>
+            </div>
+            <svg class="city-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
     </div>
 </section>
 
@@ -254,6 +265,7 @@ footer a:hover{color:var(--text)}
         <div class="cmp-cell header atx-col"><div class="cmp-metric">Austin</div></div>
         <div class="cmp-cell header det-col"><div class="cmp-metric">Detroit</div></div>
         <div class="cmp-cell header sea-col"><div class="cmp-metric">Seattle</div></div>
+        <div class="cmp-cell header la-col"><div class="cmp-metric">LA County</div></div>
 
         <div class="cmp-cell"><div class="cmp-metric">Total crashes</div></div>
         <div class="cmp-cell denver-col"><div class="cmp-val">56,697</div></div>
@@ -265,6 +277,7 @@ footer a:hover{color:var(--text)}
         <div class="cmp-cell atx-col"><div class="cmp-val">11,855</div></div>
         <div class="cmp-cell det-col"><div class="cmp-val">17,323</div></div>
         <div class="cmp-cell sea-col"><div class="cmp-val">6,371</div></div>
+        <div class="cmp-cell la-col"><div class="cmp-val">33,717</div></div>
 
         <div class="cmp-cell"><div class="cmp-metric">Crashes per 1K residents</div></div>
         <div class="cmp-cell denver-col"><div class="cmp-val">34.5</div><div class="cmp-sub">pop 1.65M</div></div>
@@ -276,6 +289,7 @@ footer a:hover{color:var(--text)}
         <div class="cmp-cell atx-col"><div class="cmp-val">11.3</div><div class="cmp-sub">pop 1.05M</div></div>
         <div class="cmp-cell det-col"><div class="cmp-val">27.1</div><div class="cmp-sub">pop 640K</div></div>
         <div class="cmp-cell sea-col"><div class="cmp-val">9.3</div><div class="cmp-sub">pop 687K</div></div>
+        <div class="cmp-cell la-col"><div class="cmp-val">6.1</div><div class="cmp-sub">pop 5.55M</div></div>
 
         <div class="cmp-cell"><div class="cmp-metric">Fatalities</div></div>
         <div class="cmp-cell denver-col"><div class="cmp-val">293</div><div class="cmp-sub">17.8 per 100K</div></div>
@@ -287,6 +301,7 @@ footer a:hover{color:var(--text)}
         <div class="cmp-cell atx-col"><div class="cmp-val">92</div><div class="cmp-sub">8.8 per 100K</div></div>
         <div class="cmp-cell det-col"><div class="cmp-val">72</div><div class="cmp-sub">11.3 per 100K</div></div>
         <div class="cmp-cell sea-col"><div class="cmp-val">28</div><div class="cmp-sub">4.1 per 100K</div></div>
+        <div class="cmp-cell la-col"><div class="cmp-val">186</div><div class="cmp-sub">3.4 per 100K</div></div>
 
         <div class="cmp-cell"><div class="cmp-metric">Speed-related</div></div>
         <div class="cmp-cell denver-col"><div class="cmp-val">4.9%</div><div class="cmp-sub">1,517 crashes</div></div>
@@ -298,6 +313,7 @@ footer a:hover{color:var(--text)}
         <div class="cmp-cell atx-col"><div class="cmp-val">&mdash;</div><div class="cmp-sub">not available</div></div>
         <div class="cmp-cell det-col"><div class="cmp-val">8.5%</div><div class="cmp-sub">1,464 crashes</div></div>
         <div class="cmp-cell sea-col"><div class="cmp-val">5.7%</div><div class="cmp-sub">362 crashes</div></div>
+        <div class="cmp-cell la-col"><div class="cmp-val">38.1%</div><div class="cmp-sub">12,846 crashes</div></div>
 
         <div class="cmp-cell"><div class="cmp-metric">DUI / Impairment</div></div>
         <div class="cmp-cell denver-col"><div class="cmp-val">6.3%</div><div class="cmp-sub">3,589 crashes</div></div>
@@ -309,6 +325,7 @@ footer a:hover{color:var(--text)}
         <div class="cmp-cell atx-col"><div class="cmp-val">&mdash;</div><div class="cmp-sub">not available</div></div>
         <div class="cmp-cell det-col"><div class="cmp-val">2.6%</div><div class="cmp-sub">458 crashes</div></div>
         <div class="cmp-cell sea-col"><div class="cmp-val">&mdash;</div><div class="cmp-sub">not available</div></div>
+        <div class="cmp-cell la-col"><div class="cmp-val">7.4%</div><div class="cmp-sub">2,490 crashes</div></div>
 
         <div class="cmp-cell"><div class="cmp-metric">Pedestrian crashes</div></div>
         <div class="cmp-cell denver-col"><div class="cmp-val">1,248</div><div class="cmp-sub">75.9 per 100K</div></div>
@@ -320,6 +337,7 @@ footer a:hover{color:var(--text)}
         <div class="cmp-cell atx-col"><div class="cmp-val">317</div><div class="cmp-sub">30.2 per 100K</div></div>
         <div class="cmp-cell det-col"><div class="cmp-val">300</div><div class="cmp-sub">46.9 per 100K</div></div>
         <div class="cmp-cell sea-col"><div class="cmp-val">381</div><div class="cmp-sub">55.5 per 100K</div></div>
+        <div class="cmp-cell la-col"><div class="cmp-val">776</div><div class="cmp-sub">14.0 per 100K</div></div>
 
         <div class="cmp-cell"><div class="cmp-metric">Cyclist crashes</div></div>
         <div class="cmp-cell denver-col"><div class="cmp-val">810</div><div class="cmp-sub">49.2 per 100K</div></div>
@@ -331,6 +349,7 @@ footer a:hover{color:var(--text)}
         <div class="cmp-cell atx-col"><div class="cmp-val">194</div><div class="cmp-sub">18.5 per 100K</div></div>
         <div class="cmp-cell det-col"><div class="cmp-val">111</div><div class="cmp-sub">17.3 per 100K</div></div>
         <div class="cmp-cell sea-col"><div class="cmp-val">267</div><div class="cmp-sub">38.9 per 100K</div></div>
+        <div class="cmp-cell la-col"><div class="cmp-val">374</div><div class="cmp-sub">6.7 per 100K</div></div>
 
         <div class="cmp-cell"><div class="cmp-metric">Data source</div></div>
         <div class="cmp-cell denver-col"><div class="cmp-val" style="font-size:.9rem">CDOT</div><div class="cmp-sub">Excel &middot; 101K rows</div></div>
@@ -342,6 +361,7 @@ footer a:hover{color:var(--text)}
         <div class="cmp-cell atx-col"><div class="cmp-val" style="font-size:.9rem">Austin OD</div><div class="cmp-sub">Socrata API &middot; 38K rows</div></div>
         <div class="cmp-cell det-col"><div class="cmp-val" style="font-size:.9rem">Detroit OD</div><div class="cmp-sub">ArcGIS API &middot; 71K rows</div></div>
         <div class="cmp-cell sea-col"><div class="cmp-val" style="font-size:.9rem">SDOT</div><div class="cmp-sub">ArcGIS API &middot; 21K rows</div></div>
+        <div class="cmp-cell la-col"><div class="cmp-val" style="font-size:.9rem">CHP CCRS</div><div class="cmp-sub">CKAN API &middot; 316K rows</div></div>
     </div>
     <div class="compare-cards">
         <div class="cmp-card"><div class="cmp-card-hdr"><div class="cmp-card-dot" style="background:var(--red)"></div><div class="cmp-card-name">Denver Metro<small>CDOT &middot; Excel &middot; 101K rows</small></div></div><div class="cmp-card-rows">
@@ -425,13 +445,22 @@ footer a:hover{color:var(--text)}
             <div class="cmp-card-row"><div class="cmp-card-lbl">Pedestrian</div><div class="cmp-card-val" style="color:#818cf8">381<small>55.5 per 100K</small></div></div>
             <div class="cmp-card-row"><div class="cmp-card-lbl">Cyclist</div><div class="cmp-card-val" style="color:#818cf8">267<small>38.9 per 100K</small></div></div>
         </div></div>
+        <div class="cmp-card"><div class="cmp-card-hdr"><div class="cmp-card-dot" style="background:#f59e0b"></div><div class="cmp-card-name">Los Angeles County<small>CHP CCRS &middot; CKAN API &middot; 316K rows</small></div></div><div class="cmp-card-rows">
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Total crashes</div><div class="cmp-card-val" style="color:#f59e0b">33,717</div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Per 1K residents</div><div class="cmp-card-val" style="color:#f59e0b">6.1<small>pop 5.55M</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Fatalities</div><div class="cmp-card-val" style="color:#f59e0b">186<small>3.4 per 100K</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Speed-related</div><div class="cmp-card-val" style="color:#f59e0b">38.1%<small>12,846</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">DUI / Impairment</div><div class="cmp-card-val" style="color:#f59e0b">7.4%<small>2,490</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Pedestrian</div><div class="cmp-card-val" style="color:#f59e0b">776<small>14.0 per 100K</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Cyclist</div><div class="cmp-card-val" style="color:#f59e0b">374<small>6.7 per 100K</small></div></div>
+        </div></div>
     </div>
 </section>
 
 <section class="about" id="about">
     <h2>What this is</h2>
     <p>Every number on these dashboards links back to a <strong>publicly available dataset</strong>. I process raw state and city DOT crash data &mdash; hundreds of thousands of records per year &mdash; and turn it into interactive, searchable, verifiable dashboards that anyone can use.</p>
-    <p>Each dashboard pulls from its city's official crash data source &mdash; CDOT, UDOT, NYC Open Data, Chicago Data Portal, DCGIS, ODOT, Austin Open Data, SEMCOG, SDOT &mdash; normalizes it into a <strong>common schema</strong>, and generates a standalone HTML file with mapped hotspots, corridor overlays, and independently filterable charts covering crash timing, severity, impairment, speed, hit-and-run, and pedestrian safety.</p>
+    <p>Each dashboard pulls from its city's official crash data source &mdash; CDOT, UDOT, NYC Open Data, Chicago Data Portal, DCGIS, ODOT, Austin Open Data, SEMCOG, SDOT, CHP CCRS &mdash; normalizes it into a <strong>common schema</strong>, and generates a standalone HTML file with mapped hotspots, corridor overlays, and independently filterable charts covering crash timing, severity, impairment, speed, hit-and-run, and pedestrian safety.</p>
     <p>The goal is to make crash data accessible to the people who live on these roads &mdash; not just the engineers and bureaucrats who control them. If your city publishes crash data, it can be added to the platform.</p>
     <p>If you find the dashboards useful, you can <a href="https://buymeacoffee.com/flu.2" target="_blank" style="color:var(--text);font-weight:500;border-bottom:1px solid var(--text-faint)">buy me a coffee</a>.</p>
     <p style="color:var(--text-faint);font-size:.78rem;margin-top:2rem;font-weight:300">No affiliation with any law firm, insurance company, or government agency. No ads. No analytics. No cookies.</p>
