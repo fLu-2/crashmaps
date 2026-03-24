@@ -46,7 +46,7 @@ header nav a:hover{color:var(--text)}
 /* City list */
 .cities{max-width:1200px;margin:0 auto;padding:0 2rem 0}
 .section-label{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);margin-bottom:1.25rem}
-@media(max-width:700px){.stat-bar{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.stat-bar{grid-template-columns:repeat(2,1fr)}}
 .city-list{border:1px solid var(--border);border-radius:14px;overflow:hidden}
 .city-row{display:flex;align-items:center;gap:1.5rem;padding:1rem 1.5rem;background:var(--bg-card);border-bottom:1px solid var(--border);transition:background .2s;text-decoration:none;color:inherit}
 .city-row:last-child{border-bottom:none}
@@ -60,10 +60,18 @@ header nav a:hover{color:var(--text)}
 .cs-cell .cs-lbl{font-size:.6rem;color:var(--text-faint)}
 .city-arrow{color:var(--text-faint);flex-shrink:0;transition:color .2s,transform .2s}
 .city-row:hover .city-arrow{color:var(--text);transform:translateX(3px)}
-@media(max-width:700px){
-    .city-row{flex-wrap:wrap;gap:.75rem;padding:1rem 1.25rem}
+@media(max-width:768px){
+    .city-row{flex-wrap:wrap;gap:.75rem;padding:1rem 1.25rem;min-height:44px}
     .city-name{min-width:auto;flex-basis:calc(100% - 30px)}
     .city-stats{gap:1rem;flex-basis:100%;padding-left:22px}
+    .cs-cell .cs-lbl{font-size:.65rem}
+    .city-name small{font-size:.68rem}
+    header nav{gap:1rem}
+    header nav a{min-height:44px;display:inline-flex;align-items:center}
+    .cities{padding:0 1rem}
+    .compare{padding:0 1rem}
+    .about{padding:0 1.25rem}
+    footer{padding:2rem 1.25rem 3rem}
 }
 
 /* Compare section */
@@ -75,7 +83,7 @@ header nav a:hover{color:var(--text)}
 .pdx-col .cmp-val{color:#f472b6}
 .atx-col .cmp-val{color:#0ea5e9}
 .det-col .cmp-val{color:#f43f5e}
-@media(max-width:700px){.compare-grid{grid-template-columns:1fr}}
+@media(max-width:768px){.compare{overflow-x:auto;-webkit-overflow-scrolling:touch}.compare-grid{min-width:900px}}
 .cmp-cell{background:var(--bg-card);padding:1.25rem;text-align:center}
 .cmp-cell.header{background:var(--bg)}
 .cmp-metric{font-size:.72rem;color:var(--text-dim);margin-bottom:.4rem;font-family:'JetBrains Mono',monospace;letter-spacing:.04em}
