@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#08090d">
 <title>crashmaps — Open Traffic Crash Dashboards</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -132,6 +133,29 @@ header nav a:hover{color:var(--text)}
 .denver-col .cmp-val{color:var(--red)}
 .slc-col .cmp-val{color:var(--cyan)}
 
+/* Overview map */
+.overview-map{max-width:1200px;margin:0 auto;padding:0 2rem 0}
+.overview-map .section-label{margin-bottom:1.25rem}
+.map-container{border:1px solid var(--border);border-radius:14px;overflow:hidden;height:420px;position:relative}
+.map-container .leaflet-container{height:100%;width:100%;background:var(--bg-card)}
+.map-container .leaflet-control-zoom{border:none}
+.map-container .leaflet-control-zoom a{background:rgba(15,17,24,.92);color:var(--text-dim);border:1px solid var(--border);width:30px;height:30px;line-height:30px;font-size:14px;backdrop-filter:blur(8px)}
+.map-container .leaflet-control-zoom a:hover{background:rgba(15,17,24,1);color:var(--text)}
+.map-container .leaflet-control-attribution{background:rgba(15,17,24,.8);color:var(--text-faint);font-size:.55rem;font-family:'DM Sans',sans-serif}
+.map-container .leaflet-control-attribution a{color:var(--text-dim)}
+.map-container .leaflet-popup-content-wrapper{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;color:var(--text);box-shadow:0 8px 32px rgba(0,0,0,.5)}
+.map-container .leaflet-popup-tip{background:var(--bg-card);border:1px solid var(--border)}
+.map-container .leaflet-popup-content{margin:0;padding:0;font-family:'DM Sans',sans-serif}
+.map-popup{padding:.75rem 1rem;min-width:180px}
+.map-popup-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:.1rem}
+.map-popup-src{font-size:.6rem;color:var(--text-faint);margin-bottom:.6rem;font-family:'JetBrains Mono',monospace}
+.map-popup-stats{display:grid;grid-template-columns:1fr 1fr;gap:.35rem .75rem}
+.map-popup-stat .mp-val{font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:500}
+.map-popup-stat .mp-lbl{font-size:.58rem;color:var(--text-faint)}
+.map-popup-link{display:block;margin-top:.6rem;padding-top:.5rem;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text-dim);text-align:center}
+.map-popup-link:hover{color:var(--text)}
+@media(max-width:768px){.overview-map{padding:0 1rem}.map-container{height:320px}}
+
 /* About section */
 .about{max-width:700px;margin:4rem auto 0;padding:0 2rem}
 .about h2{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:700;margin-bottom:1.25rem}
@@ -149,6 +173,7 @@ footer a:hover{color:var(--text)}
 <header>
     <div class="logo">crash<span>maps</span></div>
     <nav>
+        <a href="#map">Map</a>
         <a href="#cities">Cities</a>
         <a href="#compare">Compare</a>
         <a href="#about">About</a>
@@ -167,6 +192,11 @@ footer a:hover{color:var(--text)}
             <div class="sb-cell"><div class="sb-val" style="color:var(--green)">$0</div><div class="sb-lbl">Cost to access</div></div>
         </div>
     </div>
+</section>
+
+<section class="overview-map" id="map">
+    <div class="section-label">Coverage Map</div>
+    <div class="map-container"><div id="overviewMap"></div></div>
 </section>
 
 <section class="cities" id="cities">
@@ -405,6 +435,39 @@ footer a:hover{color:var(--text)}
     </div>
 </footer>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function(){
+    const metros=[
+        {name:'Denver Metro',src:'CDOT',lat:39.7392,lng:-104.9903,color:'#ff4d4d',crashes:56697,fatal:293,ped:1248,cyclist:810,href:'denver/'},
+        {name:'New York City',src:'NYC Open Data',lat:40.7128,lng:-74.0060,color:'#ffb347',crashes:64475,fatal:146,ped:7465,cyclist:4010,href:'nyc/'},
+        {name:'Chicago',src:'Chicago Portal',lat:41.8781,lng:-87.6298,color:'#b07dff',crashes:96412,fatal:94,ped:2706,cyclist:1998,href:'chicago/'},
+        {name:'Wasatch Front',src:'UDOT',lat:40.7608,lng:-111.8910,color:'#67e8f9',crashes:18099,fatal:54,ped:422,cyclist:178,href:'salt-lake-city/'},
+        {name:'Washington DC',src:'DCGIS',lat:38.9072,lng:-77.0369,color:'#10b981',crashes:20247,fatal:49,ped:880,cyclist:605,href:'dc/'},
+        {name:'Portland Metro',src:'ODOT',lat:45.5152,lng:-122.6784,color:'#f472b6',crashes:14025,fatal:103,ped:279,cyclist:183,href:'portland/'},
+        {name:'Austin',src:'Austin Open Data',lat:30.2672,lng:-97.7431,color:'#0ea5e9',crashes:11855,fatal:92,ped:317,cyclist:194,href:'austin/'},
+        {name:'Detroit',src:'Detroit Open Data',lat:42.3314,lng:-83.0458,color:'#f43f5e',crashes:17323,fatal:72,ped:300,cyclist:111,href:'detroit/'},
+        {name:'Seattle',src:'SDOT',lat:47.6062,lng:-122.3321,color:'#818cf8',crashes:6371,fatal:28,ped:381,cyclist:267,href:'seattle/'},
+        {name:'Los Angeles County',src:'CHP CCRS',lat:34.0522,lng:-118.2437,color:'#f59e0b',crashes:33717,fatal:186,ped:776,cyclist:374,href:'la/'}
+    ];
+    const map=L.map('overviewMap',{zoomControl:true,scrollWheelZoom:false,attributionControl:true}).setView([39.5,-98.0],4);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
+        attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
+        subdomains:'abcd',maxZoom:18
+    }).addTo(map);
+    const maxCrashes=Math.max(...metros.map(m=>m.crashes));
+    metros.forEach(function(m){
+        const r=Math.max(8,8+((m.crashes/maxCrashes)*18));
+        const marker=L.circleMarker([m.lat,m.lng],{
+            radius:r,fillColor:m.color,fillOpacity:0.7,color:m.color,weight:2,opacity:0.9
+        }).addTo(map);
+        marker.on('mouseover',function(){this.setStyle({fillOpacity:1,weight:3,radius:r+3})});
+        marker.on('mouseout',function(){this.setStyle({fillOpacity:0.7,weight:2,radius:r})});
+        const fmt=function(n){return n.toLocaleString()};
+        marker.bindPopup('<div class="map-popup"><div class="map-popup-name" style="color:'+m.color+'">'+m.name+'</div><div class="map-popup-src">'+m.src+' &middot; 2022&ndash;2024</div><div class="map-popup-stats"><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.crashes)+'</div><div class="mp-lbl">crashes</div></div><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.fatal)+'</div><div class="mp-lbl">fatal</div></div><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.ped)+'</div><div class="mp-lbl">pedestrian</div></div><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.cyclist)+'</div><div class="mp-lbl">cyclist</div></div></div><a href="'+m.href+'" class="map-popup-link">Open dashboard &rarr;</a></div>',{closeButton:false,className:'dark-popup'});
+    });
+})();
+</script>
 <script>
 (function(){
     const track=document.getElementById('carTrack');
