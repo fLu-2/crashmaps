@@ -440,15 +440,15 @@ footer a:hover{color:var(--text)}
 (function(){
     const metros=[
         {name:'Denver Metro',src:'CDOT',lat:39.7392,lng:-104.9903,color:'#ff4d4d',crashes:56697,fatal:293,ped:1248,cyclist:810,href:'denver/'},
-        {name:'New York City',src:'NYC Open Data',lat:40.7128,lng:-74.0060,color:'#ffb347',crashes:64475,fatal:146,ped:7465,cyclist:4010,href:'nyc/'},
-        {name:'Chicago',src:'Chicago Portal',lat:41.8781,lng:-87.6298,color:'#b07dff',crashes:96412,fatal:94,ped:2706,cyclist:1998,href:'chicago/'},
-        {name:'Wasatch Front',src:'UDOT',lat:40.7608,lng:-111.8910,color:'#67e8f9',crashes:18099,fatal:54,ped:422,cyclist:178,href:'salt-lake-city/'},
-        {name:'Washington DC',src:'DCGIS',lat:38.9072,lng:-77.0369,color:'#10b981',crashes:20247,fatal:49,ped:880,cyclist:605,href:'dc/'},
-        {name:'Portland Metro',src:'ODOT',lat:45.5152,lng:-122.6784,color:'#f472b6',crashes:14025,fatal:103,ped:279,cyclist:183,href:'portland/'},
-        {name:'Austin',src:'Austin Open Data',lat:30.2672,lng:-97.7431,color:'#0ea5e9',crashes:11855,fatal:92,ped:317,cyclist:194,href:'austin/'},
-        {name:'Detroit',src:'Detroit Open Data',lat:42.3314,lng:-83.0458,color:'#f43f5e',crashes:17323,fatal:72,ped:300,cyclist:111,href:'detroit/'},
-        {name:'Seattle',src:'SDOT',lat:47.6062,lng:-122.3321,color:'#818cf8',crashes:6371,fatal:28,ped:381,cyclist:267,href:'seattle/'},
-        {name:'Los Angeles County',src:'CHP CCRS',lat:34.0522,lng:-118.2437,color:'#f59e0b',crashes:33717,fatal:186,ped:776,cyclist:374,href:'la/'}
+        {name:'New York City',src:'NYC Open Data',lat:40.7128,lng:-74.0060,color:'#ffb347',crashes:193597,fatal:424,ped:20094,cyclist:4010,href:'nyc/'},
+        {name:'Chicago',src:'Chicago Portal',lat:41.8781,lng:-87.6298,color:'#b07dff',crashes:284751,fatal:343,ped:7299,cyclist:1998,href:'chicago/'},
+        {name:'Wasatch Front',src:'UDOT',lat:40.7608,lng:-111.8910,color:'#67e8f9',crashes:54775,fatal:176,ped:1149,cyclist:228,href:'salt-lake-city/'},
+        {name:'Washington DC',src:'DCGIS',lat:38.9072,lng:-77.0369,color:'#10b981',crashes:59899,fatal:127,ped:2479,cyclist:605,href:'dc/'},
+        {name:'Portland Metro',src:'ODOT',lat:45.5152,lng:-122.6784,color:'#f472b6',crashes:39579,fatal:285,ped:878,cyclist:183,href:'portland/'},
+        {name:'Austin',src:'Austin Open Data',lat:30.2672,lng:-97.7431,color:'#0ea5e9',crashes:38126,fatal:298,ped:1007,cyclist:194,href:'austin/'},
+        {name:'Detroit',src:'Detroit Open Data',lat:42.3314,lng:-83.0458,color:'#f43f5e',crashes:52136,fatal:244,ped:911,cyclist:111,href:'detroit/'},
+        {name:'Seattle',src:'SDOT',lat:47.6062,lng:-122.3321,color:'#818cf8',crashes:21242,fatal:84,ped:1095,cyclist:267,href:'seattle/'},
+        {name:'Los Angeles County',src:'CHP CCRS',lat:34.0522,lng:-118.2437,color:'#f59e0b',crashes:94602,fatal:591,ped:1927,cyclist:374,href:'la/'}
     ];
     const map=L.map('overviewMap',{zoomControl:true,scrollWheelZoom:false,attributionControl:true}).setView([39.5,-98.0],4);
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
