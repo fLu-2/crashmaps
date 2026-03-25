@@ -45,7 +45,7 @@ header nav a:hover{color:var(--text)}
 .stat-bar .sb-lbl{font-size:.72rem;color:var(--text-faint);margin-top:4px;line-height:1.4}
 
 /* City list */
-.cities{max-width:1200px;margin:0 auto;padding:0 2rem 0}
+.cities{max-width:1200px;margin:4rem auto 0;padding:0 2rem 0}
 .section-label{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);margin-bottom:1.25rem}
 @media(max-width:768px){.hero{min-height:auto;padding:2rem 1.25rem}.stat-bar{grid-template-columns:repeat(2,1fr)}.hero::before,.hero::after{display:none}.hero-label{margin-bottom:1.25rem}.hero h1{margin-bottom:1rem}.hero-sub{margin-bottom:2rem}}
 .city-list{border:1px solid var(--border);border-radius:14px;overflow:hidden}
@@ -134,7 +134,7 @@ header nav a:hover{color:var(--text)}
 .slc-col .cmp-val{color:var(--cyan)}
 
 /* Overview map */
-.overview-map{max-width:1200px;margin:0 auto;padding:0 2rem 0}
+.overview-map{max-width:1200px;margin:4rem auto 0;padding:0 2rem 0}
 .overview-map .section-label{margin-bottom:1.25rem}
 .map-container{border:1px solid var(--border);border-radius:14px;overflow:hidden;height:420px;position:relative}
 .map-container .leaflet-container{height:100%;width:100%;background:var(--bg-card)}
@@ -451,7 +451,7 @@ footer a:hover{color:var(--text)}
         {name:'Los Angeles County',src:'CHP CCRS',lat:34.0522,lng:-118.2437,color:'#f59e0b',crashes:33717,fatal:186,ped:776,cyclist:374,href:'la/'}
     ];
     const map=L.map('overviewMap',{zoomControl:true,scrollWheelZoom:false,attributionControl:true}).setView([39.5,-98.0],4);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
         attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
         subdomains:'abcd',maxZoom:18
     }).addTo(map);
