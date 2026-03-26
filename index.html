@@ -456,8 +456,9 @@ footer a:hover{color:var(--text)}
         subdomains:'abcd',maxZoom:18
     }).addTo(map);
     const maxCrashes=Math.max(...metros.map(m=>m.crashes));
+    const minCrashes=Math.min(...metros.map(m=>m.crashes));
     metros.forEach(function(m){
-        const r=Math.max(8,8+((m.crashes/maxCrashes)*18));
+        const r=6+Math.sqrt((m.crashes-minCrashes)/(maxCrashes-minCrashes))*24;
         const marker=L.circleMarker([m.lat,m.lng],{
             radius:r,fillColor:m.color,fillOpacity:0.7,color:m.color,weight:2,opacity:0.9
         }).addTo(map);
