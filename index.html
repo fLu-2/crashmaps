@@ -188,9 +188,9 @@ footer a:hover{color:var(--text)}
         <h1>Every crash on <em>every road</em></h1>
         <p class="hero-sub">Interactive, verifiable traffic crash dashboards built from <strong>public DOT data</strong>. No ads. No law firms. No affiliation. Just the numbers.</p>
         <div class="stat-bar">
-            <div class="sb-cell"><div class="sb-val" style="color:var(--red)">1.25M</div><div class="sb-lbl">Crash records processed</div></div>
+            <div class="sb-cell"><div class="sb-val" style="color:var(--red)">1.23M</div><div class="sb-lbl">Crash records processed</div></div>
             <div class="sb-cell"><div class="sb-val" style="color:var(--amber)">1,592</div><div class="sb-lbl">Fatalities (latest yr)</div></div>
-            <div class="sb-cell"><div class="sb-val" style="color:var(--blue)">10</div><div class="sb-lbl">Metro areas</div></div>
+            <div class="sb-cell"><div class="sb-val" style="color:var(--blue)">9</div><div class="sb-lbl">Metro areas</div></div>
             <div class="sb-cell"><div class="sb-val" style="color:var(--green)">$0</div><div class="sb-lbl">Cost to access</div></div>
         </div>
     </div>
@@ -262,16 +262,6 @@ footer a:hover{color:var(--text)}
                 <div class="cs-cell"><div class="cs-val">193,597</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">424</div><div class="cs-lbl">fatal</div></div>
                 <div class="cs-cell"><div class="cs-val">20,094</div><div class="cs-lbl">ped</div></div>
-            </div>
-            <svg class="city-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-        <a href="sf/" class="city-row">
-            <div class="city-dot" style="background:#14b8a6"></div>
-            <div class="city-name">San Francisco<small>CHP CCRS &middot; 2022&ndash;2024</small></div>
-            <div class="city-stats">
-                <div class="cs-cell"><div class="cs-val">16,931</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">114</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">1,847</div><div class="cs-lbl">ped</div></div>
             </div>
             <svg class="city-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -391,15 +381,6 @@ footer a:hover{color:var(--text)}
             <div class="cmp-card-row"><div class="cmp-card-lbl">Pedestrian</div><div class="cmp-card-val" style="color:#f43f5e">406<small>63.4 per 100K</small></div></div>
             <div class="cmp-card-row"><div class="cmp-card-lbl">Cyclist</div><div class="cmp-card-val" style="color:#f43f5e">139<small>21.7 per 100K</small></div></div>
         </div></div>
-        <div class="cmp-card"><div class="cmp-card-hdr"><div class="cmp-card-dot" style="background:#14b8a6"></div><div class="cmp-card-name">San Francisco<small>CHP CCRS &middot; CKAN API &middot; 17K rows</small></div></div><div class="cmp-card-rows">
-            <div class="cmp-card-row"><div class="cmp-card-lbl">Total crashes</div><div class="cmp-card-val" style="color:#14b8a6">5,861</div></div>
-            <div class="cmp-card-row"><div class="cmp-card-lbl">Per 1K residents</div><div class="cmp-card-val" style="color:#14b8a6">6.7<small>pop 870K</small></div></div>
-            <div class="cmp-card-row"><div class="cmp-card-lbl">Fatalities</div><div class="cmp-card-val" style="color:#14b8a6">41<small>4.7 per 100K</small></div></div>
-            <div class="cmp-card-row"><div class="cmp-card-lbl">Speed-related</div><div class="cmp-card-val" style="color:#14b8a6">27.2%<small>1,593</small></div></div>
-            <div class="cmp-card-row"><div class="cmp-card-lbl">DUI / Impairment</div><div class="cmp-card-val" style="color:#14b8a6">8.2%<small>478</small></div></div>
-            <div class="cmp-card-row"><div class="cmp-card-lbl">Pedestrian</div><div class="cmp-card-val" style="color:#14b8a6">675<small>77.6 per 100K</small></div></div>
-            <div class="cmp-card-row"><div class="cmp-card-lbl">Cyclist</div><div class="cmp-card-val" style="color:#14b8a6">471<small>54.1 per 100K</small></div></div>
-        </div></div>
         <div class="cmp-card"><div class="cmp-card-hdr"><div class="cmp-card-dot" style="background:#818cf8"></div><div class="cmp-card-name">Seattle<small>SDOT &middot; ArcGIS API &middot; 21K rows</small></div></div><div class="cmp-card-rows">
             <div class="cmp-card-row"><div class="cmp-card-lbl">Total crashes</div><div class="cmp-card-val" style="color:#818cf8">6,371</div></div>
             <div class="cmp-card-row"><div class="cmp-card-lbl">Per 1K residents</div><div class="cmp-card-val" style="color:#818cf8">9.3<small>pop 687K</small></div></div>
@@ -451,8 +432,7 @@ footer a:hover{color:var(--text)}
         {name:'Austin',src:'Austin Open Data',lat:30.2672,lng:-97.7431,color:'#0ea5e9',crashes:38302,fatal:299,ped:1008,cyclist:194,href:'austin/'},
         {name:'Detroit',src:'Detroit Open Data',lat:42.3314,lng:-83.0458,color:'#f43f5e',crashes:70731,fatal:335,ped:1230,cyclist:139,href:'detroit/'},
         {name:'Seattle',src:'SDOT',lat:47.6062,lng:-122.3321,color:'#818cf8',crashes:21242,fatal:84,ped:1095,cyclist:267,href:'seattle/'},
-        {name:'Los Angeles Metro',src:'CHP CCRS',lat:34.0522,lng:-118.2437,color:'#f59e0b',crashes:307813,fatal:2258,ped:11558,cyclist:2125,href:'la/'},
-        {name:'San Francisco',src:'CHP CCRS',lat:37.7749,lng:-122.4194,color:'#14b8a6',crashes:16931,fatal:114,ped:1847,cyclist:471,href:'sf/'}
+        {name:'Los Angeles Metro',src:'CHP CCRS',lat:34.0522,lng:-118.2437,color:'#f59e0b',crashes:307813,fatal:2258,ped:11558,cyclist:2125,href:'la/'}
     ];
     const map=L.map('overviewMap',{zoomControl:true,scrollWheelZoom:false,attributionControl:true}).setView([39.5,-98.0],4);
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
