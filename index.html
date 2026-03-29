@@ -197,7 +197,7 @@ footer a:hover{color:var(--text)}
 </section>
 
 <section class="overview-map" id="map">
-    <div class="section-label">Coverage Map</div>
+    <div class="section-label">Fatalities per 100K Residents &middot; 2024</div>
     <div class="map-container"><div id="overviewMap"></div></div>
 </section>
 
@@ -442,34 +442,35 @@ footer a:hover{color:var(--text)}
 <script>
 (function(){
     const metros=[
-        {name:'Denver Metro',src:'CDOT',lat:39.7392,lng:-104.9903,color:'#ff4d4d',crashes:139533,fatal:764,ped:2943,cyclist:615,href:'denver/'},
-        {name:'New York City',src:'NYC Open Data',lat:40.7128,lng:-74.0060,color:'#ffb347',crashes:193597,fatal:424,ped:20094,cyclist:4010,href:'nyc/'},
-        {name:'Chicago',src:'Chicago Portal',lat:41.8781,lng:-87.6298,color:'#b07dff',crashes:328006,fatal:386,ped:8224,cyclist:2298,href:'chicago/'},
-        {name:'Wasatch Front',src:'UDOT',lat:40.7608,lng:-111.8910,color:'#67e8f9',crashes:69039,fatal:215,ped:1328,cyclist:265,href:'salt-lake-city/'},
-        {name:'Washington DC',src:'DCGIS',lat:38.9072,lng:-77.0369,color:'#10b981',crashes:59899,fatal:127,ped:2479,cyclist:605,href:'dc/'},
+        {name:'Denver Metro',src:'CDOT',lat:39.7392,lng:-104.9903,color:'#ff4d4d',fatal:255,pop:1645043,crashes:47690,ped:1123,cyclist:615,href:'denver/'},
+        {name:'New York City',src:'NYC Open Data',lat:40.7128,lng:-74.0060,color:'#ffb347',fatal:145,pop:8336817,crashes:64047,ped:6950,cyclist:1337,href:'nyc/'},
+        {name:'Chicago',src:'Chicago Portal',lat:41.8781,lng:-87.6298,color:'#b07dff',fatal:110,pop:2700000,crashes:110846,ped:2741,cyclist:766,href:'chicago/'},
+        {name:'Wasatch Front',src:'UDOT',lat:40.7608,lng:-111.8910,color:'#67e8f9',fatal:69,pop:1100000,crashes:22871,ped:476,cyclist:265,href:'salt-lake-city/'},
+        {name:'Washington DC',src:'DCGIS',lat:38.9072,lng:-77.0369,color:'#10b981',fatal:49,pop:690000,crashes:20247,ped:880,cyclist:605,href:'dc/'},
 
-        {name:'Austin',src:'Austin Open Data',lat:30.2672,lng:-97.7431,color:'#0ea5e9',crashes:38302,fatal:299,ped:1008,cyclist:194,href:'austin/'},
-        {name:'Detroit',src:'Detroit Open Data',lat:42.3314,lng:-83.0458,color:'#f43f5e',crashes:70731,fatal:335,ped:1230,cyclist:139,href:'detroit/'},
-        {name:'Seattle',src:'SDOT',lat:47.6062,lng:-122.3321,color:'#818cf8',crashes:21242,fatal:84,ped:1095,cyclist:267,href:'seattle/'},
-        {name:'Houston Metro',src:'TxDOT CRIS',lat:29.7604,lng:-95.3698,color:'#14b8a6',crashes:368713,fatal:1480,ped:5449,cyclist:731,href:'houston/'},
-        {name:'Los Angeles Metro',src:'CHP CCRS',lat:34.0522,lng:-118.2437,color:'#f59e0b',crashes:307813,fatal:2258,ped:11558,cyclist:2125,href:'la/'}
+        {name:'Austin',src:'Austin Open Data',lat:30.2672,lng:-97.7431,color:'#0ea5e9',fatal:92,pop:1000000,crashes:11911,ped:336,cyclist:65,href:'austin/'},
+        {name:'Detroit',src:'Detroit Open Data',lat:42.3314,lng:-83.0458,color:'#f43f5e',fatal:98,pop:640000,crashes:23560,ped:410,cyclist:46,href:'detroit/'},
+        {name:'Seattle',src:'SDOT',lat:47.6062,lng:-122.3321,color:'#818cf8',fatal:28,pop:737000,crashes:6371,ped:365,cyclist:89,href:'seattle/'},
+        {name:'Houston Metro',src:'TxDOT CRIS',lat:29.7604,lng:-95.3698,color:'#14b8a6',fatal:559,pop:4700000,crashes:133037,ped:2081,cyclist:731,href:'houston/'},
+        {name:'Los Angeles Metro',src:'CHP CCRS',lat:34.0522,lng:-118.2437,color:'#f59e0b',fatal:708,pop:7000000,crashes:104866,ped:4109,cyclist:2125,href:'la/'}
     ];
+    metros.forEach(m=>{m.rate=Math.round(m.fatal/m.pop*100000*10)/10});
     const map=L.map('overviewMap',{zoomControl:true,scrollWheelZoom:false,attributionControl:true}).setView([39.5,-98.0],4);
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
         attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
         subdomains:'abcd',maxZoom:18
     }).addTo(map);
-    const maxCrashes=Math.max(...metros.map(m=>m.crashes));
-    const minCrashes=Math.min(...metros.map(m=>m.crashes));
+    const maxRate=Math.max(...metros.map(m=>m.rate));
+    const minRate=Math.min(...metros.map(m=>m.rate));
     metros.forEach(function(m){
-        const r=6+Math.sqrt((m.crashes-minCrashes)/(maxCrashes-minCrashes))*24;
+        const r=6+Math.sqrt((m.rate-minRate)/(maxRate-minRate))*24;
         const marker=L.circleMarker([m.lat,m.lng],{
             radius:r,fillColor:m.color,fillOpacity:0.7,color:m.color,weight:2,opacity:0.9
         }).addTo(map);
         marker.on('mouseover',function(){this.setStyle({fillOpacity:1,weight:3,radius:r+3})});
         marker.on('mouseout',function(){this.setStyle({fillOpacity:0.7,weight:2,radius:r})});
         const fmt=function(n){return n.toLocaleString()};
-        marker.bindPopup('<div class="map-popup"><div class="map-popup-name" style="color:'+m.color+'">'+m.name+'</div><div class="map-popup-src">'+m.src+' &middot; 2022&ndash;2024</div><div class="map-popup-stats"><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.crashes)+'</div><div class="mp-lbl">crashes</div></div><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.fatal)+'</div><div class="mp-lbl">fatal</div></div><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.ped)+'</div><div class="mp-lbl">pedestrian</div></div><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.cyclist)+'</div><div class="mp-lbl">cyclist</div></div></div><a href="'+m.href+'" class="map-popup-link">Open dashboard &rarr;</a></div>',{closeButton:false,className:'dark-popup'});
+        marker.bindPopup('<div class="map-popup"><div class="map-popup-name" style="color:'+m.color+'">'+m.name+'</div><div class="map-popup-src">'+m.src+' &middot; 2024</div><div class="map-popup-stats"><div class="map-popup-stat" style="grid-column:span 2"><div class="mp-val" style="color:'+m.color+';font-size:1.1rem">'+m.rate+'</div><div class="mp-lbl">fatalities per 100K residents</div></div><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.fatal)+'</div><div class="mp-lbl">people killed</div></div><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.crashes)+'</div><div class="mp-lbl">total crashes</div></div><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.ped)+'</div><div class="mp-lbl">pedestrian</div></div><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.cyclist)+'</div><div class="mp-lbl">cyclist</div></div></div><a href="'+m.href+'" class="map-popup-link">Open dashboard &rarr;</a></div>',{closeButton:false,className:'dark-popup'});
     });
 })();
 </script>
