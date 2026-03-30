@@ -203,144 +203,94 @@ footer a:hover{color:var(--text)}
 
 <section class="trend-context" style="max-width:1200px;margin:4rem auto 0;padding:0 2rem">
     <div class="section-label">Fatality Trends &middot; 2022 &ndash; 2024</div>
-    <!-- National benchmark -->
-    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1rem">
-        <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
-            <div style="font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700;color:var(--text)">US National</div>
-            <div style="display:flex;gap:1.5rem;font-family:'JetBrains Mono',monospace;font-size:.75rem">
-                <div><span style="color:var(--text-faint)">2022</span> <span style="color:var(--text)">42,721</span></div>
-                <div><span style="color:var(--text-faint)">2023</span> <span style="color:var(--text)">40,901</span> <span style="color:#4ade80;font-size:.65rem">&darr;4.3%</span></div>
-                <div><span style="color:var(--text-faint)">2024</span> <span style="color:var(--text)">39,345</span> <span style="color:#4ade80;font-size:.65rem">&darr;3.8%</span></div>
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem 1.75rem">
+        <!-- Narrative headline -->
+        <div style="font-family:'Playfair Display',serif;font-size:clamp(1.1rem,2.5vw,1.35rem);font-weight:700;color:var(--text);line-height:1.4;margin-bottom:.35rem">6 of 10 metros reduced traffic fatalities from 2022 to 2024</div>
+        <div style="font-size:.8rem;color:var(--text-dim);margin-bottom:1.5rem">Nationally, fatalities fell 7.9% over the same period &mdash; from 42,721 to 39,345. <span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text-faint)">NHTSA 2024 Early Estimate</span></div>
+        <!-- Horizontal bar chart -->
+        <div style="display:flex;flex-direction:column;gap:.45rem">
+            <!-- SLC -19.8% -->
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#67e8f9;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Wasatch Front</span></div>
+                <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:40.8%"></div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;19.8%</div>
             </div>
-            <div style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:1.1rem;font-weight:600;color:#4ade80">&darr; 7.9%</div>
-            <div style="font-size:.6rem;color:var(--text-faint)">overall</div>
+            <!-- Austin -19.3% -->
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#0ea5e9;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Austin</span></div>
+                <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:39.8%"></div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;19.3%</div>
+            </div>
+            <!-- Chicago -17.9% -->
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#b07dff;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Chicago</span></div>
+                <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:36.9%"></div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;17.9%</div>
+            </div>
+            <!-- Detroit -14.8% -->
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#f43f5e;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Detroit</span></div>
+                <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:30.5%"></div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;14.8%</div>
+            </div>
+            <!-- LA -11.7% -->
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#f59e0b;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">LA Metro</span></div>
+                <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:24.1%"></div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;11.7%</div>
+            </div>
+            <!-- Seattle -6.7% -->
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#818cf8;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Seattle</span></div>
+                <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.15);width:13.8%"></div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;6.7%</div>
+            </div>
+            <!-- Divider -->
+            <div style="height:1px;background:var(--border);margin:.2rem 0"></div>
+            <!-- Denver -1.5% -->
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#ff4d4d;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Denver</span></div>
+                <div style="height:16px;border-radius:3px;background:rgba(107,114,128,.15);width:3.1%"></div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:var(--text-faint);text-align:right">&darr;1.5%</div>
+            </div>
+            <!-- Houston +4.5% -->
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#14b8a6;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Houston*</span></div>
+                <div style="height:16px;border-radius:3px;background:rgba(248,113,113,.15);width:9.3%"></div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#f87171;text-align:right">&uarr;4.5%</div>
+            </div>
+            <!-- NYC +7.4% -->
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#ffb347;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">NYC</span></div>
+                <div style="height:16px;border-radius:3px;background:rgba(248,113,113,.15);width:15.3%"></div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#f87171;text-align:right">&uarr;7.4%</div>
+            </div>
+            <!-- DC +48.5% -->
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#10b981;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Washington DC</span></div>
+                <div style="height:16px;border-radius:3px;background:rgba(248,113,113,.2);width:100%"></div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#f87171;text-align:right">&uarr;48.5%</div>
+            </div>
         </div>
-        <div style="margin-top:.5rem;font-size:.6rem;color:var(--text-faint)">NHTSA Early Estimate, March 2025. 11 consecutive quarterly declines since Q2 2022.</div>
+        <!-- Expandable detail -->
+        <details style="margin-top:1rem">
+            <summary style="cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text-faint);user-select:none;list-style:none;display:flex;align-items:center;gap:.4rem"><span style="transition:transform .2s">&#9654;</span> Show yearly breakdown</summary>
+            <div style="margin-top:.75rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem">
+                <div style="background:var(--bg);border-radius:6px;padding:.5rem .65rem;font-family:'JetBrains Mono',monospace;font-size:.68rem"><span style="color:var(--text-dim)">Wasatch Front</span><div style="display:flex;justify-content:space-between;margin-top:3px"><span style="color:var(--text-faint)">86</span><span style="color:var(--text-faint)">60</span><span style="color:var(--text)">69</span></div></div>
+                <div style="background:var(--bg);border-radius:6px;padding:.5rem .65rem;font-family:'JetBrains Mono',monospace;font-size:.68rem"><span style="color:var(--text-dim)">Austin</span><div style="display:flex;justify-content:space-between;margin-top:3px"><span style="color:var(--text-faint)">114</span><span style="color:var(--text-faint)">93</span><span style="color:var(--text)">92</span></div></div>
+                <div style="background:var(--bg);border-radius:6px;padding:.5rem .65rem;font-family:'JetBrains Mono',monospace;font-size:.68rem"><span style="color:var(--text-dim)">Chicago</span><div style="display:flex;justify-content:space-between;margin-top:3px"><span style="color:var(--text-faint)">134</span><span style="color:var(--text-faint)">142</span><span style="color:var(--text)">110</span></div></div>
+                <div style="background:var(--bg);border-radius:6px;padding:.5rem .65rem;font-family:'JetBrains Mono',monospace;font-size:.68rem"><span style="color:var(--text-dim)">Detroit</span><div style="display:flex;justify-content:space-between;margin-top:3px"><span style="color:var(--text-faint)">115</span><span style="color:var(--text-faint)">122</span><span style="color:var(--text)">98</span></div></div>
+                <div style="background:var(--bg);border-radius:6px;padding:.5rem .65rem;font-family:'JetBrains Mono',monospace;font-size:.68rem"><span style="color:var(--text-dim)">LA Metro</span><div style="display:flex;justify-content:space-between;margin-top:3px"><span style="color:var(--text-faint)">802</span><span style="color:var(--text-faint)">748</span><span style="color:var(--text)">708</span></div></div>
+                <div style="background:var(--bg);border-radius:6px;padding:.5rem .65rem;font-family:'JetBrains Mono',monospace;font-size:.68rem"><span style="color:var(--text-dim)">Seattle</span><div style="display:flex;justify-content:space-between;margin-top:3px"><span style="color:var(--text-faint)">30</span><span style="color:var(--text-faint)">26</span><span style="color:var(--text)">28</span></div></div>
+                <div style="background:var(--bg);border-radius:6px;padding:.5rem .65rem;font-family:'JetBrains Mono',monospace;font-size:.68rem"><span style="color:var(--text-dim)">Denver</span><div style="display:flex;justify-content:space-between;margin-top:3px"><span style="color:var(--text-faint)">259</span><span style="color:var(--text-faint)">250</span><span style="color:var(--text)">255</span></div></div>
+                <div style="background:var(--bg);border-radius:6px;padding:.5rem .65rem;font-family:'JetBrains Mono',monospace;font-size:.68rem"><span style="color:var(--text-dim)">Houston*</span><div style="display:flex;justify-content:space-between;margin-top:3px"><span style="color:var(--text-faint)">535</span><span style="color:var(--text-faint)">386</span><span style="color:var(--text)">559</span></div></div>
+                <div style="background:var(--bg);border-radius:6px;padding:.5rem .65rem;font-family:'JetBrains Mono',monospace;font-size:.68rem"><span style="color:var(--text-dim)">NYC</span><div style="display:flex;justify-content:space-between;margin-top:3px"><span style="color:var(--text-faint)">135</span><span style="color:var(--text-faint)">144</span><span style="color:var(--text)">145</span></div></div>
+                <div style="background:var(--bg);border-radius:6px;padding:.5rem .65rem;font-family:'JetBrains Mono',monospace;font-size:.68rem"><span style="color:var(--text-dim)">Washington DC</span><div style="display:flex;justify-content:space-between;margin-top:3px"><span style="color:var(--text-faint)">33</span><span style="color:var(--text-faint)">45</span><span style="color:var(--text)">49</span></div></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--text-faint);padding:0 .65rem;margin-top:.25rem"><span>2022</span><span>2023</span><span>2024</span></div>
+        </details>
     </div>
-    <!-- Metro cards -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.75rem">
-        <!-- Austin -->
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.6rem">
-            <div style="display:flex;align-items:center;justify-content:space-between">
-                <div style="display:flex;align-items:center;gap:.5rem"><div style="width:8px;height:8px;border-radius:50%;background:#0ea5e9"></div><span style="font-size:.85rem;font-weight:600">Austin</span></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.95rem;font-weight:700;color:#4ade80">&darr; 19.3%</div>
-            </div>
-            <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.4rem .5rem;background:var(--bg);border-radius:6px">
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2022</div><div style="color:var(--text);font-weight:500">114</div></div>
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2023</div><div style="color:var(--text);font-weight:500">93</div></div>
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2024</div><div style="color:var(--text);font-weight:500">92</div></div>
-            </div>
-        </div>
-        <!-- Chicago -->
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.6rem">
-            <div style="display:flex;align-items:center;justify-content:space-between">
-                <div style="display:flex;align-items:center;gap:.5rem"><div style="width:8px;height:8px;border-radius:50%;background:#b07dff"></div><span style="font-size:.85rem;font-weight:600">Chicago</span></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.95rem;font-weight:700;color:#4ade80">&darr; 17.9%</div>
-            </div>
-            <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.4rem .5rem;background:var(--bg);border-radius:6px">
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2022</div><div style="color:var(--text);font-weight:500">134</div></div>
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2023</div><div style="color:var(--text);font-weight:500">142</div></div>
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2024</div><div style="color:var(--text);font-weight:500">110</div></div>
-            </div>
-        </div>
-        <!-- Detroit -->
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.6rem">
-            <div style="display:flex;align-items:center;justify-content:space-between">
-                <div style="display:flex;align-items:center;gap:.5rem"><div style="width:8px;height:8px;border-radius:50%;background:#f43f5e"></div><span style="font-size:.85rem;font-weight:600">Detroit</span></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.95rem;font-weight:700;color:#4ade80">&darr; 14.8%</div>
-            </div>
-            <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.4rem .5rem;background:var(--bg);border-radius:6px">
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2022</div><div style="color:var(--text);font-weight:500">115</div></div>
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2023</div><div style="color:var(--text);font-weight:500">122</div></div>
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2024</div><div style="color:var(--text);font-weight:500">98</div></div>
-            </div>
-        </div>
-        <!-- LA -->
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.6rem">
-            <div style="display:flex;align-items:center;justify-content:space-between">
-                <div style="display:flex;align-items:center;gap:.5rem"><div style="width:8px;height:8px;border-radius:50%;background:#f59e0b"></div><span style="font-size:.85rem;font-weight:600">LA Metro</span></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.95rem;font-weight:700;color:#4ade80">&darr; 11.7%</div>
-            </div>
-            <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.4rem .5rem;background:var(--bg);border-radius:6px">
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2022</div><div style="color:var(--text);font-weight:500">802</div></div>
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2023</div><div style="color:var(--text);font-weight:500">748</div></div>
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2024</div><div style="color:var(--text);font-weight:500">708</div></div>
-            </div>
-        </div>
-        <!-- Seattle -->
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.6rem">
-            <div style="display:flex;align-items:center;justify-content:space-between">
-                <div style="display:flex;align-items:center;gap:.5rem"><div style="width:8px;height:8px;border-radius:50%;background:#818cf8"></div><span style="font-size:.85rem;font-weight:600">Seattle</span></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.95rem;font-weight:700;color:#4ade80">&darr; 6.7%</div>
-            </div>
-            <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.4rem .5rem;background:var(--bg);border-radius:6px">
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2022</div><div style="color:var(--text);font-weight:500">30</div></div>
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2023</div><div style="color:var(--text);font-weight:500">26</div></div>
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2024</div><div style="color:var(--text);font-weight:500">28</div></div>
-            </div>
-        </div>
-        <!-- SLC -->
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.6rem">
-            <div style="display:flex;align-items:center;justify-content:space-between">
-                <div style="display:flex;align-items:center;gap:.5rem"><div style="width:8px;height:8px;border-radius:50%;background:#67e8f9"></div><span style="font-size:.85rem;font-weight:600">Wasatch Front</span></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.95rem;font-weight:700;color:#4ade80">&darr; 19.8%</div>
-            </div>
-            <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.4rem .5rem;background:var(--bg);border-radius:6px">
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2022</div><div style="color:var(--text);font-weight:500">86</div></div>
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2023</div><div style="color:var(--text);font-weight:500">60</div></div>
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2024</div><div style="color:var(--text);font-weight:500">69</div></div>
-            </div>
-        </div>
-        <!-- Denver -->
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.6rem">
-            <div style="display:flex;align-items:center;justify-content:space-between">
-                <div style="display:flex;align-items:center;gap:.5rem"><div style="width:8px;height:8px;border-radius:50%;background:#ff4d4d"></div><span style="font-size:.85rem;font-weight:600">Denver</span></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.95rem;font-weight:700;color:var(--text-faint)">&darr; 1.5%</div>
-            </div>
-            <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.4rem .5rem;background:var(--bg);border-radius:6px">
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2022</div><div style="color:var(--text);font-weight:500">259</div></div>
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2023</div><div style="color:var(--text);font-weight:500">250</div></div>
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2024</div><div style="color:var(--text);font-weight:500">255</div></div>
-            </div>
-        </div>
-        <!-- Houston -->
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.6rem">
-            <div style="display:flex;align-items:center;justify-content:space-between">
-                <div style="display:flex;align-items:center;gap:.5rem"><div style="width:8px;height:8px;border-radius:50%;background:#14b8a6"></div><span style="font-size:.85rem;font-weight:600">Houston</span></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.95rem;font-weight:700;color:#f87171">&uarr; 4.5%</div>
-            </div>
-            <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.4rem .5rem;background:var(--bg);border-radius:6px">
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2022</div><div style="color:var(--text);font-weight:500">535</div></div>
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2023</div><div style="color:var(--text);font-weight:500">386*</div></div>
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2024</div><div style="color:var(--text);font-weight:500">559</div></div>
-            </div>
-        </div>
-        <!-- NYC -->
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.6rem">
-            <div style="display:flex;align-items:center;justify-content:space-between">
-                <div style="display:flex;align-items:center;gap:.5rem"><div style="width:8px;height:8px;border-radius:50%;background:#ffb347"></div><span style="font-size:.85rem;font-weight:600">NYC</span></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.95rem;font-weight:700;color:#f87171">&uarr; 7.4%</div>
-            </div>
-            <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.4rem .5rem;background:var(--bg);border-radius:6px">
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2022</div><div style="color:var(--text);font-weight:500">135</div></div>
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2023</div><div style="color:var(--text);font-weight:500">144</div></div>
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2024</div><div style="color:var(--text);font-weight:500">145</div></div>
-            </div>
-        </div>
-        <!-- DC -->
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.6rem">
-            <div style="display:flex;align-items:center;justify-content:space-between">
-                <div style="display:flex;align-items:center;gap:.5rem"><div style="width:8px;height:8px;border-radius:50%;background:#10b981"></div><span style="font-size:.85rem;font-weight:600">Washington DC</span></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.95rem;font-weight:700;color:#f87171">&uarr; 48.5%</div>
-            </div>
-            <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.4rem .5rem;background:var(--bg);border-radius:6px">
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2022</div><div style="color:var(--text);font-weight:500">33</div></div>
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2023</div><div style="color:var(--text);font-weight:500">45</div></div>
-                <div style="text-align:center"><div style="color:var(--text-faint);margin-bottom:2px">2024</div><div style="color:var(--text);font-weight:500">49</div></div>
-            </div>
-        </div>
-    </div>
-    <div style="margin-top:1rem;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.7rem 1rem;font-size:.62rem;color:var(--text-faint);line-height:1.6">People killed in traffic crashes within each metro area (local DOT data, not full states). Overall % change is 2022 &rarr; 2024. National figure from NHTSA Early Estimate (March 2025). Sorted by improvement. * Houston 2023 extract may be incomplete; overall uses 2022 &rarr; 2024.</div>
+    <div style="margin-top:.75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.6rem .9rem;font-size:.6rem;color:var(--text-faint);line-height:1.6">People killed in traffic crashes within each metro area (local DOT data, not full states). % change is 2022 &rarr; 2024. National figure from NHTSA Early Estimate (March 2025). * Houston 2023 extract may be incomplete.</div>
 </section>
 
 <section class="cities" id="cities">
