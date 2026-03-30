@@ -158,11 +158,20 @@ header nav a:hover{color:var(--text)}
 .map-popup-link:hover{color:var(--text)}
 @media(max-width:768px){.overview-map{padding:0 1rem}.map-container{height:320px}}
 
-/* About section */
-.about{max-width:1200px;margin:4rem auto 0;padding:0 2rem}
-.about h2{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:700;margin-bottom:1.25rem}
-.about p{color:var(--text-dim);font-size:.92rem;font-weight:300;line-height:1.8;margin-bottom:1rem}
-.about p strong{color:var(--text);font-weight:500}
+/* About + Contact section */
+.about-contact{max-width:1200px;margin:4rem auto 0;padding:0 2rem}
+.about-contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:2.5rem}
+.about-col h2,.contact-col h2{font-family:'Playfair Display',serif;font-size:clamp(1.3rem,3vw,1.6rem);font-weight:700;margin-bottom:1rem}
+.about-col p{color:var(--text-dim);font-size:.85rem;font-weight:300;line-height:1.8;margin-bottom:.85rem}
+.about-col p strong{color:var(--text);font-weight:500}
+.contact-col .cf-input{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;outline:none;transition:border-color .2s;min-height:48px;width:100%;display:block}
+.contact-col .cf-input:focus{border-color:var(--border-hover)}
+.contact-col .cf-input::placeholder{color:var(--text-faint)}
+.contact-col select.cf-input{color:var(--text-dim);cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%236e7290%22 stroke-width=%222%22><path d=%22M6 9l6 6 6-6%22/></svg>');background-repeat:no-repeat;background-position:right .75rem center}
+.contact-col textarea.cf-input{resize:vertical;min-height:100px}
+.contact-col .cf-btn{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.75rem;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.82rem;cursor:pointer;transition:all .2s;letter-spacing:.04em;min-height:48px;width:100%;-webkit-tap-highlight-color:transparent}
+.contact-col .cf-btn:hover{border-color:var(--text-faint)}
+@media(max-width:768px){.about-contact-inner{grid-template-columns:1fr;gap:2rem;padding:1.5rem}}
 
 /* Footer */
 footer{max-width:1200px;margin:4rem auto 0;padding:2rem 2rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:.7rem;color:var(--text-faint);flex-wrap:wrap;gap:1rem}
@@ -515,32 +524,35 @@ footer a:hover{color:var(--text)}
     </div>
 </section>
 
-<section class="about" id="about">
-    <h2>What this is</h2>
-    <p>Every number on these dashboards links back to a <strong>publicly available dataset</strong>. I process raw state and city DOT crash data &mdash; hundreds of thousands of records per year &mdash; and turn it into interactive, searchable, verifiable dashboards that anyone can use.</p>
-    <p>Each dashboard pulls from its city's official crash data source &mdash; CDOT, UDOT, NYC Open Data, Chicago Data Portal, DCGIS, Austin Open Data, SEMCOG, SDOT, CHP CCRS &mdash; normalizes it into a <strong>common schema</strong>, and generates a standalone HTML file with mapped hotspots, corridor overlays, and independently filterable charts covering crash timing, severity, impairment, speed, hit-and-run, and pedestrian safety.</p>
-    <p>The goal is to make crash data accessible to the people who live on these roads &mdash; not just the engineers and bureaucrats who control them. If your city publishes crash data, it can be added to the platform.</p>
-    <p>If you find the dashboards useful, you can <a href="https://buymeacoffee.com/flu.2" target="_blank" style="color:var(--text);font-weight:500;border-bottom:1px solid var(--text-faint)">buy me a coffee</a>.</p>
-    <p style="color:var(--text-faint);font-size:.78rem;margin-top:2rem;font-weight:300">No affiliation with any law firm, insurance company, or government agency. No ads. No analytics. No cookies.</p>
-</section>
-
-<section class="contact" style="max-width:1200px;margin:4rem auto 0;padding:0 2rem">
-    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.3rem,3vw,1.6rem);font-weight:700;margin-bottom:.5rem">Get in touch</h2>
-    <p style="color:var(--text-dim);font-size:.85rem;font-weight:300;line-height:1.6;margin-bottom:1.5rem">Request a city, report a data issue, suggest a feature, or just say hello. Anonymous submissions welcome.</p>
-    <form id="contactForm" action="https://formspree.io/f/mlgobolb" method="POST" style="display:flex;flex-direction:column;gap:.75rem;max-width:520px">
-        <input type="email" name="email" placeholder="Email (optional — leave blank to submit anonymously)" style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;outline:none;transition:border-color .2s;min-height:48px" onfocus="this.style.borderColor='var(--border-hover)'" onblur="this.style.borderColor='var(--border)'">
-        <select name="type" style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;color:var(--text-dim);font-family:'DM Sans',sans-serif;font-size:16px;outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;min-height:48px;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%236e7290%22 stroke-width=%222%22><path d=%22M6 9l6 6 6-6%22/></svg>');background-repeat:no-repeat;background-position:right .75rem center">
-            <option value="general">General feedback</option>
-            <option value="city">Request a city</option>
-            <option value="bug">Report a data issue</option>
-            <option value="feature">Suggest a feature</option>
-        </select>
-        <textarea name="message" placeholder="Your message" required rows="4" style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;outline:none;resize:vertical;min-height:120px;transition:border-color .2s" onfocus="this.style.borderColor='var(--border-hover)'" onblur="this.style.borderColor='var(--border)'"></textarea>
-        <button type="submit" style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.75rem;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.82rem;cursor:pointer;transition:all .2s;letter-spacing:.04em;min-height:48px;-webkit-tap-highlight-color:transparent" onmouseover="this.style.borderColor='var(--text-faint)'" onmouseout="this.style.borderColor='var(--border)'">Send</button>
-    </form>
-    <div id="contactSuccess" style="display:none;max-width:520px;padding:1.25rem;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;text-align:center">
-        <p style="font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--text);margin-bottom:.35rem">Message sent. Thank you.</p>
-        <p style="font-size:.78rem;color:var(--text-faint)">I read every submission.</p>
+<section class="about-contact" id="about">
+    <div class="about-contact-inner">
+        <div class="about-col">
+            <h2>What this is</h2>
+            <p>Every number on these dashboards links back to a <strong>publicly available dataset</strong>. I process raw state and city DOT crash data &mdash; hundreds of thousands of records per year &mdash; and turn it into interactive, searchable, verifiable dashboards that anyone can use.</p>
+            <p>Each dashboard pulls from its city's official crash data source, normalizes it into a <strong>common schema</strong>, and generates a standalone HTML file with mapped hotspots, corridor overlays, and independently filterable charts covering crash timing, severity, impairment, speed, hit-and-run, and pedestrian safety.</p>
+            <p>The goal is to make crash data accessible to the people who live on these roads &mdash; not just the engineers and bureaucrats who control them. If your city publishes crash data, it can be added to the platform.</p>
+            <p>If you find the dashboards useful, you can <a href="https://buymeacoffee.com/flu.2" target="_blank" rel="noopener noreferrer" style="color:var(--text);font-weight:500;border-bottom:1px solid var(--text-faint)">buy me a coffee</a>.</p>
+            <p style="color:var(--text-faint);font-size:.75rem;margin-top:1.5rem;font-weight:300;line-height:1.6">No affiliation with any law firm, insurance company, or government agency. No ads. No analytics. No cookies.</p>
+        </div>
+        <div class="contact-col">
+            <h2>Get in touch</h2>
+            <p style="color:var(--text-dim);font-size:.85rem;font-weight:300;line-height:1.6;margin-bottom:1rem">Request a city, report a data issue, suggest a feature, or just say hello. Anonymous submissions welcome.</p>
+            <form id="contactForm" action="https://formspree.io/f/mlgobolb" method="POST" style="display:flex;flex-direction:column;gap:.75rem">
+                <input type="email" name="email" placeholder="Email (optional)" class="cf-input">
+                <select name="type" class="cf-input">
+                    <option value="general">General feedback</option>
+                    <option value="city">Request a city</option>
+                    <option value="bug">Report a data issue</option>
+                    <option value="feature">Suggest a feature</option>
+                </select>
+                <textarea name="message" placeholder="Your message" required rows="4" class="cf-input"></textarea>
+                <button type="submit" class="cf-btn">Send</button>
+            </form>
+            <div id="contactSuccess" style="display:none;padding:1.25rem;background:var(--bg);border:1px solid var(--border);border-radius:8px;text-align:center">
+                <p style="font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--text);margin-bottom:.35rem">Message sent. Thank you.</p>
+                <p style="font-size:.78rem;color:var(--text-faint)">I read every submission.</p>
+            </div>
+        </div>
     </div>
 </section>
 
