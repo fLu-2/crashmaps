@@ -159,7 +159,7 @@ header nav a:hover{color:var(--text)}
 @media(max-width:768px){.overview-map{padding:0 1rem}.map-container{height:320px}}
 
 /* About section */
-.about{max-width:700px;margin:4rem auto 0;padding:0 2rem}
+.about{max-width:1200px;margin:4rem auto 0;padding:0 2rem}
 .about h2{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:700;margin-bottom:1.25rem}
 .about p{color:var(--text-dim);font-size:.92rem;font-weight:300;line-height:1.8;margin-bottom:1rem}
 .about p strong{color:var(--text);font-weight:500}
@@ -524,20 +524,24 @@ footer a:hover{color:var(--text)}
     <p style="color:var(--text-faint);font-size:.78rem;margin-top:2rem;font-weight:300">No affiliation with any law firm, insurance company, or government agency. No ads. No analytics. No cookies.</p>
 </section>
 
-<section class="contact" style="max-width:520px;margin:4rem auto 0;padding:0 2rem">
+<section class="contact" style="max-width:1200px;margin:4rem auto 0;padding:0 2rem">
     <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.3rem,3vw,1.6rem);font-weight:700;margin-bottom:.5rem">Get in touch</h2>
-    <p style="color:var(--text-dim);font-size:.82rem;font-weight:300;line-height:1.6;margin-bottom:1.25rem">Request a city, report a data issue, suggest a feature, or just say hello.</p>
-    <form action="https://formspree.io/f/mlgobolb" method="POST" style="display:flex;flex-direction:column;gap:.75rem">
-        <input type="email" name="email" placeholder="Your email" required style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.65rem .9rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.85rem;outline:none;transition:border-color .2s" onfocus="this.style.borderColor='var(--border-hover)'" onblur="this.style.borderColor='var(--border)'">
-        <select name="type" style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.65rem .9rem;color:var(--text-dim);font-family:'DM Sans',sans-serif;font-size:.85rem;outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%236e7290%22 stroke-width=%222%22><path d=%22M6 9l6 6 6-6%22/></svg>');background-repeat:no-repeat;background-position:right .75rem center">
+    <p style="color:var(--text-dim);font-size:.85rem;font-weight:300;line-height:1.6;margin-bottom:1.5rem">Request a city, report a data issue, suggest a feature, or just say hello. Anonymous submissions welcome.</p>
+    <form id="contactForm" action="https://formspree.io/f/mlgobolb" method="POST" style="display:flex;flex-direction:column;gap:.75rem;max-width:520px">
+        <input type="email" name="email" placeholder="Email (optional — leave blank to submit anonymously)" style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;outline:none;transition:border-color .2s;min-height:48px" onfocus="this.style.borderColor='var(--border-hover)'" onblur="this.style.borderColor='var(--border)'">
+        <select name="type" style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;color:var(--text-dim);font-family:'DM Sans',sans-serif;font-size:16px;outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;min-height:48px;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%236e7290%22 stroke-width=%222%22><path d=%22M6 9l6 6 6-6%22/></svg>');background-repeat:no-repeat;background-position:right .75rem center">
             <option value="general">General feedback</option>
             <option value="city">Request a city</option>
             <option value="bug">Report a data issue</option>
             <option value="feature">Suggest a feature</option>
         </select>
-        <textarea name="message" placeholder="Your message" required rows="4" style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.65rem .9rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.85rem;outline:none;resize:vertical;min-height:80px;transition:border-color .2s" onfocus="this.style.borderColor='var(--border-hover)'" onblur="this.style.borderColor='var(--border)'"></textarea>
-        <button type="submit" style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.65rem;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.78rem;cursor:pointer;transition:all .2s;letter-spacing:.04em" onmouseover="this.style.borderColor='var(--text-faint)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-dim)'">Send</button>
+        <textarea name="message" placeholder="Your message" required rows="4" style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;outline:none;resize:vertical;min-height:120px;transition:border-color .2s" onfocus="this.style.borderColor='var(--border-hover)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+        <button type="submit" style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.75rem;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.82rem;cursor:pointer;transition:all .2s;letter-spacing:.04em;min-height:48px;-webkit-tap-highlight-color:transparent" onmouseover="this.style.borderColor='var(--text-faint)'" onmouseout="this.style.borderColor='var(--border)'">Send</button>
     </form>
+    <div id="contactSuccess" style="display:none;max-width:520px;padding:1.25rem;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;text-align:center">
+        <p style="font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--text);margin-bottom:.35rem">Message sent. Thank you.</p>
+        <p style="font-size:.78rem;color:var(--text-faint)">I read every submission.</p>
+    </div>
 </section>
 
 <footer>
@@ -628,6 +632,33 @@ footer a:hover{color:var(--text)}
     right.addEventListener('click',function(){pos++;update()});
     window.addEventListener('resize',update);
     update();
+})();
+</script>
+<script>
+(function(){
+    var form=document.getElementById('contactForm');
+    var success=document.getElementById('contactSuccess');
+    if(!form)return;
+    form.addEventListener('submit',function(e){
+        e.preventDefault();
+        var btn=form.querySelector('button[type="submit"]');
+        btn.textContent='Sending\u2026';
+        btn.disabled=true;
+        fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}})
+        .then(function(r){
+            if(r.ok){
+                form.style.display='none';
+                success.style.display='block';
+            }else{
+                btn.textContent='Error \u2014 try again';
+                btn.disabled=false;
+            }
+        })
+        .catch(function(){
+            btn.textContent='Error \u2014 try again';
+            btn.disabled=false;
+        });
+    });
 })();
 </script>
 </body>
