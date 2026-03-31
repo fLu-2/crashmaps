@@ -1266,9 +1266,22 @@ function showReport(lat,lon,addr){
     }
 
     if(total===0){
+        // Check if there are ANY grid cells within ~1.5 miles (0.02 deg)
+        // If not, the point is outside data coverage entirely
+        var anyCells=false;
+        for(var ci=0;ci<grid.length;ci++){
+            var cd=grid[ci][0]-lat,ce=grid[ci][1]-lon;
+            if(cd>0.02||cd<-0.02||ce>0.02||ce<-0.02)continue;
+            anyCells=true;break;
+        }
         resultDiv.style.display='none';
-        notFoundDiv.style.display='none';
-        emptyDiv.style.display='block';
+        if(anyCells){
+            notFoundDiv.style.display='none';
+            emptyDiv.style.display='block';
+        }else{
+            emptyDiv.style.display='none';
+            notFoundDiv.style.display='block';
+        }
         return;
     }
     emptyDiv.style.display='none';
