@@ -101,7 +101,7 @@ header nav a:hover{color:var(--text)}
 .rank-label{display:flex;align-items:center;gap:.4rem}
 .rank-label .rank-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 .rank-label span{font-size:.75rem;color:var(--text-dim)}
-.rank-bar{height:18px;border-radius:4px;transition:width .4s ease}
+.rank-bar{height:18px;border-radius:4px;transition:width .4s ease,background .4s ease}
 .rank-val{font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;text-align:right}
 .rank-na{font-size:.7rem;color:var(--text-faint);font-family:'JetBrains Mono',monospace;font-style:italic}
 .rank-divider{height:1px;background:var(--border);margin:.15rem 0}
@@ -109,6 +109,18 @@ header nav a:hover{color:var(--text)}
 .cmp-sub{font-size:.65rem;color:var(--text-faint);margin-top:.2rem}
 .denver-col .cmp-val{color:var(--red)}
 .slc-col .cmp-val{color:var(--cyan)}
+
+/* National context */
+.nc-wrap{max-width:1200px;margin:3rem auto 0;padding:0 2rem}
+.nc-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem 1.75rem}
+.nc-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1.5rem}
+.nc-val{font-family:'JetBrains Mono',monospace;font-size:clamp(1.15rem,2.5vw,1.4rem);font-weight:600;color:var(--text);margin-bottom:.25rem}
+.nc-lbl{font-size:.65rem;color:var(--text-faint);line-height:1.45}
+.nc-footer{margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap}
+.nc-connect{font-size:.78rem;color:var(--text-dim);font-weight:300}
+.nc-sources{font-family:'JetBrains Mono',monospace;font-size:.55rem;color:var(--text-faint);opacity:.7;flex-shrink:0}
+@media(max-width:1024px){.nc-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:768px){.nc-wrap{padding:0 1rem}.nc-card{padding:1.15rem 1rem}.nc-grid{grid-template-columns:repeat(2,1fr);gap:1.15rem}.nc-footer{flex-direction:column;gap:.5rem}}
 
 /* Overview map */
 .overview-map{max-width:1200px;margin:4rem auto 0;padding:0 2rem 0}
@@ -182,11 +194,12 @@ footer a:hover{color:var(--text)}
         <h1>Every crash on <em>every road</em></h1>
         <p class="hero-sub">Interactive, verifiable traffic crash dashboards built from <strong>public DOT data</strong>. No ads. No law firms. No affiliation. Just the numbers.</p>
         <div class="stat-bar">
-            <div class="sb-cell"><div class="sb-val" style="color:var(--red)">2.16M</div><div class="sb-lbl">Crash records processed</div></div>
+            <div class="sb-cell"><div class="sb-val" style="color:var(--red)">2.23M</div><div class="sb-lbl">Crash records processed</div></div>
             <div class="sb-cell"><div class="sb-val" style="color:var(--amber)">2,928</div><div class="sb-lbl">Fatalities (latest yr)</div></div>
-            <div class="sb-cell"><div class="sb-val" style="color:var(--blue)">15</div><div class="sb-lbl">Metro areas</div></div>
+            <div class="sb-cell"><div class="sb-val" style="color:var(--blue)">18</div><div class="sb-lbl">Metro areas</div></div>
             <div class="sb-cell"><div class="sb-val" style="color:var(--green)">$0</div><div class="sb-lbl">Cost to access</div></div>
         </div>
+        <p style="max-width:560px;margin:1.5rem auto 0;font-size:.8rem;color:var(--text-faint);font-weight:300;line-height:1.6;animation:fadeUp .8s ease .55s both">39,345 people were killed in U.S. traffic crashes in 2024. These 18 metros account for roughly 8% of the national toll. <span style="font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--text-faint);opacity:.7">NHTSA 2024 Early Estimate</span></p>
     </div>
 </section>
 
@@ -199,7 +212,7 @@ footer a:hover{color:var(--text)}
     <div class="section-label">Fatality Trends &middot; 2022 &ndash; 2024</div>
     <div class="trend-context-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem 1.75rem">
         <!-- Narrative headline -->
-        <div style="font-family:'Playfair Display',serif;font-size:clamp(1.1rem,2.5vw,1.35rem);font-weight:700;color:var(--text);line-height:1.4;margin-bottom:.35rem">9 of 15 metros reduced traffic fatalities in latest data</div>
+        <div style="font-family:'Playfair Display',serif;font-size:clamp(1.1rem,2.5vw,1.35rem);font-weight:700;color:var(--text);line-height:1.4;margin-bottom:.35rem">9 of 18 metros reduced traffic fatalities in latest data</div>
         <div style="font-size:.8rem;color:var(--text-dim);margin-bottom:1.5rem">Nationally, fatalities fell 7.9% over the same period &mdash; from 42,721 to 39,345. <span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text-faint)">NHTSA 2024 Early Estimate</span></div>
         <!-- Horizontal bar chart -->
         <div style="display:flex;flex-direction:column;gap:.45rem">
@@ -265,15 +278,33 @@ footer a:hover{color:var(--text)}
                 <div style="height:16px;border-radius:3px;background:rgba(107,114,128,.15);width:9.9%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:var(--text-faint);text-align:right">&darr;4.8%</div>
             </div>
+            <!-- San Jose -2.7% -->
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#d946ef;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">San Jose</span></div>
+                <div style="height:16px;border-radius:3px;background:rgba(107,114,128,.15);width:5.6%"></div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:var(--text-faint);text-align:right">&darr;2.7%</div>
+            </div>
             <!-- Denver -1.5% -->
             <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#ff4d4d;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Denver</span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(107,114,128,.15);width:3.1%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:var(--text-faint);text-align:right">&darr;1.5%</div>
             </div>
+            <!-- Philadelphia 0.0% -->
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#06b6d4;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Philadelphia</span></div>
+                <div style="height:16px;border-radius:3px;background:rgba(107,114,128,.15);width:0.2%"></div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:var(--text-faint);text-align:right">0.0%</div>
+            </div>
             <!-- Boston +2.5% -->
             <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#ec4899;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Boston</span></div>
+                <div style="height:16px;border-radius:3px;background:rgba(248,113,113,.15);width:5.2%"></div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#f87171;text-align:right">&uarr;2.5%</div>
+            </div>
+            <!-- San Francisco +2.5% -->
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#14b8a6;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">San Francisco</span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(248,113,113,.15);width:5.2%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#f87171;text-align:right">&uarr;2.5%</div>
             </div>
@@ -306,6 +337,22 @@ footer a:hover{color:var(--text)}
         <div>% change in traffic fatalities from first to last year in each metro's data range. Local DOT records only (not full states). National baseline: NHTSA 2024 Early Estimate.</div>
     </div>
 </section>
+
+<div class="nc-wrap">
+    <div class="nc-card">
+        <div class="nc-grid">
+            <div class="nc-stat"><div class="nc-val">$340B</div><div class="nc-lbl">Annual direct economic cost of U.S. traffic crashes</div></div>
+            <div class="nc-stat"><div class="nc-val">7,148</div><div class="nc-lbl">Pedestrians struck and killed in 2024</div></div>
+            <div class="nc-stat"><div class="nc-val">75%</div><div class="nc-lbl">of pedestrian fatalities occur after dark</div></div>
+            <div class="nc-stat"><div class="nc-val">87%</div><div class="nc-lbl">of speed-related deaths on non-interstate roads</div></div>
+            <div class="nc-stat"><div class="nc-val">1 in 4</div><div class="nc-lbl">pedestrian deaths involve a hit-and-run driver</div></div>
+        </div>
+        <div class="nc-footer">
+            <div class="nc-connect">These national patterns play out differently in every metro. The dashboards below show how.</div>
+            <div class="nc-sources">NHTSA &middot; GHSA &middot; 2023&ndash;2024 data</div>
+        </div>
+    </div>
+</div>
 
 <section class="cities" id="cities">
     <div class="section-label">Active Dashboards &middot; 3-Year Totals</div>
@@ -401,6 +448,15 @@ footer a:hover{color:var(--text)}
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
+        <a href="philadelphia/" class="city-row">
+            <div class="city-hdr"><div class="city-dot" style="background:#06b6d4"></div><div class="city-name">Philadelphia<small>PennDOT &middot; 2022&ndash;2024</small></div></div>
+            <div class="city-stats">
+                <div class="cs-cell"><div class="cs-val">19,226</div><div class="cs-lbl">crashes</div></div>
+                <div class="cs-cell"><div class="cs-val">355</div><div class="cs-lbl">fatal</div></div>
+                <div class="cs-cell"><div class="cs-val">3,152</div><div class="cs-lbl">ped</div></div>
+            </div>
+            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
         <a href="san-antonio/" class="city-row">
             <div class="city-hdr"><div class="city-dot" style="background:#f97316"></div><div class="city-name">San Antonio<small>TxDOT CRIS &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
@@ -416,6 +472,24 @@ footer a:hover{color:var(--text)}
                 <div class="cs-cell"><div class="cs-val">45,151</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">503</div><div class="cs-lbl">fatal</div></div>
                 <div class="cs-cell"><div class="cs-val">856</div><div class="cs-lbl">ped</div></div>
+            </div>
+            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="sf/" class="city-row">
+            <div class="city-hdr"><div class="city-dot" style="background:#14b8a6"></div><div class="city-name">San Francisco<small>CHP CCRS &middot; 2022&ndash;2024</small></div></div>
+            <div class="city-stats">
+                <div class="cs-cell"><div class="cs-val">16,931</div><div class="cs-lbl">crashes</div></div>
+                <div class="cs-cell"><div class="cs-val">114</div><div class="cs-lbl">fatal</div></div>
+                <div class="cs-cell"><div class="cs-val">1,847</div><div class="cs-lbl">ped</div></div>
+            </div>
+            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="san-jose/" class="city-row">
+            <div class="city-hdr"><div class="city-dot" style="background:#d946ef"></div><div class="city-name">San Jose Metro<small>CHP CCRS &middot; 2022&ndash;2024</small></div></div>
+            <div class="city-stats">
+                <div class="cs-cell"><div class="cs-val">32,021</div><div class="cs-lbl">crashes</div></div>
+                <div class="cs-cell"><div class="cs-val">228</div><div class="cs-lbl">fatal</div></div>
+                <div class="cs-cell"><div class="cs-val">666</div><div class="cs-lbl">ped</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -565,7 +639,10 @@ footer a:hover{color:var(--text)}
         {name:'Dallas',src:'TxDOT CRIS',lat:32.7767,lng:-96.7970,color:'#eab308',fatal:262,pop:2746247,crashes:48809,ped:985,cyclist:229,href:'dallas/'},
         {name:'Fort Worth',src:'TxDOT CRIS',lat:32.7555,lng:-97.3308,color:'#84cc16',fatal:189,pop:2020734,crashes:33850,ped:568,cyclist:231,href:'fort-worth/'},
         {name:'Boston',src:'MassDOT',lat:42.3601,lng:-71.0589,color:'#ec4899',fatal:41,pop:1506167,crashes:17108,ped:544,cyclist:484,href:'boston/'},
-        {name:'San Diego Metro',src:'CHP CCRS',lat:32.7157,lng:-117.1611,color:'#3b82f6',fatal:177,pop:3119509,crashes:16668,ped:323,cyclist:231,href:'san-diego/'}
+        {name:'San Diego Metro',src:'CHP CCRS',lat:32.7157,lng:-117.1611,color:'#3b82f6',fatal:177,pop:3119509,crashes:16668,ped:323,cyclist:231,href:'san-diego/'},
+        {name:'Philadelphia',src:'PennDOT',lat:39.9526,lng:-75.1652,color:'#06b6d4',fatal:118,pop:1480000,crashes:5806,ped:1075,cyclist:289,href:'philadelphia/'},
+        {name:'San Francisco',src:'CHP CCRS',lat:37.7749,lng:-122.4194,color:'#14b8a6',fatal:41,pop:830000,crashes:5861,ped:675,cyclist:470,href:'sf/'},
+        {name:'San Jose Metro',src:'CHP CCRS',lat:37.3382,lng:-121.8863,color:'#d946ef',fatal:71,pop:1880396,crashes:11141,ped:233,cyclist:293,href:'san-jose/'}
     ];
     metros.forEach(m=>{m.rate=Math.round(m.fatal/m.pop*100000*10)/10});
     var initZoom=window.innerWidth<=768?3:4;
@@ -629,13 +706,23 @@ footer a:hover{color:var(--text)}
         {name:'San Diego Metro',color:'#3b82f6',fatal:5.7,speed:37.1,dui:10.9,ped:10.4,cyclist:7.4},
         {name:'Dallas',color:'#eab308',fatal:9.5,speed:23.1,dui:4.7,ped:35.9,cyclist:8.3},
         {name:'Fort Worth',color:'#84cc16',fatal:9.4,speed:24.6,dui:5.0,ped:28.1,cyclist:11.4},
-        {name:'LA Metro',color:'#f59e0b',fatal:9.2,speed:30.0,dui:6.8,ped:53.2,cyclist:27.5}
+        {name:'LA Metro',color:'#f59e0b',fatal:9.2,speed:30.0,dui:6.8,ped:53.2,cyclist:27.5},
+        {name:'Philadelphia',color:'#06b6d4',fatal:8.0,speed:9.3,dui:3.7,ped:72.6,cyclist:19.5},
+        {name:'San Francisco',color:'#14b8a6',fatal:4.9,speed:27.2,dui:8.2,ped:81.3,cyclist:56.7},
+        {name:'San Jose Metro',color:'#d946ef',fatal:3.8,speed:45.3,dui:8.1,ped:12.4,cyclist:15.6}
     ];
     var labels={fatal:'Fatalities per 100K residents',speed:'Speed-related crash rate (%)',dui:'DUI / impairment crash rate (%)',ped:'Pedestrian crashes per 100K residents',cyclist:'Cyclist crashes per 100K residents'};
     var units={fatal:'/100K',speed:'%',dui:'%',ped:'/100K',cyclist:'/100K'};
     var container=document.getElementById('rankRows');
     var subtitle=document.getElementById('rankSubtitle');
     var btns=document.querySelectorAll('#rankToggle .rank-btn');
+    function sevColor(t){
+        /* t=1 worst (red), t=0 best (green). Interpolates red→amber→green */
+        var r,g,b;
+        if(t>0.5){var s=(t-0.5)*2;r=Math.round(239*s+245*(1-s));g=Math.round(68*s+158*(1-s));b=Math.round(68*s+11*(1-s));}
+        else{var s=t*2;r=Math.round(245*s+34*(1-s));g=Math.round(158*s+197*(1-s));b=Math.round(11*s+94*(1-s));}
+        return 'rgb('+r+','+g+','+b+')';
+    }
     function render(metric){
         var withData=[];var noData=[];
         metros.forEach(function(m){if(m[metric]===null)noData.push(m);else withData.push(m);});
@@ -643,10 +730,12 @@ footer a:hover{color:var(--text)}
         var maxVal=withData.length?withData[0][metric]:1;
         subtitle.textContent=labels[metric];
         var html='';
-        withData.forEach(function(m){
+        withData.forEach(function(m,i){
             var pct=Math.round(m[metric]/maxVal*100);
             var val=m[metric]%1===0?m[metric].toFixed(0):m[metric].toFixed(1);
-            html+='<div class="rank-row"><div class="rank-label"><div class="rank-dot" style="background:'+m.color+'"></div><span>'+m.name+'</span></div><div class="rank-bar-cell"><div class="rank-bar" style="width:'+pct+'%;background:'+m.color+';opacity:0.25"></div></div><div class="rank-val" style="color:'+m.color+'">'+val+units[metric]+'</div></div>';
+            var t=withData.length>1?i/(withData.length-1):0;
+            var sc=sevColor(1-t);
+            html+='<div class="rank-row"><div class="rank-label"><div class="rank-dot" style="background:'+m.color+'"></div><span>'+m.name+'</span></div><div class="rank-bar-cell"><div class="rank-bar" style="width:'+pct+'%;background:'+sc+';opacity:0.3"></div></div><div class="rank-val" style="color:'+sc+'">'+val+units[metric]+'</div></div>';
         });
         if(noData.length){
             html+='<div class="rank-divider"></div>';
