@@ -197,9 +197,9 @@ footer a:hover{color:var(--text)}
         <h1>Every crash on <em>every road</em></h1>
         <p class="hero-sub">Interactive, verifiable traffic crash dashboards built from <strong>public DOT data</strong>. No ads. No law firms. No affiliation. Just the numbers.</p>
         <div class="stat-bar">
-            <div class="sb-cell"><div class="sb-val" style="color:var(--red)">2.11M</div><div class="sb-lbl">Crash records processed</div></div>
-            <div class="sb-cell"><div class="sb-val" style="color:var(--amber)">2,751</div><div class="sb-lbl">Fatalities (latest yr)</div></div>
-            <div class="sb-cell"><div class="sb-val" style="color:var(--blue)">13</div><div class="sb-lbl">Metro areas</div></div>
+            <div class="sb-cell"><div class="sb-val" style="color:var(--red)">2.16M</div><div class="sb-lbl">Crash records processed</div></div>
+            <div class="sb-cell"><div class="sb-val" style="color:var(--amber)">2,928</div><div class="sb-lbl">Fatalities (latest yr)</div></div>
+            <div class="sb-cell"><div class="sb-val" style="color:var(--blue)">15</div><div class="sb-lbl">Metro areas</div></div>
             <div class="sb-cell"><div class="sb-val" style="color:var(--green)">$0</div><div class="sb-lbl">Cost to access</div></div>
         </div>
     </div>
@@ -214,7 +214,7 @@ footer a:hover{color:var(--text)}
     <div class="section-label">Fatality Trends &middot; 2022 &ndash; 2024</div>
     <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem 1.75rem">
         <!-- Narrative headline -->
-        <div style="font-family:'Playfair Display',serif;font-size:clamp(1.1rem,2.5vw,1.35rem);font-weight:700;color:var(--text);line-height:1.4;margin-bottom:.35rem">9 of 14 metros reduced traffic fatalities in latest data</div>
+        <div style="font-family:'Playfair Display',serif;font-size:clamp(1.1rem,2.5vw,1.35rem);font-weight:700;color:var(--text);line-height:1.4;margin-bottom:.35rem">9 of 15 metros reduced traffic fatalities in latest data</div>
         <div style="font-size:.8rem;color:var(--text-dim);margin-bottom:1.5rem">Nationally, fatalities fell 7.9% over the same period &mdash; from 42,721 to 39,345. <span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text-faint)">NHTSA 2024 Early Estimate</span></div>
         <!-- Horizontal bar chart -->
         <div style="display:flex;flex-direction:column;gap:.45rem">
@@ -297,6 +297,12 @@ footer a:hover{color:var(--text)}
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#ffb347;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">NYC</span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(248,113,113,.15);width:15.3%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#f87171;text-align:right">&uarr;7.4%</div>
+            </div>
+            <!-- San Diego +11.3% -->
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#3b82f6;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">San Diego</span></div>
+                <div style="height:16px;border-radius:3px;background:rgba(248,113,113,.15);width:23.3%"></div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#f87171;text-align:right">&uarr;11.3%</div>
             </div>
             <!-- DC +48.5% -->
             <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem">
@@ -440,6 +446,16 @@ footer a:hover{color:var(--text)}
             </div>
             <svg class="city-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
+        <a href="san-diego/" class="city-row">
+            <div class="city-dot" style="background:#3b82f6"></div>
+            <div class="city-name">San Diego Metro<small>CHP CCRS &middot; 2022&ndash;2024</small></div>
+            <div class="city-stats">
+                <div class="cs-cell"><div class="cs-val">45,151</div><div class="cs-lbl">crashes</div></div>
+                <div class="cs-cell"><div class="cs-val">503</div><div class="cs-lbl">fatal</div></div>
+                <div class="cs-cell"><div class="cs-val">856</div><div class="cs-lbl">ped</div></div>
+            </div>
+            <svg class="city-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
         <a href="salt-lake-city/" class="city-row">
             <div class="city-dot" style="background:var(--cyan)"></div>
             <div class="city-name">Wasatch Front<small>UDOT &middot; 2022&ndash;2024</small></div>
@@ -480,6 +496,7 @@ footer a:hover{color:var(--text)}
             <div class="carousel-card"><div class="cc-hdr"><div class="cc-dot" style="background:#818cf8"></div><div class="cc-name">Seattle</div><div class="cc-src">SDOT &middot; 21K</div></div><div class="cc-rows"><div class="cc-row"><div class="cc-lbl">Total crashes</div><div class="cc-val" style="color:#818cf8">6,371</div></div><div class="cc-row"><div class="cc-lbl">Per 1K residents</div><div class="cc-val" style="color:#818cf8">9.3<small>pop 687K</small></div></div><div class="cc-row"><div class="cc-lbl">Fatalities</div><div class="cc-val" style="color:#818cf8">28<small>4.1 /100K</small></div></div><div class="cc-row"><div class="cc-lbl">Speed</div><div class="cc-val" style="color:#818cf8">5.7%<small>362</small></div></div><div class="cc-row"><div class="cc-lbl">DUI</div><div class="cc-val" style="color:#818cf8">&mdash;<small>n/a</small></div></div><div class="cc-row"><div class="cc-lbl">Pedestrian</div><div class="cc-val" style="color:#818cf8">381<small>55.5 /100K</small></div></div><div class="cc-row"><div class="cc-lbl">Cyclist</div><div class="cc-val" style="color:#818cf8">267<small>38.9 /100K</small></div></div></div></div>
             <div class="carousel-card"><div class="cc-hdr"><div class="cc-dot" style="background:#14b8a6"></div><div class="cc-name">Houston Metro</div><div class="cc-src">TxDOT CRIS &middot; 393K</div></div><div class="cc-rows"><div class="cc-row"><div class="cc-lbl">Total crashes</div><div class="cc-val" style="color:#14b8a6">124,633</div></div><div class="cc-row"><div class="cc-lbl">Per 1K residents</div><div class="cc-val" style="color:#14b8a6">26.5<small>pop 4.7M</small></div></div><div class="cc-row"><div class="cc-lbl">Fatalities</div><div class="cc-val" style="color:#14b8a6">493<small>10.5 /100K</small></div></div><div class="cc-row"><div class="cc-lbl">Speed</div><div class="cc-val" style="color:#14b8a6">30.6%<small>38,148</small></div></div><div class="cc-row"><div class="cc-lbl">DUI</div><div class="cc-val" style="color:#14b8a6">2.8%<small>3,545</small></div></div><div class="cc-row"><div class="cc-lbl">Pedestrian</div><div class="cc-val" style="color:#14b8a6">2,106<small>44.8 /100K</small></div></div><div class="cc-row"><div class="cc-lbl">Cyclist</div><div class="cc-val" style="color:#14b8a6">765<small>16.3 /100K</small></div></div></div></div>
             <div class="carousel-card"><div class="cc-hdr"><div class="cc-dot" style="background:#f97316"></div><div class="cc-name">San Antonio</div><div class="cc-src">TxDOT CRIS &middot; 177K</div></div><div class="cc-rows"><div class="cc-row"><div class="cc-lbl">Total crashes</div><div class="cc-val" style="color:#f97316">58,105</div></div><div class="cc-row"><div class="cc-lbl">Per 1K residents</div><div class="cc-val" style="color:#f97316">28.1<small>pop 2.07M</small></div></div><div class="cc-row"><div class="cc-lbl">Fatalities</div><div class="cc-val" style="color:#f97316">187<small>9.0 /100K</small></div></div><div class="cc-row"><div class="cc-lbl">Speed</div><div class="cc-val" style="color:#f97316">13.7%<small>7,972</small></div></div><div class="cc-row"><div class="cc-lbl">DUI</div><div class="cc-val" style="color:#f97316">3.2%<small>1,887</small></div></div><div class="cc-row"><div class="cc-lbl">Pedestrian</div><div class="cc-val" style="color:#f97316">952<small>46.1 /100K</small></div></div><div class="cc-row"><div class="cc-lbl">Cyclist</div><div class="cc-val" style="color:#f97316">353<small>17.1 /100K</small></div></div></div></div>
+            <div class="carousel-card"><div class="cc-hdr"><div class="cc-dot" style="background:#3b82f6"></div><div class="cc-name">San Diego Metro</div><div class="cc-src">CHP CCRS &middot; 45K</div></div><div class="cc-rows"><div class="cc-row"><div class="cc-lbl">Total crashes</div><div class="cc-val" style="color:#3b82f6">16,668</div></div><div class="cc-row"><div class="cc-lbl">Per 1K residents</div><div class="cc-val" style="color:#3b82f6">5.3<small>pop 3.12M</small></div></div><div class="cc-row"><div class="cc-lbl">Fatalities</div><div class="cc-val" style="color:#3b82f6">177<small>5.7 /100K</small></div></div><div class="cc-row"><div class="cc-lbl">Speed</div><div class="cc-val" style="color:#3b82f6">37.1%<small>6,176</small></div></div><div class="cc-row"><div class="cc-lbl">DUI</div><div class="cc-val" style="color:#3b82f6">10.9%<small>1,820</small></div></div><div class="cc-row"><div class="cc-lbl">Pedestrian</div><div class="cc-val" style="color:#3b82f6">323<small>10.4 /100K</small></div></div><div class="cc-row"><div class="cc-lbl">Cyclist</div><div class="cc-val" style="color:#3b82f6">231<small>7.4 /100K</small></div></div></div></div>
             <div class="carousel-card"><div class="cc-hdr"><div class="cc-dot" style="background:#eab308"></div><div class="cc-name">Dallas</div><div class="cc-src">TxDOT CRIS &middot; 159K</div></div><div class="cc-rows"><div class="cc-row"><div class="cc-lbl">Total crashes</div><div class="cc-val" style="color:#eab308">48,809</div></div><div class="cc-row"><div class="cc-lbl">Per 1K residents</div><div class="cc-val" style="color:#eab308">17.8<small>pop 2.75M</small></div></div><div class="cc-row"><div class="cc-lbl">Fatalities</div><div class="cc-val" style="color:#eab308">262<small>9.5 /100K</small></div></div><div class="cc-row"><div class="cc-lbl">Speed</div><div class="cc-val" style="color:#eab308">23.1%<small>11,292</small></div></div><div class="cc-row"><div class="cc-lbl">DUI</div><div class="cc-val" style="color:#eab308">4.7%<small>2,284</small></div></div><div class="cc-row"><div class="cc-lbl">Pedestrian</div><div class="cc-val" style="color:#eab308">985<small>35.9 /100K</small></div></div><div class="cc-row"><div class="cc-lbl">Cyclist</div><div class="cc-val" style="color:#eab308">229<small>8.3 /100K</small></div></div></div></div>
             <div class="carousel-card"><div class="cc-hdr"><div class="cc-dot" style="background:#84cc16"></div><div class="cc-name">Fort Worth</div><div class="cc-src">TxDOT CRIS &middot; 99K</div></div><div class="cc-rows"><div class="cc-row"><div class="cc-lbl">Total crashes</div><div class="cc-val" style="color:#84cc16">33,850</div></div><div class="cc-row"><div class="cc-lbl">Per 1K residents</div><div class="cc-val" style="color:#84cc16">16.8<small>pop 2.02M</small></div></div><div class="cc-row"><div class="cc-lbl">Fatalities</div><div class="cc-val" style="color:#84cc16">189<small>9.4 /100K</small></div></div><div class="cc-row"><div class="cc-lbl">Speed</div><div class="cc-val" style="color:#84cc16">24.6%<small>8,312</small></div></div><div class="cc-row"><div class="cc-lbl">DUI</div><div class="cc-val" style="color:#84cc16">5.0%<small>1,701</small></div></div><div class="cc-row"><div class="cc-lbl">Pedestrian</div><div class="cc-val" style="color:#84cc16">568<small>28.1 /100K</small></div></div><div class="cc-row"><div class="cc-lbl">Cyclist</div><div class="cc-val" style="color:#84cc16">231<small>11.4 /100K</small></div></div></div></div>
             <div class="carousel-card"><div class="cc-hdr"><div class="cc-dot" style="background:#f59e0b"></div><div class="cc-name">LA Metro</div><div class="cc-src">CHP CCRS &middot; 308K</div></div><div class="cc-rows"><div class="cc-row"><div class="cc-lbl">Total crashes</div><div class="cc-val" style="color:#f59e0b">104,866</div></div><div class="cc-row"><div class="cc-lbl">Per 1K residents</div><div class="cc-val" style="color:#f59e0b">13.6<small>pop 7.73M</small></div></div><div class="cc-row"><div class="cc-lbl">Fatalities</div><div class="cc-val" style="color:#f59e0b">708<small>9.2 /100K</small></div></div><div class="cc-row"><div class="cc-lbl">Speed</div><div class="cc-val" style="color:#f59e0b">30.0%<small>31,462</small></div></div><div class="cc-row"><div class="cc-lbl">DUI</div><div class="cc-val" style="color:#f59e0b">6.8%<small>7,181</small></div></div><div class="cc-row"><div class="cc-lbl">Pedestrian</div><div class="cc-val" style="color:#f59e0b">4,109<small>53.2 /100K</small></div></div><div class="cc-row"><div class="cc-lbl">Cyclist</div><div class="cc-val" style="color:#f59e0b">2,125<small>27.5 /100K</small></div></div></div></div>
@@ -579,6 +596,15 @@ footer a:hover{color:var(--text)}
             <div class="cmp-card-row"><div class="cmp-card-lbl">Pedestrian</div><div class="cmp-card-val" style="color:#f59e0b">4,109<small>53.2 per 100K</small></div></div>
             <div class="cmp-card-row"><div class="cmp-card-lbl">Cyclist</div><div class="cmp-card-val" style="color:#f59e0b">2,125<small>27.5 per 100K</small></div></div>
         </div></div>
+        <div class="cmp-card"><div class="cmp-card-hdr"><div class="cmp-card-dot" style="background:#3b82f6"></div><div class="cmp-card-name">San Diego Metro<small>CHP CCRS &middot; CKAN API &middot; 45K rows</small></div></div><div class="cmp-card-rows">
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Total crashes</div><div class="cmp-card-val" style="color:#3b82f6">16,668</div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Per 1K residents</div><div class="cmp-card-val" style="color:#3b82f6">5.3<small>pop 3.12M</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Fatalities</div><div class="cmp-card-val" style="color:#3b82f6">177<small>5.7 per 100K</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Speed-related</div><div class="cmp-card-val" style="color:#3b82f6">37.1%<small>6,176</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">DUI / Impairment</div><div class="cmp-card-val" style="color:#3b82f6">10.9%<small>1,820</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Pedestrian</div><div class="cmp-card-val" style="color:#3b82f6">323<small>10.4 per 100K</small></div></div>
+            <div class="cmp-card-row"><div class="cmp-card-lbl">Cyclist</div><div class="cmp-card-val" style="color:#3b82f6">231<small>7.4 per 100K</small></div></div>
+        </div></div>
         <div class="cmp-card"><div class="cmp-card-hdr"><div class="cmp-card-dot" style="background:#f97316"></div><div class="cmp-card-name">San Antonio<small>TxDOT CRIS &middot; CSV extract &middot; 177K rows</small></div></div><div class="cmp-card-rows">
             <div class="cmp-card-row"><div class="cmp-card-lbl">Total crashes</div><div class="cmp-card-val" style="color:#f97316">58,105</div></div>
             <div class="cmp-card-row"><div class="cmp-card-lbl">Per 1K residents</div><div class="cmp-card-val" style="color:#f97316">28.1<small>pop 2.07M</small></div></div>
@@ -668,7 +694,8 @@ footer a:hover{color:var(--text)}
         {name:'San Antonio',src:'TxDOT CRIS',lat:29.4241,lng:-98.4936,color:'#f97316',fatal:187,pop:2067295,crashes:58105,ped:952,cyclist:353,href:'san-antonio/'},
         {name:'Dallas',src:'TxDOT CRIS',lat:32.7767,lng:-96.7970,color:'#eab308',fatal:262,pop:2746247,crashes:48809,ped:985,cyclist:229,href:'dallas/'},
         {name:'Fort Worth',src:'TxDOT CRIS',lat:32.7555,lng:-97.3308,color:'#84cc16',fatal:189,pop:2020734,crashes:33850,ped:568,cyclist:231,href:'fort-worth/'},
-        {name:'Boston',src:'MassDOT',lat:42.3601,lng:-71.0589,color:'#ec4899',fatal:41,pop:1506167,crashes:17108,ped:544,cyclist:484,href:'boston/'}
+        {name:'Boston',src:'MassDOT',lat:42.3601,lng:-71.0589,color:'#ec4899',fatal:41,pop:1506167,crashes:17108,ped:544,cyclist:484,href:'boston/'},
+        {name:'San Diego Metro',src:'CHP CCRS',lat:32.7157,lng:-117.1611,color:'#3b82f6',fatal:177,pop:3119509,crashes:16668,ped:323,cyclist:231,href:'san-diego/'}
     ];
     metros.forEach(m=>{m.rate=Math.round(m.fatal/m.pop*100000*10)/10});
     const map=L.map('overviewMap',{zoomControl:true,scrollWheelZoom:false,attributionControl:true}).setView([39.5,-98.0],4);
