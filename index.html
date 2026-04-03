@@ -151,8 +151,8 @@ header nav a:hover{color:var(--text)}
 /* Trend row tooltips */
 .trend-row{cursor:pointer;position:relative;transition:background .15s;border-radius:6px;padding:2px 6px;margin:0 -6px}
 .trend-row:hover{background:rgba(255,255,255,.03)}
-.trend-row::after{content:'ⓘ';position:absolute;right:-20px;top:50%;transform:translateY(-50%);font-size:.6rem;color:var(--text-faint);opacity:0;transition:opacity .15s}
-.trend-row:hover::after{opacity:1}
+.trend-row .tip-icon{font-size:.55rem;color:var(--text-faint);opacity:.45;transition:opacity .15s;margin-left:.2rem;vertical-align:middle}
+.trend-row:hover .tip-icon{opacity:.8}
 .trend-tip{overflow:hidden;max-height:0;opacity:0;transition:max-height .3s ease,opacity .25s ease,margin .3s ease;margin:0 -6px}
 .trend-tip.open{max-height:200px;opacity:1;margin:2px -6px 4px}
 .trend-tip-inner{padding:.5rem .65rem;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:6px;font-size:.7rem;color:var(--text-dim);line-height:1.55}
@@ -160,7 +160,6 @@ header nav a:hover{color:var(--text)}
 @media(max-width:768px){
     .trend-row{grid-template-columns:1fr auto!important;gap:.25rem .5rem!important}
     .trend-row>:nth-child(2){display:none}
-    .trend-row::after{display:none}
     .trend-context-card{padding:1.25rem 1rem!important}
     .trend-context{padding:0 1rem!important}
 }
@@ -370,6 +369,8 @@ footer a:hover{color:var(--text)}
 (function(){
     var rows=document.querySelectorAll('.trend-row[data-tip]');
     rows.forEach(function(row){
+        var nameSpan=row.querySelector('span[style*="text-dim"]');
+        if(nameSpan){var ic=document.createElement('span');ic.className='tip-icon';ic.textContent='\u24D8';nameSpan.appendChild(ic)}
         row.addEventListener('click',function(e){
             var existing=row.nextElementSibling;
             if(existing&&existing.classList.contains('trend-tip')){
