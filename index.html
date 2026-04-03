@@ -148,9 +148,19 @@ header nav a:hover{color:var(--text)}
 .marker-cluster:hover div{border-color:var(--text-dim);background:rgba(15,17,24,1)}
 .metro-dot{border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
 @media(max-width:768px){.overview-map{padding:0 1rem}.map-container{height:320px}}
+/* Trend row tooltips */
+.trend-row{cursor:pointer;position:relative;transition:background .15s;border-radius:6px;padding:2px 6px;margin:0 -6px}
+.trend-row:hover{background:rgba(255,255,255,.03)}
+.trend-row::after{content:'ⓘ';position:absolute;right:-20px;top:50%;transform:translateY(-50%);font-size:.6rem;color:var(--text-faint);opacity:0;transition:opacity .15s}
+.trend-row:hover::after{opacity:1}
+.trend-tip{overflow:hidden;max-height:0;opacity:0;transition:max-height .3s ease,opacity .25s ease,margin .3s ease;margin:0 -6px}
+.trend-tip.open{max-height:200px;opacity:1;margin:2px -6px 4px}
+.trend-tip-inner{padding:.5rem .65rem;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:6px;font-size:.7rem;color:var(--text-dim);line-height:1.55}
+.trend-tip-inner .tip-src{display:block;margin-top:.25rem;font-family:'JetBrains Mono',monospace;font-size:.55rem;color:var(--text-faint)}
 @media(max-width:768px){
     .trend-row{grid-template-columns:1fr auto!important;gap:.25rem .5rem!important}
     .trend-row>:nth-child(2){display:none}
+    .trend-row::after{display:none}
     .trend-context-card{padding:1.25rem 1rem!important}
     .trend-context{padding:0 1rem!important}
 }
@@ -194,152 +204,153 @@ footer a:hover{color:var(--text)}
         <h1>Every crash on <em>every road</em></h1>
         <p class="hero-sub">Interactive, verifiable traffic crash dashboards built from <strong>public DOT data</strong>. No ads. No law firms. No affiliation. Just the numbers.</p>
         <div class="stat-bar">
-            <div class="sb-cell"><div class="sb-val" style="color:var(--red)">2.45M</div><div class="sb-lbl">Crash records processed</div></div>
-            <div class="sb-cell"><div class="sb-val" style="color:var(--amber)">3,427</div><div class="sb-lbl">Fatalities (latest yr)</div></div>
+            <div class="sb-cell"><div class="sb-val" style="color:var(--red)">2.47M</div><div class="sb-lbl">Crash records processed</div></div>
+            <div class="sb-cell"><div class="sb-val" style="color:var(--amber)">3,881</div><div class="sb-lbl">Fatalities (2024)</div></div>
             <div class="sb-cell"><div class="sb-val" style="color:var(--blue)">21</div><div class="sb-lbl">Metro areas</div></div>
             <div class="sb-cell"><div class="sb-val" style="color:var(--green)">$0</div><div class="sb-lbl">Cost to access</div></div>
         </div>
-        <p style="max-width:560px;margin:1.5rem auto 0;font-size:.8rem;color:var(--text-faint);font-weight:300;line-height:1.6;animation:fadeUp .8s ease .55s both">39,345 people were killed in U.S. traffic crashes in 2024. These 21 metros account for roughly 9% of the national toll. <span style="font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--text-faint);opacity:.7">NHTSA 2024 Early Estimate</span></p>
+        <p style="max-width:560px;margin:1.5rem auto 0;font-size:.8rem;color:var(--text-faint);font-weight:300;line-height:1.6;animation:fadeUp .8s ease .55s both">39,345 people were killed in U.S. traffic crashes in 2024. These 21 metros account for roughly 10% of the national toll. <span style="font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--text-faint);opacity:.7">NHTSA 2024 Early Estimate</span></p>
     </div>
 </section>
 
 <section class="overview-map" id="map">
     <div class="section-label">Fatalities per 100K Residents &middot; 2024</div>
     <div class="map-container"><div id="overviewMap"></div></div>
+    <div style="text-align:center;margin-top:.5rem;font-size:.7rem;color:var(--text-faint);font-family:'DM Sans',sans-serif">Hold <kbd style="background:var(--bg-card);border:1px solid var(--border);border-radius:3px;padding:.1em .35em;font-family:'JetBrains Mono',monospace;font-size:.65rem">Ctrl</kbd> + scroll to zoom the map</div>
 </section>
 
 <section class="trend-context" style="max-width:1200px;margin:4rem auto 0;padding:0 2rem">
     <div class="section-label">Fatality Trends &middot; 2022 &ndash; 2024</div>
     <div class="trend-context-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem 1.75rem">
         <!-- Narrative headline -->
-        <div style="font-family:'Playfair Display',serif;font-size:clamp(1.1rem,2.5vw,1.35rem);font-weight:700;color:var(--text);line-height:1.4;margin-bottom:.35rem">13 of 21 metros reduced traffic fatalities in latest data</div>
+        <div style="font-family:'Playfair Display',serif;font-size:clamp(1.1rem,2.5vw,1.35rem);font-weight:700;color:var(--text);line-height:1.4;margin-bottom:.35rem">12 of 21 metros reduced traffic fatalities in latest data</div>
         <div style="font-size:.8rem;color:var(--text-dim);margin-bottom:1.5rem">Nationally, fatalities fell 7.9% over the same period &mdash; from 42,721 to 39,345. <span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text-faint)">NHTSA 2024 Early Estimate</span></div>
         <!-- Horizontal bar chart -->
         <div style="display:flex;flex-direction:column;gap:.45rem">
             <!-- Sacramento -20.7% -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="Record $149M in CA Office of Traffic Safety grants; city reduced school-zone limits to 15 mph at 115 schools and launched a quick-build safety program." data-src="CA OTS, City of Sacramento Vision Zero">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#fbbf24;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Sacramento</span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:42.7%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;20.7%</div>
             </div>
             <!-- SLC -19.8% -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="Vision Zero adopted Jan 2023 with $2M for traffic calming. UDOT intersection treatments (flashing yellows, cable barriers, roundabouts) cut crashes in half at treated locations." data-src="SLC.gov, Salt Lake Tribune">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#67e8f9;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Wasatch Front</span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:40.8%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;19.8%</div>
             </div>
             <!-- Austin -19.3% -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="$1.3B in Vision Zero investment since 2015. Improved intersections show a 38% average reduction in severe crashes; I-35 pedestrian barriers reduced deaths on that corridor." data-src="City of Austin Vision Zero, Austin Monitor">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#0ea5e9;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Austin</span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:39.8%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;19.3%</div>
             </div>
-            <!-- Dallas -18.6% -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#eab308;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Dallas</span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:38.4%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;18.6%</div>
-            </div>
             <!-- Chicago -17.9% -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="2,100+ safety treatments built (refuge islands, curb extensions, raised crosswalks) and 90+ miles of bikeways. Targeted corridors saw a 39% reduction in fatalities and serious injuries." data-src="CDOT Annual Report, Streetsblog Chicago">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#b07dff;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Chicago</span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:36.9%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;17.9%</div>
             </div>
+            <!-- San Jose -16.8% -->
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="AB 645 speed camera pilot authorized; speed limits reduced on 18 roadways. City received a $12.9M federal grant for corridor safety improvements." data-src="City of San Jose, FHWA SS4A">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#d946ef;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">San Jose</span></div>
+                <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:34.6%"></div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;16.8%</div>
+            </div>
             <!-- Riverside -15.3% -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="Part of a statewide CA trend: pedestrian fatalities fell 15.6% and the state made a record $149M safety investment. Some regression from a particularly high 2022 baseline." data-src="CA OTS, NHTSA">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#f87171;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Riverside</span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:31.5%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;15.3%</div>
             </div>
             <!-- Detroit -14.8% -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="Michigan&rsquo;s Hands-Free Law (June 2023) estimated to prevent 25 fatalities/year statewide. City launched Streets for People safety plan targeting 17 priority corridors with road diets and quick-build treatments." data-src="Cambridge Mobile Telematics, City of Detroit">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#f43f5e;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Detroit</span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:30.5%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;14.8%</div>
             </div>
-            <!-- San Jose -16.8% -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#d946ef;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">San Jose</span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:34.6%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;16.8%</div>
-            </div>
             <!-- LA -11.7% -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="7,000+ safety treatments deployed over the past decade. Speed limits lowered to 15 mph near 200 schools; AB 645 speed camera pilot launched on high-injury streets." data-src="LADOT Annual Report FY 2024&ndash;25">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#f59e0b;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">LA Metro</span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:24.1%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;11.7%</div>
             </div>
-            <!-- San Antonio -11.0% -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
+            <!-- San Antonio -9.0% -->
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="Vision Zero action plan adopted; TxDOT safety campaigns (#EndTheStreakTX) and infrastructure investments on state-maintained urban highways. Received SS4A federal safety grant." data-src="City of San Antonio, TxDOT">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#f97316;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">San Antonio</span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:22.7%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;11.0%</div>
+                <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:18.6%"></div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;9.0%</div>
             </div>
-            <!-- Fort Worth -9.1% -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#84cc16;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Fort Worth</span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:18.8%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;9.1%</div>
+            <!-- Dallas -7.3% -->
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="Vision Zero improvements focused on the High Injury Network; Complete Streets policy adopted. Received SS4A federal safety grant for pedestrian corridor upgrades." data-src="City of Dallas, NCTCOG">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#eab308;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Dallas</span></div>
+                <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:15.1%"></div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;7.3%</div>
             </div>
             <!-- Oakland -7.3% -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="AB 645 speed camera authorization; pandemic-era Slow Streets made permanent on several corridors. Caltrans completed safety improvements on state highways through Oakland." data-src="City of Oakland, Caltrans District 4">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#a78bfa;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Oakland</span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:15.1%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;7.3%</div>
             </div>
             <!-- Seattle -6.7% -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="Default arterial speed limit lowered to 25 mph; expanded school-zone speed cameras. SDOT redesigned Aurora Ave N corridor after high-profile pedestrian fatalities." data-src="SDOT Vision Zero, Seattle Times">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#818cf8;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Seattle</span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.15);width:13.8%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;6.7%</div>
             </div>
             <!-- Divider -->
             <div style="height:1px;background:var(--border);margin:.2rem 0"></div>
-            <!-- Houston -4.8% -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#14b8a6;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Houston</span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(107,114,128,.15);width:9.9%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:var(--text-faint);text-align:right">&darr;4.8%</div>
+            <!-- Fort Worth -3.4% -->
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="Benefiting from TxDOT statewide safety campaigns, but limited city-specific infrastructure interventions documented. High-speed arterials and state highways remain challenging." data-src="TxDOT">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#84cc16;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Fort Worth</span></div>
+                <div style="height:16px;border-radius:3px;background:rgba(107,114,128,.15);width:7.0%"></div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:var(--text-faint);text-align:right">&darr;3.4%</div>
             </div>
             <!-- Denver -1.5% -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="Vision Zero plan in place since 2017 but implementation pace has lagged peers. Fatalities remain near record highs despite targeted corridor improvements on Federal Blvd and Colfax Ave." data-src="Denver Vision Zero, CDOT">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#ff4d4d;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Denver</span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(107,114,128,.15);width:3.1%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:var(--text-faint);text-align:right">&darr;1.5%</div>
             </div>
             <!-- Philadelphia 0.0% -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="Flat despite a Vision Zero plan and SS4A federal grant. Persistent speeding and impaired driving on wide arterials remain primary challenges." data-src="City of Philadelphia Vision Zero">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#06b6d4;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Philadelphia</span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(107,114,128,.15);width:0.2%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:var(--text-faint);text-align:right">0.0%</div>
             </div>
             <!-- Boston +2.5% -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="Small base (40 &rarr; 41 fatalities) means this increase is within statistical noise. Boston has an active Vision Zero program and has lowered default speed limits to 25 mph." data-src="MassDOT, City of Boston">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#ec4899;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Boston</span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(248,113,113,.15);width:5.2%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#f87171;text-align:right">&uarr;2.5%</div>
             </div>
             <!-- San Francisco +2.5% -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="Small base (40 &rarr; 41 fatalities). Vision Zero targets missed despite significant infrastructure investment. Fentanyl-impaired driving and pedestrian vulnerability on wide arterials remain concerns." data-src="SFMTA Vision Zero, SF Chronicle">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#14b8a6;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">San Francisco</span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(248,113,113,.15);width:5.2%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#f87171;text-align:right">&uarr;2.5%</div>
             </div>
-            <!-- NYC +7.4% -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#ffb347;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">NYC</span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(248,113,113,.15);width:15.3%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#f87171;text-align:right">&uarr;7.4%</div>
-            </div>
             <!-- San Diego +3.9% -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="Increase driven primarily by pedestrian and cyclist fatalities on high-speed arterials. The region&rsquo;s sprawling road network and limited transit alternatives contribute to elevated risk." data-src="SANDAG, CHP CCRS">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#3b82f6;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">San Diego</span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(248,113,113,.15);width:8.0%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#f87171;text-align:right">&uarr;3.9%</div>
             </div>
+            <!-- Houston +4.5% -->
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="Sprawling, highway-dominant network with limited pedestrian infrastructure and high VMT per capita. Wide, high-speed arterials account for a disproportionate share of fatalities." data-src="TxDOT CRIS, H-GAC">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#14b8a6;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Houston</span></div>
+                <div style="height:16px;border-radius:3px;background:rgba(248,113,113,.15);width:9.3%"></div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#f87171;text-align:right">&uarr;4.5%</div>
+            </div>
+            <!-- NYC +7.4% -->
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="Uptick despite a decade-old Vision Zero program. Advocates cite reduced traffic enforcement and a rise in reckless driving. Pedestrian and cyclist deaths remain concentrated on outer-borough arterials." data-src="NYC DOT, Transportation Alternatives">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#ffb347;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">NYC</span></div>
+                <div style="height:16px;border-radius:3px;background:rgba(248,113,113,.15);width:15.3%"></div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#f87171;text-align:right">&uarr;7.4%</div>
+            </div>
             <!-- DC +48.5% -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row">
+            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="Small base amplifies the percentage (33 &rarr; 49 fatalities), but the trend is real. DC&rsquo;s Vision Zero goal was zero deaths by 2024. Wards 7 and 8 (east of the Anacostia) account for the majority of fatalities, reflecting deep infrastructure and equity gaps." data-src="DC Vision Zero, DDOT, Greater Greater Washington">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#10b981;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Washington DC</span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(248,113,113,.2);width:100%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#f87171;text-align:right">&uarr;48.5%</div>
@@ -352,9 +363,33 @@ footer a:hover{color:var(--text)}
             <span style="display:inline-flex;align-items:center;gap:.35rem"><span style="width:18px;height:8px;border-radius:2px;background:rgba(107,114,128,.2);display:inline-block"></span><span style="color:var(--text-dim)">Roughly flat</span></span>
             <span style="display:inline-flex;align-items:center;gap:.35rem"><span style="width:18px;height:8px;border-radius:2px;background:rgba(248,113,113,.2);display:inline-block"></span><span style="color:var(--text-dim)">Rose</span></span>
         </div>
-        <div>% change in traffic fatalities from first to last year in each metro's data range. Local DOT records only (not full states). National baseline: NHTSA 2024 Early Estimate.</div>
+        <div>% change in traffic fatalities from first to last year in each metro's data range. Local DOT records only (not full states). National baseline: NHTSA 2024 Early Estimate. <strong style="color:var(--text-dim);font-weight:500">Tap any row for context.</strong></div>
     </div>
 </section>
+<script>
+(function(){
+    var rows=document.querySelectorAll('.trend-row[data-tip]');
+    rows.forEach(function(row){
+        row.addEventListener('click',function(e){
+            var existing=row.nextElementSibling;
+            if(existing&&existing.classList.contains('trend-tip')){
+                if(existing.classList.contains('open')){existing.classList.remove('open');setTimeout(function(){existing.remove()},300);return}
+            }
+            document.querySelectorAll('.trend-tip.open').forEach(function(t){t.classList.remove('open');setTimeout(function(){t.remove()},300)});
+            var tip=document.createElement('div');
+            tip.className='trend-tip';
+            tip.innerHTML='<div class="trend-tip-inner">'+row.getAttribute('data-tip')+'<span class="tip-src">'+row.getAttribute('data-src')+'</span></div>';
+            row.after(tip);
+            requestAnimationFrame(function(){requestAnimationFrame(function(){tip.classList.add('open')})});
+        });
+    });
+    document.addEventListener('click',function(e){
+        if(!e.target.closest('.trend-row')&&!e.target.closest('.trend-tip')){
+            document.querySelectorAll('.trend-tip.open').forEach(function(t){t.classList.remove('open');setTimeout(function(){t.remove()},300)});
+        }
+    });
+})();
+</script>
 
 <div class="nc-wrap">
     <div class="nc-card">
@@ -404,11 +439,11 @@ footer a:hover{color:var(--text)}
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
         <a href="dallas/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:#eab308"></div><div class="city-name">Dallas<small>TxDOT CRIS &middot; 2023&ndash;2025</small></div></div>
+            <div class="city-hdr"><div class="city-dot" style="background:#eab308"></div><div class="city-name">Dallas<small>TxDOT CRIS &middot; 2022&ndash;2024</small></div></div>
             <div class="city-stats">
-                <div class="cs-cell"><div class="cs-val">159,277</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">890</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">3,020</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">172,127</div><div class="cs-lbl">crashes</div></div>
+                <div class="cs-cell"><div class="cs-val">958</div><div class="cs-lbl">fatal</div></div>
+                <div class="cs-cell"><div class="cs-val">3,034</div><div class="cs-lbl">ped</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -431,19 +466,19 @@ footer a:hover{color:var(--text)}
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
         <a href="fort-worth/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:#84cc16"></div><div class="city-name">Fort Worth<small>TxDOT CRIS &middot; 2023&ndash;2025</small></div></div>
+            <div class="city-hdr"><div class="city-dot" style="background:#84cc16"></div><div class="city-name">Fort Worth<small>TxDOT CRIS &middot; 2022&ndash;2024</small></div></div>
             <div class="city-stats">
-                <div class="cs-cell"><div class="cs-val">98,556</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">593</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">1,684</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">97,747</div><div class="cs-lbl">crashes</div></div>
+                <div class="cs-cell"><div class="cs-val">607</div><div class="cs-lbl">fatal</div></div>
+                <div class="cs-cell"><div class="cs-val">1,676</div><div class="cs-lbl">ped</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
         <a href="houston/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:#14b8a6"></div><div class="city-name">Houston Metro<small>TxDOT CRIS &middot; 2023&ndash;2025</small></div></div>
+            <div class="city-hdr"><div class="city-dot" style="background:#14b8a6"></div><div class="city-name">Houston Metro<small>TxDOT CRIS &middot; 2022&ndash;2024</small></div></div>
             <div class="city-stats">
-                <div class="cs-cell"><div class="cs-val">392,647</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">1,570</div><div class="cs-lbl">fatal</div></div>
+                <div class="cs-cell"><div class="cs-val">401,585</div><div class="cs-lbl">crashes</div></div>
+                <div class="cs-cell"><div class="cs-val">1,612</div><div class="cs-lbl">fatal</div></div>
                 <div class="cs-cell"><div class="cs-val">5,933</div><div class="cs-lbl">ped</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -503,20 +538,20 @@ footer a:hover{color:var(--text)}
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
         <a href="san-antonio/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:#f97316"></div><div class="city-name">San Antonio<small>TxDOT CRIS &middot; 2023&ndash;2025</small></div></div>
+            <div class="city-hdr"><div class="city-dot" style="background:#f97316"></div><div class="city-name">San Antonio<small>TxDOT CRIS &middot; 2022&ndash;2024</small></div></div>
             <div class="city-stats">
-                <div class="cs-cell"><div class="cs-val">177,439</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">610</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">2,914</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">177,806</div><div class="cs-lbl">crashes</div></div>
+                <div class="cs-cell"><div class="cs-val">657</div><div class="cs-lbl">fatal</div></div>
+                <div class="cs-cell"><div class="cs-val">2,828</div><div class="cs-lbl">ped</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
         <a href="san-diego/" class="city-row">
             <div class="city-hdr"><div class="city-dot" style="background:#3b82f6"></div><div class="city-name">San Diego Metro<small>CHP CCRS &middot; 2022&ndash;2024</small></div></div>
             <div class="city-stats">
-                <div class="cs-cell"><div class="cs-val">68,529</div><div class="cs-lbl">crashes</div></div>
+                <div class="cs-cell"><div class="cs-val">68,523</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">774</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">3,270</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">3,269</div><div class="cs-lbl">ped</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -670,23 +705,23 @@ footer a:hover{color:var(--text)}
 (function(){
     const metros=[
         {name:'Denver Metro',src:'CDOT',lat:39.7392,lng:-104.9903,color:'#ff4d4d',fatal:255,pop:1645043,crashes:47690,ped:1123,cyclist:615,href:'denver/'},
-        {name:'New York City',src:'NYC Open Data',lat:40.7128,lng:-74.0060,color:'#ffb347',fatal:145,pop:8336817,crashes:64047,ped:6950,cyclist:1337,href:'nyc/'},
-        {name:'Chicago',src:'Chicago Portal',lat:41.8781,lng:-87.6298,color:'#b07dff',fatal:110,pop:2700000,crashes:110846,ped:2741,cyclist:766,href:'chicago/'},
+        {name:'New York City',src:'NYC Open Data',lat:40.7128,lng:-74.0060,color:'#ffb347',fatal:145,pop:8336817,crashes:64047,ped:7413,cyclist:4010,href:'nyc/'},
+        {name:'Chicago',src:'Chicago Portal',lat:41.8781,lng:-87.6298,color:'#b07dff',fatal:110,pop:2700000,crashes:110846,ped:3044,cyclist:2298,href:'chicago/'},
         {name:'Wasatch Front',src:'UDOT',lat:40.7608,lng:-111.8910,color:'#67e8f9',fatal:69,pop:1100000,crashes:22871,ped:476,cyclist:265,href:'salt-lake-city/'},
         {name:'Washington DC',src:'DCGIS',lat:38.9072,lng:-77.0369,color:'#10b981',fatal:49,pop:690000,crashes:20247,ped:880,cyclist:605,href:'dc/'},
 
-        {name:'Austin',src:'Austin Open Data',lat:30.2672,lng:-97.7431,color:'#0ea5e9',fatal:92,pop:1000000,crashes:11911,ped:336,cyclist:65,href:'austin/'},
-        {name:'Detroit',src:'Detroit Open Data',lat:42.3314,lng:-83.0458,color:'#f43f5e',fatal:98,pop:640000,crashes:23560,ped:410,cyclist:46,href:'detroit/'},
-        {name:'Seattle',src:'SDOT',lat:47.6062,lng:-122.3321,color:'#818cf8',fatal:28,pop:737000,crashes:6371,ped:365,cyclist:89,href:'seattle/'},
-        {name:'Houston Metro',src:'TxDOT CRIS',lat:29.7604,lng:-95.3698,color:'#14b8a6',fatal:493,pop:4700000,crashes:124633,ped:2106,cyclist:765,href:'houston/'},
+        {name:'Austin',src:'Austin Open Data',lat:30.2672,lng:-97.7431,color:'#0ea5e9',fatal:92,pop:1000000,crashes:11911,ped:317,cyclist:194,href:'austin/'},
+        {name:'Detroit',src:'Detroit Open Data',lat:42.3314,lng:-83.0458,color:'#f43f5e',fatal:98,pop:640000,crashes:23560,ped:406,cyclist:139,href:'detroit/'},
+        {name:'Seattle',src:'SDOT',lat:47.6062,lng:-122.3321,color:'#818cf8',fatal:28,pop:737000,crashes:6371,ped:381,cyclist:267,href:'seattle/'},
+        {name:'Houston Metro',src:'TxDOT CRIS',lat:29.7604,lng:-95.3698,color:'#14b8a6',fatal:559,pop:4700000,crashes:133037,ped:2081,cyclist:731,href:'houston/'},
         {name:'Los Angeles Metro',src:'CHP CCRS',lat:34.0522,lng:-118.2437,color:'#f59e0b',fatal:708,pop:7000000,crashes:104866,ped:4109,cyclist:2125,href:'la/'},
-        {name:'San Antonio',src:'TxDOT CRIS',lat:29.4241,lng:-98.4936,color:'#f97316',fatal:187,pop:2067295,crashes:58105,ped:952,cyclist:353,href:'san-antonio/'},
-        {name:'Dallas',src:'TxDOT CRIS',lat:32.7767,lng:-96.7970,color:'#eab308',fatal:262,pop:2746247,crashes:48809,ped:985,cyclist:229,href:'dallas/'},
-        {name:'Fort Worth',src:'TxDOT CRIS',lat:32.7555,lng:-97.3308,color:'#84cc16',fatal:189,pop:2020734,crashes:33850,ped:568,cyclist:231,href:'fort-worth/'},
+        {name:'San Antonio',src:'TxDOT CRIS',lat:29.4241,lng:-98.4936,color:'#f97316',fatal:213,pop:2067295,crashes:59784,ped:1014,cyclist:429,href:'san-antonio/'},
+        {name:'Dallas',src:'TxDOT CRIS',lat:32.7767,lng:-96.7970,color:'#eab308',fatal:306,pop:2746247,crashes:51319,ped:1042,cyclist:226,href:'dallas/'},
+        {name:'Fort Worth',src:'TxDOT CRIS',lat:32.7555,lng:-97.3308,color:'#84cc16',fatal:196,pop:2020734,crashes:31772,ped:537,cyclist:196,href:'fort-worth/'},
         {name:'Boston',src:'MassDOT',lat:42.3601,lng:-71.0589,color:'#ec4899',fatal:41,pop:1506167,crashes:17108,ped:544,cyclist:484,href:'boston/'},
         {name:'San Diego Metro',src:'CHP CCRS',lat:32.7157,lng:-117.1611,color:'#3b82f6',fatal:265,pop:3119509,crashes:24469,ped:1131,cyclist:904,href:'san-diego/'},
         {name:'Philadelphia',src:'PennDOT',lat:39.9526,lng:-75.1652,color:'#06b6d4',fatal:118,pop:1480000,crashes:5806,ped:1075,cyclist:289,href:'philadelphia/'},
-        {name:'San Francisco',src:'CHP CCRS',lat:37.7749,lng:-122.4194,color:'#14b8a6',fatal:41,pop:830000,crashes:5861,ped:675,cyclist:470,href:'sf/'},
+        {name:'San Francisco',src:'CHP CCRS',lat:37.7749,lng:-122.4194,color:'#14b8a6',fatal:41,pop:830000,crashes:5861,ped:675,cyclist:471,href:'sf/'},
         {name:'San Jose Metro',src:'CHP CCRS',lat:37.3382,lng:-121.8863,color:'#d946ef',fatal:89,pop:1880396,crashes:13545,ped:498,cyclist:536,href:'san-jose/'},
         {name:'Sacramento',src:'CHP CCRS',lat:38.5816,lng:-121.4944,color:'#fbbf24',fatal:149,pop:1478230,crashes:19499,ped:665,cyclist:564,href:'sacramento/'},
         {name:'Oakland Metro',src:'CHP CCRS',lat:37.8044,lng:-122.2712,color:'#a78bfa',fatal:89,pop:1629451,crashes:19224,ped:696,cyclist:564,href:'oakland/'},
@@ -748,17 +783,17 @@ footer a:hover{color:var(--text)}
         {name:'Boston',color:'#ec4899',fatal:2.7,speed:3.8,dui:0.6,ped:36.1,cyclist:32.1},
         {name:'Austin',color:'#0ea5e9',fatal:8.8,speed:null,dui:null,ped:30.2,cyclist:18.5},
         {name:'Detroit',color:'#f43f5e',fatal:15.3,speed:8.3,dui:2.6,ped:63.4,cyclist:21.7},
-        {name:'Seattle',color:'#818cf8',fatal:4.1,speed:5.7,dui:null,ped:55.5,cyclist:38.9},
-        {name:'Houston Metro',color:'#14b8a6',fatal:10.5,speed:30.6,dui:2.8,ped:44.8,cyclist:16.3},
-        {name:'San Antonio',color:'#f97316',fatal:9.0,speed:13.7,dui:3.2,ped:46.1,cyclist:17.1},
+        {name:'Seattle',color:'#818cf8',fatal:4.1,speed:5.7,dui:null,ped:56.3,cyclist:39.4},
+        {name:'Houston Metro',color:'#14b8a6',fatal:11.8,speed:30.7,dui:2.9,ped:44.1,cyclist:15.5},
+        {name:'San Antonio',color:'#f97316',fatal:10.3,speed:14.0,dui:3.1,ped:49.0,cyclist:20.8},
         {name:'San Diego Metro',color:'#3b82f6',fatal:8.5,speed:31.2,dui:13.0,ped:36.3,cyclist:29.0},
-        {name:'Dallas',color:'#eab308',fatal:9.5,speed:23.1,dui:4.7,ped:35.9,cyclist:8.3},
-        {name:'Fort Worth',color:'#84cc16',fatal:9.4,speed:24.6,dui:5.0,ped:28.1,cyclist:11.4},
-        {name:'LA Metro',color:'#f59e0b',fatal:9.2,speed:30.0,dui:6.8,ped:53.2,cyclist:27.5},
+        {name:'Dallas',color:'#eab308',fatal:11.1,speed:23.8,dui:4.4,ped:37.9,cyclist:8.2},
+        {name:'Fort Worth',color:'#84cc16',fatal:9.7,speed:25.4,dui:5.2,ped:26.6,cyclist:9.7},
+        {name:'Los Angeles Metro',color:'#f59e0b',fatal:10.5,speed:30.0,dui:6.8,ped:60.7,cyclist:31.4},
         {name:'Philadelphia',color:'#06b6d4',fatal:8.0,speed:9.3,dui:3.7,ped:72.6,cyclist:19.5},
         {name:'San Francisco',color:'#14b8a6',fatal:4.9,speed:27.2,dui:8.2,ped:81.3,cyclist:56.7},
         {name:'San Jose Metro',color:'#d946ef',fatal:4.7,speed:40.8,dui:8.6,ped:26.5,cyclist:28.5},
-        {name:'Sacramento',color:'#fbbf24',fatal:10.1,speed:28.8,dui:9.4,ped:45.0,cyclist:38.1},
+        {name:'Sacramento',color:'#fbbf24',fatal:10.1,speed:28.8,dui:9.4,ped:45.0,cyclist:38.2},
         {name:'Oakland Metro',color:'#a78bfa',fatal:5.5,speed:33.4,dui:7.6,ped:42.7,cyclist:34.6},
         {name:'Riverside Metro',color:'#f87171',fatal:11.7,speed:26.7,dui:11.8,ped:30.4,cyclist:20.2}
     ];
