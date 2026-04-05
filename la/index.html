@@ -124,15 +124,16 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .leaflet-control-zoom a:hover{background:#f5f5f5!important}
 .leaflet-control-zoom{border-radius:8px!important;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.15)!important;border:none!important}
 .leaflet-control-attribution{background:rgba(255,255,255,.75)!important;font-size:10px!important;padding:2px 6px!important}
-.rank-table{width:100%;border-collapse:collapse;margin-top:.5rem}
+.rank-table{width:100%;border-collapse:collapse;table-layout:fixed;margin-top:.5rem}
 .rank-table th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:500;color:var(--text-faint);letter-spacing:.05em;text-transform:uppercase;padding:.6rem .75rem;border-bottom:1px solid var(--border)}
-.rank-table td{padding:.75rem;font-size:.88rem;border-bottom:1px solid rgba(28,31,46,.6);vertical-align:middle}
+.rank-table td{padding:.75rem;font-size:.88rem;border-bottom:1px solid rgba(28,31,46,.6);vertical-align:middle;overflow:hidden}
 .rank-table tr:last-child td{border-bottom:none}
 .rank-table tr:hover td{background:rgba(255,255,255,.015)}
 .rank-num{font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:var(--text-faint);width:32px;text-align:center}
-.crash-bar-wrap{display:flex;align-items:center;gap:8px}
-.crash-bar{height:8px;border-radius:4px;background:linear-gradient(90deg,var(--red),var(--amber));min-width:4px}
-.crash-count{font-family:'JetBrains Mono',monospace;font-size:.78rem;font-weight:500;color:var(--amber);min-width:32px}
+.crash-bar-wrap{display:grid;grid-template-columns:1fr 52px;align-items:center;gap:6px}
+.crash-bar-track{position:relative;height:8px}
+.crash-bar{position:absolute;left:0;top:0;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 35%,transparent));min-width:4px;transition:width .3s ease}
+.crash-count{font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:var(--accent);text-align:right;white-space:nowrap}
 
 main{max-width:1200px;margin:0 auto;padding:4rem 2rem 6rem}
 .rule{height:1px;background:var(--border);margin:3rem 0}
@@ -174,11 +175,11 @@ main{max-width:1200px;margin:0 auto;padding:4rem 2rem 6rem}
 .map-legend-row .map-legend-item:last-child{grid-column:1/-1;text-align:center;justify-content:center;font-size:.6rem}
 .chart-metro{padding:6px 10px;font-size:.68rem;min-height:36px}
 .chart-box{height:220px}.chart-box.tall{height:280px}.chart-box.short{height:180px}
-.rank-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.rank-table{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .rank-table td{padding:.6rem .5rem;font-size:.8rem}
 .rank-table th{padding:.5rem;font-size:.65rem}
-.crash-bar-wrap{gap:5px}
-.crash-count{font-size:.72rem;min-width:28px}
+.crash-bar-wrap{grid-template-columns:1fr 44px;gap:4px}
+.crash-count{font-size:.68rem}
 .rank-num{font-size:.68rem}
 .card-top{padding:.85rem 1rem .4rem}
 .sec-desc{font-size:.88rem}
@@ -211,15 +212,15 @@ footer a{color:var(--text-dim);text-decoration:none}
 <section class="hero" id="hero"><div class="hero-inner">
     <div class="hero-label">Los Angeles Metro Crash Analysis &middot; CHP CCRS &middot; 2022&ndash;2024</div>
     <h1>Crashes, Corridors &amp;&nbsp;<em>Dangerous Streets</em></h1>
-    <p class="hero-sub">Where, when, and why traffic crashes happen across Los Angeles, Long Beach, Unincorporated, Glendale, Pasadena, and 12 more cities &mdash; built from CHP CCRS county-wide crash data.</p>
+    <p class="hero-sub">Where, when, and why traffic crashes happen across Los Angeles, Long Beach, Unincorporated, Glendale, and 12 more cities &mdash; built from CHP CCRS crash records.</p>
     <div class="stats-strip">
         <div class="stat-cell"><div class="stat-val red">104,866</div><div class="stat-lbl">Reported crashes (metro, 2024)</div></div>
         <div class="stat-cell"><div class="stat-val amber">708</div><div class="stat-lbl">Traffic fatalities (metro, 2024)</div></div>
         <div class="stat-cell"><div class="stat-val blue">4,109</div><div class="stat-lbl">Pedestrian crashes (metro, 2024)</div></div>
         <div class="stat-cell"><div class="stat-val purple">30.0%</div><div class="stat-lbl">Speed-related rate (metro, 2024)</div></div>
     </div>
+    <div style="text-align:center;margin-top:.7rem;font-size:.7rem;color:var(--text-faint);font-family:DM Sans,sans-serif"><strong style=color:var(--text-dim)>Other LA County</strong> refers to crashes in the metro area not assigned to a specific city.</div>
 </div></section>
-
 <nav class="sticky-nav" id="stickyNav"><div class="sticky-nav-inner">
     <a class="nav-home" href="../">crashmaps</a>
     <a href="#sec-01">01 Map</a>
@@ -605,9 +606,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 
 
 <!-- 10 HIT-AND-RUN -->
-<div class="rule"></div>
-<div class="sec-hdr" id="sec-10"><div class="sec-num">10 &mdash; Hit-and-Run</div><h2 class="sec-title">28.3% of Drivers Flee the Scene</h2><p class="sec-desc">29,626 hit-and-run crashes across the metro. Santa Monica leads at 40.9%.</p></div>
-<div class="grid-2"><div class="card"><div class="card-top"><div><div class="card-title">Hit-and-Run Rate by Hour</div><div class="card-sub" id="hrHourSub">% of crashes that are H&amp;R &middot; All Metro</div></div><select class="chart-metro" id="selHrHour"><option value="all" selected>All Metro</option><option value="Los Angeles">Los Angeles</option>
+<div class="rule"></div><div class="sec-hdr" id="sec-10"><div class="sec-num">10 &mdash; Hit-and-Run</div><h2 class="sec-title">28.3% of Drivers Flee the Scene</h2><p class="sec-desc">29,626 hit-and-run crashes across the metro. Santa Monica leads at 40.9%.</p></div><div class="grid-2"><div class="card"><div class="card-top"><div><div class="card-title">Hit-and-Run Rate by Hour</div><div class="card-sub" id="hrHourSub">% of crashes that are H&amp;R &middot; All Metro</div></div><select class="chart-metro" id="selHrHour"><option value="all" selected>All Metro</option><option value="Los Angeles">Los Angeles</option>
 <option value="Long Beach">Long Beach</option>
 <option value="Unincorporated">Unincorporated</option>
 <option value="Glendale">Glendale</option>
@@ -639,7 +638,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <!-- 12 VISION ZERO -->
 <div class="rule"></div>
 <div class="sec-hdr" id="sec-12"><div class="sec-num">12 &mdash; Vision Zero LA</div><h2 class="sec-title">Vision Zero LA: Progress Toward Zero</h2><p class="sec-desc">Los Angeles Metro adopted Vision Zero LA in 2015, setting a target of 0 traffic fatalities by 2025. The baseline was 260 fatalities in 2015.</p></div>
-<div class="grid-2"><div class="card"><div class="card-top"><div><div class="card-title">Fatalities: Goal vs. Actual</div><div class="card-sub">2015&ndash;2025</div></div></div><div class="chart-box"><canvas id="vzChart"></canvas></div></div></div>
+<div class="card"><div class="card-top"><div><div class="card-title">Fatalities: Goal vs. Actual</div><div class="card-sub">2015&ndash;2025</div></div></div><div class="chart-box"><canvas id="vzChart"></canvas></div></div>
 
 <!-- 13 SOURCES -->
 <div class="rule"></div>
@@ -673,6 +672,8 @@ const temporal={"Los Angeles": {"hourly": [938, 830, 859, 588, 558, 705, 912, 12
 const cities=["Los Angeles", "Long Beach", "Unincorporated", "Glendale", "Pasadena", "Norwalk", "Carson", "Downey", "Santa Monica", "South Gate", "Inglewood", "Bellflower", "Torrance", "Commerce", "Compton", "Lynwood", "Other LA County"];
 
 function getMetroLabel(c){ return c==='all'?'All Metro':c; }
+function titleCase(s){return s.toLowerCase().replace(/(^|[\s\-\/])\w/g,function(c){return c.toUpperCase()})}
+function truncLabel(s,max){return s.length>max?s.slice(0,max-1)+'…':s}
 function agg(fn){ return cities.map(c=>fn(c)).reduce((a,b)=>a.map((v,i)=>v+(b[i]||0))); }
 
 
@@ -703,7 +704,8 @@ function buildDow(city){
     const d=city==='all'?agg(c=>(temporal[c]?.dow||Array(7).fill(0))):(temporal[city]?.dow||Array(7).fill(0));
     if(chDow)chDow.destroy();
     document.getElementById('dowSub').textContent=getMetroLabel(city)+' · CHP CCRS 2024';
-    chDow=new Chart(document.getElementById('dowChart'),{type:'bar',data:{labels:dowLabels,datasets:[{data:d,backgroundColor:d.map((v,i)=>i>=4?'rgba(255,179,71,.6)':'rgba(77,166,255,.5)'),borderRadius:6,maxBarThickness:40}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:TT},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},x:{grid:{display:false}}}}});
+    var dowColors=d.map(function(v,i){return i<5?'#f59e0bb3':'#f59e0b4d'});
+    chDow=new Chart(document.getElementById('dowChart'),{type:'bar',data:{labels:dowLabels,datasets:[{data:d,backgroundColor:dowColors,borderRadius:6,maxBarThickness:40}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,labels:{generateLabels:function(){return[{text:'Weekday (Mon–Fri)',fillStyle:'#f59e0bb3',fontColor:'#8b90a8',strokeStyle:'transparent',lineWidth:0},{text:'Weekend (Sat–Sun)',fillStyle:'#f59e0b4d',fontColor:'#8b90a8',strokeStyle:'transparent',lineWidth:0}]},color:'#8b90a8',font:{family:"'JetBrains Mono',monospace",size:10},boxWidth:12,padding:14}},tooltip:TT},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},x:{grid:{display:false}}}}});
 }
 buildDow('all');
 document.getElementById('selDow').addEventListener('change',function(){buildDow(this.value)});
@@ -747,25 +749,38 @@ document.getElementById('selWdWe').addEventListener('change',function(){buildWdW
 new Chart(document.getElementById('sevChart'),{type:'doughnut',data:{labels:['Fatal','Injury','Property Damage Only'],datasets:[{data:[708,41131,63027],backgroundColor:['rgba(255,77,77,.8)','rgba(255,179,71,.6)','rgba(85,88,115,.5)'],borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{legend:{position:'right',labels:{padding:12,usePointStyle:true,pointStyle:'rectRounded',font:{size:11}}},tooltip:{...TT,callbacks:{label:c=>c.label+': '+c.raw.toLocaleString()+' crashes'}}}}});
 
 // Fatalities by city
-new Chart(document.getElementById('fatalCityChart'),{type:'bar',data:{labels:cities,datasets:[{data:cities.map(c=>cityData[c]?.fatal||0),backgroundColor:cities.map(c=>(cityData[c]?.fatal||0)>=5?'rgba(255,77,77,.75)':'rgba(255,77,77,.4)'),borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+' fatalities'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false}}}}});
+new Chart(document.getElementById('fatalCityChart'),{type:'bar',data:{labels:cities,datasets:[{data:cities.map(c=>cityData[c]?.fatal||0),backgroundColor:'rgba(255,77,77,.65)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+' fatalities'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false}}}}});
 
 // === CRASH TYPE ===
+function shortType(s){
+    s=titleCase(s);
+    if(s.length<=25)return s;
+    s=s.replace(/Same Direction - Both Going Straight-/i,'');
+    s=s.replace(/Same Direction - One Straight-One /i,'');
+    s=s.replace(/Opposite Direction - One Straight-One /i,'Opposing ');
+    s=s.replace(/One Motor Vehicle - /i,'Single Veh: ');
+    s=s.replace(/Angle - Both Going Straight$/i,'Angle');
+    s=s.replace(/Angle - One Straight-One /i,'Angle: ');
+    s=s.replace(/Both Going Straight-/i,'');
+    s=s.replace(/Going Straight$/i,'Straight');
+    return s;
+}
 let chType;
 function buildCrashType(city){
     const d=city==='all'?null:cityData[city];
-    let labels,vals;
+    let fullLabels,labels,vals;
     if(d && d.topTypes && d.topTypes.length){
-        labels=d.topTypes.map(t=>t[0]);vals=d.topTypes.map(t=>t[1]);
+        fullLabels=d.topTypes.map(t=>titleCase(t[0]));vals=d.topTypes.map(t=>t[1]);
     } else {
-        // Aggregate across all cities
         const merged={};
         cities.forEach(c=>{const cd=cityData[c];if(cd&&cd.topTypes)cd.topTypes.forEach(t=>{merged[t[0]]=(merged[t[0]]||0)+t[1]})});
         const sorted=Object.entries(merged).sort((a,b)=>b[1]-a[1]).slice(0,8);
-        labels=sorted.map(s=>s[0]);vals=sorted.map(s=>s[1]);
+        fullLabels=sorted.map(s=>titleCase(s[0]));vals=sorted.map(s=>s[1]);
     }
+    labels=fullLabels.map(l=>shortType(l));
     if(chType)chType.destroy();
     document.getElementById('typeSub').textContent=(city==='all'?'All Metro':city)+' \u00b7 CHP CCRS 2024';
-    chType=new Chart(document.getElementById('crashTypeChart'),{type:'bar',data:{labels,datasets:[{data:vals,backgroundColor:'rgba(255,179,71,.55)',borderRadius:6,maxBarThickness:30}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw.toLocaleString()+' crashes'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false}}}}});
+    chType=new Chart(document.getElementById('crashTypeChart'),{type:'bar',data:{labels,datasets:[{data:vals,backgroundColor:'rgba(255,179,71,.55)',borderRadius:6,maxBarThickness:30}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{title:c=>[fullLabels[c[0].dataIndex]],label:c=>c.raw.toLocaleString()+' crashes'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false},ticks:{autoSkip:false}}}}});
 }
 buildCrashType('all');
 document.getElementById('selCrashType').addEventListener('change',function(){buildCrashType(this.value)});
@@ -776,16 +791,16 @@ function buildFactors(city){
     const d=city==='all'?null:cityData[city];
     let labels,vals;
     if(d && d.topFactors && d.topFactors.length){
-        labels=d.topFactors.map(t=>t[0]);vals=d.topFactors.map(t=>t[1]);
+        labels=d.topFactors.map(t=>shortType(t[0]));vals=d.topFactors.map(t=>t[1]);
     } else {
         const merged={};
         cities.forEach(c=>{const cd=cityData[c];if(cd&&cd.topFactors)cd.topFactors.forEach(t=>{merged[t[0]]=(merged[t[0]]||0)+t[1]})});
         const sorted=Object.entries(merged).sort((a,b)=>b[1]-a[1]).slice(0,8);
-        labels=sorted.map(s=>s[0]);vals=sorted.map(s=>s[1]);
+        labels=sorted.map(s=>shortType(s[0]));vals=sorted.map(s=>s[1]);
     }
     if(chFactors)chFactors.destroy();
     document.getElementById('factorSub').textContent=(city==='all'?'All Metro':city)+' \u00b7 CHP CCRS 2024';
-    chFactors=new Chart(document.getElementById('factorsChart'),{type:'bar',data:{labels,datasets:[{data:vals,backgroundColor:'rgba(77,166,255,.55)',borderRadius:6,maxBarThickness:30}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw.toLocaleString()+' crashes'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false}}}}});
+    chFactors=new Chart(document.getElementById('factorsChart'),{type:'bar',data:{labels,datasets:[{data:vals,backgroundColor:'rgba(77,166,255,.55)',borderRadius:6,maxBarThickness:30}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw.toLocaleString()+' crashes'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:10}}}}}});
 }
 buildFactors('all');
 document.getElementById('selFactors').addEventListener('change',function(){buildFactors(this.value)});
@@ -794,7 +809,8 @@ document.getElementById('selFactors').addEventListener('change',function(){build
 const popData={"Los Angeles": 3898747, "Long Beach": 466742, "Unincorporated": 1049000, "Glendale": 196543, "Pasadena": 138699, "Norwalk": 105549, "Carson": 95374, "Downey": 111772, "Santa Monica": 93076, "South Gate": 94396, "Inglewood": 107762, "Bellflower": 79904, "Torrance": 144642, "Commerce": 12748, "Compton": 97877, "Lynwood": 72488};
 const pcLabels=cities.filter(c=>popData[c]&&cityData[c]);
 const pcVals=pcLabels.map(c=>parseFloat(((cityData[c].total/popData[c])*1000).toFixed(1)));
-new Chart(document.getElementById('perCapitaChart'),{type:'bar',data:{labels:pcLabels,datasets:[{data:pcVals,backgroundColor:'#f59e0bb3',borderRadius:6,maxBarThickness:36}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+' per 1,000 residents'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Crashes per 1,000 residents',color:'#555873',font:{size:11}}},y:{grid:{display:false}}}}});
+var pcBox=document.getElementById('perCapitaChart').parentElement;pcBox.style.height=Math.max(260,pcLabels.length*36)+'px';
+new Chart(document.getElementById('perCapitaChart'),{type:'bar',data:{labels:pcLabels,datasets:[{data:pcVals,backgroundColor:'#f59e0bb3',borderRadius:6,maxBarThickness:36}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+' per 1,000 residents'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Crashes per 1,000 residents',color:'#555873',font:{size:11}}},y:{grid:{display:false},ticks:{autoSkip:false}}}}});
 
 // === DUI HOURLY ===
 let chImpHour;
@@ -1484,11 +1500,10 @@ function renderIntersectionTable(){
     const crashHdr=rateMode?'Crashes':'<span style="color:var(--red)">Crashes ↓</span>';
     const rateHdr=rateMode?'<span style="color:#6bb5ff">Rate ↓</span>':'Rate';
 
-    document.getElementById('intersectionTable').innerHTML='<thead><tr><th style="width:40px">#</th><th>Intersection</th><th>'+crashHdr+'</th><th style="min-width:90px">'+rateHdr+'</th></tr></thead><tbody>'+all.map((i,idx)=>{
+    document.getElementById('intersectionTable').innerHTML='<thead><tr><th style="width:40px">#</th><th>Intersection</th><th style="width:45%">'+crashHdr+'</th><th style="width:90px">'+rateHdr+'</th></tr></thead><tbody>'+all.map((i,idx)=>{
         const crashPct=i.c/maxCrash*100;
-        const barStyle=rateMode?'':'background:linear-gradient(90deg,rgba(255,77,77,.45),rgba(255,77,77,.15))';
         const cityLabel=currentCity==='all'?'<span style="display:block;font-size:.68rem;color:var(--amber);font-weight:400;font-family:JetBrains Mono,monospace">'+i.city+'</span>':'';
-        return '<tr><td class="rank-num">'+(idx+1)+'</td><td style="font-weight:500">'+i.n+cityLabel+'</td><td><div class="crash-bar-wrap"><div class="crash-bar" style="width:'+crashPct+'%;'+barStyle+'"></div><span class="crash-count">'+(rateMode?'<span style="color:var(--text-dim)">'+i.c+'</span>':i.c)+'</span></div></td><td style="font-size:.82rem;font-family:JetBrains Mono,monospace;color:'+(rateMode?'#6bb5ff':'var(--text-faint)')+'">'+i.rate+'/M</td></tr>';
+        return '<tr><td class="rank-num">'+(idx+1)+'</td><td style="font-weight:500">'+i.n+cityLabel+'</td><td><div class="crash-bar-wrap"><div class="crash-bar-track"><div class="crash-bar" style="width:'+crashPct+'%'+(rateMode?';opacity:.4':'')+'"></div></div><span class="crash-count">'+(rateMode?'<span style="color:var(--text-dim)">'+i.c+'</span>':i.c)+'</span></div></td><td style="font-size:.82rem;font-family:JetBrains Mono,monospace;color:'+(rateMode?'var(--accent)':'var(--text-faint)')+'">'+i.rate+'/M</td></tr>';
     }).join('')+'</tbody>';
 }
 renderIntersectionTable();
@@ -1555,6 +1570,7 @@ renderIntersectionTable();
     if(location.hash) setTimeout(applyDeepLink,500);
     window.addEventListener('hashchange',applyDeepLink);
 })();
+
 </script>
 </body>
 </html>
