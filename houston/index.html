@@ -1522,24 +1522,30 @@ renderIntersectionTable();
 
 // === FORCE CHART REDRAW ===
 (function(){
-    var resized=new Set();
-    function resizeAll(){Object.values(Chart.instances).forEach(function(c){c.resize()})}
+    function forceRedraw(){
+        Object.values(Chart.instances).forEach(function(c){
+            c.resize();
+            c.update('none');
+        });
+    }
+    // Double-RAF ensures browser has completed layout before we redraw
+    requestAnimationFrame(function(){requestAnimationFrame(forceRedraw)});
+    // Also on window load in case scripts ran before layout
+    window.addEventListener('load',function(){
+        forceRedraw();
+        setTimeout(forceRedraw,300);
+    });
+    // IntersectionObserver for charts that are below the fold
     var obs=new IntersectionObserver(function(entries){
         entries.forEach(function(e){
             if(e.isIntersecting){
-                var canvas=e.target;
-                var id=canvas.id;
-                if(!resized.has(id)){
-                    resized.add(id);
-                    var inst=Object.values(Chart.instances).find(function(c){return c.canvas===canvas});
-                    if(inst)inst.resize();
-                }
-                obs.unobserve(canvas);
+                var inst=Object.values(Chart.instances).find(function(c){return c.canvas===e.target});
+                if(inst){inst.resize();inst.update('none')}
+                obs.unobserve(e.target);
             }
         });
-    },{rootMargin:'200px'});
+    },{rootMargin:'300px'});
     document.querySelectorAll('.chart-box canvas').forEach(function(c){obs.observe(c)});
-    window.addEventListener('load',function(){setTimeout(resizeAll,100);setTimeout(resizeAll,500);setTimeout(resizeAll,1500)});
 })();
 
 </script>
