@@ -1441,11 +1441,26 @@ renderIntersectionTable();
 })();
 
 // === FORCE CHART REDRAW ===
-window.addEventListener('load',function(){
-    setTimeout(function(){
-        Object.values(Chart.instances).forEach(function(c){c.resize()});
-    },200);
-});
+(function(){
+    var resized=new Set();
+    function resizeAll(){Object.values(Chart.instances).forEach(function(c){c.resize()})}
+    var obs=new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+            if(e.isIntersecting){
+                var canvas=e.target;
+                var id=canvas.id;
+                if(!resized.has(id)){
+                    resized.add(id);
+                    var inst=Object.values(Chart.instances).find(function(c){return c.canvas===canvas});
+                    if(inst)inst.resize();
+                }
+                obs.unobserve(canvas);
+            }
+        });
+    },{rootMargin:'200px'});
+    document.querySelectorAll('.chart-box canvas').forEach(function(c){obs.observe(c)});
+    window.addEventListener('load',function(){setTimeout(resizeAll,100);setTimeout(resizeAll,500);setTimeout(resizeAll,1500)});
+})();
 
 </script>
 </body>
