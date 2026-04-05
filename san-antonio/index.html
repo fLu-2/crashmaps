@@ -511,13 +511,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <!-- 11 PEDESTRIANS & CYCLISTS -->
 <div class="rule"></div>
 <div class="sec-hdr" id="sec-11"><div class="sec-num">11 &mdash; Pedestrians &amp; Cyclists</div><h2 class="sec-title">The Most Vulnerable on Metro Streets</h2><p class="sec-desc">1014 pedestrian crashes and 429 cyclist crashes across the metro in 2024.</p></div>
-<div class="grid-2">
-    <div class="card"><div class="card-top"><div><div class="card-title">Pedestrian Crashes by City</div><div class="card-sub">TxDOT CRIS 2024</div></div></div><div class="chart-box"><canvas id="pedCityChart"></canvas></div></div>
-    <div class="card callout" style="border:1px solid var(--border);border-radius:12px;background:var(--card)">
-        <div class="callout-val" style="color:var(--blue)">1014</div>
-        <div class="callout-desc">pedestrian crashes in 2024. San Antonio accounts for 916 &mdash; 90% of the metro total despite having 72% of the population.</div>
-    </div>
-</div>
+<div class="card"><div class="card-top"><div><div class="card-title">Pedestrian Crashes by City</div><div class="card-sub">TxDOT CRIS 2024</div></div></div><div class="chart-box"><canvas id="pedCityChart"></canvas></div><div style="padding:.6rem 1.25rem .85rem;font-size:.75rem;color:var(--text-dim);font-family:DM Sans,sans-serif;border-top:1px solid var(--border);text-align:center"><span style="font-family:JetBrains Mono,monospace;font-weight:600;color:var(--blue)">1014</span> pedestrian crashes in 2024. San Antonio accounts for 916 &mdash; 90% of the metro total despite having 72% of the population.</div></div>
 
 <!-- 12 VISION ZERO -->
 <div class="rule"></div>
@@ -633,7 +627,8 @@ document.getElementById('selWdWe').addEventListener('change',function(){buildWdW
 new Chart(document.getElementById('sevChart'),{type:'doughnut',data:{labels:['Fatal','Injury','Property Damage Only'],datasets:[{data:[213,14582,44989],backgroundColor:['rgba(255,77,77,.8)','rgba(255,179,71,.6)','rgba(85,88,115,.5)'],borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{legend:{position:'right',labels:{padding:12,usePointStyle:true,pointStyle:'rectRounded',font:{size:11}}},tooltip:{...TT,callbacks:{label:c=>c.label+': '+c.raw.toLocaleString()+' crashes'}}}}});
 
 // Fatalities by city
-new Chart(document.getElementById('fatalCityChart'),{type:'bar',data:{labels:cities,datasets:[{data:cities.map(c=>cityData[c]?.fatal||0),backgroundColor:'rgba(255,77,77,.65)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+' fatalities'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false}}}}});
+var fatBox=document.getElementById('fatalCityChart').parentElement;fatBox.style.height=Math.max(260,cities.length*36)+'px';
+new Chart(document.getElementById('fatalCityChart'),{type:'bar',data:{labels:cities,datasets:[{data:cities.map(c=>cityData[c]?.fatal||0),backgroundColor:'rgba(255,77,77,.65)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+' fatalities'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false},ticks:{autoSkip:false}}}}});
 
 // === CRASH TYPE ===
 function shortType(s){
@@ -708,7 +703,8 @@ buildImpHour('all');
 document.getElementById('selImpHour').addEventListener('change',function(){buildImpHour(this.value)});
 
 // DUI by city
-new Chart(document.getElementById('impCityChart'),{type:'bar',data:{labels:cities,datasets:[{data:cities.map(c=>cityData[c]?.impaired||0),backgroundColor:'rgba(255,179,71,.6)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:TT},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false}}}}});
+var impBox=document.getElementById('impCityChart').parentElement;impBox.style.height=Math.max(260,cities.length*36)+'px';
+new Chart(document.getElementById('impCityChart'),{type:'bar',data:{labels:cities,datasets:[{data:cities.map(c=>cityData[c]?.impaired||0),backgroundColor:'rgba(255,179,71,.6)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:TT},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false},ticks:{autoSkip:false}}}}});
 
 // === SPEED HOURLY ===
 let chSpeedHour;
@@ -757,10 +753,12 @@ buildHrHour('all');
 document.getElementById('selHrHour').addEventListener('change',function(){buildHrHour(this.value)});
 
 // H&R by city %
-new Chart(document.getElementById('hrCityChart'),{type:'bar',data:{labels:cities,datasets:[{data:cities.map(c=>cityData[c]?.hitrunPct||0),backgroundColor:cities.map(c=>(cityData[c]?.hitrunPct||0)>=15?'rgba(176,125,255,.75)':'rgba(176,125,255,.45)'),borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+'% hit-and-run rate'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},ticks:{callback:v=>v+'%'}},y:{grid:{display:false}}}}});
+var hrBox=document.getElementById('hrCityChart').parentElement;hrBox.style.height=Math.max(260,cities.length*36)+'px';
+new Chart(document.getElementById('hrCityChart'),{type:'bar',data:{labels:cities,datasets:[{data:cities.map(c=>cityData[c]?.hitrunPct||0),backgroundColor:cities.map(c=>(cityData[c]?.hitrunPct||0)>=15?'rgba(176,125,255,.75)':'rgba(176,125,255,.45)'),borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+'% hit-and-run rate'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},ticks:{callback:v=>v+'%'}},y:{grid:{display:false},ticks:{autoSkip:false}}}}});
 
 // === PEDESTRIAN ===
-new Chart(document.getElementById('pedCityChart'),{type:'bar',data:{labels:cities,datasets:[{label:'Pedestrian',data:cities.map(c=>cityData[c]?.pedestrian||0),backgroundColor:'rgba(255,77,77,.65)',borderRadius:6},{label:'Cyclist',data:cities.map(c=>cityData[c]?.cyclist||0),backgroundColor:'rgba(77,166,255,.65)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'rectRounded',padding:12}},tooltip:TT},scales:{x:{beginAtZero:true,stacked:true,grid:{color:'rgba(28,31,46,.5)'}},y:{stacked:true,grid:{display:false}}}}});
+var pedBox=document.getElementById('pedCityChart').parentElement;pedBox.style.height=Math.max(260,cities.length*36)+'px';
+new Chart(document.getElementById('pedCityChart'),{type:'bar',data:{labels:cities,datasets:[{label:'Pedestrian',data:cities.map(c=>cityData[c]?.pedestrian||0),backgroundColor:'rgba(255,77,77,.65)',borderRadius:6},{label:'Cyclist',data:cities.map(c=>cityData[c]?.cyclist||0),backgroundColor:'rgba(77,166,255,.65)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'rectRounded',padding:12}},tooltip:TT},scales:{x:{beginAtZero:true,stacked:true,grid:{color:'rgba(28,31,46,.5)'}},y:{stacked:true,grid:{display:false},ticks:{autoSkip:false}}}}});
 
 
 // === YEAR OVER YEAR ===
