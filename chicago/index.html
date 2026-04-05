@@ -678,11 +678,10 @@ buildWdWe('all');
 document.getElementById('selWdWe').addEventListener('change',function(){buildWdWe(this.value)});
 
 // === SEVERITY ===
-new Chart(document.getElementById('sevChart'),{type:'doughnut',data:{labels:['Fatal','Injury','Property Damage Only'],datasets:[{data:[110,18190,92546],backgroundColor:['rgba(255,77,77,.8)','rgba(255,179,71,.6)','rgba(85,88,115,.5)'],borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{legend:{position:'right',labels:{padding:12,usePointStyle:true,pointStyle:'rectRounded',font:{size:11}}},tooltip:{...TT,callbacks:{label:c=>c.label+': '+c.raw.toLocaleString()+' crashes'}}}}});
+new Chart(document.getElementById('sevChart'),{type:'doughnut',data:{labels:['Fatal','Injury','Property Damage Only'],datasets:[{data:[110,18190,92546],backgroundColor:['rgba(255,77,77,.8)','rgba(255,179,71,.6)','rgba(85,88,115,.5)'],borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',layout:{padding:{top:5,left:30,right:30,bottom:0}},plugins:{legend:{position:'bottom',labels:{padding:14,usePointStyle:true,pointStyle:'rectRounded',font:{size:11},color:'#8b90a8'}},tooltip:{...TT,callbacks:{label:c=>c.label+': '+c.raw.toLocaleString()+' crashes'}}}}});
 
 // Fatalities by city
-var fatBox=document.getElementById('fatalCityChart').parentElement;fatBox.style.height=Math.max(260,cities.length*36)+'px';
-new Chart(document.getElementById('fatalCityChart'),{type:'bar',data:{labels:cities,datasets:[{data:cities.map(c=>cityData[c]?.fatal||0),backgroundColor:'rgba(255,77,77,.65)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+' fatalities'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false},ticks:{autoSkip:false}}}}});
+new Chart(document.getElementById('fatalCityChart'),{type:'bar',data:{labels:cities,datasets:[{data:cities.map(c=>cityData[c]?.fatal||0),backgroundColor:'rgba(255,77,77,.65)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+' fatalities'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:10}}}}}});
 
 // === CRASH TYPE ===
 function shortType(s){
