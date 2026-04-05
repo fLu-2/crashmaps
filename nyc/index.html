@@ -1428,6 +1428,13 @@ renderIntersectionTable();
     window.addEventListener('hashchange',applyDeepLink);
 })();
 
+// === FORCE CHART REDRAW ===
+window.addEventListener('load',function(){
+    setTimeout(function(){
+        Object.values(Chart.instances).forEach(function(c){c.resize()});
+    },200);
+});
+
 </script>
 </body>
 </html>
