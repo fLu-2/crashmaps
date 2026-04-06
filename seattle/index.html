@@ -241,6 +241,8 @@ footer a{color:var(--text-dim);text-decoration:none}
 
 <main>
 
+
+
 <!-- 01 CRASH MAP -->
 <div class="rule"></div>
 <div class="sec-hdr" id="sec-01"><div class="sec-num">01 &mdash; Crash Map</div><h2 class="sec-title">Where It Happens</h2><p class="sec-desc">Search an address, filter by crash type, compare years, or enter your commute to see every crash hotspot along your route.</p></div>
@@ -529,7 +531,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 
 
 <!-- 09 SPEED -->
-<div class="rule"></div><div class="sec-hdr" id="sec-09"><div class="sec-num">09 &mdash; Speed</div><h2 class="sec-title">Speed Kills Disproportionately</h2><p class="sec-desc">5.7% of crashes are speed-related. West Seattle has the highest rate at 9.5%.</p></div><div class="card"><div class="card-top"><div><div class="card-title">Speed Rate by Hour</div><div class="card-sub" id="speedHourSub">% of crashes involving speed &middot; All Metro</div></div><select class="chart-metro" id="selSpeedHour"><option value="all" selected>All Metro</option><option value="Downtown">Downtown</option>
+<div class="rule"></div><div class="sec-hdr" id="sec-09"><div class="sec-num">09 &mdash; Speed</div><h2 class="sec-title">Speed Kills Disproportionately</h2><p class="sec-desc">5.7% of crashes are speed-related. West Seattle has the highest rate at 9.5%.</p></div><div class="grid-2"><div class="card"><div class="card-top"><div><div class="card-title">Speed Rate by Hour</div><div class="card-sub" id="speedHourSub">% of crashes involving speed &middot; All Metro</div></div><select class="chart-metro" id="selSpeedHour"><option value="all" selected>All Metro</option><option value="Downtown">Downtown</option>
 <option value="Capitol Hill">Capitol Hill</option>
 <option value="University District">University District</option>
 <option value="Ballard">Ballard</option>
@@ -540,7 +542,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <option value="West Seattle">West Seattle</option>
 <option value="North Seattle">North Seattle</option>
 <option value="South Seattle">South Seattle</option>
-<option value="Central District">Central District</option></select></div><div class="chart-box"><canvas id="speedHourChart"></canvas></div></div><div class="grid-2"><div class="card"><div class="card-top"><div><div class="card-title">Speed&#x27;s Share of Fatalities</div><div class="card-sub">By neighborhood &middot; SDOT 2024</div></div><div class="tag tag-red">Fatal</div></div><div class="chart-box"><canvas id="speedFatalChart"></canvas></div></div></div>
+<option value="Central District">Central District</option></select></div><div class="chart-box"><canvas id="speedHourChart"></canvas></div></div><div class="card"><div class="card-top"><div><div class="card-title">Speed&#x27;s Share of Fatalities</div><div class="card-sub">By neighborhood &middot; SDOT 2024</div></div><div class="tag tag-red">Fatal</div></div><div class="chart-box"><canvas id="speedFatalChart"></canvas></div></div></div>
 
 
 
@@ -555,7 +557,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <!-- 12 VISION ZERO -->
 <div class="rule"></div>
 <div class="sec-hdr" id="sec-12"><div class="sec-num">12 &mdash; Vision Zero Seattle</div><h2 class="sec-title">Vision Zero Seattle: Progress Toward Zero</h2><p class="sec-desc">Seattle adopted Vision Zero Seattle in 2015, setting a target of 0 traffic fatalities by 2030. The baseline was 20 fatalities in 2015.</p></div>
-<div class="card"><div class="card-top"><div><div class="card-title">Fatalities: Goal vs. Actual</div><div class="card-sub">2015&ndash;2030</div></div></div><div class="chart-box"><canvas id="vzChart"></canvas></div></div>
+<div class="card"><div class="card-top"><div><div class="card-title">Fatalities: Goal vs. Actual</div><div class="card-sub">2022&ndash;2030</div></div></div><div class="chart-box"><canvas id="vzChart"></canvas></div></div>
 
 <!-- 13 SOURCES -->
 <div class="rule"></div>
@@ -633,7 +635,8 @@ function buildMonthly(city){
     const d=city==='all'?agg(c=>(temporal[c]?.monthly||Array(12).fill(0))):(temporal[city]?.monthly||Array(12).fill(0));
     if(chMonthly)chMonthly.destroy();
     document.getElementById('monthlySub').textContent=getMetroLabel(city)+' · SDOT 2024';
-    chMonthly=new Chart(document.getElementById('monthlyChart'),{type:'bar',data:{labels:monthLabels,datasets:[{data:d,backgroundColor:'rgba(103,232,249,.45)',borderRadius:5,maxBarThickness:40}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:TT},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},x:{grid:{display:false}}}}});
+    var avg=Math.round(d.reduce(function(a,b){return a+b},0)/d.length);
+    chMonthly=new Chart(document.getElementById('monthlyChart'),{type:'bar',data:{labels:monthLabels,datasets:[{label:'Crashes',data:d,backgroundColor:'rgba(103,232,249,.45)',borderRadius:5,maxBarThickness:40,order:2},{type:'line',label:'Monthly Avg ('+avg.toLocaleString()+')',data:Array(12).fill(avg),borderColor:'#818cf8',borderWidth:2,borderDash:[6,3],pointRadius:0,fill:false,order:1}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'end',labels:{usePointStyle:true,pointStyle:'line',padding:14,font:{size:11},color:'#8b90a8',filter:function(item){return item.datasetIndex===1}}},tooltip:{...TT,filter:function(t){return t.datasetIndex===0}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},x:{grid:{display:false}}}}});
 }
 buildMonthly('all');
 document.getElementById('selMonthly').addEventListener('change',function(){buildMonthly(this.value)});
@@ -757,7 +760,7 @@ new Chart(document.getElementById('speedFatalChart'),{type:'bar',data:{labels:ci
 // H&R charts skipped — no hit-and-run data available
 
 // === PEDESTRIAN ===
-var pedSorted=[...cities].sort((a,b)=>(cityData[b]?.pedestrian||0)-(cityData[a]?.pedestrian||0));
+var pedSorted=[...cities].sort((a,b)=>((cityData[b]?.pedestrian||0)+(cityData[b]?.cyclist||0))-((cityData[a]?.pedestrian||0)+(cityData[a]?.cyclist||0)));
 new Chart(document.getElementById('pedCityChart'),{type:'bar',data:{labels:pedSorted,datasets:[{label:'Pedestrian',data:pedSorted.map(c=>cityData[c]?.pedestrian||0),backgroundColor:'rgba(255,77,77,.65)',borderRadius:6,maxBarThickness:20},{label:'Cyclist',data:pedSorted.map(c=>cityData[c]?.cyclist||0),backgroundColor:'rgba(77,166,255,.65)',borderRadius:6,maxBarThickness:20}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'rectRounded',padding:12}},tooltip:TT},scales:{x:{beginAtZero:true,stacked:true,grid:{color:'rgba(28,31,46,.5)'}},y:{stacked:true,grid:{display:false},ticks:{autoSkip:false,font:{size:cities.length>10?9:10}}}}}});
 
 
@@ -774,7 +777,7 @@ new Chart(document.getElementById('yoySevChart'),{type:'line',data:{labels:yoyLa
 
 
 // === VISION ZERO ===
-new Chart(document.getElementById('vzChart'),{type:'line',data:{labels:[2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030],datasets:[{label:'Actual Fatalities',data:[20, null, null, null, null, null, null, 30, 26, 28, null, null, null, null, null, null],borderColor:'rgba(255,77,77,.8)',backgroundColor:'rgba(255,77,77,.1)',borderWidth:2.5,pointRadius:4,pointHoverRadius:6,tension:.2,fill:true,spanGaps:false},{label:'Vision Zero Seattle Goal',data:[20, 19, 17, 16, 15, 13, 12, 11, 9, 8, 7, 5, 4, 3, 1, 0],borderColor:'rgba(77,255,145,.6)',backgroundColor:'rgba(77,255,145,.05)',borderWidth:2,borderDash:[8,4],pointRadius:0,tension:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'circle',padding:12}},tooltip:{...TT,callbacks:{label:c=>c.dataset.label+': '+c.raw+' fatalities'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Fatalities',color:'#555873',font:{size:11}}},x:{grid:{display:false}}}}});
+new Chart(document.getElementById('vzChart'),{type:'line',data:{labels:[2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030],datasets:[{label:'Actual Fatalities',data:[30, 26, 28, null, null, null, null, null, null],borderColor:'rgba(255,77,77,.8)',backgroundColor:'rgba(255,77,77,.1)',borderWidth:2.5,pointRadius:4,pointHoverRadius:6,tension:.2,fill:true,spanGaps:false},{label:'Vision Zero Seattle Goal',data:[11, 9, 8, 7, 5, 4, 3, 1, 0],borderColor:'rgba(77,255,145,.6)',backgroundColor:'rgba(77,255,145,.05)',borderWidth:2,borderDash:[8,4],pointRadius:0,tension:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'circle',padding:12}},tooltip:{...TT,callbacks:{label:c=>c.dataset.label+': '+c.raw+' fatalities'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Fatalities',color:'#555873',font:{size:11}}},x:{grid:{display:false}}}}});
 
 // =========================================================================
 // === CRASH MAP ENGINE ===
