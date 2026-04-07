@@ -655,6 +655,8 @@ document.getElementById('selWdWe').addEventListener('change',function(){buildWdW
 // === SEVERITY ===
 new Chart(document.getElementById('sevChart'),{type:'doughnut',data:{labels:['Fatal','Injury','Property Damage Only'],datasets:[{data:[92,5507,6312],backgroundColor:['rgba(255,77,77,.8)','rgba(255,179,71,.6)','rgba(85,88,115,.5)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',layout:{padding:{top:5,left:30,right:30,bottom:0}},plugins:{legend:{position:'bottom',labels:{padding:14,usePointStyle:true,pointStyle:'rectRounded',font:{size:11},color:'#8b90a8'}},tooltip:{...TT,callbacks:{label:c=>c.label+': '+c.raw.toLocaleString()+' crashes'}}}}});
 
+const popData={"District 1": 105000, "District 2": 105000, "District 3": 105000, "District 4": 105000, "District 5": 105000, "District 6": 105000, "District 7": 105000, "District 8": 105000, "District 9": 105000, "District 10": 105000};
+
 // Fatalities by city (horizontal)
 var fatSorted=[...cities].sort((a,b)=>(cityData[b]?.fatal||0)-(cityData[a]?.fatal||0));
 new Chart(document.getElementById('fatalCityChart'),{type:'bar',data:{labels:fatSorted,datasets:[{data:fatSorted.map(c=>cityData[c]?.fatal||0),backgroundColor:'rgba(255,77,77,.65)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+' fatalities'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:10}}}}}});
@@ -696,7 +698,6 @@ document.getElementById('selCrashType').addEventListener('change',function(){bui
 // Contributing factors chart skipped — no factor data available
 
 // === PER CAPITA (horizontal) ===
-const popData={"District 1": 105000, "District 2": 105000, "District 3": 105000, "District 4": 105000, "District 5": 105000, "District 6": 105000, "District 7": 105000, "District 8": 105000, "District 9": 105000, "District 10": 105000};
 const pcLabels=cities.filter(c=>popData[c]&&cityData[c]).sort((a,b)=>((cityData[b].total/popData[b])-(cityData[a].total/popData[a])));
 const pcVals=pcLabels.map(c=>parseFloat(((cityData[c].total/popData[c])*1000).toFixed(1)));
 new Chart(document.getElementById('perCapitaChart'),{type:'bar',data:{labels:pcLabels,datasets:[{data:pcVals,backgroundColor:'#0ea5e9b3',borderRadius:6,maxBarThickness:20}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+' per 1,000 residents'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Crashes per 1,000 residents',color:'#555873',font:{size:11}}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:pcLabels.length>10?9:10}}}}}});
