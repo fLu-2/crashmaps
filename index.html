@@ -201,9 +201,9 @@ footer a:hover{color:var(--text)}
         <h1>Every crash on <em>every road</em></h1>
         <p class="hero-sub">Interactive, verifiable traffic crash dashboards built from <strong>public DOT data</strong>. No ads. No law firms. No affiliation. Just the numbers.</p>
         <div class="stat-bar">
-            <div class="sb-cell"><div class="sb-val" style="color:var(--red)">2.47M</div><div class="sb-lbl">Crash records processed</div></div>
+            <div class="sb-cell"><div class="sb-val" style="color:var(--red)">2.16M</div><div class="sb-lbl">Crash records processed</div></div>
             <div class="sb-cell"><div class="sb-val" style="color:var(--amber)">3,881</div><div class="sb-lbl">Fatalities (2024)</div></div>
-            <div class="sb-cell"><div class="sb-val" style="color:var(--blue)">21</div><div class="sb-lbl">Metro areas</div></div>
+            <div class="sb-cell"><div class="sb-val" style="color:var(--blue)">20</div><div class="sb-lbl">Metro areas</div></div>
             <div class="sb-cell"><div class="sb-val" style="color:var(--green)">$0</div><div class="sb-lbl">Cost to access</div></div>
         </div>
         <p style="max-width:560px;margin:1.5rem auto 0;font-size:.8rem;color:var(--text-faint);font-weight:300;line-height:1.6;animation:fadeUp .8s ease .55s both">39,345 people were killed in U.S. traffic crashes in 2024. These 21 metros account for roughly 10% of the national toll. <span style="font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--text-faint);opacity:.7">NHTSA 2024 Early Estimate</span></p>
@@ -265,12 +265,6 @@ footer a:hover{color:var(--text)}
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#f43f5e;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">Detroit</span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:30.5%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;14.8%</div>
-            </div>
-            <!-- LA -11.7% -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="7,000+ safety treatments deployed over the past decade. Speed limits lowered to 15 mph near 200 schools; AB 645 speed camera pilot launched on high-injury streets." data-src="LADOT Annual Report FY 2024&ndash;25">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#f59e0b;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim)">LA Metro</span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:24.1%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;11.7%</div>
             </div>
             <!-- San Antonio -9.0% -->
             <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="Vision Zero action plan adopted; TxDOT safety campaigns (#EndTheStreakTX) and infrastructure investments on state-maintained urban highways. Received SS4A federal safety grant." data-src="City of San Antonio, TxDOT">
@@ -478,15 +472,6 @@ footer a:hover{color:var(--text)}
                 <div class="cs-cell"><div class="cs-val">401,585</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">1,612</div><div class="cs-lbl">fatal</div></div>
                 <div class="cs-cell"><div class="cs-val">5,933</div><div class="cs-lbl">ped</div></div>
-            </div>
-            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-        <a href="la/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:#f59e0b"></div><div class="city-name">Los Angeles Metro<small>CHP CCRS &middot; 2022&ndash;2024</small></div></div>
-            <div class="city-stats">
-                <div class="cs-cell"><div class="cs-val">307,813</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">2,258</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">11,558</div><div class="cs-lbl">ped</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -712,7 +697,6 @@ footer a:hover{color:var(--text)}
         {name:'Detroit',src:'Detroit Open Data',lat:42.3314,lng:-83.0458,color:'#f43f5e',fatal:98,pop:640000,crashes:23560,ped:406,cyclist:139,href:'detroit/'},
         {name:'Seattle',src:'SDOT',lat:47.6062,lng:-122.3321,color:'#818cf8',fatal:28,pop:737000,crashes:6371,ped:381,cyclist:267,href:'seattle/'},
         {name:'Houston Metro',src:'TxDOT CRIS',lat:29.7604,lng:-95.3698,color:'#14b8a6',fatal:559,pop:4700000,crashes:133037,ped:2081,cyclist:731,href:'houston/'},
-        {name:'Los Angeles Metro',src:'CHP CCRS',lat:34.0522,lng:-118.2437,color:'#f59e0b',fatal:708,pop:7000000,crashes:104866,ped:4109,cyclist:2125,href:'la/'},
         {name:'San Antonio',src:'TxDOT CRIS',lat:29.4241,lng:-98.4936,color:'#f97316',fatal:213,pop:2067295,crashes:59784,ped:1014,cyclist:429,href:'san-antonio/'},
         {name:'Dallas',src:'TxDOT CRIS',lat:32.7767,lng:-96.7970,color:'#eab308',fatal:306,pop:2746247,crashes:51319,ped:1042,cyclist:226,href:'dallas/'},
         {name:'Fort Worth',src:'TxDOT CRIS',lat:32.7555,lng:-97.3308,color:'#84cc16',fatal:196,pop:2020734,crashes:31772,ped:537,cyclist:196,href:'fort-worth/'},
@@ -787,7 +771,6 @@ footer a:hover{color:var(--text)}
         {name:'San Diego Metro',color:'#3b82f6',fatal:8.5,speed:31.2,dui:13.0,ped:36.3,cyclist:29.0},
         {name:'Dallas',color:'#eab308',fatal:11.1,speed:23.8,dui:4.4,ped:37.9,cyclist:8.2},
         {name:'Fort Worth',color:'#84cc16',fatal:9.7,speed:25.4,dui:5.2,ped:26.6,cyclist:9.7},
-        {name:'Los Angeles Metro',color:'#f59e0b',fatal:10.5,speed:30.0,dui:6.8,ped:60.7,cyclist:31.4},
         {name:'Philadelphia',color:'#06b6d4',fatal:8.0,speed:9.3,dui:3.7,ped:72.6,cyclist:19.5},
         {name:'San Francisco',color:'#14b8a6',fatal:4.9,speed:27.2,dui:8.2,ped:81.3,cyclist:56.7},
         {name:'San Jose Metro',color:'#d946ef',fatal:4.7,speed:40.8,dui:8.6,ped:26.5,cyclist:28.5},
