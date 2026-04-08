@@ -201,6 +201,7 @@ main{max-width:1200px;margin:0 auto;padding:4rem 2rem 6rem}
 .callout-desc{font-size:.88rem;color:var(--text-dim);margin-top:.8rem;line-height:1.5}
 .callout-note{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text-faint);margin-top:1.2rem;letter-spacing:.05em}
 .meth-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-bottom:1rem}
+.meth-grid-single{grid-template-columns:minmax(280px,600px)}
 .meth-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem}
 .meth-title{font-weight:600;font-size:.85rem;margin-bottom:.5rem;display:flex;align-items:center;gap:8px}
 .meth-text{font-size:.76rem;color:var(--text-dim);line-height:1.6}.meth-text a{color:var(--blue);text-decoration:none}
@@ -597,14 +598,14 @@ footer a{color:var(--text-dim);text-decoration:none}
 <!-- 13 SOURCES -->
 <div class="rule"></div>
 <div class="sec-hdr" id="sec-13"><div class="sec-num">13 &mdash; Sources</div><h2 class="sec-title">Where This Data Comes From</h2></div>
-<div class="meth-grid">
+<div class="meth-grid meth-grid-single">
 <div class="meth-card"><div class="meth-title"><div class="dot" style="background:var(--blue)"></div>CHP CCRS</div><div class="meth-text">California Highway Patrol publishes all crash records through the Crash Records System (CCRS) on data.ca.gov. 24,469 crashes in San Diego County in 2024, each geocoded with coordinates, severity, and behavioral flags from the Parties detail table.<br><br><a href="https://data.ca.gov/dataset/ccrs" target="_blank" rel="noopener noreferrer">CCRS Dataset on data.ca.gov</a></div></div>
 </div>
 
 <!-- 14 METHODOLOGY -->
 <div class="rule"></div>
 <div class="sec-hdr" id="sec-14"><div class="sec-num">14 &mdash; Methodology</div><h2 class="sec-title">How I Built This</h2></div>
-<div class="meth-grid">
+<div class="meth-grid meth-grid-single">
 <div class="meth-card"><div class="meth-text">Raw CCRS crash records are queried from the CKAN DataStore API, filtered to County Code 37 (San Diego). Party-level data is joined by Collision ID to extract DUI/impairment status and speed limits. Records without valid coordinates are excluded. 24,469 records processed for 2024.</div></div>
 </div>
 

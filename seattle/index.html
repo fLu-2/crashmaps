@@ -201,6 +201,7 @@ main{max-width:1200px;margin:0 auto;padding:4rem 2rem 6rem}
 .callout-desc{font-size:.88rem;color:var(--text-dim);margin-top:.8rem;line-height:1.5}
 .callout-note{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text-faint);margin-top:1.2rem;letter-spacing:.05em}
 .meth-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-bottom:1rem}
+.meth-grid-single{grid-template-columns:minmax(280px,600px)}
 .meth-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem}
 .meth-title{font-weight:600;font-size:.85rem;margin-bottom:.5rem;display:flex;align-items:center;gap:8px}
 .meth-text{font-size:.76rem;color:var(--text-dim);line-height:1.6}.meth-text a{color:var(--blue);text-decoration:none}
@@ -564,14 +565,14 @@ footer a{color:var(--text-dim);text-decoration:none}
 <!-- 13 SOURCES -->
 <div class="rule"></div>
 <div class="sec-hdr" id="sec-13"><div class="sec-num">13 &mdash; Sources</div><h2 class="sec-title">Where This Data Comes From</h2></div>
-<div class="meth-grid">
+<div class="meth-grid meth-grid-single">
 <div class="meth-card"><div class="meth-title"><div class="dot" style="background:var(--blue)"></div>SDOT Collisions</div><div class="meth-text">Seattle Department of Transportation publishes all collision records through an ArcGIS FeatureServer. 6,371 injury and property-damage crashes in 2024, each geocoded with coordinates, severity, and behavioral flags.<br><br><a href="https://data-seattlecitygis.opendata.arcgis.com/datasets/sdot-collisions-all-years" target="_blank" rel="noopener noreferrer">SDOT Collisions Dataset</a></div></div>
 </div>
 
 <!-- 14 METHODOLOGY -->
 <div class="rule"></div>
 <div class="sec-hdr" id="sec-14"><div class="sec-num">14 &mdash; Methodology</div><h2 class="sec-title">How I Built This</h2></div>
-<div class="meth-grid">
+<div class="meth-grid meth-grid-single">
 <div class="meth-card"><div class="meth-text">Raw SDOT collision records are queried from the ArcGIS FeatureServer for each year. Coordinates are requested in WGS84 (outSR=4326). Records without valid coordinates are excluded. Neighborhoods are assigned via coordinate bounding boxes. Crash types are derived from SDOT collision descriptions. 6,371 records processed for 2024.</div></div>
 </div>
 
