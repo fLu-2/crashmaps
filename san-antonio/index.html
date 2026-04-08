@@ -520,7 +520,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <!-- 12 VISION ZERO -->
 <div class="rule"></div>
 <div class="sec-hdr" id="sec-12"><div class="sec-num">12 &mdash; Vision Zero San Antonio</div><h2 class="sec-title">Vision Zero San Antonio: Progress Toward Zero</h2><p class="sec-desc">San Antonio adopted Vision Zero San Antonio in 2015, setting a target of 0 traffic fatalities by 2050. The baseline was 159 fatalities in 2017.</p></div>
-<div class="card"><div class="card-top"><div><div class="card-title">Fatalities: Goal vs. Actual</div><div class="card-sub">2022&ndash;2050</div></div></div><div class="chart-box"><canvas id="vzChart"></canvas></div></div>
+<div class="card"><div class="card-top"><div><div class="card-title">Fatalities: Goal vs. Actual</div><div class="card-sub">2022&ndash;2030</div></div></div><div class="chart-box"><canvas id="vzChart"></canvas></div><div style="padding:.6rem 1.25rem .85rem;font-size:.725rem;color:var(--text-dim);font-family:DM Sans,sans-serif;border-top:1px solid var(--border);text-align:center">Vision Zero San Antonio targets zero traffic fatalities by 2050. Chart shows goal trajectory through 2030.</div></div>
 
 <!-- 13 SOURCES -->
 <div class="rule"></div>
@@ -790,7 +790,7 @@ new Chart(document.getElementById('yoySevChart'),{type:'line',data:{labels:yoyLa
 
 
 // === VISION ZERO ===
-new Chart(document.getElementById('vzChart'),{type:'line',data:{labels:[2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040, 2041, 2042, 2043, 2044, 2045, 2046, 2047, 2048, 2049, 2050],datasets:[{label:'Actual Fatalities',data:[234, 210, 213, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],borderColor:'rgba(255,77,77,.8)',backgroundColor:'rgba(255,77,77,.1)',borderWidth:2.5,pointRadius:4,pointHoverRadius:6,tension:.2,fill:true,spanGaps:false},{label:'Vision Zero San Antonio Goal',data:[135, 130, 125, 120, 116, 111, 106, 101, 96, 92, 87, 82, 77, 72, 67, 63, 58, 53, 48, 43, 39, 34, 29, 24, 19, 14, 10, 5, 0],borderColor:'rgba(77,255,145,.6)',backgroundColor:'rgba(77,255,145,.05)',borderWidth:2,borderDash:[8,4],pointRadius:0,tension:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'circle',padding:12}},tooltip:{...TT,callbacks:{label:c=>c.dataset.label+': '+c.raw+' fatalities'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Fatalities',color:'#555873',font:{size:11}}},x:{grid:{display:false}}}}});
+new Chart(document.getElementById('vzChart'),{type:'line',data:{labels:[2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030],datasets:[{label:'Actual Fatalities',data:[234, 210, 213, null, null, null, null, null, null],borderColor:'rgba(255,77,77,.8)',backgroundColor:'rgba(255,77,77,.1)',borderWidth:2.5,pointRadius:4,pointHoverRadius:6,tension:.2,fill:true,spanGaps:false},{label:'Vision Zero San Antonio Goal',data:[135, 130, 125, 120, 116, 111, 106, 101, 96],borderColor:'rgba(77,255,145,.6)',backgroundColor:'rgba(77,255,145,.05)',borderWidth:2,borderDash:[8,4],pointRadius:0,tension:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'circle',padding:12}},tooltip:{...TT,callbacks:{label:c=>c.dataset.label+': '+c.raw+' fatalities'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Fatalities',color:'#555873',font:{size:11}}},x:{grid:{display:false}}}}});
 
 // =========================================================================
 // === CRASH MAP ENGINE ===
@@ -872,12 +872,13 @@ function renderMarkers(){
 
     const zoom=map.getZoom();
     const zoomScale=Math.max(0.35,Math.min(1,(zoom-9)/5));
+    const maxCrashes=ranked.length>0?ranked[0].crashes:1;
     ranked.forEach((s,idx)=>{
         if(s.crashes===0) return;
         const isTop10=idx<10 && currentType==='all';
         const dynRank=idx+1;
 
-        const baseRadius=Math.max(4,4+((s.crashes-5)/80)*10);
+        const baseRadius=Math.max(4,4+(s.crashes/maxCrashes)*18);
         const radius=Math.max(3,Math.round(baseRadius*zoomScale));
         const color=isTop10?'#dc2626':'#f97316';
 

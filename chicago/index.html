@@ -901,12 +901,13 @@ function renderMarkers(){
 
     const zoom=map.getZoom();
     const zoomScale=Math.max(0.35,Math.min(1,(zoom-9)/5));
+    const maxCrashes=ranked.length>0?ranked[0].crashes:1;
     ranked.forEach((s,idx)=>{
         if(s.crashes===0) return;
         const isTop10=idx<10 && currentType==='all';
         const dynRank=idx+1;
 
-        const baseRadius=Math.max(4,4+((s.crashes-5)/80)*10);
+        const baseRadius=Math.max(4,4+(s.crashes/maxCrashes)*18);
         const radius=Math.max(3,Math.round(baseRadius*zoomScale));
         const color=isTop10?'#dc2626':'#f97316';
 

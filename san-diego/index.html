@@ -236,9 +236,9 @@ footer a{color:var(--text-dim);text-decoration:none}
     <a href="#sec-09">09 Speed</a>
     <a href="#sec-10">10 Hit &amp; Run</a>
     <a href="#sec-11">11 Ped/Bike</a>
-    
-    <a href="#sec-12">12 Sources</a>
-    <a href="#sec-13">13 Methodology</a>
+    <a href="#sec-12">12 Vision Zero San Diego</a>
+    <a href="#sec-13">13 Sources</a>
+    <a href="#sec-14">14 Methodology</a>
 </div></nav>
 
 <main>
@@ -589,21 +589,21 @@ footer a{color:var(--text-dim);text-decoration:none}
 <div class="sec-hdr" id="sec-11"><div class="sec-num">11 &mdash; Pedestrians &amp; Cyclists</div><h2 class="sec-title">The Most Vulnerable on Metro Streets</h2><p class="sec-desc">1131 pedestrian crashes and 904 cyclist crashes across the metro in 2024.</p></div>
 <div class="card"><div class="card-top"><div><div class="card-title">Pedestrian Crashes by City</div><div class="card-sub">CHP CCRS &middot; CHP CCRS 2024</div></div></div><div class="chart-box"><canvas id="pedCityChart"></canvas></div><div style="padding:.6rem 1.25rem .85rem;font-size:.75rem;color:var(--text-dim);font-family:DM Sans,sans-serif;border-top:1px solid var(--border);text-align:center"><span style="font-family:JetBrains Mono,monospace;font-weight:600;color:var(--blue)">1131</span> pedestrian crashes in 2024. San Diego accounts for 576 &mdash; 51% of the metro total despite having 44% of the population.</div></div>
 
-
-
-
-
-
-<!-- 12 SOURCES -->
+<!-- 12 VISION ZERO -->
 <div class="rule"></div>
-<div class="sec-hdr" id="sec-12"><div class="sec-num">12 &mdash; Sources</div><h2 class="sec-title">Where This Data Comes From</h2></div>
+<div class="sec-hdr" id="sec-12"><div class="sec-num">12 &mdash; Vision Zero San Diego</div><h2 class="sec-title">Vision Zero San Diego: Progress Toward Zero</h2><p class="sec-desc">San Diego Metro adopted Vision Zero San Diego in 2015, setting a target of 0 traffic fatalities by 2025. The baseline was 80 fatalities in 2015.</p></div>
+<div class="card"><div class="card-top"><div><div class="card-title">Fatalities: Goal vs. Actual</div><div class="card-sub">2022&ndash;2025</div></div></div><div class="chart-box"><canvas id="vzChart"></canvas></div></div>
+
+<!-- 13 SOURCES -->
+<div class="rule"></div>
+<div class="sec-hdr" id="sec-13"><div class="sec-num">13 &mdash; Sources</div><h2 class="sec-title">Where This Data Comes From</h2></div>
 <div class="meth-grid">
 <div class="meth-card"><div class="meth-title"><div class="dot" style="background:var(--blue)"></div>CHP CCRS</div><div class="meth-text">California Highway Patrol publishes all crash records through the Crash Records System (CCRS) on data.ca.gov. 24,469 crashes in San Diego County in 2024, each geocoded with coordinates, severity, and behavioral flags from the Parties detail table.<br><br><a href="https://data.ca.gov/dataset/ccrs" target="_blank" rel="noopener noreferrer">CCRS Dataset on data.ca.gov</a></div></div>
 </div>
 
-<!-- 13 METHODOLOGY -->
+<!-- 14 METHODOLOGY -->
 <div class="rule"></div>
-<div class="sec-hdr" id="sec-13"><div class="sec-num">13 &mdash; Methodology</div><h2 class="sec-title">How I Built This</h2></div>
+<div class="sec-hdr" id="sec-14"><div class="sec-num">14 &mdash; Methodology</div><h2 class="sec-title">How I Built This</h2></div>
 <div class="meth-grid">
 <div class="meth-card"><div class="meth-text">Raw CCRS crash records are queried from the CKAN DataStore API, filtered to County Code 37 (San Diego). Party-level data is joined by Collision ID to extract DUI/impairment status and speed limits. Records without valid coordinates are excluded. 24,469 records processed for 2024.</div></div>
 </div>
@@ -857,7 +857,8 @@ new Chart(document.getElementById('yoySevChart'),{type:'line',data:{labels:yoyLa
 (function(){function bOpts(d){var mn=Math.min.apply(null,d);var mx=Math.max.apply(null,d);var yMin=Math.max(0,Math.min(2*mn-mx,Math.round(mn*0.7)));return{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:TT},scales:{y:{min:yMin,grid:{color:"rgba(28,31,46,.5)"},ticks:{precision:0}},x:{grid:{display:false}}}};}var duiD=getYoYAll('impaired');new Chart(document.getElementById('yoyDuiChart'),{type:'bar',data:{labels:yoyLabels,datasets:[{data:duiD,backgroundColor:'rgba(255,179,71,.6)',borderRadius:6,maxBarThickness:40}]},options:bOpts(duiD)});var spdD=getYoYAll('speed');new Chart(document.getElementById('yoySpeedChart'),{type:'bar',data:{labels:yoyLabels,datasets:[{data:spdD,backgroundColor:'rgba(255,77,77,.6)',borderRadius:6,maxBarThickness:40}]},options:bOpts(spdD)});var hrD=getYoYAll('hitrun');new Chart(document.getElementById('yoyHrChart'),{type:'bar',data:{labels:yoyLabels,datasets:[{data:hrD,backgroundColor:'rgba(176,125,255,.6)',borderRadius:6,maxBarThickness:40}]},options:bOpts(hrD)});})();
 
 
-// Vision Zero chart skipped — no VZ config
+// === VISION ZERO ===
+new Chart(document.getElementById('vzChart'),{type:'line',data:{labels:[2022, 2023, 2024, 2025],datasets:[{label:'Actual Fatalities',data:[255, 254, 265, null],borderColor:'rgba(255,77,77,.8)',backgroundColor:'rgba(255,77,77,.1)',borderWidth:2.5,pointRadius:4,pointHoverRadius:6,tension:.2,fill:true,spanGaps:false},{label:'Vision Zero San Diego Goal',data:[24, 16, 8, 0],borderColor:'rgba(77,255,145,.6)',backgroundColor:'rgba(77,255,145,.05)',borderWidth:2,borderDash:[8,4],pointRadius:0,tension:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'circle',padding:12}},tooltip:{...TT,callbacks:{label:c=>c.dataset.label+': '+c.raw+' fatalities'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Fatalities',color:'#555873',font:{size:11}}},x:{grid:{display:false}}}}});
 
 // =========================================================================
 // === CRASH MAP ENGINE ===
@@ -939,12 +940,13 @@ function renderMarkers(){
 
     const zoom=map.getZoom();
     const zoomScale=Math.max(0.35,Math.min(1,(zoom-9)/5));
+    const maxCrashes=ranked.length>0?ranked[0].crashes:1;
     ranked.forEach((s,idx)=>{
         if(s.crashes===0) return;
         const isTop10=idx<10 && currentType==='all';
         const dynRank=idx+1;
 
-        const baseRadius=Math.max(4,4+((s.crashes-5)/80)*10);
+        const baseRadius=Math.max(4,4+(s.crashes/maxCrashes)*18);
         const radius=Math.max(3,Math.round(baseRadius*zoomScale));
         const color=isTop10?'#dc2626':'#f97316';
 
