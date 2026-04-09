@@ -472,7 +472,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <div class="sec-hdr" id="sec-07"><div class="sec-num">07 &mdash; Severity</div><h2 class="sec-title">How Bad Are the Crashes?</h2><p class="sec-desc">213 people died on San Antonio roads in 2024. The severity breakdown tells us how crashes distribute between fatal, serious, minor, and property-damage-only.</p></div>
 <div class="grid-2">
     <div class="card"><div class="card-top"><div><div class="card-title">Severity Distribution</div><div class="card-sub">All Metro &middot; TxDOT CRIS 2024</div></div></div><div class="chart-box"><canvas id="sevChart"></canvas></div></div>
-    <div class="card"><div class="card-top"><div><div class="card-title">Fatalities by City</div><div class="card-sub">TxDOT CRIS 2024</div></div><div class="tag tag-red">Fatal</div></div><div class="chart-box"><canvas id="fatalCityChart"></canvas></div></div>
+    <div class="card"><div class="card-top"><div><div class="card-title">Fatalities Per 1,000 Residents</div><div class="card-sub">Population-adjusted rate &middot; TxDOT CRIS 2024</div></div><div class="tag tag-red">Fatal</div></div><div class="chart-box"><canvas id="fatalCityChart"></canvas></div></div>
 </div>
 <div class="grid-2"><div class="card"><div class="card-top"><div><div class="card-title">Crash Type Breakdown</div><div class="card-sub" id="typeSub">All Metro &middot; TxDOT CRIS 2024</div></div><select class="chart-metro" id="selCrashType"><option value="all" selected>All Metro</option><option value="San Antonio">San Antonio</option>
 <option value="Leon Valley/NW">Leon Valley/NW</option>
@@ -492,7 +492,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <option value="NE Suburbs">NE Suburbs</option>
 <option value="Alamo Heights">Alamo Heights</option>
 <option value="Helotes">Helotes</option>
-<option value="Other Metro">Other Metro</option></select></div><div class="chart-box"><canvas id="impHourChart"></canvas></div></div><div class="card"><div class="card-top"><div><div class="card-title">DUI by City</div><div class="card-sub">Total DUI crashes &middot; TxDOT CRIS 2024</div></div></div><div class="chart-box"><canvas id="impCityChart"></canvas></div></div></div>
+<option value="Other Metro">Other Metro</option></select></div><div class="chart-box"><canvas id="impHourChart"></canvas></div></div><div class="card"><div class="card-top"><div><div class="card-title">DUI Crashes Per 1,000 Residents</div><div class="card-sub">Population-adjusted rate &middot; TxDOT CRIS 2024</div></div></div><div class="chart-box"><canvas id="impCityChart"></canvas></div></div></div>
 
 <!-- 09 SPEED -->
 <div class="rule"></div><div class="sec-hdr" id="sec-09"><div class="sec-num">09 &mdash; Speed</div><h2 class="sec-title">Speed Kills Disproportionately</h2><p class="sec-desc">14.0% of crashes are speed-related. Helotes has the highest rate at 24.3%.</p></div><div class="card"><div class="card-top"><div><div class="card-title">Speed Rate by Hour</div><div class="card-sub" id="speedHourSub">% of crashes involving speed &middot; All Metro</div></div><select class="chart-metro" id="selSpeedHour"><option value="all" selected>All Metro</option><option value="San Antonio">San Antonio</option>
@@ -500,7 +500,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <option value="NE Suburbs">NE Suburbs</option>
 <option value="Alamo Heights">Alamo Heights</option>
 <option value="Helotes">Helotes</option>
-<option value="Other Metro">Other Metro</option></select></div><div class="chart-box"><canvas id="speedHourChart"></canvas></div></div><div class="grid-2"><div class="card"><div class="card-top"><div><div class="card-title">Speed&#x27;s Share of Fatalities</div><div class="card-sub">By city &middot; TxDOT CRIS 2024</div></div><div class="tag tag-red">Fatal</div></div><div class="chart-box"><canvas id="speedFatalChart"></canvas></div></div><div class="card"><div class="card-top"><div><div class="card-title">Crashes by Speed Limit Zone</div><div class="card-sub" id="speedZoneSub">All Metro &middot; TxDOT CRIS 2024</div></div><select class="chart-metro" id="selSpeedZone"><option value="all" selected>All Metro</option><option value="San Antonio">San Antonio</option>
+<option value="Other Metro">Other Metro</option></select></div><div class="chart-box"><canvas id="speedHourChart"></canvas></div></div><div class="grid-2"><div class="card"><div class="card-top"><div><div class="card-title">Speed&#x27;s Share of Fatalities</div><div class="card-sub">Per 1,000 residents &middot; TxDOT CRIS 2024</div></div><div class="tag tag-red">Fatal</div></div><div class="chart-box"><canvas id="speedFatalChart"></canvas></div></div><div class="card"><div class="card-top"><div><div class="card-title">Crashes by Speed Limit Zone</div><div class="card-sub" id="speedZoneSub">All Metro &middot; TxDOT CRIS 2024</div></div><select class="chart-metro" id="selSpeedZone"><option value="all" selected>All Metro</option><option value="San Antonio">San Antonio</option>
 <option value="Leon Valley/NW">Leon Valley/NW</option>
 <option value="NE Suburbs">NE Suburbs</option>
 <option value="Alamo Heights">Alamo Heights</option>
@@ -520,7 +520,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <!-- 11 PEDESTRIANS & CYCLISTS -->
 <div class="rule"></div>
 <div class="sec-hdr" id="sec-11"><div class="sec-num">11 &mdash; Pedestrians &amp; Cyclists</div><h2 class="sec-title">The Most Vulnerable on Metro Streets</h2><p class="sec-desc">1014 pedestrian crashes and 429 cyclist crashes across the metro in 2024.</p></div>
-<div class="card"><div class="card-top"><div><div class="card-title">Pedestrian Crashes by City</div><div class="card-sub">TxDOT CRIS &middot; TxDOT CRIS 2024</div></div></div><div class="chart-box"><canvas id="pedCityChart"></canvas></div><div style="padding:.6rem 1.25rem .85rem;font-size:.75rem;color:var(--text-dim);font-family:DM Sans,sans-serif;border-top:1px solid var(--border);text-align:center"><span style="font-family:JetBrains Mono,monospace;font-weight:600;color:var(--blue)">1014</span> pedestrian crashes in 2024. San Antonio accounts for 916 &mdash; 90% of the metro total despite having 72% of the population.</div></div>
+<div class="card"><div class="card-top"><div><div class="card-title">Pedestrian &amp; Cyclist Crashes Per 1,000 Residents</div><div class="card-sub">Population-adjusted rate &middot; TxDOT CRIS 2024</div></div></div><div class="chart-box"><canvas id="pedCityChart"></canvas></div><div style="padding:.6rem 1.25rem .85rem;font-size:.75rem;color:var(--text-dim);font-family:DM Sans,sans-serif;border-top:1px solid var(--border);text-align:center"><span style="font-family:JetBrains Mono,monospace;font-weight:600;color:var(--blue)">1014</span> pedestrian crashes in 2024. San Antonio accounts for 916 &mdash; 90% of the metro total despite having 72% of the population.</div></div>
 
 <!-- 12 VISION ZERO -->
 <div class="rule"></div>
@@ -642,9 +642,9 @@ new Chart(document.getElementById('sevChart'),{type:'doughnut',data:{labels:['Fa
 
 const popData={"San Antonio": 1495295, "Leon Valley/NW": 55000, "NE Suburbs": 115000, "Alamo Heights": 27000, "Helotes": 25000, "Other Metro": 350000};
 
-// Fatalities by city (horizontal)
-var fatSorted=[...cities].sort((a,b)=>(cityData[b]?.fatal||0)-(cityData[a]?.fatal||0));
-new Chart(document.getElementById('fatalCityChart'),{type:'bar',data:{labels:fatSorted,datasets:[{data:fatSorted.map(c=>cityData[c]?.fatal||0),backgroundColor:'rgba(255,77,77,.65)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+' fatalities'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:10}}}}}});
+// Fatalities by city (horizontal, per capita)
+var fatPcSorted=[...cities].filter(c=>popData[c]).sort((a,b)=>((cityData[b]?.fatal||0)/popData[b])-((cityData[a]?.fatal||0)/popData[a]));
+new Chart(document.getElementById('fatalCityChart'),{type:'bar',data:{labels:fatPcSorted,datasets:[{data:fatPcSorted.map(c=>parseFloat(((cityData[c]?.fatal||0)/popData[c]*1000).toFixed(2))),backgroundColor:'rgba(255,77,77,.65)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+' per 1,000 residents'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Fatalities per 1,000 residents',color:'#555873',font:{size:11}}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:10}}}}}});
 
 // === CRASH TYPE ===
 function shortType(s){
@@ -699,7 +699,7 @@ function buildFactors(city){
     if(labels.length<=4){
         chFactors=new Chart(document.getElementById('factorsChart'),{type:'doughnut',data:{labels,datasets:[{data:vals,backgroundColor:factorColors.slice(0,labels.length),borderColor:'#0f1118',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,cutout:'50%',layout:{padding:{top:5,left:10,right:10,bottom:0}},plugins:{legend:{position:'bottom',labels:{padding:14,usePointStyle:true,pointStyle:'rectRounded',font:{size:11},color:'#8b90a8'}},tooltip:{...TT,callbacks:{label:function(c){var t=c.dataset.data.reduce(function(a,b){return a+b},0);return c.label+': '+c.raw.toLocaleString()+' ('+Math.round(c.raw/t*100)+'%)'}}}}}});
     } else {
-        chFactors=new Chart(document.getElementById('factorsChart'),{type:'bar',data:{labels,datasets:[{data:vals,backgroundColor:'rgba(77,166,255,.55)',borderRadius:6,maxBarThickness:30}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw.toLocaleString()+' crashes'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:10}}}}}});
+        chFactors=new Chart(document.getElementById('factorsChart'),{type:'bar',data:{labels,datasets:[{data:vals,backgroundColor:'rgba(77,166,255,.55)',borderRadius:6,maxBarThickness:30}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw.toLocaleString()+' crashes'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Crashes',color:'#555873',font:{size:11}}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:10}}}}}});
     }
 }
 buildFactors('all');
@@ -720,9 +720,9 @@ function buildImpHour(city){
 }
 buildImpHour('all');
 document.getElementById('selImpHour').addEventListener('change',function(){buildImpHour(this.value)});
-// DUI by city (horizontal)
-var impSorted=[...cities].sort((a,b)=>(cityData[b]?.impaired||0)-(cityData[a]?.impaired||0));
-new Chart(document.getElementById('impCityChart'),{type:'bar',data:{labels:impSorted,datasets:[{data:impSorted.map(c=>cityData[c]?.impaired||0),backgroundColor:'rgba(255,179,71,.6)',borderRadius:6,maxBarThickness:20}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:TT},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:cities.length>10?9:10}}}}}});
+// DUI by city (per capita)
+var impPcSorted=[...cities].filter(c=>popData[c]).sort((a,b)=>((cityData[b]?.impaired||0)/popData[b])-((cityData[a]?.impaired||0)/popData[a]));
+new Chart(document.getElementById('impCityChart'),{type:'bar',data:{labels:impPcSorted,datasets:[{data:impPcSorted.map(c=>parseFloat(((cityData[c]?.impaired||0)/popData[c]*1000).toFixed(2))),backgroundColor:'rgba(255,179,71,.6)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+' per 1,000 residents'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'DUI crashes per 1,000 residents',color:'#555873',font:{size:11}}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:10}}}}}});
 
 // === SPEED HOURLY ===
 let chSpeedHour;
@@ -734,10 +734,11 @@ function buildSpeedHour(city){
 }
 buildSpeedHour('all');
 document.getElementById('selSpeedHour').addEventListener('change',function(){buildSpeedHour(this.value)});
-// Speed fatalities stacked
-const spFat=cities.map(c=>cityData[c]?.speedFatal||0);
-const nonSpFat=cities.map(c=>(cityData[c]?.fatal||0)-(cityData[c]?.speedFatal||0));
-new Chart(document.getElementById('speedFatalChart'),{type:'bar',data:{labels:cities.map(c=>c.length>12?c.slice(0,10)+'..':c),datasets:[{label:'Speed-related',data:spFat,backgroundColor:'rgba(255,77,77,.75)',borderRadius:0},{label:'Other',data:nonSpFat,backgroundColor:'rgba(85,88,115,.5)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'rectRounded',padding:12,font:{size:10}}},tooltip:TT},scales:{x:{stacked:true,grid:{display:false},ticks:{font:{size:isMobile?8:10}}},y:{stacked:true,beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}}}}});
+// Speed fatalities stacked (per capita)
+var spFatPcSorted=[...cities].filter(c=>popData[c]).sort((a,b)=>((cityData[b]?.fatal||0)/popData[b])-((cityData[a]?.fatal||0)/popData[a]));
+const spFatPc=spFatPcSorted.map(c=>parseFloat(((cityData[c]?.speedFatal||0)/popData[c]*1000).toFixed(2)));
+const nonSpFatPc=spFatPcSorted.map(c=>parseFloat((((cityData[c]?.fatal||0)-(cityData[c]?.speedFatal||0))/popData[c]*1000).toFixed(2)));
+new Chart(document.getElementById('speedFatalChart'),{type:'bar',data:{labels:spFatPcSorted.map(c=>c.length>12?c.slice(0,10)+'..':c),datasets:[{label:'Speed-related',data:spFatPc,backgroundColor:'rgba(255,77,77,.75)',borderRadius:0},{label:'Other',data:nonSpFatPc,backgroundColor:'rgba(85,88,115,.5)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'rectRounded',padding:12,font:{size:10}}},tooltip:{...TT,callbacks:{label:c=>c.dataset.label+': '+c.raw+' per 1,000'}}},scales:{x:{stacked:true,grid:{display:false},ticks:{font:{size:isMobile?8:10}}},y:{stacked:true,beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Fatalities per 1,000 residents',color:'#555873',font:{size:11}}}}}});
 
 // === SPEED ZONES ===
 const szLabels=['≤25','30','35','40','45','50+'];
@@ -777,9 +778,9 @@ document.getElementById('selHrHour').addEventListener('change',function(){buildH
 var hrSorted=[...cities].sort((a,b)=>(cityData[b]?.hitrunPct||0)-(cityData[a]?.hitrunPct||0));
 new Chart(document.getElementById('hrCityChart'),{type:'bar',data:{labels:hrSorted,datasets:[{data:hrSorted.map(c=>cityData[c]?.hitrunPct||0),backgroundColor:'rgba(176,125,255,.65)',borderRadius:6,maxBarThickness:20}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+'% hit-and-run rate'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},ticks:{callback:v=>v+'%'}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:cities.length>10?9:10}}}}}});
 
-// === PEDESTRIAN (horizontal) ===
-var pedSorted=[...cities].sort((a,b)=>((cityData[b]?.pedestrian||0)+(cityData[b]?.cyclist||0))-((cityData[a]?.pedestrian||0)+(cityData[a]?.cyclist||0)));
-new Chart(document.getElementById('pedCityChart'),{type:'bar',data:{labels:pedSorted,datasets:[{label:'Pedestrian',data:pedSorted.map(c=>cityData[c]?.pedestrian||0),backgroundColor:'rgba(255,77,77,.65)',borderRadius:6,maxBarThickness:20},{label:'Cyclist',data:pedSorted.map(c=>cityData[c]?.cyclist||0),backgroundColor:'rgba(77,166,255,.65)',borderRadius:6,maxBarThickness:20}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'rectRounded',padding:12}},tooltip:TT},scales:{x:{beginAtZero:true,stacked:true,grid:{color:'rgba(28,31,46,.5)'}},y:{stacked:true,grid:{display:false},ticks:{autoSkip:false,font:{size:cities.length>10?9:10}}}}}});
+// === PEDESTRIAN (horizontal, per capita) ===
+var pedPcSorted=[...cities].filter(c=>popData[c]).sort((a,b)=>(((cityData[b]?.pedestrian||0)+(cityData[b]?.cyclist||0))/popData[b])-(((cityData[a]?.pedestrian||0)+(cityData[a]?.cyclist||0))/popData[a]));
+new Chart(document.getElementById('pedCityChart'),{type:'bar',data:{labels:pedPcSorted,datasets:[{label:'Pedestrian',data:pedPcSorted.map(c=>parseFloat(((cityData[c]?.pedestrian||0)/popData[c]*1000).toFixed(2))),backgroundColor:'rgba(255,77,77,.65)',borderRadius:6},{label:'Cyclist',data:pedPcSorted.map(c=>parseFloat(((cityData[c]?.cyclist||0)/popData[c]*1000).toFixed(2))),backgroundColor:'rgba(77,166,255,.65)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'rectRounded',padding:12}},tooltip:{...TT,callbacks:{label:c=>c.dataset.label+': '+c.raw+' per 1,000'}}},scales:{x:{beginAtZero:true,stacked:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Per 1,000 residents',color:'#555873',font:{size:11}}},y:{stacked:true,grid:{display:false},ticks:{autoSkip:false,font:{size:10}}}}}});
 
 
 // === YEAR OVER YEAR ===
