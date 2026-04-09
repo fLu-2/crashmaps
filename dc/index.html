@@ -201,6 +201,7 @@ main{max-width:1200px;margin:0 auto;padding:4rem 2rem 6rem}
 .callout-desc{font-size:.88rem;color:var(--text-dim);margin-top:.8rem;line-height:1.5}
 .callout-note{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text-faint);margin-top:1.2rem;letter-spacing:.05em}
 .meth-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-bottom:1rem}
+.meth-grid-single{grid-template-columns:minmax(280px,600px)}
 .meth-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem}
 .meth-title{font-weight:600;font-size:.85rem;margin-bottom:.5rem;display:flex;align-items:center;gap:8px}
 .meth-text{font-size:.76rem;color:var(--text-dim);line-height:1.6}.meth-text a{color:var(--blue);text-decoration:none}
@@ -417,7 +418,11 @@ footer a{color:var(--text-dim);text-decoration:none}
             </div>
         </div>
     </div>
-    <table class="rank-table" id="intersectionTable"></table>
+    <table class="rank-table" id="intersectionTable">
+        <colgroup><col style="width:40px"><col><col style="width:45%"><col style="width:90px"></colgroup>
+        <thead><tr><th>#</th><th>Intersection</th><th id="crashHdr">Crashes</th><th id="rateHdr">Rate</th></tr></thead>
+        <tbody id="intersectionBody"></tbody>
+    </table>
 </div>
 
 <!-- 04 CITY OVERVIEW -->
@@ -568,7 +573,7 @@ const temporal={"Ward 1": {"hourly": [90, 63, 71, 62, 93, 78, 52, 62, 33, 25, 38
 const cities=["Ward 1", "Ward 2", "Ward 3", "Ward 4", "Ward 5", "Ward 6", "Ward 7", "Ward 8"].sort((a,b)=>(cityData[b]?.total||0)-(cityData[a]?.total||0));
 
 function getMetroLabel(c){ return c==='all'?'All Metro':c; }
-function titleCase(s){return s.toLowerCase().replace(/(^|[\s\-\/])\w/g,function(c){return c.toUpperCase()})}
+function titleCase(s){var acronyms={dui:'DUI',dwi:'DWI',suv:'SUV',hov:'HOV',cdl:'CDL'};return s.toLowerCase().replace(/(^|[\s\-\/])\w/g,function(c){return c.toUpperCase()}).replace(/\b\w+\b/g,function(w){return acronyms[w.toLowerCase()]||w})}
 function truncLabel(s,max){return s.length>max?s.slice(0,max-1)+'…':s}
 function agg(fn){ return cities.map(c=>fn(c)).reduce((a,b)=>a.map((v,i)=>v+(b[i]||0))); }
 
@@ -1389,14 +1394,14 @@ function renderIntersectionTable(){
 
     const rateMode=currentSort==='rate';
     const maxCrash=Math.max(...all.map(i=>i.c),1);
-    const crashHdr=rateMode?'Crashes':'<span style="color:var(--red)">Crashes ↓</span>';
-    const rateHdr=rateMode?'<span style="color:#6bb5ff">Rate ↓</span>':'Rate';
+    document.getElementById('crashHdr').innerHTML=rateMode?'Crashes':'<span style="color:var(--red)">Crashes ↓</span>';
+    document.getElementById('rateHdr').innerHTML=rateMode?'<span style="color:#6bb5ff">Rate ↓</span>':'Rate';
 
-    document.getElementById('intersectionTable').innerHTML='<thead><tr><th style="width:40px">#</th><th>Intersection</th><th style="width:45%">'+crashHdr+'</th><th style="width:90px">'+rateHdr+'</th></tr></thead><tbody>'+all.map((i,idx)=>{
+    document.getElementById('intersectionBody').innerHTML=all.map((i,idx)=>{
         const crashPct=i.c/maxCrash*100;
         const cityLabel=currentCity==='all'?'<span style="display:block;font-size:.68rem;color:var(--amber);font-weight:400;font-family:JetBrains Mono,monospace">'+i.city+'</span>':'';
         return '<tr><td class="rank-num">'+(idx+1)+'</td><td style="font-weight:500">'+i.n+cityLabel+'</td><td><div class="crash-bar-wrap"><div class="crash-bar-track"><div class="crash-bar" style="width:'+crashPct+'%'+(rateMode?';opacity:.4':'')+'"></div></div><span class="crash-count">'+(rateMode?'<span style="color:var(--text-dim)">'+i.c+'</span>':i.c)+'</span></div></td><td style="font-size:.82rem;font-family:JetBrains Mono,monospace;color:'+(rateMode?'var(--accent)':'var(--text-faint)')+'">'+i.rate+'/M</td></tr>';
-    }).join('')+'</tbody>';
+    }).join('');
 }
 renderIntersectionTable();
 
