@@ -714,8 +714,9 @@ footer a:hover{color:var(--text)}
     const map=L.map('overviewMap',{zoomControl:false,scrollWheelZoom:false,attributionControl:true}).setView([39.5,-98.0],initZoom);
     L.control.zoom({position:'bottomright'}).addTo(map);
     document.getElementById('overviewMap').addEventListener('wheel',function(e){if(e.ctrlKey){e.preventDefault();if(e.deltaY<0)map.zoomIn();else map.zoomOut();}},{passive:false});
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
-        attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
+    // CARTO key must match CARTO_API_KEY in build.py (landing page is hand-built, not generated)
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=cb1_5d5k_1_728050e3f77e99607f59bc94',{
+        attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains:'abcd',maxZoom:18
     }).addTo(map);
     const maxRate=Math.max(...metros.map(m=>m.rate));

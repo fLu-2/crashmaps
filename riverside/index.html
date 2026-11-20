@@ -986,8 +986,8 @@ let commuteMarkers=L.layerGroup();
 let nearbyHighlights=L.layerGroup();
 
 const map=L.map('crashMap',{scrollWheelZoom:true,zoomControl:true}).setView(mapCenter,isMobile?9:mapZoom);
-const tiles=L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
-    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
+const tiles=L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=cb1_5d5k_1_728050e3f77e99607f59bc94',{
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
     subdomains:'abcd',maxZoom:19
 }).addTo(map);
 let tileOk=false;
@@ -1457,8 +1457,8 @@ function showReport(lat,lon,addr){
     const mapDiv=document.getElementById('lookupMapWrap');
     if(mapDiv){
         if(!miniMap){
-            miniMap=L.map(mapDiv,{zoomControl:false,attributionControl:false,dragging:false,scrollWheelZoom:false,doubleClickZoom:false,touchZoom:false});
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:19}).addTo(miniMap);
+            miniMap=L.map(mapDiv,{zoomControl:false,attributionControl:true,dragging:false,scrollWheelZoom:false,doubleClickZoom:false,touchZoom:false});
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png?key=cb1_5d5k_1_728050e3f77e99607f59bc94',{attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',subdomains:'abcd',maxZoom:19}).addTo(miniMap);
             miniLayers=L.layerGroup().addTo(miniMap);
         }
         miniLayers.clearLayers();
