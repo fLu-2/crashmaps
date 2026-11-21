@@ -169,23 +169,26 @@ header nav a:hover{color:var(--text)}
 .about-col h2,.contact-col h2{font-family:'Playfair Display',serif;font-size:clamp(1.3rem,3vw,1.6rem);font-weight:700;margin-bottom:1rem}
 .about-col p{color:var(--text-dim);font-size:.85rem;font-weight:300;line-height:1.8;margin-bottom:.85rem}
 .about-col p strong{color:var(--text);font-weight:500}
+.about-col p:last-child{margin-bottom:0}
+.contact-col{display:flex;flex-direction:column}
+.contact-col #contactForm{flex:1}
 .contact-col .cf-input{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;outline:none;transition:border-color .2s;min-height:48px;width:100%;display:block}
 .contact-col .cf-input:focus{border-color:var(--border-hover)}
 .contact-col .cf-input::placeholder{color:var(--text-faint)}
 .contact-col select.cf-input{color:var(--text-dim);cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%236e7290%22 stroke-width=%222%22><path d=%22M6 9l6 6 6-6%22/></svg>');background-repeat:no-repeat;background-position:right .75rem center}
-.contact-col textarea.cf-input{resize:vertical;min-height:100px}
+.contact-col textarea.cf-input{resize:vertical;min-height:100px;flex:1}
 .contact-col .cf-btn{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.75rem;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.82rem;cursor:pointer;transition:all .2s;letter-spacing:.04em;min-height:48px;width:100%;-webkit-tap-highlight-color:transparent}
 .contact-col .cf-btn:hover{border-color:var(--text-faint)}
 .contact-col [hidden]{display:none!important}
 .contact-col .cf-note{color:var(--text-dim);font-size:.78rem;font-weight:300;line-height:1.6;margin:0}
 #cfCityWrap .cf-note{margin-top:.5rem}
 .contact-col .cf-note a,.cf-faq a{color:var(--text);border-bottom:1px solid var(--text-faint)}
-.cf-faq{margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border)}
+.cf-faq{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;padding-top:2rem;border-top:1px solid var(--border)}
+.cf-faq-item{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1.25rem}
 .cf-faq h3{font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;color:var(--text);margin:0 0 .35rem}
-.cf-faq p{color:var(--text-dim);font-size:.8rem;font-weight:300;line-height:1.65;margin:0 0 1rem}
-.cf-faq p:last-child{margin-bottom:0}
+.cf-faq p{color:var(--text-dim);font-size:.8rem;font-weight:300;line-height:1.65;margin:0}
 @media(max-width:480px){.contact-col input[type=email].cf-input::placeholder{font-size:13px}}
-@media(max-width:768px){.about-contact-inner{grid-template-columns:1fr;gap:2rem;padding:1.5rem}}
+@media(max-width:768px){.about-contact-inner{grid-template-columns:1fr;gap:2rem;padding:1.5rem}.cf-faq{grid-template-columns:1fr;gap:.75rem;padding-top:1.5rem}}
 
 /* Footer */
 footer{max-width:1200px;margin:4rem auto 0;padding:2rem 2rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:.7rem;color:var(--text-faint);flex-wrap:wrap;gap:1rem}
@@ -687,11 +690,17 @@ footer a:hover{color:var(--text)}
                 <p style="font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--text);margin-bottom:.35rem">Message sent. Thank you.</p>
                 <p style="font-size:.78rem;color:var(--text-faint)">I read every submission.</p>
             </div>
-            <div class="cf-faq">
+        </div>
+        <div class="cf-faq">
+            <div class="cf-faq-item">
                 <h3>Can I download the raw data?</h3>
                 <p>The dashboards show summaries only. Each dashboard's Sources section (for example, <a href="denver/#sec-13">Denver's</a>) links to the agency dataset where the full records are published.</p>
+            </div>
+            <div class="cf-faq-item">
                 <h3>Can you add my city?</h3>
                 <p>Possibly, if its city or state publishes crash records with locations through at least 2024. Send a "Request a city" message above; some states restrict access to crash data, so not every city can be added.</p>
+            </div>
+            <div class="cf-faq-item">
                 <h3>How is the data processed?</h3>
                 <p>Each agency's records are mapped to a common schema, aggregated, and built into a standalone page. Each dashboard's Methodology section (for example, <a href="denver/#sec-14">Denver's</a>) explains that source's quirks and exclusions.</p>
             </div>
