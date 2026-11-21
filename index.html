@@ -176,6 +176,15 @@ header nav a:hover{color:var(--text)}
 .contact-col textarea.cf-input{resize:vertical;min-height:100px}
 .contact-col .cf-btn{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.75rem;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.82rem;cursor:pointer;transition:all .2s;letter-spacing:.04em;min-height:48px;width:100%;-webkit-tap-highlight-color:transparent}
 .contact-col .cf-btn:hover{border-color:var(--text-faint)}
+.contact-col [hidden]{display:none!important}
+.contact-col .cf-note{color:var(--text-dim);font-size:.78rem;font-weight:300;line-height:1.6;margin:0}
+#cfCityWrap .cf-note{margin-top:.5rem}
+.contact-col .cf-note a,.cf-faq a{color:var(--text);border-bottom:1px solid var(--text-faint)}
+.cf-faq{margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border)}
+.cf-faq h3{font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;color:var(--text);margin:0 0 .35rem}
+.cf-faq p{color:var(--text-dim);font-size:.8rem;font-weight:300;line-height:1.65;margin:0 0 1rem}
+.cf-faq p:last-child{margin-bottom:0}
+@media(max-width:480px){.contact-col input[type=email].cf-input::placeholder{font-size:13px}}
 @media(max-width:768px){.about-contact-inner{grid-template-columns:1fr;gap:2rem;padding:1.5rem}}
 
 /* Footer */
@@ -646,30 +655,45 @@ footer a:hover{color:var(--text)}
     <div class="about-contact-inner">
         <div class="about-col">
             <h2>What this is</h2>
-            <p>Every number on these dashboards links back to a <strong>publicly available dataset</strong>. I process raw state and city DOT crash data &mdash; hundreds of thousands of records per year &mdash; and turn it into interactive, searchable, verifiable dashboards that anyone can use.</p>
-            <p>Each dashboard pulls from its city's official crash data source, normalizes it into a <strong>common schema</strong>, and generates a standalone HTML file with mapped hotspots, corridor overlays, and independently filterable charts covering crash timing, severity, impairment, speed, hit-and-run, and pedestrian safety.</p>
-            <p>The goal is to make crash data accessible to the people who live on these roads &mdash; not just the engineers and bureaucrats who control them. If your city publishes crash data, it can be added to the platform.</p>
+            <p>I turn official crash records from state and city transportation agencies into interactive dashboards for 20 US metros. Every figure traces back to a public dataset, linked from each dashboard's Sources section.</p>
+            <p>Each dashboard maps crash hotspots and breaks crashes down by timing, severity, impairment, speed, hit-and-run, and pedestrian and cyclist safety. Its Methodology section explains how the data was processed.</p>
+            <p>The dashboards show summaries. Individual crash records stay with the agencies that publish them, and the Sources links lead there.</p>
+            <p>I built crashmaps so the people who drive, walk, and bike these roads can see what happens on them. If your city publishes crash records, <a href="#contact" style="color:var(--text);font-weight:500;border-bottom:1px solid var(--text-faint)">use the form</a> to request it.</p>
             <p>If you find the dashboards useful, you can <a href="https://buymeacoffee.com/flu.2" target="_blank" rel="noopener noreferrer" style="color:var(--text);font-weight:500;border-bottom:1px solid var(--text-faint)">buy me a coffee</a>.</p>
-            <p style="color:var(--text-faint);font-size:.75rem;margin-top:1.5rem;font-weight:300;line-height:1.6">No affiliation with any law firm, insurance company, or government agency. No ads. No analytics. No cookies.</p>
+            <p style="color:var(--text-faint);font-size:.75rem;margin-top:1.5rem;font-weight:300;line-height:1.6">No affiliation with any law firm, insurance company, or government agency. No ads, analytics, or cookies.</p>
         </div>
-        <div class="contact-col">
+        <div class="contact-col" id="contact" style="scroll-margin-top:5rem">
             <h2>Get in touch</h2>
             <p style="color:var(--text-dim);font-size:.85rem;font-weight:300;line-height:1.6;margin-bottom:1rem">Request a city, report a data issue, suggest a feature, or just say hello. Anonymous submissions welcome.</p>
             <form id="contactForm" action="https://formspree.io/f/mlgobolb" method="POST" style="display:flex;flex-direction:column;gap:.75rem">
                 <input type="text" name="_gotcha" style="position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0" tabindex="-1" autocomplete="off">
-                <input type="email" name="email" placeholder="Email (optional)" class="cf-input">
-                <select name="type" class="cf-input">
+                <input type="email" name="email" placeholder="Email (optional, needed for a reply)" aria-label="Email (optional, needed for a reply)" class="cf-input">
+                <select name="type" id="cfType" class="cf-input" aria-label="Message type">
                     <option value="general">General feedback</option>
                     <option value="city">Request a city</option>
+                    <option value="research">Research or data access</option>
                     <option value="bug">Report a data issue</option>
                     <option value="feature">Suggest a feature</option>
                 </select>
+                <div id="cfCityWrap" hidden>
+                    <input type="text" name="city" id="cfCity" placeholder="City and state" aria-label="City and state" class="cf-input" disabled>
+                    <p class="cf-note">Some states restrict access to their crash data, so not every city can be added.</p>
+                </div>
+                <p class="cf-note" id="cfResearchNote" hidden>The dashboards show summaries. Each dashboard's Sources section links to the original agency data. NHTSA's <a href="https://www.nhtsa.gov/research-data/fatality-analysis-reporting-system-fars" target="_blank" rel="noopener noreferrer">FARS</a> covers every fatal crash nationwide, and GHSA's <a href="https://www.ghsa.org/state-highway-safety-offices" target="_blank" rel="noopener noreferrer">State Highway Safety Office directory</a> lists who to contact in each state.</p>
                 <textarea name="message" placeholder="Your message" required rows="4" class="cf-input"></textarea>
                 <button type="submit" class="cf-btn">Send</button>
             </form>
             <div id="contactSuccess" style="display:none;padding:1.25rem;background:var(--bg);border:1px solid var(--border);border-radius:8px;text-align:center">
                 <p style="font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--text);margin-bottom:.35rem">Message sent. Thank you.</p>
                 <p style="font-size:.78rem;color:var(--text-faint)">I read every submission.</p>
+            </div>
+            <div class="cf-faq">
+                <h3>Can I download the raw data?</h3>
+                <p>The dashboards show summaries only. Each dashboard's Sources section (for example, <a href="denver/#sec-13">Denver's</a>) links to the agency dataset where the full records are published.</p>
+                <h3>Can you add my city?</h3>
+                <p>Possibly, if its city or state publishes crash records with locations through at least 2024. Send a "Request a city" message above; some states restrict access to crash data, so not every city can be added.</p>
+                <h3>How is the data processed?</h3>
+                <p>Each agency's records are mapped to a common schema, aggregated, and built into a standalone page. Each dashboard's Methodology section (for example, <a href="denver/#sec-14">Denver's</a>) explains that source's quirks and exclusions.</p>
             </div>
         </div>
     </div>
@@ -829,6 +853,19 @@ footer a:hover{color:var(--text)}
     var success=document.getElementById('contactSuccess');
     if(!form)return;
     var btn=form.querySelector('button[type="submit"]');
+    var typeSel=document.getElementById('cfType');
+    var cityWrap=document.getElementById('cfCityWrap');
+    var cityInput=document.getElementById('cfCity');
+    var researchNote=document.getElementById('cfResearchNote');
+    function syncType(){
+        var isCity=typeSel.value==='city';
+        cityWrap.hidden=!isCity;
+        cityInput.disabled=!isCity;
+        cityInput.required=isCity;
+        researchNote.hidden=typeSel.value!=='research';
+    }
+    typeSel.addEventListener('change',syncType);
+    syncType();
     var ready=false;
     btn.disabled=true;
     btn.style.opacity='.4';
