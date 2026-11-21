@@ -573,7 +573,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <!-- 12 VISION ZERO -->
 <div class="rule"></div>
 <div class="sec-hdr" id="sec-12"><div class="sec-num">12 &mdash; Vision Zero Houston</div><h2 class="sec-title">Vision Zero Houston: Progress Toward Zero</h2><p class="sec-desc">Houston Metro adopted Vision Zero Houston in 2019, setting a target of 0 traffic fatalities by 2030. The baseline was 254 fatalities in 2019.</p></div>
-<div class="card"><div class="card-top"><div><div class="card-title">Fatalities: Goal vs. Actual</div><div class="card-sub">2022&ndash;2030</div></div></div><div class="chart-box"><canvas id="vzChart"></canvas></div></div>
+<div class="card"><div class="card-top"><div><div class="card-title">Fatalities: Goal vs. Actual</div><div class="card-sub">2019 baseline &middot; 2022&ndash;2030</div></div></div><div class="chart-box"><canvas id="vzChart"></canvas></div></div>
 
 <!-- 13 SOURCES -->
 <div class="rule"></div>
@@ -846,7 +846,7 @@ new Chart(document.getElementById('yoySevChart'),{type:'line',data:{labels:yoyLa
 
 
 // === VISION ZERO ===
-new Chart(document.getElementById('vzChart'),{type:'line',data:{labels:[2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030],datasets:[{label:'Actual Fatalities',data:[535, 518, 559, null, null, null, null, null, null],borderColor:'rgba(255,77,77,.8)',backgroundColor:'rgba(255,77,77,.1)',borderWidth:2.5,pointRadius:4,pointHoverRadius:6,tension:.2,fill:true,spanGaps:false},{label:'Vision Zero Houston Goal',data:[185, 162, 139, 115, 92, 69, 46, 23, 0],borderColor:'rgba(77,255,145,.6)',backgroundColor:'rgba(77,255,145,.05)',borderWidth:2,borderDash:[8,4],pointRadius:0,tension:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'circle',padding:12}},tooltip:{...TT,callbacks:{label:c=>c.dataset.label+': '+c.raw+' fatalities'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Fatalities',color:'#555873',font:{size:11}}},x:{grid:{display:false}}}}});
+new Chart(document.getElementById('vzChart'),{type:'line',data:{labels:["2019 baseline", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"],datasets:[{label:'Actual Fatalities',data:[null, 535, 518, 559, null, null, null, null, null, null],borderColor:'rgba(255,77,77,.8)',backgroundColor:'rgba(255,77,77,.1)',borderWidth:2.5,pointRadius:4,pointHoverRadius:6,tension:.2,fill:true,spanGaps:false},{label:'Official Baseline (2019)',data:[254, null, null, null, null, null, null, null, null, null],borderColor:'rgba(140,148,175,.9)',backgroundColor:'rgba(140,148,175,.9)',pointStyle:'rectRot',pointRadius:7,pointHoverRadius:8,showLine:false},{label:'Vision Zero Houston Goal',data:[254, 185, 162, 139, 115, 92, 69, 46, 23, 0],borderColor:'rgba(77,255,145,.6)',backgroundColor:'rgba(77,255,145,.05)',borderWidth:2,borderDash:[8,4],pointRadius:0,tension:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'circle',padding:12}},tooltip:{...TT,callbacks:{label:c=>c.dataset.label+': '+c.raw+' fatalities'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Fatalities',color:'#555873',font:{size:11}}},x:{grid:{display:false}}}}});
 
 // =========================================================================
 // === CRASH MAP ENGINE ===
