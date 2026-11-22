@@ -161,6 +161,7 @@ header nav a:hover{color:var(--text)}
 /* Trend row tooltips */
 .trend-row{cursor:pointer;position:relative;transition:background .15s;border-radius:6px;padding:2px 6px;margin:0 -6px}
 .trend-row:hover{background:rgba(255,255,255,.03)}
+a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:2px solid #e8eaf0;outline-offset:2px}
 .trend-tip{overflow:hidden;max-height:0;opacity:0;transition:max-height .3s ease,opacity .25s ease,margin .3s ease;margin:0 -6px}
 .trend-tip.open{max-height:200px;opacity:1;margin:2px -6px 4px}
 .trend-tip-inner{padding:.5rem .65rem;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:6px;font-size:.7rem;color:var(--text-dim);line-height:1.55}
@@ -383,15 +384,20 @@ footer a:hover{color:var(--text)}
 <script>
 (function(){
     var rows=document.querySelectorAll('.trend-row[data-tip]');
+    function collapseAll(){document.querySelectorAll('.trend-row[aria-expanded="true"]').forEach(function(r){r.setAttribute('aria-expanded','false')})}
     rows.forEach(function(row){
+        // Each row is a button: reachable with Tab, opened with Enter or Space
+        row.setAttribute('role','button');row.setAttribute('tabindex','0');row.setAttribute('aria-expanded','false');
+        row.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();row.click()}});
         row.addEventListener('click',function(e){
             var existing=row.nextElementSibling;
             if(existing&&existing.classList.contains('trend-tip')){
-                if(existing.classList.contains('open')){existing.classList.remove('open');setTimeout(function(){existing.remove()},300);return}
+                if(existing.classList.contains('open')){existing.classList.remove('open');row.setAttribute('aria-expanded','false');setTimeout(function(){existing.remove()},300);return}
             }
             document.querySelectorAll('.trend-tip.open').forEach(function(t){t.classList.remove('open');setTimeout(function(){t.remove()},300)});
+            collapseAll();row.setAttribute('aria-expanded','true');
             var tip=document.createElement('div');
-            tip.className='trend-tip';
+            tip.className='trend-tip';tip.setAttribute('role','status');
             tip.innerHTML='<div class="trend-tip-inner">'+row.getAttribute('data-tip')+'<span class="tip-src">'+row.getAttribute('data-src')+'</span></div>';
             row.after(tip);
             requestAnimationFrame(function(){requestAnimationFrame(function(){tip.classList.add('open')})});
@@ -399,6 +405,7 @@ footer a:hover{color:var(--text)}
     });
     document.addEventListener('click',function(e){
         if(!e.target.closest('.trend-row')&&!e.target.closest('.trend-tip')){
+            collapseAll();
             document.querySelectorAll('.trend-tip.open').forEach(function(t){t.classList.remove('open');setTimeout(function(){t.remove()},300)});
         }
     });
@@ -690,7 +697,7 @@ footer a:hover{color:var(--text)}
                     <p class="cf-note">Some states restrict access to their crash data, so not every city can be added.</p>
                 </div>
                 <p class="cf-note" id="cfResearchNote" hidden>The dashboards show summaries. Each dashboard's Sources section links to the original agency data. NHTSA's <a href="https://www.nhtsa.gov/research-data/fatality-analysis-reporting-system-fars" target="_blank" rel="noopener noreferrer">FARS</a> covers every fatal crash nationwide, and GHSA's <a href="https://www.ghsa.org/state-highway-safety-offices" target="_blank" rel="noopener noreferrer">State Highway Safety Office directory</a> lists who to contact in each state.</p>
-                <textarea name="message" placeholder="Your message" required rows="4" class="cf-input"></textarea>
+                <textarea name="message" placeholder="Your message" aria-label="Your message" required rows="4" class="cf-input"></textarea>
                 <button type="submit" class="cf-btn">Send</button>
             </form>
             <div id="contactSuccess" style="display:none;padding:1.25rem;background:var(--bg);border:1px solid var(--border);border-radius:8px;text-align:center">
