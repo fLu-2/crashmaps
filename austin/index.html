@@ -206,6 +206,8 @@ main{max-width:1200px;margin:0 auto;padding:4rem 2rem 6rem}
 .tag-red{background:rgba(255,77,77,.12);color:var(--red)}.tag-amber{background:rgba(255,179,71,.12);color:var(--amber)}
 .city-table{width:100%;border-collapse:collapse;font-size:.8rem}.city-table th{text-align:left;padding:.55rem 1rem;color:var(--text-dim);font-weight:500;font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid var(--border)}
 .city-table td{padding:.55rem 1rem;border-bottom:1px solid rgba(28,31,46,.5)}.city-table tr:hover{background:rgba(255,255,255,.02)}
+.city-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media(max-width:768px){.city-table{border-collapse:separate;border-spacing:0}.city-table th,.city-table td{padding:.5rem .65rem;white-space:nowrap}.city-table th:first-child,.city-table td:first-child{position:sticky;left:0;z-index:1;background:var(--card);white-space:normal;min-width:7.5rem;max-width:42vw;box-shadow:inset -1px 0 0 var(--border)}}
 .mono{font-family:'JetBrains Mono',monospace}
 .callout{display:flex;flex-direction:column;justify-content:center;padding:2rem}
 .callout-val{font-family:'JetBrains Mono',monospace;font-size:clamp(2.5rem,5vw,3.5rem);font-weight:700;line-height:1}
@@ -451,7 +453,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <div class="rule"></div>
 <div class="sec-hdr" id="sec-04"><div class="sec-num">04 &mdash; District Overview</div><h2 class="sec-title">Crash Rates Across the Metro</h2><p class="sec-desc">How each district in Austin compares on total crashes, fatalities, and behavioral factors.</p></div>
 <div class="card"><div class="card-top"><div><div class="card-title">District Comparison</div><div class="card-sub">All districts &middot; Austin Open Data 2025</div></div><div class="tag tag-red">Overview</div></div>
-<table class="city-table"><thead><tr><th>District</th><th>Crashes</th><th>Deaths</th><th>Ped</th></tr></thead><tbody id="cityTableBody"></tbody></table></div>
+<div class="city-table-wrap" tabindex="0" role="region" aria-label="District comparison table"><table class="city-table"><thead><tr><th>District</th><th>Crashes</th><th>Deaths</th><th>Ped</th></tr></thead><tbody id="cityTableBody"></tbody></table></div></div>
 <div class="card"><div class="card-top"><div><div class="card-title">Crashes Per 1,000 Residents</div><div class="card-sub">Population-adjusted crash rate &middot; Austin Open Data 2025</div></div></div><div class="chart-box"><canvas id="perCapitaChart"></canvas></div><div style="padding:.6rem 1.25rem .85rem;font-size:.75rem;color:var(--text-dim);font-family:DM Sans,sans-serif;border-top:1px solid var(--border);text-align:center">Populations are estimates: 2020 Census block groups, placed in each district by the same boundaries that assign crashes, scaled to the Census Bureau estimate for City of Austin on July 1, 2025. Other Austin has no defined population and no per-resident rate.</div></div>
 
 <!-- 05 WHEN IT HAPPENS -->
