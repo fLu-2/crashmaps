@@ -21,7 +21,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-:root{--bg:#08090d;--bg-card:#0f1118;--card:#0f1118;--border:#1c1f2e;--border-hover:#2a2e42;--text:#e8eaf0;--text-dim:#8b90a8;--text-faint:#8b90a8;--red:#ff4d4d;--red-dim:rgba(255,77,77,0.12);--amber:#ffb347;--amber-dim:rgba(255,179,71,0.12);--blue:#4da6ff;--blue-dim:rgba(77,166,255,0.10);--green:#4dff91;--green-dim:rgba(77,255,145,0.10);--purple:#b07dff;--purple-dim:rgba(176,125,255,0.10);--cyan:#67e8f9;--accent:#f59e0b;--accent-dim:rgba(245,158,11,.12)}
+:root{--bg:#08090d;--bg-card:#0f1118;--card:#0f1118;--border:#1c1f2e;--border-hover:#2a2e42;--text:#e8eaf0;--text-dim:#8b90a8;--text-faint:#8b90a8;--red:#ff4d4d;--red-dim:rgba(255,77,77,0.12);--amber:#ffb347;--amber-dim:rgba(255,179,71,0.12);--blue:#4da6ff;--blue-dim:rgba(77,166,255,0.10);--green:#4dff91;--green-dim:rgba(77,255,145,0.10);--purple:#b07dff;--purple-dim:rgba(176,125,255,0.10);--cyan:#67e8f9;--accent:#f59e0b;--accent-dim:rgba(245,158,11,.12);--deaths:#e5534b;--ped:#e0a23c;--cyclist:#4f9cf0;--fell:#22a565;--flat:#6b7280;--rose:#e5534b;--chip:#1a1d2b;--link-line:#4a4f66;--r-card:12px;--r-ctl:8px;--r-bar:3px;--b-card:1px solid #1c1f2e;--b-ctl:1px solid #2a2e42;--h-compact:36px;--h-std:44px;--h-hero:48px;--ease:150ms ease-out;--t-color:color var(--ease),border-color var(--ease),background-color var(--ease),opacity var(--ease)}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -30,23 +30,23 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 
 /* Back link */
-.back-link{max-width:1200px;margin:0 auto;padding:.75rem 1.5rem;font-family:'JetBrains Mono',monospace;font-size:.68rem}
-.back-link a{color:var(--text-faint);text-decoration:none;transition:color .15s}
+.back-link{max-width:1200px;margin:0 auto;padding:.75rem 1.5rem;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500}
+.back-link a{color:var(--text-dim);text-decoration:none;transition:var(--t-color)}
 .back-link a:hover{color:var(--accent)}
 
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:3rem 2rem;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(245,158,11,.12),transparent 60%),radial-gradient(ellipse 60% 40% at 80% 80%,rgba(77,166,255,0.04),transparent 50%)}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(245,158,11,.12),transparent 60%)}
 .hero::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.015) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black,transparent)}
 .hero-inner{position:relative;z-index:2;max-width:960px;margin:0 auto;width:100%}
-.hero-label{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:500;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;padding:6px 14px;background:var(--accent-dim);border:1px solid rgba(245,158,11,.2);border-radius:100px;margin-bottom:2rem;animation:fadeIn .6s ease}
+.hero-label{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;padding:6px 14px;background:var(--accent-dim);border:1px solid rgba(245,158,11,.2);border-radius:100px;margin-bottom:2rem;animation:fadeIn .6s ease}
 .hero-label::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 2s ease infinite}
 .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,6vw,4.8rem);font-weight:700;line-height:1.08;margin-bottom:1.5rem;animation:fadeUp .8s ease .1s both}
-.hero h1 em{font-style:normal;background:linear-gradient(135deg, #f59e0b, #fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero h1 em{font-style:normal;background:linear-gradient(135deg, #f59e0b, color-mix(in srgb, #f59e0b 55%, #ffffff));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero-sub{font-size:clamp(.95rem,2.5vw,1.1rem);font-weight:300;color:var(--text-dim);max-width:580px;margin-bottom:3rem;animation:fadeUp .8s ease .25s both}
 .stats-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden;animation:fadeUp .8s ease .4s both}
 .stat-cell{padding:1.2rem 1.4rem;background:var(--bg-card)}
 .stat-val{font-family:'JetBrains Mono',monospace;font-size:clamp(1.1rem,3vw,1.5rem);font-weight:500}
-.stat-val.red{color:var(--red)}.stat-val.amber{color:var(--amber)}.stat-val.blue{color:var(--blue)}.stat-val.purple{color:var(--purple)}.stat-val.green{color:var(--green)}
+.stat-val{color:var(--text)}.stat-val.deaths{color:var(--deaths)}
 .stat-lbl{font-size:.75rem;color:var(--text-faint);margin-top:4px;line-height:1.4}
 
 /* Sticky nav */
@@ -56,11 +56,27 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .sticky-nav{visibility:hidden;transition:transform .25s,visibility 0s .25s}
 .sticky-nav.visible{visibility:visible;transition:transform .25s}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent)!important;outline-offset:2px}
+a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible,[tabindex]:focus-visible,[role=button]:focus-visible{outline:2px solid var(--accent)!important;outline-offset:2px}
+input:focus,select:focus,textarea:focus{border-color:#2a2e42!important}
+.leaflet-marker-icon:focus-visible{outline:none!important}
+.leaflet-marker-icon:focus-visible>div{box-shadow:0 0 0 3px #fff,0 0 0 5px var(--accent)!important}
+main a,footer a,.meth-text a,.map-card a{color:var(--text);text-decoration:underline;text-decoration-color:var(--link-line);text-decoration-thickness:1px;text-underline-offset:2px;transition:var(--t-color)}
+main a:hover,footer a:hover,.meth-text a:hover,.map-card a:hover{color:var(--accent);text-decoration-color:var(--accent)}
+.leaflet-container a.leaflet-popup-close-button,.leaflet-control-zoom a,.leaflet-control-attribution a{text-decoration:none}
+.ico{display:inline-block;vertical-align:-3px;flex-shrink:0}
+.ok-ico{color:var(--fell)}
+.lead-in{color:var(--text);font-weight:600}
+.region-name{display:block;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text-dim)}
+.popup-region{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text-dim);margin-bottom:2px}
+.th-hi{color:var(--accent)}
+.ctl-label{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text-dim)}
+.btn-primary{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;min-height:var(--h-std);padding:0 1.25rem;border-radius:var(--r-ctl);border:none;background:var(--accent);color:#fff;cursor:pointer;white-space:nowrap;transition:var(--t-color)}
+.btn-primary:hover{opacity:.88}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 .sticky-nav-inner{display:flex;gap:0;max-width:1100px;margin:0 auto;padding:0 .5rem;white-space:nowrap;align-items:center}
-.sticky-nav .nav-home{padding:.65rem .8rem;font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--text-faint);text-decoration:none;border-right:1px solid var(--border);margin-right:.25rem;flex-shrink:0}
+.sticky-nav .nav-home{padding:.65rem .8rem;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text-faint);text-decoration:none;border-right:1px solid var(--border);margin-right:.25rem;flex-shrink:0}
 .sticky-nav .nav-home:hover{color:var(--accent)}
-.sticky-nav a{padding:.65rem .8rem;font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--text-dim);text-decoration:none;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;flex-shrink:0}
+.sticky-nav a{padding:.65rem .8rem;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text-dim);text-decoration:none;border-bottom:2px solid transparent;transition:var(--t-color);flex-shrink:0}
 .sticky-nav a:hover,.sticky-nav a.active{color:var(--text);border-bottom-color:var(--accent)}
 
 /* Map */
@@ -72,83 +88,83 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,te
 .map-fallback.show{display:flex}
 .map-fallback h3{font-family:'Playfair Display',serif;font-size:1.3rem}
 .map-fallback p{color:var(--text-dim);font-size:.9rem;max-width:400px;line-height:1.6}
-.map-fallback code{background:rgba(255,179,71,0.15);color:var(--amber);padding:2px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:.82rem}
+.map-fallback code{background:var(--chip);color:var(--text);padding:2px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:.82rem}
 .map-toolbar{display:flex;flex-direction:column;background:#0d0f19;border-radius:12px 12px 0 0;border-bottom:1px solid var(--border)}
 .map-toolbar-row{display:flex;flex-wrap:wrap;gap:.5rem;padding:.65rem 1rem;align-items:center}
 .map-toolbar-row+.map-toolbar-row{border-top:1px solid rgba(255,255,255,.04)}
 .map-search{display:flex;flex:1;min-width:200px;position:relative}
 @media(max-width:400px){.map-search{min-width:0}}
-.map-search input{width:100%;background:#161929;border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:.85rem;padding:8px 12px 8px 34px;border-radius:8px;outline:none;transition:border-color .2s}
-.map-search input:focus{border-color:var(--blue)}
+.map-search input{width:100%;background:#161929;border:var(--b-ctl);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;min-height:var(--h-std);padding:8px 12px 8px 34px;border-radius:var(--r-ctl);transition:var(--t-color)}
+
 .map-search input::placeholder{color:var(--text-faint)}
-.map-search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-faint);font-size:.85rem;pointer-events:none}
+.map-search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--text-dim);line-height:0;pointer-events:none}
 .lookup-cols{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
 #lookupMapWrap .leaflet-container,#lookupMapWrap.leaflet-container{cursor:default!important}
 .lookup-map-col{min-height:240px}
 .lookup-stats-col{display:flex;flex-direction:column;justify-content:center}
-.lookup-pill{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .6rem;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:500}
+.lookup-pill{display:inline-flex;align-items:baseline;gap:.3rem;padding:4px 10px;border-radius:var(--r-ctl);background:var(--chip);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text-dim)}.lookup-pill .lp-num{font-family:'JetBrains Mono',monospace;color:var(--text)}.lookup-pill-fatal{background:rgba(229,83,75,.14)}.lookup-pill-fatal .lp-num,.lookup-pill-fatal .lp-lbl{color:var(--deaths)}
 .lookup-bar-wrap{display:flex;align-items:flex-end;gap:3px;height:36px}
-.lookup-bar{flex:1;border-radius:3px 3px 0 0;min-width:0;position:relative;transition:height .3s ease}
-.lookup-bar-label{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--text-faint);white-space:nowrap}
+.lookup-bar{flex:1;border-radius:var(--r-bar) var(--r-bar) 0 0;min-width:0;position:relative;transition:height .3s ease}
+.lookup-bar-label{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text-faint);white-space:nowrap}
 .lookup-ctx-bar{height:6px;border-radius:3px;position:relative}
 .lookup-ctx-bar-inner{height:100%;border-radius:3px}
 @media(max-width:768px){.lookup-cols{grid-template-columns:1fr}.lookup-map-col{min-height:200px}}
-.map-metro-select{background:#161929;color:var(--text);border:1px solid var(--border);border-radius:8px;padding:7px 28px 7px 10px;font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:500;letter-spacing:.02em;cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7094'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;min-width:145px;transition:border-color .15s}
-.map-metro-select:hover,.map-metro-select:focus{border-color:var(--amber);outline:none}
+.map-metro-select{background:#161929;color:var(--text);border:var(--b-ctl);border-radius:var(--r-ctl);padding:7px 28px 7px 10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;min-height:var(--h-compact);cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238b90a8'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;min-width:145px;transition:var(--t-color)}
+.map-metro-select:hover{border-color:var(--text-dim)}
 .map-filter-strip{display:flex;gap:.35rem;padding:.55rem 1rem;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-top:1px solid rgba(255,255,255,.04);align-items:center}
 .map-filter-strip::-webkit-scrollbar{display:none}
 .map-filter-group{display:flex;align-items:center;gap:5px;flex-shrink:0}
-.map-filter-group-label{font-family:'JetBrains Mono',monospace;font-size:.58rem;font-weight:600;color:var(--text-faint);letter-spacing:.07em;text-transform:uppercase;white-space:nowrap;padding-right:2px}
+.map-filter-group-label{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text-dim);white-space:nowrap;padding-right:2px}
 .map-filters{display:flex;gap:3px}
 .map-filter-sep{width:1px;height:20px;background:rgba(255,255,255,.08);margin:0 10px;flex-shrink:0}
-.map-btn{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:500;padding:6px 12px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer;transition:all .15s;white-space:nowrap;letter-spacing:.02em}
+.map-btn{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;min-height:var(--h-compact);padding:6px 12px;border-radius:var(--r-ctl);border:var(--b-ctl);background:transparent;color:var(--text-dim);cursor:pointer;transition:var(--t-color);white-space:nowrap}
 .map-btn:hover{border-color:var(--text-dim);color:var(--text)}
 .map-btn.active{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.2);color:var(--accent)}
 .map-btn.active-blue{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.2);color:var(--accent)}
-.commute-toggle{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:500;padding:7px 14px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer;transition:all .15s;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.commute-toggle{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;min-height:var(--h-compact);padding:6px 14px;border-radius:var(--r-ctl);border:var(--b-ctl);background:transparent;color:var(--text-dim);cursor:pointer;transition:var(--t-color);white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
 .map-filter-toggle{display:none}
 .map-filter-mobile{display:none}
-.commute-toggle:hover{border-color:var(--green);color:var(--green)}
-.commute-toggle.open{background:rgba(77,255,145,.12);border-color:rgba(77,255,145,0.3);color:var(--green)}
+.commute-toggle:hover{border-color:var(--text-dim);color:var(--text)}
+.commute-toggle.open{background:rgba(245,158,11,.12);border-color:var(--accent);color:var(--accent)}
 .commute-panel{display:none;padding:.85rem 1rem;background:#0d0f19;border-bottom:1px solid var(--border);gap:.6rem;align-items:flex-end;flex-wrap:wrap}
 .commute-panel.show{display:flex}
 .commute-field{display:flex;flex-direction:column;gap:3px;flex:1;min-width:180px}
-.commute-field label{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:.06em}
-.commute-field input{background:#161929;border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:.85rem;padding:8px 12px;border-radius:8px;outline:none;transition:border-color .2s}
-.commute-field input:focus{border-color:var(--green)}
+.commute-field label{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text-dim)}
+.commute-field input{background:#161929;border:var(--b-ctl);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;min-height:var(--h-std);padding:8px 12px;border-radius:var(--r-ctl);transition:var(--t-color)}
+
 .commute-field input::placeholder{color:var(--text-faint)}
-.commute-go{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;padding:8px 20px;border-radius:8px;border:none;background:linear-gradient(135deg,var(--green),#2dcc70);color:#08090d;cursor:pointer;transition:opacity .15s;white-space:nowrap}
+.commute-go{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;min-height:var(--h-std);padding:8px 20px;border-radius:var(--r-ctl);border:none;background:var(--accent);color:#fff;cursor:pointer;transition:var(--t-color);white-space:nowrap}
 .commute-go:hover{opacity:.85}
-.commute-clear{font-family:'JetBrains Mono',monospace;font-size:.68rem;padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer}
-.commute-result{width:100%;font-size:.82rem;color:var(--green);font-family:'JetBrains Mono',monospace;padding-top:4px;display:none}
+.commute-clear{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;min-height:var(--h-std);padding:8px 14px;border-radius:var(--r-ctl);border:var(--b-ctl);background:transparent;color:var(--text-dim);cursor:pointer;transition:var(--t-color)}
+.commute-result{width:100%;font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;padding-top:4px;display:none}
 .commute-result.show{display:block}
 .crash-popup .leaflet-popup-content-wrapper{background:#141726;color:#e8eaf0;border-radius:12px;border:1px solid #353a52;box-shadow:0 4px 16px rgba(0,0,0,0.35),0 12px 40px rgba(0,0,0,0.25)}
 .crash-popup .leaflet-popup-tip{background:#141726}
 .crash-popup .leaflet-popup-content{margin:14px 18px;font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.5}
 .crash-popup .leaflet-popup-close-button{color:#6b7094!important;font-size:20px!important;padding:4px 6px 0 0!important;line-height:1!important;width:24px!important;height:24px!important}
 .crash-popup .leaflet-popup-close-button:hover{color:#e8eaf0!important;background:transparent!important}
-.popup-rank{font-family:'JetBrains Mono',monospace;font-size:11px;color:#f59e0b;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px}
+.popup-rank{font-family:'JetBrains Mono',monospace;font-size:12px;color:#f59e0b;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px}
 .popup-name{font-weight:600;font-size:15px;margin-bottom:6px}
 .popup-count{display:flex;align-items:baseline;gap:6px;white-space:nowrap}.popup-num{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;line-height:1.1;color:#f59e0b}.popup-unit{font-family:'DM Sans',sans-serif;font-size:13px;color:#e8eaf0}.popup-years{font-family:'JetBrains Mono',monospace;font-size:12px;color:#8b90a8;white-space:nowrap;margin:2px 0 6px}
 .popup-trend{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;margin-bottom:6px}
 .popup-note{font-size:12px;color:#8b90a8;line-height:1.45}
 .popup-tags{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap}
-.popup-tag{font-size:10.5px;padding:3px 8px;border-radius:5px;font-weight:600;letter-spacing:.03em}
+.popup-tag{font-size:12px;padding:3px 8px;border-radius:var(--r-ctl);font-weight:600}
 .map-legend-row{display:flex;flex-wrap:wrap;gap:1.25rem;margin-top:1rem;font-size:.78rem;color:var(--text-dim);align-items:center;padding:0 1rem}
 .map-legend-item{display:flex;align-items:center;gap:6px}
 .leaflet-control-zoom a{background:white!important;color:#333!important;border-color:#ccc!important;font-weight:300!important;width:32px!important;height:32px!important;line-height:32px!important;font-size:16px!important}
 .leaflet-control-zoom a:hover{background:#f5f5f5!important}
 .leaflet-control-zoom{border-radius:8px!important;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.15)!important;border:none!important}
-.leaflet-control-attribution{background:rgba(255,255,255,.75)!important;font-size:10px!important;padding:2px 6px!important}
+.leaflet-control-attribution{background:rgba(255,255,255,.75)!important;font-size:12px!important;padding:2px 6px!important}
 .rank-table{width:100%;border-collapse:collapse;table-layout:fixed;margin-top:.5rem}
-.rank-table th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:500;color:var(--text-faint);letter-spacing:.05em;text-transform:uppercase;padding:.6rem .75rem;border-bottom:1px solid var(--border)}
+.rank-table th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:var(--text-faint);letter-spacing:.08em;text-transform:uppercase;padding:.6rem .75rem;border-bottom:1px solid var(--border)}
 .rank-table td{padding:.75rem;font-size:.88rem;border-bottom:1px solid rgba(28,31,46,.6);vertical-align:middle;overflow:hidden}
 .rank-table tr:last-child td{border-bottom:none}
 .rank-table tr:hover td{background:rgba(255,255,255,.015)}
 .rank-num{font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:var(--text-faint);width:32px;text-align:center}
 .crash-bar-wrap{display:grid;grid-template-columns:1fr 52px;align-items:center;gap:6px}
 .crash-bar-track{position:relative;height:8px}
-.crash-bar{position:absolute;left:0;top:0;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 35%,transparent));min-width:4px;transition:width .3s ease}
+.crash-bar{position:absolute;left:0;top:0;height:100%;border-radius:var(--r-bar);background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 35%,transparent));min-width:4px;transition:width .3s ease}
 .crash-count{font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:var(--accent);text-align:right;white-space:nowrap}
 
 main{max-width:1200px;margin:0 auto;padding:4rem 2rem 6rem}
@@ -169,49 +185,47 @@ main{max-width:1200px;margin:0 auto;padding:4rem 2rem 6rem}
 .stats-strip{grid-template-columns:repeat(2,1fr)}
 .stat-cell{padding:.7rem .6rem}
 .grid-2,.grid-3,.grid-1-3,.grid-65-35{grid-template-columns:1fr}
-.sticky-nav a{padding:.6rem .7rem;font-size:.65rem;min-height:44px;display:inline-flex;align-items:center}
-.sticky-nav .nav-home{padding:.6rem .7rem;font-size:.65rem;min-height:44px;display:inline-flex;align-items:center}
+.sticky-nav a{padding:.6rem .7rem;min-height:44px;display:inline-flex;align-items:center}
+.sticky-nav .nav-home{padding:.6rem .7rem;min-height:44px;display:inline-flex;align-items:center}
 #crashMap{height:360px}
-.map-btn{font-size:.62rem;padding:7px 9px;min-height:36px}
-.map-filter-group-label{font-size:.56rem}
+.map-btn{padding:7px 10px}
 .map-filter-desktop{display:none}
 .map-filter-mobile{display:none;padding:.75rem;border-top:1px solid rgba(255,255,255,.04)}
 .map-filter-mobile.show{display:block}
 .mf-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
-.mf-field label{display:block;font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:600;color:var(--text-faint);letter-spacing:.07em;text-transform:uppercase;margin-bottom:2px}
-.mf-select{width:100%;background:#161929;color:var(--text);border:1px solid var(--border);border-radius:8px;padding:10px 28px 10px 12px;font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:500;cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7094'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
-.mf-select:focus{border-color:var(--blue);outline:none}
-.map-filter-toggle{display:inline-flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:.65rem;font-weight:500;padding:7px 12px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer;white-space:nowrap}
+.mf-field label{display:block;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text-dim);margin-bottom:2px}
+.mf-select{width:100%;background:#161929;color:var(--text);border:var(--b-ctl);border-radius:var(--r-ctl);padding:10px 28px 10px 12px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7094'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+
+.map-filter-toggle{display:inline-flex;align-items:center;gap:6px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:7px 12px;border-radius:var(--r-ctl);border:var(--b-ctl);background:transparent;color:var(--text-dim);cursor:pointer;white-space:nowrap}
 .map-filter-toggle.open{border-color:var(--accent);color:var(--accent)}
-.map-search input{font-size:.8rem;padding:8px 12px 8px 32px}
-.map-metro-select{min-width:120px;font-size:.65rem;padding:6px 22px 6px 8px}
+.map-search input{padding:8px 12px 8px 34px}
+.map-metro-select{min-width:120px;padding:6px 22px 6px 8px}
 .commute-panel{flex-direction:column;padding:.75rem;gap:.6rem}
 .commute-field{min-width:0;flex:none;width:100%}
-.commute-field label{font-size:.6rem;margin-bottom:2px}
-.commute-field input{font-size:.8rem;padding:10px 12px}
-.commute-go{width:100%;text-align:center;padding:11px;font-size:.72rem}
-.commute-clear{width:100%;text-align:center;padding:11px;font-size:.68rem}
-.map-legend-row{display:grid;grid-template-columns:repeat(2,1fr);gap:.35rem .6rem;font-size:.68rem;padding:.5rem .75rem}
-.map-legend-row .map-legend-item:last-child{grid-column:1/-1;text-align:center;justify-content:center;font-size:.6rem}
-.chart-metro{padding:6px 10px;font-size:.68rem;min-height:36px}
+.commute-field label{margin-bottom:2px}
+.commute-field input{padding:10px 12px}
+.commute-go{width:100%;text-align:center;padding:11px}
+.commute-clear{width:100%;text-align:center;padding:11px}
+.map-legend-row{display:grid;grid-template-columns:repeat(2,1fr);gap:.35rem .6rem;font-size:.75rem;padding:.5rem .75rem}
+.map-legend-row .map-legend-item:last-child{grid-column:1/-1;text-align:center;justify-content:center;font-size:.75rem}
+.chart-metro{padding:6px 10px}
+.map-btn,.commute-toggle,.map-filter-toggle,.commute-go,.commute-clear,.chart-metro,.map-metro-select,.mf-select,.btn-primary,.map-search input,.commute-field input{min-height:var(--h-std)}
 .chart-box{height:220px}.chart-box.tall{height:280px}.chart-box.short{height:180px}
 .rank-table{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .rank-table td{padding:.6rem .5rem;font-size:.8rem}
-.rank-table th{padding:.5rem;font-size:.65rem}
+.rank-table th{padding:.5rem;font-size:.75rem}
 .crash-bar-wrap{grid-template-columns:1fr 44px;gap:4px}
-.crash-count{font-size:.68rem}
-.rank-num{font-size:.68rem}
+.crash-count{font-size:.75rem}
+.rank-num{font-size:.75rem}
 .card-top{padding:.85rem 1rem .4rem}
 .sec-desc{font-size:.88rem}
 }
-.card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1rem}
+.card{background:var(--card);border:var(--b-card);border-radius:var(--r-card);overflow:hidden;margin-bottom:1rem}
 .card-top{display:flex;justify-content:space-between;align-items:flex-start;padding:1rem 1.25rem .5rem;gap:.75rem;flex-wrap:wrap}
-.card-title{font-weight:600;font-size:.92rem}.card-sub{font-size:.7rem;color:var(--text-dim);margin-top:.15rem}
-.chart-metro{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:.7rem;font-family:'JetBrains Mono',monospace;cursor:pointer}
+.card-title{font-weight:600;font-size:15px}.card-sub{font-size:13px;color:var(--text-dim);margin-top:.15rem}
+.chart-metro{background:var(--bg);color:var(--text);border:var(--b-ctl);border-radius:var(--r-ctl);min-height:var(--h-compact);padding:4px 10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:var(--t-color)}
 .chart-box{padding:.75rem 1rem 1rem;height:260px;position:relative}.chart-box.tall{height:340px}.chart-box.short{height:200px}
-.tag{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:4px;white-space:nowrap;height:fit-content}
-.tag-red{background:rgba(255,77,77,.12);color:var(--red)}.tag-amber{background:rgba(255,179,71,.12);color:var(--amber)}
-.city-table{width:100%;border-collapse:collapse;font-size:.8rem}.city-table th{text-align:left;padding:.55rem 1rem;color:var(--text-dim);font-weight:500;font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.city-table{width:100%;border-collapse:collapse;font-size:.8rem}.city-table th{text-align:left;padding:.55rem 1rem;color:var(--text-dim);font-weight:500;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid var(--border)}
 .city-table td{padding:.55rem 1rem;border-bottom:1px solid rgba(28,31,46,.5)}.city-table tr:hover{background:rgba(255,255,255,.02)}
 .city-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 @media(max-width:768px){.city-table{border-collapse:separate;border-spacing:0}.city-table th,.city-table td{padding:.5rem .65rem;white-space:nowrap}.city-table th:first-child,.city-table td:first-child{position:sticky;left:0;z-index:1;background:var(--card);white-space:normal;min-width:7.5rem;max-width:42vw;box-shadow:inset -1px 0 0 var(--border)}}
@@ -219,15 +233,15 @@ main{max-width:1200px;margin:0 auto;padding:4rem 2rem 6rem}
 .callout{display:flex;flex-direction:column;justify-content:center;padding:2rem}
 .callout-val{font-family:'JetBrains Mono',monospace;font-size:clamp(2.5rem,5vw,3.5rem);font-weight:700;line-height:1}
 .callout-desc{font-size:.88rem;color:var(--text-dim);margin-top:.8rem;line-height:1.5}
-.callout-note{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text-faint);margin-top:1.2rem;letter-spacing:.05em}
+.callout-note{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text-faint);margin-top:1.2rem;letter-spacing:.05em}
 .meth-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-bottom:1rem}
 .meth-grid-single{grid-template-columns:minmax(280px,600px)}
-.meth-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem}
+.meth-card{background:var(--card);border:var(--b-card);border-radius:var(--r-card);padding:1.25rem}
 .meth-title{font-weight:600;font-size:.85rem;margin-bottom:.5rem;display:flex;align-items:center;gap:8px}
-.meth-text{font-size:.76rem;color:var(--text-dim);line-height:1.6}.meth-text a{color:var(--blue);text-decoration:none}
-.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-footer{text-align:center;padding:2rem 1rem;font-size:.7rem;color:var(--text-faint);border-top:1px solid var(--border)}
-footer a{color:var(--text-dim);text-decoration:none}
+.meth-text{font-size:13px;color:var(--text-dim);line-height:1.6}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;background:var(--accent)}
+footer{text-align:center;padding:2rem 1rem;font-size:.75rem;color:var(--text-faint);border-top:1px solid var(--border)}
+
 </style>
 </head>
 <body>
@@ -237,13 +251,13 @@ footer a{color:var(--text-dim);text-decoration:none}
     <h1>Crashes, Boroughs &amp;&nbsp;<em>Dangerous Crossings</em></h1>
     <p class="hero-sub">Where, when, and why traffic crashes happen across Manhattan, Brooklyn, Queens, Bronx, Staten Island &mdash; built from NYC Open Data crash records.</p>
     <div class="stats-strip">
-        <div class="stat-cell"><div class="stat-val red">85,559</div><div class="stat-lbl">Reported crashes (citywide, 2025)</div></div>
-        <div class="stat-cell"><div class="stat-val amber">229</div><div class="stat-lbl">Traffic deaths (citywide, 2025)</div></div>
-        <div class="stat-cell"><div class="stat-val blue">8,888</div><div class="stat-lbl">Pedestrian crashes (citywide, 2025)</div></div>
-        <div class="stat-cell"><div class="stat-val purple">3.9%</div><div class="stat-lbl">Speed-related rate (citywide, 2025)</div></div>
+        <div class="stat-cell"><div class="stat-val">85,559</div><div class="stat-lbl">Reported crashes (citywide, 2025)</div></div>
+        <div class="stat-cell"><div class="stat-val deaths">229</div><div class="stat-lbl">Traffic deaths (citywide, 2025)</div></div>
+        <div class="stat-cell"><div class="stat-val">8,888</div><div class="stat-lbl">Pedestrian crashes (citywide, 2025)</div></div>
+        <div class="stat-cell"><div class="stat-val">3.9%</div><div class="stat-lbl">Speed-related rate (citywide, 2025)</div></div>
     </div>
     
-    <div style="text-align:center;margin-top:.7rem;font-size:.7rem;color:var(--text-faint);font-family:DM Sans,sans-serif"><strong style=color:var(--text-dim)>Borough not recorded</strong> holds crashes where NYC Open Data has neither a borough nor coordinates. They count toward every citywide total and are left off the map.</div>
+    <div style="text-align:center;margin-top:.7rem;font-size:.75rem;color:var(--text-faint);font-family:DM Sans,sans-serif"><strong style=color:var(--text-dim)>Borough not recorded</strong> holds crashes where NYC Open Data has neither a borough nor coordinates. They count toward every citywide total and are left off the map.</div>
 </div></section>
 <nav class="sticky-nav" id="stickyNav"><div class="sticky-nav-inner">
     <a class="nav-home" href="../">crashmaps</a>
@@ -278,13 +292,13 @@ footer a{color:var(--text-dim);text-decoration:none}
     <div class="map-toolbar">
         <div class="map-toolbar-row">
             <div class="map-search">
-                <span class="map-search-icon">&#128269;</span>
+                <span class="map-search-icon"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
                 <input type="text" id="mapSearchInput" placeholder="Search an address, then press Enter" autocomplete="off">
             </div>
-            <button class="commute-toggle" id="commuteToggle">&#128663; My Commute</button>
-            <button class="map-filter-toggle" id="filterToggle">&#9881; Filters</button>
+            <button class="commute-toggle" id="commuteToggle"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 17h14v-5l-2-5H7l-2 5v5z"/><path d="M5 12h14"/><circle cx="8" cy="17" r="1.5"/><circle cx="16" cy="17" r="1.5"/></svg> My Commute</button>
+            <button class="map-filter-toggle" id="filterToggle"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg> Filters</button>
         </div>
-        <div id="mapSearchMsg" role="status" style="display:none;font-size:.72rem;color:var(--amber);padding:.4rem .25rem 0"></div>
+        <div id="mapSearchMsg" role="status" style="display:none;font-size:.75rem;color:var(--amber);padding:.4rem .25rem 0"></div>
         <div class="commute-panel" id="commutePanel">
             <div class="commute-field"><label>From (home)</label><input type="text" id="commuteFrom" placeholder="e.g. Times Square, Manhattan"></div>
             <div class="commute-field"><label>To (work)</label><input type="text" id="commuteTo" placeholder="e.g. Brooklyn Bridge"></div>
@@ -348,10 +362,10 @@ footer a{color:var(--text-dim);text-decoration:none}
 <div class="map-legend-item"><svg width="20" height="8"><line x1="1" y1="4" x2="19" y2="4" stroke="#dc2626" stroke-width="2.5" stroke-opacity=".75"/></svg> Highway</div>
 <div class="map-legend-item"><svg width="20" height="8"><line x1="1" y1="4" x2="19" y2="4" stroke="#f97316" stroke-width="2.5" stroke-opacity=".75"/></svg> Arterial</div>
         <div class="map-legend-item"><svg width="20" height="8"><line x1="1" y1="4" x2="19" y2="4" stroke="#16a34a" stroke-width="2.5"/></svg> Commute</div>
-        <div class="map-legend-item" style="margin-left:auto;color:var(--text-faint);font-size:.68rem">Size = crash volume &middot; Click markers for details</div>
+        <div class="map-legend-item" style="margin-left:auto;color:var(--text-faint);font-size:.75rem">Size = crash volume &middot; Click markers for details</div>
     </div>
-    <div style="padding:.5rem 1rem .25rem;font-size:.68rem;color:var(--text-faint);line-height:1.5">
-<strong style="color:var(--text-dim)">Not on the map:</strong> 17,851 of 273,484 crashes (6.5%) have no usable coordinates in the NYC Open Data records. They are counted in every total and chart on this page.<br><strong style="color:var(--text-dim)">Not shown as hotspots:</strong> crashes that the source logged to a road or a default address, with no specific location (Verrazano Bridge: 231, Triborough Bridge: 217, Verrazano Bridge Upper: 100, Brooklyn Bridge: 54, Laurelton Parkway: 36, Verrazano Bridge Lower: 32, Martin Luther King Jr: 15, Bronx Whitestone Bridge: 15, and 1 other roads: 15). They are counted in every total and chart on this page.<br><strong style="color:var(--text-dim)">Privacy:</strong> This page has no backend, no analytics, and no cookies, and nothing you type is stored by crashmaps. Loading it fetches fonts from Google Fonts, scripts from cdnjs (Cloudflare) and map tiles from CARTO, and each of those services sees your IP address. An address you search is sent to <a href="https://nominatim.openstreetmap.org/" target="_blank" rel="noopener noreferrer" style="color:var(--amber);text-decoration:none">OpenStreetMap Nominatim</a>, and commute start and end points are sent to the public <a href="https://project-osrm.org/" target="_blank" rel="noopener noreferrer" style="color:var(--amber);text-decoration:none">OSRM</a> routing server. Those requests are subject to each service&rsquo;s privacy policy.
+    <div style="padding:.5rem 1rem .25rem;font-size:.75rem;color:var(--text-faint);line-height:1.5">
+<strong style="color:var(--text-dim)">Not on the map:</strong> 17,851 of 273,484 crashes (6.5%) have no usable coordinates in the NYC Open Data records. They are counted in every total and chart on this page.<br><strong style="color:var(--text-dim)">Not shown as hotspots:</strong> crashes that the source logged to a road or a default address, with no specific location (Verrazano Bridge: 231, Triborough Bridge: 217, Verrazano Bridge Upper: 100, Brooklyn Bridge: 54, Laurelton Parkway: 36, Verrazano Bridge Lower: 32, Martin Luther King Jr: 15, Bronx Whitestone Bridge: 15, and 1 other roads: 15). They are counted in every total and chart on this page.<br><strong style="color:var(--text-dim)">Privacy:</strong> This page has no backend, no analytics, and no cookies, and nothing you type is stored by crashmaps. Loading it fetches fonts from Google Fonts, scripts from cdnjs (Cloudflare) and map tiles from CARTO, and each of those services sees your IP address. An address you search is sent to <a href="https://nominatim.openstreetmap.org/" target="_blank" rel="noopener noreferrer">OpenStreetMap Nominatim</a>, and commute start and end points are sent to the public <a href="https://project-osrm.org/" target="_blank" rel="noopener noreferrer">OSRM</a> routing server. Those requests are subject to each service&rsquo;s privacy policy.
     </div>
 </div>
 
@@ -362,13 +376,13 @@ footer a{color:var(--text-dim);text-decoration:none}
     <div style="padding:1.25rem">
         <div style="display:flex;gap:.5rem;align-items:stretch">
             <div class="map-search">
-                <span class="map-search-icon">&#128269;</span>
+                <span class="map-search-icon"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
                 <input type="text" id="lookupInput" placeholder="e.g. 400 S State St" autocomplete="off" style="width:100%">
             </div>
-            <button class="map-btn active-blue" id="lookupBtn" style="padding:0 1.25rem;white-space:nowrap;font-size:.78rem">Search</button>
+            <button class="btn-primary" id="lookupBtn">Search</button>
         </div>
         <div style="display:flex;align-items:center;gap:.75rem;margin-top:.65rem">
-            <span style="font-size:.7rem;color:var(--text-faint);font-family:'JetBrains Mono',monospace">RADIUS</span>
+            <span class="ctl-label">Radius</span>
             <div class="map-filters" id="radiusGroup">
                 <button class="map-btn" data-radius="0.0015">0.1 mi</button>
                 <button class="map-btn active-blue" data-radius="0.004">0.25 mi</button>
@@ -376,7 +390,7 @@ footer a{color:var(--text-dim);text-decoration:none}
             </div>
         </div>
         <div id="lookupResult" style="display:none;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border)">
-            <div id="lookupAddress" style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-faint);margin-bottom:.75rem"></div>
+            <div id="lookupAddress" style="font-size:13px;color:var(--text-dim);margin-bottom:.75rem"></div>
             <div class="lookup-cols">
                 <div class="lookup-map-col">
                     <div id="lookupMapWrap" style="height:100%;min-height:240px;border-radius:10px;overflow:hidden;border:1px solid var(--border)"></div>
@@ -427,7 +441,7 @@ footer a{color:var(--text-dim);text-decoration:none}
     </div>
     <table class="rank-table" id="intersectionTable">
         <colgroup><col style="width:40px"><col><col style="width:45%"></colgroup>
-        <thead><tr><th>#</th><th>Intersection</th><th><span style="color:var(--red)">Crashes &darr;</span></th></tr></thead>
+        <thead><tr><th>#</th><th>Intersection</th><th><span class="th-hi">Crashes &darr;</span></th></tr></thead>
         <tbody id="intersectionBody"></tbody>
     </table>
 </div>
@@ -483,7 +497,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <div class="sec-hdr" id="sec-07"><div class="sec-num">07 &mdash; Severity</div><h2 class="sec-title">How Bad Are the Crashes?</h2><p class="sec-desc">229 people died on New York City roads in 2025. The severity chart counts crashes by their worst outcome: fatal, injury, or property damage only.</p></div>
 <div class="grid-2">
     <div class="card"><div class="card-top"><div><div class="card-title">Severity Distribution</div><div class="card-sub">All Metro &middot; NYC Open Data 2025</div></div></div><div class="chart-box"><canvas id="sevChart"></canvas></div></div>
-    <div class="card"><div class="card-top"><div><div class="card-title">Deaths by Borough</div><div class="card-sub">NYC Open Data 2025</div></div></div><div class="chart-box"><canvas id="fatalCityChart"></canvas></div><div id="fatalCityFootnote" style="display:none;padding:.5rem 1.25rem .7rem;font-size:.72rem;color:var(--text-dim);font-family:'DM Sans',sans-serif;border-top:1px solid var(--border);text-align:center"></div></div>
+    <div class="card"><div class="card-top"><div><div class="card-title">Deaths by Borough</div><div class="card-sub">NYC Open Data 2025</div></div></div><div class="chart-box"><canvas id="fatalCityChart"></canvas></div><div id="fatalCityFootnote" style="display:none;padding:.5rem 1.25rem .7rem;font-size:.75rem;color:var(--text-dim);font-family:'DM Sans',sans-serif;border-top:1px solid var(--border);text-align:center"></div></div>
 </div>
 <div class="grid-2"><div class="card"><div class="card-top"><div><div class="card-title">Crash Type Breakdown</div><div class="card-sub" id="typeSub">All Metro &middot; NYC Open Data 2025</div></div><select class="chart-metro" id="selCrashType"><option value="all" selected>All Metro</option><option value="Manhattan">Manhattan</option>
 <option value="Brooklyn">Brooklyn</option>
@@ -521,7 +535,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <!-- 11 PEDESTRIANS & CYCLISTS -->
 <div class="rule"></div>
 <div class="sec-hdr" id="sec-11"><div class="sec-num">11 &mdash; <span class="lbl-long">Pedestrians &amp; Cyclists</span><span class="lbl-short">Walk &amp; Bike</span></div><h2 class="sec-title">The Most Vulnerable on Metro Streets</h2><p class="sec-desc">8,888 pedestrian crashes and 4,514 cyclist crashes across the metro in 2025.</p></div>
-<div class="card"><div class="card-top"><div><div class="card-title">Pedestrian Crashes by Borough</div><div class="card-sub">NYC Open Data 2025</div></div></div><div class="chart-box"><canvas id="pedCityChart"></canvas></div><div style="padding:.6rem 1.25rem .85rem;font-size:.75rem;color:var(--text-dim);font-family:DM Sans,sans-serif;border-top:1px solid var(--border);text-align:center"><span style="font-family:JetBrains Mono,monospace;font-weight:600;color:var(--blue)">8,888</span> pedestrian crashes in 2025. Brooklyn accounts for 2,876 &mdash; 32% of the total, with 31% of the population.</div></div>
+<div class="card"><div class="card-top"><div><div class="card-title">Pedestrian Crashes by Borough</div><div class="card-sub">NYC Open Data 2025</div></div></div><div class="chart-box"><canvas id="pedCityChart"></canvas></div><div style="padding:.6rem 1.25rem .85rem;font-size:.75rem;color:var(--text-dim);font-family:DM Sans,sans-serif;border-top:1px solid var(--border);text-align:center"><span style="font-family:JetBrains Mono,monospace;font-weight:600;color:var(--text)">8,888</span> pedestrian crashes in 2025. Brooklyn accounts for 2,876 &mdash; 32% of the total, with 31% of the population.</div></div>
 
 <!-- 12 VISION ZERO -->
 <div class="rule"></div>
@@ -532,23 +546,23 @@ footer a{color:var(--text-dim);text-decoration:none}
 <div class="rule"></div>
 <div class="sec-hdr" id="sec-13"><div class="sec-num">13 &mdash; Sources</div><h2 class="sec-title">Where This Data Comes From</h2></div>
 <div class="meth-grid">
-<div class="meth-card"><div class="meth-title"><div class="dot" style="background:var(--amber)"></div>NYC Open Data</div><div class="meth-text">Motor Vehicle Collisions dataset from NYPD, updated daily. 85,559 citywide crash records for 2025.<br><br><a href="https://data.cityofnewyork.us/Public-Safety/Motor-Vehicle-Collisions-Crashes/h9gi-nx95" target="_blank" rel="noopener noreferrer">NYC Open Data &rarr;</a></div></div>
-<div class="meth-card"><div class="meth-title"><div class="dot" style="background:var(--blue)"></div>NYC Vision Zero</div><div class="meth-text">New York City adopted Vision Zero in 2014 &mdash; the first major US city to do so.<br><br><a href="https://www.nyc.gov/content/visionzero/pages/" target="_blank" rel="noopener noreferrer">Vision Zero &rarr;</a></div></div>
-<div class="meth-card"><div class="meth-title"><div class="dot" style="background:var(--green)"></div>NYPD Traffic Data</div><div class="meth-text">Crash reports filed via NYPD form MV-104AN for collisions involving injury, death, or property damage exceeding $1,000.<br><br><a href="https://www.nyc.gov/site/nypd/stats/traffic-data/traffic-data-landing.page" target="_blank" rel="noopener noreferrer">NYPD Traffic &rarr;</a></div></div>
+<div class="meth-card"><div class="meth-title"><div class="dot"></div>NYC Open Data</div><div class="meth-text">Motor Vehicle Collisions dataset from NYPD, updated daily. 85,559 citywide crash records for 2025.<br><br><a href="https://data.cityofnewyork.us/Public-Safety/Motor-Vehicle-Collisions-Crashes/h9gi-nx95" target="_blank" rel="noopener noreferrer">NYC Open Data &rarr;</a></div></div>
+<div class="meth-card"><div class="meth-title"><div class="dot"></div>NYC Vision Zero</div><div class="meth-text">New York City adopted Vision Zero in 2014 &mdash; the first major US city to do so.<br><br><a href="https://www.nyc.gov/content/visionzero/pages/" target="_blank" rel="noopener noreferrer">Vision Zero &rarr;</a></div></div>
+<div class="meth-card"><div class="meth-title"><div class="dot"></div>NYPD Traffic Data</div><div class="meth-text">Crash reports filed via NYPD form MV-104AN for collisions involving injury, death, or property damage exceeding $1,000.<br><br><a href="https://www.nyc.gov/site/nypd/stats/traffic-data/traffic-data-landing.page" target="_blank" rel="noopener noreferrer">NYPD Traffic &rarr;</a></div></div>
 </div>
 
 <!-- 14 METHODOLOGY -->
 <div class="rule"></div>
 <div class="sec-hdr" id="sec-14"><div class="sec-num">14 &mdash; Methodology</div><h2 class="sec-title">How I Built This</h2></div>
 <div class="meth-grid">
-<div class="meth-card"><div class="meth-text"><strong style="color:var(--amber)">Data pipeline:</strong> Crash records queried from NYC Open Data Socrata API (dataset h9gi-nx95), paginated at 50,000 records per call. 85,559 citywide records for 2025. Coordinates are native WGS84 &mdash; no reprojection needed.</div></div>
-<div class="meth-card"><div class="meth-text"><strong style="color:var(--amber)">Borough assignment:</strong> Borough comes from the NYC borough field. When that field is blank, the borough is assigned from the crash coordinates using NYC&rsquo;s official borough boundaries (water areas included). Crashes with neither a borough nor coordinates are counted under &ldquo;Borough not recorded&rdquo;: they stay in every citywide total and are left off the map.</div></div>
-<div class="meth-card"><div class="meth-text"><strong style="color:var(--amber)">Data note:</strong> Earlier versions of this dashboard dropped every record with a blank borough field, which undercounted 2022&ndash;2024 crashes by about 30% (and fatal crashes by about 40%). Since November 2026 those records are placed by their coordinates, so every year is counted the same way.</div></div>
-<div class="meth-card"><div class="meth-text"><strong style="color:var(--amber)">Behavioral flags:</strong> Impairment and speed derived from contributing factor fields (5 per crash). "Alcohol Involvement" and "Drugs (illegal)" map to impairment; "Unsafe Speed" maps to speed-related. Hit-and-run data is not available in this dataset.</div></div>
-<div class="meth-card"><div class="meth-text"><strong style="color:var(--amber)">Why this count differs from NYC DOT&rsquo;s:</strong> The 229 deaths shown for 2025 are the sum of &ldquo;persons killed&rdquo; across every police-reported collision in the NYC Open Data table, which NYPD describes as preliminary and subject to change. NYC DOT counted 205 traffic deaths for 2025 in its year-end release (January 2026). DOT&rsquo;s figure comes from a separate fatality database that DOT maintains and reconciles with NYPD records; later DOT publications put 2025 at 209 (April 2026) and 210 (Vision Zero View, November 2026). Neither agency publishes which cases are in one count and missing from the other, so the two totals cannot be matched record by record. For the city&rsquo;s official count, use Vision Zero View (vzv.nyc).</div></div>
-<div class="meth-card"><div class="meth-text"><strong style="color:var(--amber)">Hotspots:</strong> A hotspot is every crash within roughly a 200-metre area. 31 of the 65 hotspots on this page come from records that give a street with no cross street. Those are grouped by 200-metre square and labelled &ldquo;[street] near [nearest cross street]&rdquo;, with the cross street taken from OpenStreetMap. The count covers every crash in the square, including crashes on the other streets inside it. Squares next to each other are listed separately.</div></div>
-<div class="meth-card"><div class="meth-text"><strong style="color:var(--amber)">Records with no street text:</strong> 75,248 crashes have coordinates and no street or intersection text in the source records. They are counted in the hotspot at their coordinates. A hotspot&rsquo;s name comes from the records in it that do carry text, or from OpenStreetMap when none does.</div></div>
-<div class="meth-card"><div class="meth-text"><strong style="color:var(--amber)">Hotspot review:</strong> 715 crashes are recorded at 19 coordinates where the source logged crashes to a whole road or a default address, so the coordinate does not show where each crash happened. A coordinate is left out automatically when every address on it is a road name alone, with no block number or cross street, on 15 or more crashes, and that road&rsquo;s crashes sit on a few points (fewer than 20 coordinates for the whole road, or one coordinate holding a fifth of them); I reviewed the others by hand. A road whose crashes are spread over many coordinates along its length stays in. They are left out of the Top 10 and the map hotspots and are counted in every total; the note under the map lists them.</div></div>
+<div class="meth-card"><div class="meth-text"><strong class="lead-in">Data pipeline:</strong> Crash records queried from NYC Open Data Socrata API (dataset h9gi-nx95), paginated at 50,000 records per call. 85,559 citywide records for 2025. Coordinates are native WGS84 &mdash; no reprojection needed.</div></div>
+<div class="meth-card"><div class="meth-text"><strong class="lead-in">Borough assignment:</strong> Borough comes from the NYC borough field. When that field is blank, the borough is assigned from the crash coordinates using NYC&rsquo;s official borough boundaries (water areas included). Crashes with neither a borough nor coordinates are counted under &ldquo;Borough not recorded&rdquo;: they stay in every citywide total and are left off the map.</div></div>
+<div class="meth-card"><div class="meth-text"><strong class="lead-in">Data note:</strong> Earlier versions of this dashboard dropped every record with a blank borough field, which undercounted 2022&ndash;2024 crashes by about 30% (and fatal crashes by about 40%). Since November 2026 those records are placed by their coordinates, so every year is counted the same way.</div></div>
+<div class="meth-card"><div class="meth-text"><strong class="lead-in">Behavioral flags:</strong> Impairment and speed derived from contributing factor fields (5 per crash). "Alcohol Involvement" and "Drugs (illegal)" map to impairment; "Unsafe Speed" maps to speed-related. Hit-and-run data is not available in this dataset.</div></div>
+<div class="meth-card"><div class="meth-text"><strong class="lead-in">Why this count differs from NYC DOT&rsquo;s:</strong> The 229 deaths shown for 2025 are the sum of &ldquo;persons killed&rdquo; across every police-reported collision in the NYC Open Data table, which NYPD describes as preliminary and subject to change. NYC DOT counted 205 traffic deaths for 2025 in its year-end release (January 2026). DOT&rsquo;s figure comes from a separate fatality database that DOT maintains and reconciles with NYPD records; later DOT publications put 2025 at 209 (April 2026) and 210 (Vision Zero View, November 2026). Neither agency publishes which cases are in one count and missing from the other, so the two totals cannot be matched record by record. For the city&rsquo;s official count, use Vision Zero View (vzv.nyc).</div></div>
+<div class="meth-card"><div class="meth-text"><strong class="lead-in">Hotspots:</strong> A hotspot is every crash within roughly a 200-metre area. 31 of the 65 hotspots on this page come from records that give a street with no cross street. Those are grouped by 200-metre square and labelled &ldquo;[street] near [nearest cross street]&rdquo;, with the cross street taken from OpenStreetMap. The count covers every crash in the square, including crashes on the other streets inside it. Squares next to each other are listed separately.</div></div>
+<div class="meth-card"><div class="meth-text"><strong class="lead-in">Records with no street text:</strong> 75,248 crashes have coordinates and no street or intersection text in the source records. They are counted in the hotspot at their coordinates. A hotspot&rsquo;s name comes from the records in it that do carry text, or from OpenStreetMap when none does.</div></div>
+<div class="meth-card"><div class="meth-text"><strong class="lead-in">Hotspot review:</strong> 715 crashes are recorded at 19 coordinates where the source logged crashes to a whole road or a default address, so the coordinate does not show where each crash happened. A coordinate is left out automatically when every address on it is a road name alone, with no block number or cross street, on 15 or more crashes, and that road&rsquo;s crashes sit on a few points (fewer than 20 coordinates for the whole road, or one coordinate holding a fifth of them); I reviewed the others by hand. A road whose crashes are spread over many coordinates along its length stays in. They are left out of the Top 10 and the map hotspots and are counted in every total; the note under the map lists them.</div></div>
 </div>
 
 </main>
@@ -556,8 +570,14 @@ footer a{color:var(--text-dim);text-decoration:none}
 
 <script>
 Chart.defaults.color='#8b90a8';Chart.defaults.borderColor='#1c1f2e';Chart.defaults.font.family="'DM Sans',sans-serif";
-const isMobile=window.innerWidth<=480;Chart.defaults.font.size=isMobile?10:12;
-const fmtN=v=>Number(v||0).toLocaleString('en-US');const fmtR1=v=>Number(v||0).toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1});
+const isMobile=window.innerWidth<=480;Chart.defaults.font.size=12;
+const fmtN=v=>Number(v||0).toLocaleString('en-US');
+// One place decides chart colors (DESIGN_RULES.md, Color). 'count' = any single series of crash counts
+// = the city accent. Fixed meanings only for deaths, pedestrians and cyclists. Trend directions
+// (fell/flat/rose) only on trend indicators, always with an arrow. 'neutral' = everything else.
+const PAL={count:'#f59e0b',deaths:'#e5534b',ped:'#e0a23c',cyclist:'#4f9cf0',fell:'#22a565',flat:'#6b7280',rose:'#e5534b',neutral:'#8b90a8',muted:'#3a3f55'};
+function chartColor(measure,alpha){const h=PAL[measure]||PAL.count;if(alpha==null)return h;const n=parseInt(h.slice(1),16);return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+alpha+')';}
+if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)Chart.defaults.animation=false;const fmtR1=v=>Number(v||0).toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1});
 
 // One-sentence text summary of every chart, kept on the canvas as its accessible name.
 // Rebuilt after each update, so it follows the chart's own filter.
@@ -589,6 +609,18 @@ Chart.register({id:'a11ySummary',afterUpdate(chart){setTimeout(()=>{try{
     cv.setAttribute('aria-label',(title+(sub?', '+sub:'')+': '+body+'.').replace(/\s+/g,' '));
 }catch(e){}},0)}});
 
+// Rotated region labels (many-region charts) need room on the left so the first label is not clipped.
+// Interim until by-region charts become horizontal bars (CLAUDE.md, Charts & Data).
+Chart.register({id:'rotPad',beforeInit(c){const o=c.config.options||{},t=o.scales&&o.scales.x&&o.scales.x.ticks;if(!t||t.minRotation!==45)return;
+  const ctx=document.createElement('canvas').getContext('2d');ctx.font="12px 'DM Sans',sans-serif";const n=(c.config.data.labels||[]).length||1;
+  const wrap2=l=>{l=String(l);if(l.length<=14)return l;const m=l.length/2;let best=-1;
+    for(let i=0;i<l.length;i++)if(l[i]===' '||l[i]==='/')if(best<0||Math.abs(i-m)<Math.abs(best-m))best=i;
+    return best<0?l:[l.slice(0,best+(l[best]==='/'?1:0)).trim(),l.slice(best+1).trim()];};
+  t.callback=function(v){return wrap2(this.getLabelForValue(v))};
+  const slot=(c.canvas.parentNode.clientWidth||600)*0.85/n;
+  const lw=l=>Math.max(...[].concat(wrap2(l)).map(x=>ctx.measureText(x).width));
+  const need=Math.max(0,...(c.config.data.labels||[]).map((l,i)=>lw(l)*0.72-(i+0.5)*slot));
+  o.layout=Object.assign({},o.layout,{padding:Object.assign({},(o.layout||{}).padding,{left:Math.round(need)})});}});
 Chart.register({id:'legendPad',beforeInit(chart){const orig=chart.legend.fit;chart.legend.fit=function(){orig.call(this);this.height+=10;}}});
 const TT={backgroundColor:'#1c1f2e',titleColor:'#e8eaf0',bodyColor:'#8b90a8',borderColor:'#2a2e42',borderWidth:1,padding:isMobile?8:12,cornerRadius:8};
 const hourLabels=['12a','1a','2a','3a','4a','5a','6a','7a','8a','9a','10a','11a','12p','1p','2p','3p','4p','5p','6p','7p','8p','9p','10p','11p'];
@@ -622,7 +654,7 @@ function buildHourly(city){
     const d=city==='all'?agg(c=>(temporal[c]?.hourly||Array(24).fill(0))):(temporal[city]?.hourly||Array(24).fill(0));
     if(chHourly)chHourly.destroy();
     document.getElementById('hourlySub').textContent=getMetroLabel(city)+' · NYC Open Data 2025';
-    chHourly=new Chart(document.getElementById('hourlyChart'),{type:'bar',data:{labels:hourLabels,datasets:[{data:d,backgroundColor:'rgba(255,77,77,.5)',borderRadius:4,maxBarThickness:24}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw.toLocaleString()+' crashes'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},x:{grid:{display:false},ticks:{maxTicksLimit:isMobile?8:24}}}}});
+    chHourly=new Chart(document.getElementById('hourlyChart'),{type:'bar',data:{labels:hourLabels,datasets:[{data:d,backgroundColor:chartColor('count',.7),borderRadius:3,maxBarThickness:24}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw.toLocaleString()+' crashes'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},x:{grid:{display:false},ticks:{maxRotation:0,autoSkip:true,maxTicksLimit:isMobile?8:12}}}}});
 }
 buildHourly('all');
 document.getElementById('selHourly').addEventListener('change',function(){buildHourly(this.value)});
@@ -633,8 +665,8 @@ function buildDow(city){
     const d=city==='all'?agg(c=>(temporal[c]?.dow||Array(7).fill(0))):(temporal[city]?.dow||Array(7).fill(0));
     if(chDow)chDow.destroy();
     document.getElementById('dowSub').textContent=getMetroLabel(city)+' · NYC Open Data 2025';
-    var dowColors=d.map(function(v,i){return i<5?'#f59e0bb3':'#f59e0b4d'});
-    chDow=new Chart(document.getElementById('dowChart'),{type:'bar',data:{labels:dowLabels,datasets:[{data:d,backgroundColor:dowColors,borderRadius:6,maxBarThickness:40}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,labels:{generateLabels:function(){return[{text:'Weekday (Mon–Fri)',fillStyle:'#f59e0bb3',fontColor:'#8b90a8',strokeStyle:'transparent',lineWidth:0},{text:'Weekend (Sat–Sun)',fillStyle:'#f59e0b4d',fontColor:'#8b90a8',strokeStyle:'transparent',lineWidth:0}]},color:'#8b90a8',font:{family:"'JetBrains Mono',monospace",size:10},boxWidth:12,padding:14}},tooltip:TT},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},x:{grid:{display:false}}}}});
+    var dowColors=d.map(function(v,i){return i<5?chartColor('count',.7):chartColor('count',.3)});
+    chDow=new Chart(document.getElementById('dowChart'),{type:'bar',data:{labels:dowLabels,datasets:[{data:d,backgroundColor:dowColors,borderRadius:3,maxBarThickness:40}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,labels:{generateLabels:function(){return[{text:'Weekday (Mon–Fri)',fillStyle:chartColor('count',.7),fontColor:'#8b90a8',strokeStyle:'transparent',lineWidth:0},{text:'Weekend (Sat–Sun)',fillStyle:chartColor('count',.3),fontColor:'#8b90a8',strokeStyle:'transparent',lineWidth:0}]},color:'#8b90a8',font:{size:12},boxWidth:12,padding:14}},tooltip:TT},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},x:{grid:{display:false}}}}});
 }
 if(document.getElementById('dowChart')){buildDow('all');
 document.getElementById('selDow').addEventListener('change',function(){buildDow(this.value)});}
@@ -646,7 +678,7 @@ function buildMonthly(city){
     if(chMonthly)chMonthly.destroy();
     document.getElementById('monthlySub').textContent=getMetroLabel(city)+' · NYC Open Data 2025';
     var avg=Math.round(d.reduce(function(a,b){return a+b},0)/d.length);
-    chMonthly=new Chart(document.getElementById('monthlyChart'),{type:'bar',data:{labels:monthLabels,datasets:[{label:'Crashes',data:d,backgroundColor:'rgba(103,232,249,.45)',borderRadius:5,maxBarThickness:40,order:2},{type:'line',label:'Monthly Avg ('+avg.toLocaleString()+')',data:Array(12).fill(avg),borderColor:'#f59e0b',borderWidth:2,borderDash:[6,3],pointRadius:0,fill:false,order:1}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'end',labels:{usePointStyle:true,pointStyle:'line',padding:14,font:{size:11},color:'#8b90a8',filter:function(item){return item.datasetIndex===1}}},tooltip:{...TT,filter:function(t){return t.datasetIndex===0}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},x:{grid:{display:false}}}}});
+    chMonthly=new Chart(document.getElementById('monthlyChart'),{type:'bar',data:{labels:monthLabels,datasets:[{label:'Crashes',data:d,backgroundColor:chartColor('count',.6),borderRadius:3,maxBarThickness:40,order:2},{type:'line',label:'Monthly Avg ('+avg.toLocaleString()+')',data:Array(12).fill(avg),borderColor:chartColor('count'),borderWidth:2,borderDash:[6,3],pointRadius:0,fill:false,order:1}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'end',labels:{usePointStyle:true,pointStyle:'line',padding:14,font:{size:12},color:'#8b90a8',filter:function(item){return item.datasetIndex===1}}},tooltip:{...TT,filter:function(t){return t.datasetIndex===0}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},x:{grid:{display:false}}}}});
 }
 buildMonthly('all');
 document.getElementById('selMonthly').addEventListener('change',function(){buildMonthly(this.value)});
@@ -670,19 +702,19 @@ function buildWdWe(city){
     }
     if(chWdWe)chWdWe.destroy();
     document.getElementById('wdweSub').textContent=(city==='all'?'All Metro':city)+' \u00b7 NYC Open Data 2025';
-    chWdWe=new Chart(document.getElementById('wdweChart'),{type:'line',data:{labels:hourLabels,datasets:[{label:'Weekday',data:wd,borderColor:'rgba(77,166,255,.8)',backgroundColor:'rgba(77,166,255,.1)',fill:true,tension:.3,pointRadius:2},{label:'Weekend',data:we,borderColor:'rgba(255,179,71,.8)',backgroundColor:'rgba(255,179,71,.1)',fill:true,tension:.3,pointRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'circle',padding:12}},tooltip:{...TT,callbacks:{label:c=>c.dataset.label+': '+c.raw+'% of daily crashes'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'% of daily crashes',color:'#8b90a8',font:{size:11}}},x:{grid:{display:false},ticks:{maxTicksLimit:12}}}}});
+    chWdWe=new Chart(document.getElementById('wdweChart'),{type:'line',data:{labels:hourLabels,datasets:[{label:'Weekday',data:wd,borderColor:chartColor('count'),backgroundColor:chartColor('count',.1),fill:true,tension:.3,pointRadius:2},{label:'Weekend',data:we,borderColor:chartColor('count',.55),backgroundColor:'transparent',borderDash:[6,4],fill:false,tension:.3,pointRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'circle',padding:12}},tooltip:{...TT,callbacks:{label:c=>c.dataset.label+': '+c.raw+'% of daily crashes'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'% of daily crashes',color:'#8b90a8',font:{size:12}}},x:{grid:{display:false},ticks:{maxRotation:0,autoSkip:true,maxTicksLimit:isMobile?8:12}}}}});
 }
 buildWdWe('all');
 document.getElementById('selWdWe').addEventListener('change',function(){buildWdWe(this.value)});
 
 // === SEVERITY ===
-new Chart(document.getElementById('sevChart'),{type:'doughnut',data:{labels:['Fatal crashes','Injury crashes','Property damage only'],datasets:[{data:[216,37210,48133],backgroundColor:['rgba(255,77,77,.8)','rgba(255,179,71,.6)','rgba(85,88,115,.5)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',layout:{padding:{top:5,left:30,right:30,bottom:0}},plugins:{legend:{position:'bottom',labels:{padding:14,usePointStyle:true,pointStyle:'rectRounded',font:{size:11},color:'#8b90a8'}},tooltip:{...TT,callbacks:{label:c=>c.label+': '+c.raw.toLocaleString()+' crashes'}}}}});
+new Chart(document.getElementById('sevChart'),{type:'doughnut',data:{labels:['Fatal crashes','Injury crashes','Property damage only'],datasets:[{data:[216,37210,48133],backgroundColor:[chartColor('deaths'),chartColor('neutral',.75),chartColor('muted')],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',layout:{padding:{top:5,left:30,right:30,bottom:0}},plugins:{legend:{position:'bottom',labels:{padding:14,usePointStyle:true,pointStyle:'rectRounded',font:{size:12},color:'#8b90a8'}},tooltip:{...TT,callbacks:{label:c=>c.label+': '+c.raw.toLocaleString()+' crashes'}}}}});
 
 const popData={"Manhattan": 1664862, "Brooklyn": 2653963, "Queens": 2358182, "Bronx": 1406332, "Staten Island": 501290};
 
 // Fatalities by city (horizontal)
 var fatSorted=[...cities].filter(c=>(cityData[c]?.deaths||0)>0).sort((a,b)=>(cityData[b]?.deaths||0)-(cityData[a]?.deaths||0));
-new Chart(document.getElementById('fatalCityChart'),{type:'bar',data:{labels:fatSorted,datasets:[{data:fatSorted.map(c=>cityData[c]?.deaths||0),backgroundColor:'rgba(255,77,77,.65)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+' deaths'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:10}}}}}});
+new Chart(document.getElementById('fatalCityChart'),{type:'bar',data:{labels:fatSorted,datasets:[{data:fatSorted.map(c=>cityData[c]?.deaths||0),backgroundColor:chartColor('deaths',.85),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+' deaths'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:12}}}}}});
 var zeroFatCities=cities.filter(c=>(cityData[c]?.deaths||0)===0);
 if(zeroFatCities.length){var fn=document.getElementById('fatalCityFootnote');if(fn){fn.style.display='block';fn.textContent=zeroFatCities.join(', ')+(zeroFatCities.length===1?' had':' each had')+' zero deaths in 2025 and '+(zeroFatCities.length===1?'is':'are')+' not shown.';}}
 
@@ -715,14 +747,14 @@ function buildCrashType(city){
     labels=fullLabels.map(l=>shortType(l));
     if(chType)chType.destroy();
     document.getElementById('typeSub').textContent=(city==='all'?'All Metro':city)+' \u00b7 NYC Open Data 2025';
-    chType=new Chart(document.getElementById('crashTypeChart'),{type:'bar',data:{labels,datasets:[{data:vals,backgroundColor:'rgba(255,179,71,.55)',borderRadius:6,maxBarThickness:30}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{title:c=>[fullLabels[c[0].dataIndex]],label:c=>c.raw.toLocaleString()+' crashes'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false},ticks:{autoSkip:false}}}}});
+    chType=new Chart(document.getElementById('crashTypeChart'),{type:'bar',data:{labels,datasets:[{data:vals,backgroundColor:chartColor('count',.7),borderRadius:3,maxBarThickness:30}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{title:c=>[fullLabels[c[0].dataIndex]],label:c=>c.raw.toLocaleString()+' crashes'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false},ticks:{autoSkip:false}}}}});
 }
 buildCrashType('all');
 document.getElementById('selCrashType').addEventListener('change',function(){buildCrashType(this.value)});
 
 // === CONTRIBUTING FACTORS ===
 let chFactors;
-const factorColors=['rgba(77,166,255,.7)','rgba(255,179,71,.7)','rgba(176,125,255,.7)','rgba(255,107,107,.7)','rgba(103,232,249,.7)','rgba(132,204,22,.7)','rgba(236,72,153,.7)','rgba(249,115,22,.7)'];
+const factorColors=[1,.75,.55,.4,.3,.22,.16,.12].map(a=>chartColor('count',a));
 function buildFactors(city){
     const d=city==='all'?null:cityData[city];
     let labels,vals;
@@ -737,9 +769,9 @@ function buildFactors(city){
     if(chFactors)chFactors.destroy();
     document.getElementById('factorSub').textContent=(city==='all'?'All Metro':city)+' \u00b7 NYC Open Data 2025';
     if(labels.length<=4){
-        chFactors=new Chart(document.getElementById('factorsChart'),{type:'doughnut',data:{labels,datasets:[{data:vals,backgroundColor:factorColors.slice(0,labels.length),borderColor:'#0f1118',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,cutout:'50%',layout:{padding:{top:5,left:10,right:10,bottom:0}},plugins:{legend:{position:'bottom',labels:{padding:14,usePointStyle:true,pointStyle:'rectRounded',font:{size:11},color:'#8b90a8'}},tooltip:{...TT,callbacks:{label:function(c){var t=c.dataset.data.reduce(function(a,b){return a+b},0);return c.label+': '+c.raw.toLocaleString()+' ('+Math.round(c.raw/t*100)+'%)'}}}}}});
+        chFactors=new Chart(document.getElementById('factorsChart'),{type:'doughnut',data:{labels,datasets:[{data:vals,backgroundColor:factorColors.slice(0,labels.length),borderColor:'#0f1118',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,cutout:'50%',layout:{padding:{top:5,left:10,right:10,bottom:0}},plugins:{legend:{position:'bottom',labels:{padding:14,usePointStyle:true,pointStyle:'rectRounded',font:{size:12},color:'#8b90a8'}},tooltip:{...TT,callbacks:{label:function(c){var t=c.dataset.data.reduce(function(a,b){return a+b},0);return c.label+': '+c.raw.toLocaleString()+' ('+Math.round(c.raw/t*100)+'%)'}}}}}});
     } else {
-        chFactors=new Chart(document.getElementById('factorsChart'),{type:'bar',data:{labels,datasets:[{data:vals,backgroundColor:'rgba(77,166,255,.55)',borderRadius:6,maxBarThickness:30}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw.toLocaleString()+' crashes'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Crashes',color:'#8b90a8',font:{size:11}}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:10}}}}}});
+        chFactors=new Chart(document.getElementById('factorsChart'),{type:'bar',data:{labels,datasets:[{data:vals,backgroundColor:chartColor('count',.7),borderRadius:3,maxBarThickness:30}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw.toLocaleString()+' crashes'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Crashes',color:'#8b90a8',font:{size:12}}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:12}}}}}});
     }
 }
 buildFactors('all');
@@ -748,7 +780,7 @@ document.getElementById('selFactors').addEventListener('change',function(){build
 // === PER CAPITA (horizontal) ===
 const pcLabels=cities.filter(c=>popData[c]&&cityData[c]).sort((a,b)=>((cityData[b].total/popData[b])-(cityData[a].total/popData[a])));
 const pcVals=pcLabels.map(c=>parseFloat(((cityData[c].total/popData[c])*1000).toFixed(1)));
-new Chart(document.getElementById('perCapitaChart'),{type:'bar',data:{labels:pcLabels,datasets:[{data:pcVals,backgroundColor:'#f59e0bb3',borderRadius:6,maxBarThickness:20}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+' per 1,000 residents'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Crashes per 1,000 residents',color:'#8b90a8',font:{size:11}}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:pcLabels.length>10?9:10}}}}}});
+new Chart(document.getElementById('perCapitaChart'),{type:'bar',data:{labels:pcLabels,datasets:[{data:pcVals,backgroundColor:chartColor('count',.7),borderRadius:3,maxBarThickness:20}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+' per 1,000 residents'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Crashes per 1,000 residents',color:'#8b90a8',font:{size:12}}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:12}}}}}});
 
 // === DUI HOURLY ===
 let chImpHour;
@@ -756,13 +788,13 @@ function buildImpHour(city){
     const d=city==='all'?cities.map(c=>cityData[c]?.impRate||Array(24).fill(0)).reduce((a,b)=>a.map((v,i)=>v+b[i])).map(v=>v/cities.length):(cityData[city]?.impRate||Array(24).fill(0));
     if(chImpHour)chImpHour.destroy();
     document.getElementById('impHourSub').textContent='% DUI \u00b7 '+getMetroLabel(city);
-    chImpHour=new Chart(document.getElementById('impHourChart'),{type:'line',data:{labels:hourLabels,datasets:[{data:d.map(v=>Math.round(v*10)/10),borderColor:'#ffb347',backgroundColor:'rgba(255,179,71,.1)',borderWidth:2.5,pointRadius:0,pointHoverRadius:5,tension:.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+'% DUI rate'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},ticks:{callback:v=>v+'%'}},x:{grid:{display:false},ticks:{maxTicksLimit:isMobile?8:24}}}}});
+    chImpHour=new Chart(document.getElementById('impHourChart'),{type:'line',data:{labels:hourLabels,datasets:[{data:d.map(v=>Math.round(v*10)/10),borderColor:chartColor('count'),backgroundColor:chartColor('count',.1),borderWidth:2.5,pointRadius:0,pointHoverRadius:5,tension:.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+'% DUI rate'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},ticks:{callback:v=>v+'%'}},x:{grid:{display:false},ticks:{maxRotation:0,autoSkip:true,maxTicksLimit:isMobile?8:12}}}}});
 }
 buildImpHour('all');
 document.getElementById('selImpHour').addEventListener('change',function(){buildImpHour(this.value)});
 // DUI by city (horizontal)
 var impSorted=[...cities].sort((a,b)=>(cityData[b]?.impaired||0)-(cityData[a]?.impaired||0));
-new Chart(document.getElementById('impCityChart'),{type:'bar',data:{labels:impSorted,datasets:[{data:impSorted.map(c=>cityData[c]?.impaired||0),backgroundColor:'rgba(255,179,71,.6)',borderRadius:6,maxBarThickness:20}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:TT},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:cities.length>10?9:10}}}}}});
+new Chart(document.getElementById('impCityChart'),{type:'bar',data:{labels:impSorted,datasets:[{data:impSorted.map(c=>cityData[c]?.impaired||0),backgroundColor:chartColor('count',.7),borderRadius:3,maxBarThickness:20}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:TT},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:12}}}}}});
 
 // === SPEED HOURLY ===
 let chSpeedHour;
@@ -770,14 +802,14 @@ function buildSpeedHour(city){
     const d=city==='all'?cities.map(c=>cityData[c]?.speedRate||Array(24).fill(0)).reduce((a,b)=>a.map((v,i)=>v+b[i])).map(v=>v/cities.length):(cityData[city]?.speedRate||Array(24).fill(0));
     if(chSpeedHour)chSpeedHour.destroy();
     document.getElementById('speedHourSub').textContent='% speed \u00b7 '+getMetroLabel(city);
-    chSpeedHour=new Chart(document.getElementById('speedHourChart'),{type:'line',data:{labels:hourLabels,datasets:[{data:d.map(v=>Math.round(v*10)/10),borderColor:'#ff4d4d',backgroundColor:'rgba(255,77,77,.1)',borderWidth:2.5,pointRadius:0,pointHoverRadius:5,tension:.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+'% speed-related'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},ticks:{callback:v=>v+'%'}},x:{grid:{display:false},ticks:{maxTicksLimit:isMobile?8:24}}}}});
+    chSpeedHour=new Chart(document.getElementById('speedHourChart'),{type:'line',data:{labels:hourLabels,datasets:[{data:d.map(v=>Math.round(v*10)/10),borderColor:chartColor('count'),backgroundColor:chartColor('count',.1),borderWidth:2.5,pointRadius:0,pointHoverRadius:5,tension:.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+'% speed-related'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},ticks:{callback:v=>v+'%'}},x:{grid:{display:false},ticks:{maxRotation:0,autoSkip:true,maxTicksLimit:isMobile?8:12}}}}});
 }
 buildSpeedHour('all');
 document.getElementById('selSpeedHour').addEventListener('change',function(){buildSpeedHour(this.value)});
 // Speed fatalities stacked
 const spFat=cities.map(c=>cityData[c]?.speedDeaths||0);
 const nonSpFat=cities.map(c=>(cityData[c]?.deaths||0)-(cityData[c]?.speedDeaths||0));
-new Chart(document.getElementById('speedFatalChart'),{type:'bar',data:{labels:cities.map(c=>c.length>12?c.slice(0,10)+'..':c),datasets:[{label:'Speed-related',data:spFat,backgroundColor:'rgba(255,77,77,.75)',borderRadius:0},{label:'Other',data:nonSpFat,backgroundColor:'rgba(85,88,115,.5)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'rectRounded',padding:12,font:{size:10}}},tooltip:TT},scales:{x:{stacked:true,grid:{display:false},ticks:{font:{size:isMobile?8:10}}},y:{stacked:true,beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}}}}});
+new Chart(document.getElementById('speedFatalChart'),{type:'bar',data:{labels:cities.map(c=>c.length>12?c.slice(0,10)+'..':c),datasets:[{label:'Speed-related',data:spFat,backgroundColor:chartColor('deaths',.85),borderRadius:0},{label:'Other',data:nonSpFat,backgroundColor:chartColor('muted'),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'rectRounded',padding:12,font:{size:12}}},tooltip:TT},scales:{x:{stacked:true,grid:{display:false},ticks:{font:{size:12}}},y:{stacked:true,beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}}}}});
 
 // Speed zone chart skipped — no speed limit data
 
@@ -785,7 +817,7 @@ new Chart(document.getElementById('speedFatalChart'),{type:'bar',data:{labels:ci
 
 // === PEDESTRIAN (horizontal) ===
 var pedSorted=[...cities].sort((a,b)=>((cityData[b]?.pedestrian||0)+(cityData[b]?.cyclist||0))-((cityData[a]?.pedestrian||0)+(cityData[a]?.cyclist||0)));
-new Chart(document.getElementById('pedCityChart'),{type:'bar',data:{labels:pedSorted,datasets:[{label:'Pedestrian',data:pedSorted.map(c=>cityData[c]?.pedestrian||0),backgroundColor:'rgba(255,77,77,.65)',borderRadius:6,maxBarThickness:20},{label:'Cyclist',data:pedSorted.map(c=>cityData[c]?.cyclist||0),backgroundColor:'rgba(77,166,255,.65)',borderRadius:6,maxBarThickness:20}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'rectRounded',padding:12}},tooltip:TT},scales:{x:{beginAtZero:true,stacked:true,grid:{color:'rgba(28,31,46,.5)'}},y:{stacked:true,grid:{display:false},ticks:{autoSkip:false,font:{size:cities.length>10?9:10}}}}}});
+new Chart(document.getElementById('pedCityChart'),{type:'bar',data:{labels:pedSorted,datasets:[{label:'Pedestrian',data:pedSorted.map(c=>cityData[c]?.pedestrian||0),backgroundColor:chartColor('ped',.85),borderRadius:3,maxBarThickness:20},{label:'Cyclist',data:pedSorted.map(c=>cityData[c]?.cyclist||0),backgroundColor:chartColor('cyclist',.85),borderRadius:3,maxBarThickness:20}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'rectRounded',padding:12}},tooltip:TT},scales:{x:{beginAtZero:true,stacked:true,grid:{color:'rgba(28,31,46,.5)'}},y:{stacked:true,grid:{display:false},ticks:{autoSkip:false,font:{size:12}}}}}});
 
 
 // === YEAR OVER YEAR ===
@@ -793,15 +825,15 @@ const yoyLabels=["2023", "2024", "2025"];
 const yoyData=yoyD;
 function getYoYAll(field){ return [0,1,2].map(i=>cities.reduce((s,c)=>(yoyData[c]?s+(yoyData[c][field]?yoyData[c][field][i]:0):s),0)); }
 
-new Chart(document.getElementById('yoyTotalChart'),{type:'line',data:{labels:yoyLabels,datasets:[{label:'Total Crashes',data:getYoYAll('totals'),borderColor:'#ff4d4d',backgroundColor:'rgba(255,77,77,.08)',borderWidth:2.5,pointRadius:5,pointBackgroundColor:'#ff4d4d',pointBorderColor:'#08090d',pointBorderWidth:2,tension:.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw.toLocaleString()+' crashes'}}},scales:{y:{beginAtZero:false,grid:{color:'rgba(28,31,46,.5)'},ticks:{callback:v=>v>=1000?(v/1000).toFixed(1)+'K':v}},x:{grid:{display:false}}}}});
+new Chart(document.getElementById('yoyTotalChart'),{type:'line',data:{labels:yoyLabels,datasets:[{label:'Total Crashes',data:getYoYAll('totals'),borderColor:chartColor('count'),backgroundColor:chartColor('count',.08),borderWidth:2.5,pointRadius:5,pointBackgroundColor:chartColor('count'),pointBorderColor:'#08090d',pointBorderWidth:2,tension:.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw.toLocaleString()+' crashes'}}},scales:{y:{beginAtZero:false,grid:{color:'rgba(28,31,46,.5)'},ticks:{callback:v=>v>=1000?(v/1000).toFixed(1)+'K':v}},x:{grid:{display:false}}}}});
 
-new Chart(document.getElementById('yoySevChart'),{type:'line',data:{labels:yoyLabels,datasets:[{label:'Deaths',data:getYoYAll('deaths'),borderColor:'#ffb347',backgroundColor:'rgba(255,179,71,.08)',borderWidth:2.5,pointRadius:5,pointBackgroundColor:'#ffb347',pointBorderColor:'#08090d',pointBorderWidth:2,tension:.3,fill:true,yAxisID:'yFatal'},{label:'Ped Crashes',data:getYoYAll('peds'),borderColor:'#4da6ff',backgroundColor:'rgba(77,166,255,.06)',borderWidth:2,pointRadius:4,pointBackgroundColor:'#4da6ff',pointBorderColor:'#08090d',pointBorderWidth:2,tension:.3,fill:true,yAxisID:'yPed'}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'circle',padding:14,font:{size:11}}},tooltip:TT},scales:{yFatal:{type:'linear',position:'left',beginAtZero:false,title:{display:true,text:'Deaths',color:'#ffb347',font:{size:10}},grid:{color:'rgba(28,31,46,.5)'},ticks:{color:'#ffb347',font:{size:10},precision:0}},yPed:{type:'linear',position:'right',beginAtZero:false,title:{display:true,text:'Ped Crashes',color:'#4da6ff',font:{size:10}},grid:{drawOnChartArea:false},ticks:{color:'#4da6ff',font:{size:10},precision:0}},x:{grid:{display:false}}}}});
+new Chart(document.getElementById('yoySevChart'),{type:'line',data:{labels:yoyLabels,datasets:[{label:'Deaths',data:getYoYAll('deaths'),borderColor:chartColor('deaths'),backgroundColor:chartColor('deaths',.08),borderWidth:2.5,pointRadius:5,pointBackgroundColor:chartColor('deaths'),pointBorderColor:'#08090d',pointBorderWidth:2,tension:.3,fill:true,yAxisID:'yFatal'},{label:'Ped Crashes',data:getYoYAll('peds'),borderColor:chartColor('ped'),backgroundColor:chartColor('ped',.06),borderWidth:2,pointRadius:4,pointBackgroundColor:chartColor('ped'),pointBorderColor:'#08090d',pointBorderWidth:2,tension:.3,fill:true,yAxisID:'yPed'}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'circle',padding:14,font:{size:12}}},tooltip:TT},scales:{yFatal:{type:'linear',position:'left',beginAtZero:false,title:{display:true,text:'Deaths',color:chartColor('deaths'),font:{size:12}},grid:{color:'rgba(28,31,46,.5)'},ticks:{color:chartColor('deaths'),font:{size:12},precision:0}},yPed:{type:'linear',position:'right',beginAtZero:false,title:{display:true,text:'Ped Crashes',color:chartColor('ped'),font:{size:12}},grid:{drawOnChartArea:false},ticks:{color:chartColor('ped'),font:{size:12},precision:0}},x:{grid:{display:false}}}}});
 
-(function(){function bOpts(d){var mn=Math.min.apply(null,d);var mx=Math.max.apply(null,d);var yMin=Math.max(0,Math.min(2*mn-mx,Math.round(mn*0.7)));return{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:TT},scales:{y:{min:yMin,grid:{color:"rgba(28,31,46,.5)"},ticks:{precision:0}},x:{grid:{display:false}}}};}var duiD=getYoYAll('impaired');new Chart(document.getElementById('yoyDuiChart'),{type:'bar',data:{labels:yoyLabels,datasets:[{data:duiD,backgroundColor:'rgba(255,179,71,.6)',borderRadius:6,maxBarThickness:40}]},options:bOpts(duiD)});var spdD=getYoYAll('speed');new Chart(document.getElementById('yoySpeedChart'),{type:'bar',data:{labels:yoyLabels,datasets:[{data:spdD,backgroundColor:'rgba(255,77,77,.6)',borderRadius:6,maxBarThickness:40}]},options:bOpts(spdD)});})();
+(function(){function bOpts(d){var mn=Math.min.apply(null,d);var mx=Math.max.apply(null,d);var yMin=Math.max(0,Math.min(2*mn-mx,Math.round(mn*0.7)));return{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:TT},scales:{y:{min:yMin,grid:{color:"rgba(28,31,46,.5)"},ticks:{precision:0}},x:{grid:{display:false}}}};}var duiD=getYoYAll('impaired');new Chart(document.getElementById('yoyDuiChart'),{type:'bar',data:{labels:yoyLabels,datasets:[{data:duiD,backgroundColor:chartColor('count',.7),borderRadius:3,maxBarThickness:40}]},options:bOpts(duiD)});var spdD=getYoYAll('speed');new Chart(document.getElementById('yoySpeedChart'),{type:'bar',data:{labels:yoyLabels,datasets:[{data:spdD,backgroundColor:chartColor('count',.7),borderRadius:3,maxBarThickness:40}]},options:bOpts(spdD)});})();
 
 
 // === VISION ZERO ===
-new Chart(document.getElementById('vzChart'),{type:'line',data:{labels:["2013 baseline", "2023", "2024", "2025"],datasets:[{label:'Actual deaths',data:[null, 280, 268, 229],borderColor:'rgba(255,77,77,.8)',backgroundColor:'rgba(255,77,77,.1)',borderWidth:2.5,pointRadius:4,pointHoverRadius:6,tension:.2,fill:true,spanGaps:false},{label:'Official Baseline (2013)',data:[299, null, null, null],borderColor:'rgba(140,148,175,.9)',backgroundColor:'rgba(140,148,175,.9)',pointStyle:'rectRot',pointRadius:7,pointHoverRadius:8,showLine:false},{label:'Vision Zero Goal',data:[299, 27, 0, 0],borderColor:'rgba(77,255,145,.6)',backgroundColor:'rgba(77,255,145,.05)',borderWidth:2,borderDash:[8,4],pointRadius:0,tension:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'circle',padding:12}},tooltip:{...TT,callbacks:{label:c=>c.dataset.label+': '+c.raw+' deaths'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Deaths',color:'#8b90a8',font:{size:11}}},x:{grid:{display:false}}}}});
+new Chart(document.getElementById('vzChart'),{type:'line',data:{labels:["2013 baseline", "2023", "2024", "2025"],datasets:[{label:'Actual deaths',data:[null, 280, 268, 229],borderColor:chartColor('deaths'),backgroundColor:chartColor('deaths',.1),borderWidth:2.5,pointRadius:4,pointHoverRadius:6,tension:.2,fill:true,spanGaps:false},{label:'Official Baseline (2013)',data:[299, null, null, null],borderColor:chartColor('neutral'),backgroundColor:chartColor('neutral'),pointStyle:'rectRot',pointRadius:7,pointHoverRadius:8,showLine:false},{label:'Vision Zero Goal',data:[299, 27, 0, 0],borderColor:'rgba(232,234,240,.7)',backgroundColor:'transparent',borderWidth:2,borderDash:[8,4],pointRadius:0,tension:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'circle',padding:12}},tooltip:{...TT,callbacks:{label:c=>c.dataset.label+': '+c.raw+' deaths'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Deaths',color:'#8b90a8',font:{size:12}}},x:{grid:{display:false}}}}});
 
 // =========================================================================
 // === CRASH MAP ENGINE ===
@@ -908,21 +940,21 @@ function renderMarkers(){
             if(prevCount){
                 const pct=Math.round(((s.crashes-prevCount)/prevCount)*100);
                 const arrow=pct>0?'&#9650;':'&#9660;';
-                const tColor=pct>0?'#ff4d4d':'#4dff91';
+                const tColor=pct>0?chartColor('rose'):chartColor('fell');
                 trendStr='<div class="popup-trend" style="color:'+tColor+'">'+arrow+' '+(pct>0?'+':'')+pct+'% vs '+prevYr+'</div>';
             }
         }
 
         let tagHTML='';
         if(s.tags && s.tags.length){
-            const tc={ped:['Pedestrian','#ff6b6b','rgba(255,77,77,.2)'],cyclist:['Cyclist','#6bb5ff','rgba(77,166,255,.2)'],fatal:['Fatal crash','#ffc266','rgba(255,179,71,.2)']};
+            const tc={ped:['Pedestrian',chartColor('ped'),chartColor('ped',.15)],cyclist:['Cyclist',chartColor('cyclist'),chartColor('cyclist',.15)],fatal:['Fatal crash',chartColor('deaths'),chartColor('deaths',.15)]};
             tagHTML='<div class="popup-tags">'+s.tags.map(t=>{
                 const m=tc[t]||['','',''];
                 return '<span class="popup-tag" style="color:'+m[1]+';background:'+m[2]+'">'+m[0]+'</span>';
             }).join('')+'</div>';
         }
 
-        const cityTag=currentCity==='all'?'<div style="font-family:JetBrains Mono,monospace;font-size:10px;color:var(--amber);letter-spacing:.04em;text-transform:uppercase;margin-bottom:2px">'+s.city+'</div>':'';
+        const cityTag=currentCity==='all'?'<div class="popup-region">'+s.city+'</div>':'';
         const noteItems=[];
         if(s.speed) noteItems.push(fmtN(s.speed)+' speed-related');
         if(s.hitrun) noteItems.push(fmtN(s.hitrun)+' hit-and-run');
@@ -936,7 +968,7 @@ function renderMarkers(){
         // Numbered label for top 10
         if(isTop10){
             const icon=L.divIcon({
-                html:'<div style="display:flex;align-items:center;justify-content:center;width:'+(isMobile?16:20)+'px;height:'+(isMobile?16:20)+'px;border-radius:50%;background:rgba(20,23,38,0.88);border:1.5px solid rgba(255,255,255,0.9);box-shadow:0 1px 4px rgba(0,0,0,.4);font-family:JetBrains Mono,monospace;font-size:'+(isMobile?8:10)+'px;font-weight:700;color:#fff;line-height:1">'+dynRank+'</div>',
+                html:'<div style="display:flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:rgba(20,23,38,0.88);border:1.5px solid rgba(255,255,255,0.9);box-shadow:0 1px 4px rgba(0,0,0,.4);font-family:JetBrains Mono,monospace;font-size:12px;font-weight:700;color:#fff;line-height:1">'+dynRank+'</div>',
                 className:'',iconSize:[22,22],iconAnchor:[11,11]
             });
             const lab=L.marker([s.lat,s.lon],{icon:icon,keyboard:true}).addTo(labelLayer);
@@ -1012,7 +1044,7 @@ searchInput.addEventListener('keydown',function(e){
 });
 // Search runs only on Enter (Nominatim's usage policy forbids search-as-you-type).
 const searchMsgEl=document.getElementById('mapSearchMsg');
-function searchMsg(t){if(searchMsgEl){searchMsgEl.textContent=t;searchMsgEl.style.display=t?'block':'none'}}
+function searchMsg(t){if(searchMsgEl){searchMsgEl.innerHTML=t?'<svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4M12 17.5v.01"/></svg> '+t:'';searchMsgEl.style.display=t?'block':'none'}}
 function doSearch(query){
     if(!query) return;
     searchMsg('');
@@ -1138,7 +1170,7 @@ async function doCommute(){
         });
         const totalCrashes=nearRoute.reduce((sum,s)=>sum+(currentYear==='all'?s.count:((s.by_year&&s.by_year[currentYear])||0)),0);
         const yrLabel=currentYear==='all'?'2023–2025':currentYear;
-        result.innerHTML='&#9989; Found <strong>'+nearRoute.length+' hotspot'+(nearRoute.length!==1?'s':'')+'</strong> with <strong>'+totalCrashes+' total crashes</strong> ('+yrLabel+') within &frac14; mile of your commute.';
+        result.innerHTML='<span class="ok-ico"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6L9 17l-5-5"/></svg></span> Found <strong>'+nearRoute.length+' hotspot'+(nearRoute.length!==1?'s':'')+'</strong> with <strong>'+totalCrashes+' total crashes</strong> ('+yrLabel+') within &frac14; mile of your commute.';
         map.fitBounds(commuteRoute.getBounds().pad(0.15));
     }catch(err){
         result.textContent='Error finding route. Try more specific addresses.';
@@ -1300,7 +1332,7 @@ function showReport(lat,lon,addr){
             const intensity=Math.min(g[2]/Math.max(maxCount,1),1);
             const hasF=g[3]>0;
             const hasPed=g[4]>0;
-            const color=hasF?'#ff4d4d':hasPed?'#ffb347':'#f59e0b';
+            const color=hasF?chartColor('deaths'):hasPed?chartColor('ped'):chartColor('count');
             const sz=3+intensity*7;
             const op=hasF?0.95:(0.3+intensity*0.55);
             L.circleMarker([g[0],g[1]],{radius:sz,fillColor:color,fillOpacity:op,color:color,weight:hasF?1.5:0,opacity:0.4}).addTo(miniLayers);
@@ -1312,7 +1344,7 @@ function showReport(lat,lon,addr){
         nearHotspots.forEach(function(s){
             const rank=spots.indexOf(s)+1;
             L.circleMarker([s.lat,s.lon],{radius:10,fillColor:'#f59e0b',fillOpacity:0.15,color:'#f59e0b',weight:1.5,dashArray:'4,3'}).addTo(miniLayers);
-            L.marker([s.lat,s.lon],{icon:L.divIcon({className:'',html:'<div style="font-family:JetBrains Mono,monospace;font-size:9px;color:#f59e0b;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.9);white-space:nowrap;transform:translate(12px,-8px)">#'+rank+'</div>',iconSize:[0,0]})}).addTo(miniLayers);
+            L.marker([s.lat,s.lon],{icon:L.divIcon({className:'',html:'<div style="font-family:JetBrains Mono,monospace;font-size:.75rem;color:#f59e0b;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.9);white-space:nowrap;transform:translate(12px,-8px)">#'+rank+'</div>',iconSize:[0,0]})}).addTo(miniLayers);
         });
         L.circleMarker([lat,lon],{radius:5,fillColor:'#fff',fillOpacity:1,color:'#f59e0b',weight:2.5}).addTo(miniLayers);
         const pad=r*1.3;
@@ -1321,17 +1353,15 @@ function showReport(lat,lon,addr){
     }
 
     // Breakdown — colored pill badges, always show fatal
-    function pill(val,label,color){
-        const bg=color.replace(')',',0.12)').replace('var(--','rgba(').replace('rgb(','rgba(');
-        const bgFallback=color==='var(--red)'?'rgba(255,77,77,0.12)':color==='var(--amber)'?'rgba(255,179,71,0.12)':color==='var(--blue)'?'rgba(77,166,255,0.12)':color==='var(--purple)'?'rgba(176,125,255,0.12)':'rgba(103,232,249,0.12)';
-        return '<span class="lookup-pill" style="background:'+bgFallback+';color:'+color+'">'+fmtN(val)+' <span style="opacity:.7">'+label+'</span></span>';
+    function pill(val,label,fatalChip){
+        return '<span class="lookup-pill'+(fatalChip?' lookup-pill-fatal':'')+'"><span class="lp-num">'+fmtN(val)+'</span> <span class="lp-lbl">'+label+'</span></span>';
     }
     breakdownDiv.innerHTML=[
-        pill(fatal,'fatal crashes','var(--red)'),
-        pill(ped,'pedestrian','var(--amber)'),
-        pill(cyclist,'cyclist','var(--blue)'),
-        pill(speed,'speed','var(--purple)'),
-        pill(hitrun,'hit-and-run','var(--cyan)')
+        pill(fatal,'fatal crashes',true),
+        pill(ped,'pedestrian'),
+        pill(cyclist,'cyclist'),
+        pill(speed,'speed'),
+        pill(hitrun,'hit-and-run')
     ].join('');
 
     // Year-by-year — inline text
@@ -1340,7 +1370,7 @@ function showReport(lat,lon,addr){
         let yhtml='<div style="font-family:JetBrains Mono,monospace;font-size:.75rem;color:var(--text-faint);display:flex;align-items:center;gap:.35rem;flex-wrap:wrap">';
         yrKeys.forEach(function(y,i){
             const isLast=i===yrKeys.length-1;
-            if(i>0) yhtml+='<span style="color:var(--border);font-size:.6rem">&#9654;</span>';
+            if(i>0) yhtml+='<span style="color:var(--border);font-size:.75rem">&#9654;</span>';
             yhtml+='<span style="color:'+(isLast?'var(--text)':'var(--text-faint)')+'">'+y+': <span style="font-weight:'+(isLast?'600':'400')+'">'+byYear[y]+'</span></span>';
         });
         yhtml+='</div>';
@@ -1356,7 +1386,7 @@ function showReport(lat,lon,addr){
         if(prev>0){
             const pct=Math.round((curr-prev)/prev*100);
             const arrow=pct>0?'&#9650;':pct<0?'&#9660;':'&#8212;';
-            const color=pct>0?'var(--red)':pct<0?'var(--green)':'var(--text-dim)';
+            const color=pct>0?chartColor('rose'):pct<0?chartColor('fell'):chartColor('flat');
             trendDiv.innerHTML='<span style="color:'+color+';font-weight:500">'+arrow+' '+(pct>0?'+':'')+pct+'% YoY</span>';
         }else{
             trendDiv.innerHTML='';
@@ -1369,9 +1399,9 @@ function showReport(lat,lon,addr){
     const avgPerCell=totalCrashesAllYears/Math.max(gridCellCount,1);
     if(avgPerCell>0){
         const ratio=Math.round(total/avgPerCell*10)/10;
-        const color=ratio>=1.5?'var(--red)':ratio<=0.5?'var(--green)':'var(--text-dim)';
+        const color='#e8eaf0';
         const desc=ratio>=1.5?'above':ratio<=0.5?'below':'near';
-        contextDiv.innerHTML='<span style="font-family:JetBrains Mono,monospace;font-size:.78rem;color:var(--text-faint)"><span style="color:'+color+';font-weight:600">'+ratio+'&times;</span> '+desc+' metro average crash density</span>';
+        contextDiv.innerHTML='<span style="font-size:13px;color:var(--text-dim)"><span style="font-family:JetBrains Mono,monospace;color:'+color+';font-weight:600">'+fmtR1(ratio)+'&times;</span> '+desc+' metro average crash density</span>';
     }else{
         contextDiv.innerHTML='';
     }
@@ -1413,7 +1443,7 @@ function renderIntersectionTable(){
 
     document.getElementById('intersectionBody').innerHTML=all.map((i,idx)=>{
         const crashPct=i.c/maxCrash*100;
-        const cityLabel=currentCity==='all'?'<span style="display:block;font-size:.68rem;color:var(--amber);font-weight:400;font-family:JetBrains Mono,monospace">'+i.city+'</span>':'';
+        const cityLabel=currentCity==='all'?'<span class="region-name">'+i.city+'</span>':'';
         return '<tr><td class="rank-num">'+(idx+1)+'</td><td style="font-weight:500">'+i.n+cityLabel+'</td><td><div class="crash-bar-wrap"><div class="crash-bar-track"><div class="crash-bar" style="width:'+crashPct+'%"></div></div><span class="crash-count">'+i.c+'</span></div></td></tr>';
     }).join('');
 }
