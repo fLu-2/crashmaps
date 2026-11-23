@@ -129,7 +129,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,te
 .crash-popup .leaflet-popup-close-button:hover{color:#e8eaf0!important;background:transparent!important}
 .popup-rank{font-family:'JetBrains Mono',monospace;font-size:11px;color:#84cc16;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px}
 .popup-name{font-weight:600;font-size:15px;margin-bottom:6px}
-.popup-count{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:#84cc16;margin-bottom:4px}
+.popup-count{display:flex;align-items:baseline;gap:6px;white-space:nowrap}.popup-num{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;line-height:1.1;color:#84cc16}.popup-unit{font-family:'DM Sans',sans-serif;font-size:13px;color:#e8eaf0}.popup-years{font-family:'JetBrains Mono',monospace;font-size:12px;color:#8b90a8;white-space:nowrap;margin:2px 0 6px}
 .popup-trend{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;margin-bottom:6px}
 .popup-note{font-size:12px;color:#8b90a8;line-height:1.45}
 .popup-tags{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap}
@@ -153,9 +153,10 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,te
 
 main{max-width:1200px;margin:0 auto;padding:4rem 2rem 6rem}
 .rule{height:1px;background:var(--border);margin:3rem 0}
-.sec-hdr{margin-bottom:2rem}.sec-num{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:500;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem}
+.sec-hdr{margin-bottom:2rem}.sec-num{font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem}
 .sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:700;line-height:1.2;margin-bottom:.6rem}
 .sec-desc{font-size:.95rem;font-weight:300;color:var(--text-dim);max-width:620px}
+.lbl-short{display:none}
 .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1rem}
 .grid-2>.card,.grid-3>.card{margin-bottom:0}
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1rem}
@@ -163,6 +164,7 @@ main{max-width:1200px;margin:0 auto;padding:4rem 2rem 6rem}
 .grid-65-35{display:grid;grid-template-columns:65fr 35fr;gap:1rem;margin-bottom:1rem}.grid-65-35>.card{margin-bottom:0}
 @media(max-width:768px){
 .hero{min-height:auto;padding:2rem 1rem}
+.lbl-long{display:none}.lbl-short{display:inline}.sec-num{white-space:nowrap}
 .hero::before,.hero::after{display:none}
 .stats-strip{grid-template-columns:repeat(2,1fr)}
 .stat-cell{padding:.7rem .6rem}
@@ -271,7 +273,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <div class="card map-card">
     <div class="card-top">
         <div><div class="card-title">Fort Worth Crash Map</div><div class="card-sub">65 intersections &middot; 7 cities &middot; TxDOT CRIS 2023&ndash;2025</div></div>
-        <div class="tag tag-red">Interactive</div>
+        
     </div>
     <div class="map-toolbar">
         <div class="map-toolbar-row">
@@ -311,7 +313,7 @@ footer a{color:var(--text-dim);text-decoration:none}
                     <button class="map-btn active" data-type="all">All</button>
                     <button class="map-btn" data-type="ped">Ped</button>
                     <button class="map-btn" data-type="cyclist">Bike</button>
-                    <button class="map-btn" data-type="fatal">Fatal</button>
+                    <button class="map-btn" data-type="fatal">Fatal crashes</button>
                 </div>
             </div>
             <div class="map-filter-sep"></div>
@@ -329,7 +331,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <option value="Haltom City/Saginaw">Haltom City/Saginaw</option>
 <option value="Grapevine/Southlake">Grapevine/Southlake</option>
 <option value="Other Metro">Other Metro</option></select></div>
-                <div class="mf-field"><label>Show</label><select id="typeFilterMob" class="mf-select"><option value="all" selected>All Crashes</option><option value="ped">Pedestrian</option><option value="cyclist">Cyclist</option><option value="fatal">Fatal</option></select></div>
+                <div class="mf-field"><label>Show</label><select id="typeFilterMob" class="mf-select"><option value="all" selected>All Crashes</option><option value="ped">Pedestrian</option><option value="cyclist">Cyclist</option><option value="fatal">Fatal crashes</option></select></div>
                 <div class="mf-field"><label>Year</label><select id="yearFilterMob" class="mf-select"><option value="2023">2023</option><option value="2024">2024</option><option value="2025">2025</option><option value="all" selected>All Years</option></select></div>
             </div>
         </div>
@@ -356,7 +358,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 
 <!-- 02 LOOK UP YOUR STREET -->
 <div class="rule"></div>
-<div class="sec-hdr" id="sec-02"><div class="sec-num">02 &mdash; Look Up Your Street</div><h2 class="sec-title">How Safe Is Your Area?</h2><p class="sec-desc">Search any address or intersection to see a crash summary for that location. TxDOT CRIS 2023&ndash;2025.</p></div>
+<div class="sec-hdr" id="sec-02"><div class="sec-num">02 &mdash; <span class="lbl-long">Look Up Your Street</span><span class="lbl-short">Your Street</span></div><h2 class="sec-title">How Safe Is Your Area?</h2><p class="sec-desc">Search any address or intersection to see a crash summary for that location. TxDOT CRIS 2023&ndash;2025.</p></div>
 <div class="card" style="overflow:visible">
     <div style="padding:1.25rem">
         <div style="display:flex;gap:.5rem;align-items:stretch">
@@ -410,7 +412,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 
 <!-- 03 DANGEROUS INTERSECTIONS -->
 <div class="rule"></div>
-<div class="sec-hdr" id="sec-03"><div class="sec-num">03 &mdash; Dangerous Intersections</div><h2 class="sec-title">The Top 10 Crash Sites</h2><p class="sec-desc">Ranked by total crash volume across Fort Worth. Busy roads rank high partly because they carry more traffic.</p></div>
+<div class="sec-hdr" id="sec-03"><div class="sec-num">03 &mdash; <span class="lbl-long">Dangerous Intersections</span><span class="lbl-short">Intersections</span></div><h2 class="sec-title">The Top 10 Crash Sites</h2><p class="sec-desc">Ranked by total crash volume across Fort Worth. Busy roads rank high partly because they carry more traffic.</p></div>
 <div class="card">
     <div class="card-top">
         <div>
@@ -433,8 +435,8 @@ footer a{color:var(--text-dim);text-decoration:none}
 
 <!-- 04 CITY OVERVIEW -->
 <div class="rule"></div>
-<div class="sec-hdr" id="sec-04"><div class="sec-num">04 &mdash; City Overview</div><h2 class="sec-title">Crash Rates Across the Metro</h2><p class="sec-desc">How each city in Fort Worth compares on total crashes, fatalities, and behavioral factors.</p></div>
-<div class="card"><div class="card-top"><div><div class="card-title">City Comparison</div><div class="card-sub">All cities &middot; TxDOT CRIS 2025</div></div><div class="tag tag-red">Overview</div></div>
+<div class="sec-hdr" id="sec-04"><div class="sec-num">04 &mdash; <span class="lbl-long">City Overview</span><span class="lbl-short">By City</span></div><h2 class="sec-title">Crash Rates Across the Metro</h2><p class="sec-desc">How each city in Fort Worth compares on total crashes, deaths, and behavioral factors.</p></div>
+<div class="card"><div class="card-top"><div><div class="card-title">City Comparison</div><div class="card-sub">All cities &middot; TxDOT CRIS 2025</div></div></div>
 <div class="city-table-wrap" tabindex="0" role="region" aria-label="City comparison table"><table class="city-table"><thead><tr><th>City</th><th>Crashes</th><th>Deaths</th><th>DUI</th><th>Speed</th><th>Hit &amp; Run</th><th>Ped</th></tr></thead><tbody id="cityTableBody"></tbody></table></div><div style="padding:.6rem 1.25rem .85rem;font-size:.75rem;line-height:1.6;color:var(--text-dim);font-family:DM Sans,sans-serif;border-top:1px solid var(--border)"><div>What each city includes (Fort Worth is that city alone; all figures are for the parts inside Tarrant County):</div><div><strong>Arlington area</strong>: Arlington, Dalworthington Gardens and Pantego.</div><div><strong>Mansfield/Burleson</strong>: Mansfield, Kennedale, Crowley and Burleson.</div><div><strong>NRH/HEB</strong>: North Richland Hills, Hurst, Euless, Bedford, Richland Hills and Watauga.</div><div><strong>Haltom City/Saginaw</strong>: Haltom City, River Oaks, Westworth Village, Saginaw, Lake Worth and Haslet.</div><div><strong>Grapevine/Southlake</strong>: Grapevine, Southlake, Colleyville, Westlake and Keller.</div><div><strong>Other Metro</strong>: the rest of Tarrant County.</div></div></div>
 <div class="card"><div class="card-top"><div><div class="card-title">Crashes Per 1,000 Residents</div><div class="card-sub">Population-adjusted crash rate &middot; TxDOT CRIS 2025</div></div></div><div class="chart-box"><canvas id="perCapitaChart"></canvas></div><div style="padding:.6rem 1.25rem .85rem;font-size:.75rem;color:var(--text-dim);font-family:DM Sans,sans-serif;border-top:1px solid var(--border);text-align:center">Populations: U.S. Census Bureau estimates for July 1, 2025. City populations are the parts inside Tarrant County, grouped as the regions are; Other Metro is the rest of the county.</div></div>
 
@@ -474,10 +476,10 @@ footer a{color:var(--text-dim);text-decoration:none}
 
 <!-- 06 YEAR OVER YEAR -->
 <div class="rule"></div>
-<div class="sec-hdr" id="sec-06"><div class="sec-num">06 &mdash; Year Over Year</div><h2 class="sec-title">Is the Metro Getting Safer?</h2><p class="sec-desc">Three years of TxDOT CRIS records show how crashes, fatalities, and behavioral factors are trending across Fort Worth.</p></div>
+<div class="sec-hdr" id="sec-06"><div class="sec-num">06 &mdash; Year Over Year</div><h2 class="sec-title">Is the Metro Getting Safer?</h2><p class="sec-desc">Three years of TxDOT CRIS records show how crashes, deaths, and behavioral factors are trending across Fort Worth.</p></div>
 <div class="grid-2">
     <div class="card"><div class="card-top"><div><div class="card-title">Total Crashes</div><div class="card-sub">Metro-wide &middot; TxDOT CRIS 2023&ndash;2025</div></div></div><div class="chart-box"><canvas id="yoyTotalChart"></canvas></div></div>
-    <div class="card"><div class="card-top"><div><div class="card-title">Fatalities &amp; Pedestrian Crashes</div><div class="card-sub">Metro-wide &middot; TxDOT CRIS 2023&ndash;2025</div></div></div><div class="chart-box"><canvas id="yoySevChart"></canvas></div></div>
+    <div class="card"><div class="card-top"><div><div class="card-title">Deaths &amp; Pedestrian Crashes</div><div class="card-sub">Metro-wide &middot; TxDOT CRIS 2023&ndash;2025</div></div></div><div class="chart-box"><canvas id="yoySevChart"></canvas></div></div>
 </div>
 <div class="grid-3"><div class="card"><div class="card-top"><div><div class="card-title">DUI Crashes</div><div class="card-sub">2023&ndash;2025</div></div></div><div class="chart-box short"><canvas id="yoyDuiChart"></canvas></div></div><div class="card"><div class="card-top"><div><div class="card-title">Speed-Related</div><div class="card-sub">2023&ndash;2025</div></div></div><div class="chart-box short"><canvas id="yoySpeedChart"></canvas></div></div><div class="card"><div class="card-top"><div><div class="card-title">Hit &amp; Run</div><div class="card-sub">2023&ndash;2025</div></div></div><div class="chart-box short"><canvas id="yoyHrChart"></canvas></div></div></div>
 
@@ -486,7 +488,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <div class="sec-hdr" id="sec-07"><div class="sec-num">07 &mdash; Severity</div><h2 class="sec-title">How Bad Are the Crashes?</h2><p class="sec-desc">191 people died on Fort Worth roads in 2025. The severity chart counts crashes by their worst outcome: fatal, injury, or property damage only.</p></div>
 <div class="grid-2">
     <div class="card"><div class="card-top"><div><div class="card-title">Severity Distribution</div><div class="card-sub">All Metro &middot; TxDOT CRIS 2025</div></div></div><div class="chart-box"><canvas id="sevChart"></canvas></div></div>
-    <div class="card"><div class="card-top"><div><div class="card-title">Fatalities by City</div><div class="card-sub">TxDOT CRIS 2025</div></div><div class="tag tag-red">Fatal</div></div><div class="chart-box"><canvas id="fatalCityChart"></canvas></div><div id="fatalCityFootnote" style="display:none;padding:.5rem 1.25rem .7rem;font-size:.72rem;color:var(--text-dim);font-family:'DM Sans',sans-serif;border-top:1px solid var(--border);text-align:center"></div></div>
+    <div class="card"><div class="card-top"><div><div class="card-title">Deaths by City</div><div class="card-sub">TxDOT CRIS 2025</div></div></div><div class="chart-box"><canvas id="fatalCityChart"></canvas></div><div id="fatalCityFootnote" style="display:none;padding:.5rem 1.25rem .7rem;font-size:.72rem;color:var(--text-dim);font-family:'DM Sans',sans-serif;border-top:1px solid var(--border);text-align:center"></div></div>
 </div>
 <div class="grid-2"><div class="card"><div class="card-top"><div><div class="card-title">Crash Type Breakdown</div><div class="card-sub" id="typeSub">All Metro &middot; TxDOT CRIS 2025</div></div><select class="chart-metro" id="selCrashType"><option value="all" selected>All Metro</option><option value="Fort Worth">Fort Worth</option>
 <option value="Arlington area">Arlington area</option>
@@ -518,7 +520,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <option value="NRH/HEB">NRH/HEB</option>
 <option value="Haltom City/Saginaw">Haltom City/Saginaw</option>
 <option value="Grapevine/Southlake">Grapevine/Southlake</option>
-<option value="Other Metro">Other Metro</option></select></div><div class="chart-box"><canvas id="speedHourChart"></canvas></div></div><div class="grid-2"><div class="card"><div class="card-top"><div><div class="card-title">Speed&#x27;s Share of Fatalities</div><div class="card-sub">By city &middot; TxDOT CRIS 2025</div></div><div class="tag tag-red">Fatal</div></div><div class="chart-box"><canvas id="speedFatalChart"></canvas></div></div><div class="card"><div class="card-top"><div><div class="card-title">Crashes by Speed Limit Zone</div><div class="card-sub" id="speedZoneSub">All Metro &middot; TxDOT CRIS 2025</div></div><select class="chart-metro" id="selSpeedZone"><option value="all" selected>All Metro</option><option value="Fort Worth">Fort Worth</option>
+<option value="Other Metro">Other Metro</option></select></div><div class="chart-box"><canvas id="speedHourChart"></canvas></div></div><div class="grid-2"><div class="card"><div class="card-top"><div><div class="card-title">Speed&#x27;s Share of Deaths</div><div class="card-sub">By city &middot; TxDOT CRIS 2025</div></div></div><div class="chart-box"><canvas id="speedFatalChart"></canvas></div></div><div class="card"><div class="card-top"><div><div class="card-title">Crashes by Speed Limit Zone</div><div class="card-sub" id="speedZoneSub">All Metro &middot; TxDOT CRIS 2025</div></div><select class="chart-metro" id="selSpeedZone"><option value="all" selected>All Metro</option><option value="Fort Worth">Fort Worth</option>
 <option value="Arlington area">Arlington area</option>
 <option value="Mansfield/Burleson">Mansfield/Burleson</option>
 <option value="NRH/HEB">NRH/HEB</option>
@@ -539,13 +541,13 @@ footer a{color:var(--text-dim);text-decoration:none}
 
 <!-- 11 PEDESTRIANS & CYCLISTS -->
 <div class="rule"></div>
-<div class="sec-hdr" id="sec-11"><div class="sec-num">11 &mdash; Pedestrians &amp; Cyclists</div><h2 class="sec-title">The Most Vulnerable on Metro Streets</h2><p class="sec-desc">568 pedestrian crashes and 231 cyclist crashes across the metro in 2025.</p></div>
+<div class="sec-hdr" id="sec-11"><div class="sec-num">11 &mdash; <span class="lbl-long">Pedestrians &amp; Cyclists</span><span class="lbl-short">Walk &amp; Bike</span></div><h2 class="sec-title">The Most Vulnerable on Metro Streets</h2><p class="sec-desc">568 pedestrian crashes and 231 cyclist crashes across the metro in 2025.</p></div>
 <div class="card"><div class="card-top"><div><div class="card-title">Pedestrian Crashes by City</div><div class="card-sub">TxDOT CRIS 2025</div></div></div><div class="chart-box"><canvas id="pedCityChart"></canvas></div><div style="padding:.6rem 1.25rem .85rem;font-size:.75rem;color:var(--text-dim);font-family:DM Sans,sans-serif;border-top:1px solid var(--border);text-align:center"><span style="font-family:JetBrains Mono,monospace;font-weight:600;color:var(--blue)">568</span> pedestrian crashes in 2025. Fort Worth accounts for 336 &mdash; 59% of the total, with 45% of the population.</div></div>
 
 <!-- 12 VISION ZERO -->
 <div class="rule"></div>
-<div class="sec-hdr" id="sec-12"><div class="sec-num">12 &mdash; Vision Zero Fort Worth</div><h2 class="sec-title">Vision Zero Fort Worth: Progress Toward Zero</h2><p class="sec-desc">The City of Fort Worth adopted Vision Zero Fort Worth in 2020, setting a target of 0 traffic fatalities by 2050. The baseline was 103 fatalities in 2019. The chart counts deaths in the City of Fort Worth only; the other sections of this dashboard cover the wider metro.</p></div>
-<div class="card"><div class="card-top"><div><div class="card-title">Fatalities: Goal vs. Actual</div><div class="card-sub">City of Fort Worth only &middot; 2019 baseline &middot; 2023&ndash;2030</div></div></div><div class="chart-box"><canvas id="vzChart"></canvas></div><div style="padding:.6rem 1.25rem .85rem;font-size:.725rem;color:var(--text-dim);font-family:DM Sans,sans-serif;border-top:1px solid var(--border);text-align:center">Vision Zero Fort Worth targets zero traffic fatalities by 2050. Chart shows goal trajectory through 2030.</div></div>
+<div class="sec-hdr" id="sec-12"><div class="sec-num">12 &mdash; <span class="lbl-long">Vision Zero Fort Worth</span><span class="lbl-short">Vision Zero</span></div><h2 class="sec-title">Vision Zero Fort Worth: Progress Toward Zero</h2><p class="sec-desc">The City of Fort Worth adopted Vision Zero Fort Worth in 2020, setting a target of 0 traffic deaths by 2050. The baseline was 103 deaths in 2019. The chart counts deaths in the City of Fort Worth only; the other sections of this dashboard cover the wider metro.</p></div>
+<div class="card"><div class="card-top"><div><div class="card-title">Deaths: Goal vs. Actual</div><div class="card-sub">City of Fort Worth only &middot; 2019 baseline &middot; 2023&ndash;2030</div></div></div><div class="chart-box"><canvas id="vzChart"></canvas></div><div style="padding:.6rem 1.25rem .85rem;font-size:.725rem;color:var(--text-dim);font-family:DM Sans,sans-serif;border-top:1px solid var(--border);text-align:center">Vision Zero Fort Worth targets zero traffic deaths by 2050. Chart shows goal trajectory through 2030.</div></div>
 
 <!-- 13 SOURCES -->
 <div class="rule"></div>
@@ -573,6 +575,7 @@ footer a{color:var(--text-dim);text-decoration:none}
 <script>
 Chart.defaults.color='#8b90a8';Chart.defaults.borderColor='#1c1f2e';Chart.defaults.font.family="'DM Sans',sans-serif";
 const isMobile=window.innerWidth<=480;Chart.defaults.font.size=isMobile?10:12;
+const fmtN=v=>Number(v||0).toLocaleString('en-US');const fmtR1=v=>Number(v||0).toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1});
 
 // One-sentence text summary of every chart, kept on the canvas as its accessible name.
 // Rebuilt after each update, so it follows the chart's own filter.
@@ -624,11 +627,11 @@ function agg(fn){ return cities.map(c=>fn(c)).reduce((a,b)=>a.map((v,i)=>v+(b[i]
 // === TABLE ===
 const tbody=document.getElementById('cityTableBody');
 cities.forEach(c=>{const d=cityData[c];if(!d)return;const tr=document.createElement('tr');
-tr.innerHTML=`<td>${c}</td><td class="mono">${d.total.toLocaleString()}</td><td class="mono">${d.deaths}</td><td class="mono">${d.impaired}</td><td class="mono">${d.speed.toLocaleString()}</td><td class="mono">${d.hitrun.toLocaleString()}</td><td class="mono">${d.pedestrian}</td>`;
+tr.innerHTML=`<td>${c}</td><td class="mono">${fmtN(d.total)}</td><td class="mono">${fmtN(d.deaths)}</td><td class="mono">${fmtN(d.impaired)}</td><td class="mono">${fmtN(d.speed)}</td><td class="mono">${fmtN(d.hitrun)}</td><td class="mono">${fmtN(d.pedestrian)}</td>`;
 tbody.appendChild(tr)});
 const totRow=document.createElement('tr');totRow.style.fontWeight='600';
 const _t=33855,_f=191,_i=1703,_sp=8313,_hr=5476,_p=568;
-totRow.innerHTML=`<td>All Metro</td><td class="mono">${_t.toLocaleString()}</td><td class="mono">${_f}</td><td class="mono">${_i}</td><td class="mono">${_sp.toLocaleString()}</td><td class="mono">${_hr.toLocaleString()}</td><td class="mono">${_p}</td>`;
+totRow.innerHTML=`<td>All Metro</td><td class="mono">${fmtN(_t)}</td><td class="mono">${fmtN(_f)}</td><td class="mono">${fmtN(_i)}</td><td class="mono">${fmtN(_sp)}</td><td class="mono">${fmtN(_hr)}</td><td class="mono">${fmtN(_p)}</td>`;
 tbody.appendChild(totRow);
 
 // === HOURLY ===
@@ -691,15 +694,15 @@ buildWdWe('all');
 document.getElementById('selWdWe').addEventListener('change',function(){buildWdWe(this.value)});
 
 // === SEVERITY ===
-new Chart(document.getElementById('sevChart'),{type:'doughnut',data:{labels:['Fatal','Injury','Property Damage Only'],datasets:[{data:[187,11706,21962],backgroundColor:['rgba(255,77,77,.8)','rgba(255,179,71,.6)','rgba(85,88,115,.5)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',layout:{padding:{top:5,left:30,right:30,bottom:0}},plugins:{legend:{position:'bottom',labels:{padding:14,usePointStyle:true,pointStyle:'rectRounded',font:{size:11},color:'#8b90a8'}},tooltip:{...TT,callbacks:{label:c=>c.label+': '+c.raw.toLocaleString()+' crashes'}}}}});
+new Chart(document.getElementById('sevChart'),{type:'doughnut',data:{labels:['Fatal crashes','Injury crashes','Property damage only'],datasets:[{data:[187,11706,21962],backgroundColor:['rgba(255,77,77,.8)','rgba(255,179,71,.6)','rgba(85,88,115,.5)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',layout:{padding:{top:5,left:30,right:30,bottom:0}},plugins:{legend:{position:'bottom',labels:{padding:14,usePointStyle:true,pointStyle:'rectRounded',font:{size:11},color:'#8b90a8'}},tooltip:{...TT,callbacks:{label:c=>c.label+': '+c.raw.toLocaleString()+' crashes'}}}}});
 
 const popData={"Fort Worth": 1006863, "Arlington area": 406850, "Mansfield/Burleson": 119900, "NRH/HEB": 249293, "Haltom City/Saginaw": 92485, "Grapevine/Southlake": 155020, "Other Metro": 218055};
 
 // Fatalities by city (horizontal)
 var fatSorted=[...cities].filter(c=>(cityData[c]?.deaths||0)>0).sort((a,b)=>(cityData[b]?.deaths||0)-(cityData[a]?.deaths||0));
-new Chart(document.getElementById('fatalCityChart'),{type:'bar',data:{labels:fatSorted,datasets:[{data:fatSorted.map(c=>cityData[c]?.deaths||0),backgroundColor:'rgba(255,77,77,.65)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+' fatalities'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:10}}}}}});
+new Chart(document.getElementById('fatalCityChart'),{type:'bar',data:{labels:fatSorted,datasets:[{data:fatSorted.map(c=>cityData[c]?.deaths||0),backgroundColor:'rgba(255,77,77,.65)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw+' deaths'}}},scales:{x:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:10}}}}}});
 var zeroFatCities=cities.filter(c=>(cityData[c]?.deaths||0)===0);
-if(zeroFatCities.length){var fn=document.getElementById('fatalCityFootnote');if(fn){fn.style.display='block';fn.textContent=zeroFatCities.join(', ')+(zeroFatCities.length===1?' had':' each had')+' zero fatalities in 2025 and '+(zeroFatCities.length===1?'is':'are')+' not shown.';}}
+if(zeroFatCities.length){var fn=document.getElementById('fatalCityFootnote');if(fn){fn.style.display='block';fn.textContent=zeroFatCities.join(', ')+(zeroFatCities.length===1?' had':' each had')+' zero deaths in 2025 and '+(zeroFatCities.length===1?'is':'are')+' not shown.';}}
 
 // === CRASH TYPE ===
 function shortType(s){
@@ -844,13 +847,13 @@ function getYoYAll(field){ return [0,1,2].map(i=>cities.reduce((s,c)=>(yoyData[c
 
 new Chart(document.getElementById('yoyTotalChart'),{type:'line',data:{labels:yoyLabels,datasets:[{label:'Total Crashes',data:getYoYAll('totals'),borderColor:'#ff4d4d',backgroundColor:'rgba(255,77,77,.08)',borderWidth:2.5,pointRadius:5,pointBackgroundColor:'#ff4d4d',pointBorderColor:'#08090d',pointBorderWidth:2,tension:.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw.toLocaleString()+' crashes'}}},scales:{y:{beginAtZero:false,grid:{color:'rgba(28,31,46,.5)'},ticks:{callback:v=>v>=1000?(v/1000).toFixed(1)+'K':v}},x:{grid:{display:false}}}}});
 
-new Chart(document.getElementById('yoySevChart'),{type:'line',data:{labels:yoyLabels,datasets:[{label:'Fatalities',data:getYoYAll('deaths'),borderColor:'#ffb347',backgroundColor:'rgba(255,179,71,.08)',borderWidth:2.5,pointRadius:5,pointBackgroundColor:'#ffb347',pointBorderColor:'#08090d',pointBorderWidth:2,tension:.3,fill:true,yAxisID:'yFatal'},{label:'Ped Crashes',data:getYoYAll('peds'),borderColor:'#4da6ff',backgroundColor:'rgba(77,166,255,.06)',borderWidth:2,pointRadius:4,pointBackgroundColor:'#4da6ff',pointBorderColor:'#08090d',pointBorderWidth:2,tension:.3,fill:true,yAxisID:'yPed'}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'circle',padding:14,font:{size:11}}},tooltip:TT},scales:{yFatal:{type:'linear',position:'left',beginAtZero:false,title:{display:true,text:'Fatalities',color:'#ffb347',font:{size:10}},grid:{color:'rgba(28,31,46,.5)'},ticks:{color:'#ffb347',font:{size:10},precision:0}},yPed:{type:'linear',position:'right',beginAtZero:false,title:{display:true,text:'Ped Crashes',color:'#4da6ff',font:{size:10}},grid:{drawOnChartArea:false},ticks:{color:'#4da6ff',font:{size:10},precision:0}},x:{grid:{display:false}}}}});
+new Chart(document.getElementById('yoySevChart'),{type:'line',data:{labels:yoyLabels,datasets:[{label:'Deaths',data:getYoYAll('deaths'),borderColor:'#ffb347',backgroundColor:'rgba(255,179,71,.08)',borderWidth:2.5,pointRadius:5,pointBackgroundColor:'#ffb347',pointBorderColor:'#08090d',pointBorderWidth:2,tension:.3,fill:true,yAxisID:'yFatal'},{label:'Ped Crashes',data:getYoYAll('peds'),borderColor:'#4da6ff',backgroundColor:'rgba(77,166,255,.06)',borderWidth:2,pointRadius:4,pointBackgroundColor:'#4da6ff',pointBorderColor:'#08090d',pointBorderWidth:2,tension:.3,fill:true,yAxisID:'yPed'}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'circle',padding:14,font:{size:11}}},tooltip:TT},scales:{yFatal:{type:'linear',position:'left',beginAtZero:false,title:{display:true,text:'Deaths',color:'#ffb347',font:{size:10}},grid:{color:'rgba(28,31,46,.5)'},ticks:{color:'#ffb347',font:{size:10},precision:0}},yPed:{type:'linear',position:'right',beginAtZero:false,title:{display:true,text:'Ped Crashes',color:'#4da6ff',font:{size:10}},grid:{drawOnChartArea:false},ticks:{color:'#4da6ff',font:{size:10},precision:0}},x:{grid:{display:false}}}}});
 
 (function(){function bOpts(d){var mn=Math.min.apply(null,d);var mx=Math.max.apply(null,d);var yMin=Math.max(0,Math.min(2*mn-mx,Math.round(mn*0.7)));return{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:TT},scales:{y:{min:yMin,grid:{color:"rgba(28,31,46,.5)"},ticks:{precision:0}},x:{grid:{display:false}}}};}var duiD=getYoYAll('impaired');new Chart(document.getElementById('yoyDuiChart'),{type:'bar',data:{labels:yoyLabels,datasets:[{data:duiD,backgroundColor:'rgba(255,179,71,.6)',borderRadius:6,maxBarThickness:40}]},options:bOpts(duiD)});var spdD=getYoYAll('speed');new Chart(document.getElementById('yoySpeedChart'),{type:'bar',data:{labels:yoyLabels,datasets:[{data:spdD,backgroundColor:'rgba(255,77,77,.6)',borderRadius:6,maxBarThickness:40}]},options:bOpts(spdD)});var hrD=getYoYAll('hitrun');new Chart(document.getElementById('yoyHrChart'),{type:'bar',data:{labels:yoyLabels,datasets:[{data:hrD,backgroundColor:'rgba(176,125,255,.6)',borderRadius:6,maxBarThickness:40}]},options:bOpts(hrD)});})();
 
 
 // === VISION ZERO ===
-new Chart(document.getElementById('vzChart'),{type:'line',data:{labels:["2019 baseline", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"],datasets:[{label:'Actual Fatalities',data:[null, 121, 113, 113, null, null, null, null, null],borderColor:'rgba(255,77,77,.8)',backgroundColor:'rgba(255,77,77,.1)',borderWidth:2.5,pointRadius:4,pointHoverRadius:6,tension:.2,fill:true,spanGaps:false},{label:'Official Baseline (2019)',data:[103, null, null, null, null, null, null, null, null],borderColor:'rgba(140,148,175,.9)',backgroundColor:'rgba(140,148,175,.9)',pointStyle:'rectRot',pointRadius:7,pointHoverRadius:8,showLine:false},{label:'Vision Zero Fort Worth Goal',data:[103, 90, 86, 83, 80, 76, 73, 70, 66],borderColor:'rgba(77,255,145,.6)',backgroundColor:'rgba(77,255,145,.05)',borderWidth:2,borderDash:[8,4],pointRadius:0,tension:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'circle',padding:12}},tooltip:{...TT,callbacks:{label:c=>c.dataset.label+': '+c.raw+' fatalities'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Fatalities',color:'#8b90a8',font:{size:11}}},x:{grid:{display:false}}}}});
+new Chart(document.getElementById('vzChart'),{type:'line',data:{labels:["2019 baseline", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"],datasets:[{label:'Actual deaths',data:[null, 121, 113, 113, null, null, null, null, null],borderColor:'rgba(255,77,77,.8)',backgroundColor:'rgba(255,77,77,.1)',borderWidth:2.5,pointRadius:4,pointHoverRadius:6,tension:.2,fill:true,spanGaps:false},{label:'Official Baseline (2019)',data:[103, null, null, null, null, null, null, null, null],borderColor:'rgba(140,148,175,.9)',backgroundColor:'rgba(140,148,175,.9)',pointStyle:'rectRot',pointRadius:7,pointHoverRadius:8,showLine:false},{label:'Vision Zero Fort Worth Goal',data:[103, 90, 86, 83, 80, 76, 73, 70, 66],borderColor:'rgba(77,255,145,.6)',backgroundColor:'rgba(77,255,145,.05)',borderWidth:2,borderDash:[8,4],pointRadius:0,tension:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'circle',padding:12}},tooltip:{...TT,callbacks:{label:c=>c.dataset.label+': '+c.raw+' deaths'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(28,31,46,.5)'},title:{display:true,text:'Deaths',color:'#8b90a8',font:{size:11}}},x:{grid:{display:false}}}}});
 
 // =========================================================================
 // === CRASH MAP ENGINE ===
@@ -964,7 +967,7 @@ function renderMarkers(){
 
         let tagHTML='';
         if(s.tags && s.tags.length){
-            const tc={ped:['Pedestrian','#ff6b6b','rgba(255,77,77,.2)'],cyclist:['Cyclist','#6bb5ff','rgba(77,166,255,.2)'],fatal:['Fatal','#ffc266','rgba(255,179,71,.2)']};
+            const tc={ped:['Pedestrian','#ff6b6b','rgba(255,77,77,.2)'],cyclist:['Cyclist','#6bb5ff','rgba(77,166,255,.2)'],fatal:['Fatal crash','#ffc266','rgba(255,179,71,.2)']};
             tagHTML='<div class="popup-tags">'+s.tags.map(t=>{
                 const m=tc[t]||['','',''];
                 return '<span class="popup-tag" style="color:'+m[1]+';background:'+m[2]+'">'+m[0]+'</span>';
@@ -973,13 +976,13 @@ function renderMarkers(){
 
         const cityTag=currentCity==='all'?'<div style="font-family:JetBrains Mono,monospace;font-size:10px;color:var(--amber);letter-spacing:.04em;text-transform:uppercase;margin-bottom:2px">'+s.city+'</div>':'';
         const noteItems=[];
-        if(s.speed) noteItems.push(s.speed+' speed-related');
-        if(s.hitrun) noteItems.push(s.hitrun+' hit-and-run');
-        if(s.ped) noteItems.push(s.ped+' pedestrian');
-        const noteStr=noteItems.length?noteItems.join(' &middot; '):'Crash cluster &mdash; '+s.count+' total over 3 years';
+        if(s.speed) noteItems.push(fmtN(s.speed)+' speed-related');
+        if(s.hitrun) noteItems.push(fmtN(s.hitrun)+' hit-and-run');
+        if(s.ped) noteItems.push(fmtN(s.ped)+' pedestrian');
+        const noteStr=noteItems.length?noteItems.join(' &middot; '):'Crash cluster &mdash; '+fmtN(s.count)+' total over 3 years';
 
         const yrLabel=yr==='all'?'2023–2025':yr;
-        const popup='<div class="popup-rank">'+(isTop10?'#'+dynRank+' by total crashes':'Notable Hotspot')+'</div>'+cityTag+'<div class="popup-name">'+s.name+'</div><div class="popup-count">'+s.crashes+' crashes ('+yrLabel+')</div>'+trendStr+'<div class="popup-note">'+noteStr+'</div>'+tagHTML;
+        const popup='<div class="popup-rank">'+(isTop10?'#'+dynRank+' by total crashes':'Notable Hotspot')+'</div>'+cityTag+'<div class="popup-name">'+s.name+'</div><div class="popup-count"><span class="popup-num">'+fmtN(s.crashes)+'</span><span class="popup-unit">crashes</span></div><div class="popup-years">'+yrLabel+'</div>'+trendStr+'<div class="popup-note">'+noteStr+'</div>'+tagHTML;
         marker.bindPopup(popup,{className:'crash-popup',maxWidth:isMobile?240:260,closeButton:true});
 
         // Numbered label for top 10
@@ -990,7 +993,7 @@ function renderMarkers(){
             });
             const lab=L.marker([s.lat,s.lon],{icon:icon,keyboard:true}).addTo(labelLayer);
             const labEl=lab.getElement();
-            if(labEl){labEl.setAttribute('role','button');labEl.setAttribute('aria-label','Number '+dynRank+': '+s.name+', '+s.crashes+' crashes. Press Enter for details.');}
+            if(labEl){labEl.setAttribute('role','button');labEl.setAttribute('aria-label','Number '+dynRank+': '+s.name+', '+fmtN(s.crashes)+' crashes. Press Enter for details.');}
             const openFromLabel=kb=>{
                 marker.openPopup();
                 if(!kb)return;
@@ -1373,10 +1376,10 @@ function showReport(lat,lon,addr){
     function pill(val,label,color){
         const bg=color.replace(')',',0.12)').replace('var(--','rgba(').replace('rgb(','rgba(');
         const bgFallback=color==='var(--red)'?'rgba(255,77,77,0.12)':color==='var(--amber)'?'rgba(255,179,71,0.12)':color==='var(--blue)'?'rgba(77,166,255,0.12)':color==='var(--purple)'?'rgba(176,125,255,0.12)':'rgba(103,232,249,0.12)';
-        return '<span class="lookup-pill" style="background:'+bgFallback+';color:'+color+'">'+val+' <span style="opacity:.7">'+label+'</span></span>';
+        return '<span class="lookup-pill" style="background:'+bgFallback+';color:'+color+'">'+fmtN(val)+' <span style="opacity:.7">'+label+'</span></span>';
     }
     breakdownDiv.innerHTML=[
-        pill(fatal,'fatal','var(--red)'),
+        pill(fatal,'fatal crashes','var(--red)'),
         pill(ped,'pedestrian','var(--amber)'),
         pill(cyclist,'cyclist','var(--blue)'),
         pill(speed,'speed','var(--purple)'),

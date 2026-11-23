@@ -58,7 +58,8 @@ header nav a:hover{color:var(--text)}
 
 /* City list */
 .cities{max-width:1200px;margin:4rem auto 0;padding:0 2rem 0}
-.section-label{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);margin-bottom:1.25rem}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint);margin-bottom:1.25rem}
+@media(max-width:768px){.section-label{white-space:nowrap}.section-label .lbl-long{display:none}}
 @media(max-width:768px){.hero{min-height:auto;padding:2rem 1.25rem}.stat-bar{grid-template-columns:repeat(2,1fr)}.hero::before,.hero::after{display:none}.hero-label{margin-bottom:1.25rem}.hero h1{margin-bottom:1rem}.hero-sub{margin-bottom:2rem}}
 .city-list{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .city-row{display:flex;flex-direction:column;gap:.6rem;padding:1rem 1.15rem;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;transition:background .2s,border-color .2s;text-decoration:none;color:inherit;position:relative}
@@ -153,6 +154,8 @@ header nav a:hover{color:var(--text)}
 .map-popup-stat .mp-lbl{font-size:.58rem;color:var(--text-faint)}
 .map-popup-link{display:block;margin-top:.6rem;padding-top:.5rem;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text-dim);text-align:center}
 .map-popup-link:hover{color:var(--text)}
+.mp-head{display:flex;align-items:baseline;gap:6px;white-space:nowrap}.mp-num{font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:700;line-height:1.1}.mp-unit{font-size:12px;color:var(--text)}
+.mp-years{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-dim);white-space:nowrap;margin:2px 0 .6rem}
 .marker-cluster{background:transparent!important}
 .marker-cluster div{background:rgba(15,17,24,.92);border:2px solid var(--border-hover);border-radius:50%;width:40px!important;height:40px!important;margin-left:-4px!important;margin-top:-4px!important;display:flex;align-items:center;justify-content:center;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;box-shadow:0 4px 20px rgba(0,0,0,.5);backdrop-filter:blur(8px)}
 .marker-cluster:hover div{border-color:var(--text-dim);background:rgba(15,17,24,1)}
@@ -187,8 +190,8 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,te
 .contact-col .cf-input::placeholder{color:var(--text-faint)}
 .contact-col select.cf-input{color:var(--text-dim);cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%236e7290%22 stroke-width=%222%22><path d=%22M6 9l6 6 6-6%22/></svg>');background-repeat:no-repeat;background-position:right .75rem center}
 .contact-col textarea.cf-input{resize:vertical;min-height:100px;flex:1}
-.contact-col .cf-btn{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.75rem;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.82rem;cursor:pointer;transition:all .2s;letter-spacing:.04em;min-height:48px;width:100%;-webkit-tap-highlight-color:transparent}
-.contact-col .cf-btn:hover{border-color:var(--text-faint)}
+.contact-col .cf-btn{background:#e5534b;border:none;border-radius:8px;padding:0 1rem;color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:background .15s ease-out;height:48px;min-height:48px;width:100%;-webkit-tap-highlight-color:transparent}
+.contact-col .cf-btn:hover{background:#ec6a62}
 .contact-col [hidden]{display:none!important}
 .contact-col .cf-note{color:var(--text-dim);font-size:.78rem;font-weight:300;line-height:1.6;margin:0}
 #cfCityWrap .cf-note{margin-top:.5rem}
@@ -204,6 +207,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,te
 footer{max-width:1200px;margin:4rem auto 0;padding:2rem 2rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:.7rem;color:var(--text-faint);flex-wrap:wrap;gap:1rem}
 footer a{color:var(--text-dim)}
 footer a:hover{color:var(--text)}
+.foot-note{flex:0 0 100%;width:100%;margin-top:.9rem}
 </style>
 </head>
 <body>
@@ -225,146 +229,146 @@ footer a:hover{color:var(--text)}
         <p class="hero-sub">Interactive, verifiable traffic crash dashboards built from <strong>public DOT data</strong>. No ads. No law firms. No affiliation. Just the numbers.</p>
         <div class="stat-bar">
             <div class="sb-cell"><div class="sb-val" style="color:var(--red)">2.22M</div><div class="sb-lbl">Crash records processed</div></div>
-            <div class="sb-cell"><div class="sb-val" style="color:var(--amber)">3,084</div><div class="sb-lbl">Fatalities (latest year)</div></div>
+            <div class="sb-cell"><div class="sb-val" style="color:var(--amber)">3,084</div><div class="sb-lbl">Deaths (latest year)</div></div>
             <div class="sb-cell"><div class="sb-val" style="color:var(--blue)">20</div><div class="sb-lbl">Metro areas</div></div>
             <div class="sb-cell"><div class="sb-val" style="color:var(--green)">$0</div><div class="sb-lbl">Cost to access</div></div>
         </div>
-        <p style="max-width:560px;margin:1.5rem auto 0;font-size:.8rem;color:var(--text-faint);font-weight:300;line-height:1.6;animation:fadeUp .8s ease .55s both">36,640 people were killed in U.S. traffic crashes in 2025, and the fatality rate fell to 1.10 deaths per 100 million vehicle miles traveled, the second-lowest fatality rate on record. The 15 metros with 2025 data account for roughly 7% of that national toll; the other 5 are still on 2024 data. <span style="font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--text-faint)">NHTSA 2025 Early Estimate</span></p>
+        <p style="max-width:560px;margin:1.5rem auto 0;font-size:.8rem;color:var(--text-faint);font-weight:300;line-height:1.6;animation:fadeUp .8s ease .55s both">36,640 people were killed in U.S. traffic crashes in 2025, and the death rate fell to 1.10 deaths per 100 million vehicle miles traveled, the second-lowest on record. The 15 metros with 2025 data account for roughly 7% of that national toll; the other 5 are still on 2024 data. <span style="font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--text-faint)">NHTSA 2025 Early Estimate</span></p>
     </div>
 </section>
 
 <section class="overview-map" id="map">
-    <div class="section-label">Fatalities per 100K Residents &middot; Latest Year of Data</div>
+    <div class="section-label">Deaths per 100K Residents<span class="lbl-long"> &middot; Latest Year of Data</span></div>
     <div class="map-container"><div id="overviewMap"></div></div>
     <div style="text-align:center;margin-top:.5rem;font-size:.7rem;color:var(--text-faint);font-family:'DM Sans',sans-serif">Hold <kbd style="background:var(--bg-card);border:1px solid var(--border);border-radius:3px;padding:.1em .35em;font-family:'JetBrains Mono',monospace;font-size:.65rem">Ctrl</kbd> + scroll to zoom the map</div>
 </section>
 
 <section class="trend-context" style="max-width:1200px;margin:4rem auto 0;padding:0 2rem">
-    <div class="section-label">Fatality Trends &middot; Latest 3 Years of Data</div>
+    <div class="section-label">Death Trends<span class="lbl-long"> &middot; Latest 3 Years of Data</span></div>
     <div class="trend-context-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem 1.75rem">
         <!-- Narrative headline -->
         <div style="font-family:'Playfair Display',serif;font-size:clamp(1.1rem,2.5vw,1.35rem);font-weight:700;color:var(--text);line-height:1.4;margin-bottom:.35rem">17 of 20 metros had fewer traffic deaths in their latest year than two years earlier</div>
-        <div style="font-size:.8rem;color:var(--text-dim);margin-bottom:1.5rem">Nationally, fatalities fell 10.7% from 2023 to 2025 &mdash; from 41,025 to 36,640. 2025 is an early estimate. <span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text-faint)">NHTSA FARS 2023 Final &middot; 2025 Early Estimate</span></div>
+        <div style="font-size:.8rem;color:var(--text-dim);margin-bottom:1.5rem">Nationally, traffic deaths fell 10.7% from 2023 to 2025 &mdash; from 41,025 to 36,640. 2025 is an early estimate. <span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text-faint)">NHTSA FARS 2023 Final &middot; 2025 Early Estimate</span></div>
         <!-- Horizontal bar chart (generated by update_landing.py) -->
         <div style="display:flex;flex-direction:column;gap:.45rem">
             <!-- Washington DC -55.1% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="49 people were killed in 2023 and 22 in 2025, in DC Open Data records. With counts this small, the percentage swings widely from year to year. The Metropolitan Police Department counted 25 traffic deaths in 2025 and 52 in 2024." data-src="DC Open Data; MPD traffic fatality statistics">
+            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="49 people were killed in 2023 and 22 in 2025, in DC Open Data records. With counts this small, the percentage swings widely from year to year. The Metropolitan Police Department counted 25 traffic deaths in 2025 and 52 in 2024." data-src="DC Open Data; MPD traffic fatality statistics">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#10b981;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Washington DC<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:100.0%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;55.1%</div>
             </div>
             <!-- Chicago -38.0% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="150 people were killed in 2023 and 93 in 2025, in Chicago Open Data records." data-src="Chicago Open Data">
+            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="150 people were killed in 2023 and 93 in 2025, in Chicago Open Data records." data-src="Chicago Open Data">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#b07dff;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Chicago<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:69.0%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;38.0%</div>
             </div>
-            <!-- San Jose -33.9% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="124 people were killed in 2023 and 82 in 2025, in CHP CCRS records." data-src="CHP CCRS">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#d946ef;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">San Jose<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
+            <!-- San Jose Metro -33.9% (2023&ndash;2025) -->
+            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="124 people were killed in 2023 and 82 in 2025, in CHP CCRS records." data-src="CHP CCRS">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#d946ef;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">San Jose Metro<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:61.5%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;33.9%</div>
             </div>
             <!-- Sacramento -28.4% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="211 people were killed in 2023 and 151 in 2025, in CHP CCRS records." data-src="CHP CCRS">
+            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="211 people were killed in 2023 and 151 in 2025, in CHP CCRS records." data-src="CHP CCRS">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#fbbf24;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Sacramento<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:51.5%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;28.4%</div>
             </div>
             <!-- Philadelphia -27.0% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="122 people were killed in 2023 and 89 in 2025, in PennDOT records. The city&rsquo;s Vision Zero report counts 89 traffic deaths in 2025, down 26% from 2024." data-src="PennDOT; City of Philadelphia Vision Zero report, Nov 2026">
+            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="122 people were killed in 2023 and 89 in 2025, in PennDOT records. The city&rsquo;s Vision Zero report counts 89 traffic deaths in 2025, down 26% from 2024." data-src="PennDOT; City of Philadelphia Vision Zero report, Nov 2026">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#06b6d4;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Philadelphia<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:49.0%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;27.0%</div>
             </div>
             <!-- Wasatch Front -19.8% (2022&ndash;2024) -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="91 people were killed in 2022 and 73 in 2024, in UDOT records." data-src="UDOT">
+            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="91 people were killed in 2022 and 73 in 2024, in UDOT records." data-src="UDOT">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#67e8f9;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Wasatch Front<span class="yr-tag" style="display:block;margin-left:0">2022&ndash;24</span></span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:35.9%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;19.8%</div>
             </div>
             <!-- Dallas -18.4% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="342 people were killed in 2023 and 279 in 2025, in TxDOT CRIS records." data-src="TxDOT CRIS">
+            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="342 people were killed in 2023 and 279 in 2025, in TxDOT CRIS records." data-src="TxDOT CRIS">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#eab308;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Dallas<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:33.4%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;18.4%</div>
             </div>
-            <!-- NYC -18.2% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="280 people were killed in 2023 and 229 in 2025, in NYC Open Data records. NYC DOT counted 205 traffic deaths in 2025 and 253 in 2024 in its own reconciled database; the figure here sums NYPD&rsquo;s preliminary police reports." data-src="NYC Open Data; NYC DOT year-end release, 2026">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#ffb347;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">NYC<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
+            <!-- New York City -18.2% (2023&ndash;2025) -->
+            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="280 people were killed in 2023 and 229 in 2025, in NYC Open Data records. NYC DOT counted 205 traffic deaths in 2025 and 253 in 2024 in its own reconciled database; the figure here sums NYPD&rsquo;s preliminary police reports." data-src="NYC Open Data; NYC DOT year-end release, 2026">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#ffb347;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">New York City<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:33.0%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;18.2%</div>
             </div>
-            <!-- Riverside -15.7% (2022&ndash;2024) -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="337 people were killed in 2022 and 284 in 2024, in CHP CCRS records." data-src="CHP CCRS">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#f87171;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Riverside<span class="yr-tag" style="display:block;margin-left:0">2022&ndash;24</span></span></div>
+            <!-- Riverside Metro -15.7% (2022&ndash;2024) -->
+            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="337 people were killed in 2022 and 284 in 2024, in CHP CCRS records." data-src="CHP CCRS">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#f87171;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Riverside Metro<span class="yr-tag" style="display:block;margin-left:0">2022&ndash;24</span></span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:28.5%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;15.7%</div>
             </div>
-            <!-- Oakland -15.3% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="111 people were killed in 2023 and 94 in 2025, in CHP CCRS records." data-src="CHP CCRS">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#a78bfa;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Oakland<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
+            <!-- Oakland Metro -15.3% (2023&ndash;2025) -->
+            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="111 people were killed in 2023 and 94 in 2025, in CHP CCRS records." data-src="CHP CCRS">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#a78bfa;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Oakland Metro<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:27.8%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;15.3%</div>
             </div>
             <!-- Fort Worth -13.6% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="221 people were killed in 2023 and 191 in 2025, in TxDOT CRIS records." data-src="TxDOT CRIS">
+            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="221 people were killed in 2023 and 191 in 2025, in TxDOT CRIS records." data-src="TxDOT CRIS">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#84cc16;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Fort Worth<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:24.7%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;13.6%</div>
             </div>
             <!-- Detroit -13.3% (2022&ndash;2024) -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="120 people were killed in 2022 and 104 in 2024, in Detroit Open Data records." data-src="Detroit Open Data">
+            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="120 people were killed in 2022 and 104 in 2024, in Detroit Open Data records." data-src="Detroit Open Data">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#f43f5e;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Detroit<span class="yr-tag" style="display:block;margin-left:0">2022&ndash;24</span></span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:24.1%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;13.3%</div>
             </div>
             <!-- San Francisco -10.8% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="37 people were killed in 2023 and 33 in 2025, in CHP CCRS records. With counts this small, the percentage swings widely from year to year. SFMTA counted 25 traffic deaths in 2025 and 43 in 2024; its count leaves out some freeway deaths that CHP records include." data-src="CHP CCRS; SFMTA Vision Zero release, 2026">
+            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="37 people were killed in 2023 and 33 in 2025, in CHP CCRS records. With counts this small, the percentage swings widely from year to year. SFMTA counted 25 traffic deaths in 2025 and 43 in 2024; its count leaves out some freeway deaths that CHP records include." data-src="CHP CCRS; SFMTA Vision Zero release, 2026">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#14b8a6;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">San Francisco<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:19.6%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;10.8%</div>
             </div>
             <!-- San Antonio -10.1% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="217 people were killed in 2023 and 195 in 2025, in TxDOT CRIS records." data-src="TxDOT CRIS">
+            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="217 people were killed in 2023 and 195 in 2025, in TxDOT CRIS records." data-src="TxDOT CRIS">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#f97316;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">San Antonio<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:18.3%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;10.1%</div>
             </div>
-            <!-- Houston -6.0% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="550 people were killed in 2023 and 517 in 2025, in TxDOT CRIS records." data-src="TxDOT CRIS">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#14b8a6;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Houston<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
+            <!-- Houston Metro -6.0% (2023&ndash;2025) -->
+            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="550 people were killed in 2023 and 517 in 2025, in TxDOT CRIS records." data-src="TxDOT CRIS">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#14b8a6;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Houston Metro<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(74,222,128,.2);width:10.9%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#4ade80;text-align:right">&darr;6.0%</div>
             </div>
             <!-- Divider -->
             <div style="height:1px;background:var(--border);margin:.2rem 0"></div>
-            <!-- Denver -2.1% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="287 people were killed in 2023 and 281 in 2025, in CDOT records." data-src="CDOT">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#ff4d4d;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Denver<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
+            <!-- Denver Metro -2.1% (2023&ndash;2025) -->
+            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="287 people were killed in 2023 and 281 in 2025, in CDOT records." data-src="CDOT">
+                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#ff4d4d;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Denver Metro<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(107,114,128,.15);width:3.8%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:var(--text-faint);text-align:right">&darr;2.1%</div>
             </div>
             <!-- San Diego -2.0% (2022&ndash;2024) -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="199 people were killed in 2022 and 195 in 2024, in CHP CCRS records." data-src="CHP CCRS">
+            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="199 people were killed in 2022 and 195 in 2024, in CHP CCRS records." data-src="CHP CCRS">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#3b82f6;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">San Diego<span class="yr-tag" style="display:block;margin-left:0">2022&ndash;24</span></span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(107,114,128,.15);width:3.6%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:var(--text-faint);text-align:right">&darr;2.0%</div>
             </div>
             <!-- Boston +2.4% (2022&ndash;2024) -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="42 people were killed in 2022 and 43 in 2024, in MassDOT records. With counts this small, the percentage swings widely from year to year." data-src="MassDOT">
+            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="42 people were killed in 2022 and 43 in 2024, in MassDOT records. With counts this small, the percentage swings widely from year to year." data-src="MassDOT">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#ec4899;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Boston<span class="yr-tag" style="display:block;margin-left:0">2022&ndash;24</span></span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(248,113,113,.15);width:4.4%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#f87171;text-align:right">&uarr;2.4%</div>
             </div>
             <!-- Austin +10.0% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="90 people were killed in 2023 and 99 in 2025, in Austin Open Data records. The City of Austin&rsquo;s preliminary count for 2025 is 99 deaths." data-src="Austin Open Data; City of Austin Transportation and Public Works, Feb 2026">
+            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="90 people were killed in 2023 and 99 in 2025, in Austin Open Data records. The City of Austin&rsquo;s preliminary count for 2025 is 99 deaths." data-src="Austin Open Data; City of Austin Transportation and Public Works, Feb 2026">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#0ea5e9;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Austin<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(248,113,113,.15);width:18.1%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#f87171;text-align:right">&uarr;10.0%</div>
             </div>
             <!-- Seattle +11.1% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:110px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="27 people were killed in 2023 and 30 in 2025, in SDOT records. With counts this small, the percentage swings widely from year to year." data-src="SDOT">
+            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="27 people were killed in 2023 and 30 in 2025, in SDOT records. With counts this small, the percentage swings widely from year to year." data-src="SDOT">
                 <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#818cf8;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Seattle<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
                 <div style="height:16px;border-radius:3px;background:rgba(248,113,113,.15);width:20.1%"></div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#f87171;text-align:right">&uarr;11.1%</div>
@@ -417,7 +421,7 @@ footer a:hover{color:var(--text)}
         <div class="nc-grid">
             <div class="nc-stat"><div class="nc-val">$340B</div><div class="nc-lbl">Annual direct economic cost of U.S. traffic crashes (2019, NHTSA)</div></div>
             <div class="nc-stat"><div class="nc-val">6,732</div><div class="nc-lbl">Pedestrians struck and killed in 2025 (GHSA projection)</div></div>
-            <div class="nc-stat"><div class="nc-val">76%</div><div class="nc-lbl">of pedestrian fatalities occur after dark (2024)</div></div>
+            <div class="nc-stat"><div class="nc-val">76%</div><div class="nc-lbl">of pedestrian deaths occur after dark (2024)</div></div>
             <div class="nc-stat"><div class="nc-val">87%</div><div class="nc-lbl">of speed-related deaths on non-interstate roads (2024)</div></div>
             <div class="nc-stat"><div class="nc-val">24%</div><div class="nc-lbl">of pedestrian deaths involve a hit-and-run driver (2024)</div></div>
         </div>
@@ -429,15 +433,15 @@ footer a:hover{color:var(--text)}
 </div>
 
 <section class="cities" id="cities">
-    <div class="section-label">Active Dashboards &middot; 3-Year Totals</div>
+    <div class="section-label">Active Dashboards<span class="lbl-long"> &middot; 3-Year Totals</span></div>
     <!-- Alphabetical by display name -->
     <div class="city-list">
         <a href="austin/" class="city-row">
             <div class="city-hdr"><div class="city-dot" style="background:#0ea5e9"></div><div class="city-name">Austin<small>Austin Open Data &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">37,136</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">286</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">961</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">286</div><div class="cs-lbl">deaths</div></div>
+                <div class="cs-cell"><div class="cs-val">961</div><div class="cs-lbl">pedestrian</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -445,8 +449,8 @@ footer a:hover{color:var(--text)}
             <div class="city-hdr"><div class="city-dot" style="background:#ec4899"></div><div class="city-name">Boston<small>MassDOT &middot; 2022&ndash;2024</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">55,049</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">123</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">1,666</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">123</div><div class="cs-lbl">deaths</div></div>
+                <div class="cs-cell"><div class="cs-val">1,666</div><div class="cs-lbl">pedestrian</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -454,8 +458,8 @@ footer a:hover{color:var(--text)}
             <div class="city-hdr"><div class="city-dot" style="background:var(--purple)"></div><div class="city-name">Chicago<small>Chicago Data Portal &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">331,034</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">366</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">8,734</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">366</div><div class="cs-lbl">deaths</div></div>
+                <div class="cs-cell"><div class="cs-val">8,734</div><div class="cs-lbl">pedestrian</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -463,8 +467,8 @@ footer a:hover{color:var(--text)}
             <div class="city-hdr"><div class="city-dot" style="background:#eab308"></div><div class="city-name">Dallas<small>TxDOT CRIS &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">159,284</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">953</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">3,021</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">953</div><div class="cs-lbl">deaths</div></div>
+                <div class="cs-cell"><div class="cs-val">3,021</div><div class="cs-lbl">pedestrian</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -472,8 +476,8 @@ footer a:hover{color:var(--text)}
             <div class="city-hdr"><div class="city-dot" style="background:var(--red)"></div><div class="city-name">Denver Metro<small>CDOT &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">151,463</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">847</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">3,222</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">847</div><div class="cs-lbl">deaths</div></div>
+                <div class="cs-cell"><div class="cs-val">3,222</div><div class="cs-lbl">pedestrian</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -481,8 +485,8 @@ footer a:hover{color:var(--text)}
             <div class="city-hdr"><div class="city-dot" style="background:#f43f5e"></div><div class="city-name">Detroit<small>Detroit Open Data &middot; 2022&ndash;2024</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">70,731</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">354</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">1,230</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">354</div><div class="cs-lbl">deaths</div></div>
+                <div class="cs-cell"><div class="cs-val">1,230</div><div class="cs-lbl">pedestrian</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -490,8 +494,8 @@ footer a:hover{color:var(--text)}
             <div class="city-hdr"><div class="city-dot" style="background:#84cc16"></div><div class="city-name">Fort Worth<small>TxDOT CRIS &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">98,560</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">619</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">1,684</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">619</div><div class="cs-lbl">deaths</div></div>
+                <div class="cs-cell"><div class="cs-val">1,684</div><div class="cs-lbl">pedestrian</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -499,8 +503,8 @@ footer a:hover{color:var(--text)}
             <div class="city-hdr"><div class="city-dot" style="background:#14b8a6"></div><div class="city-name">Houston Metro<small>TxDOT CRIS &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">392,792</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">1,658</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">6,144</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">1,658</div><div class="cs-lbl">deaths</div></div>
+                <div class="cs-cell"><div class="cs-val">6,144</div><div class="cs-lbl">pedestrian</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -508,8 +512,8 @@ footer a:hover{color:var(--text)}
             <div class="city-hdr"><div class="city-dot" style="background:var(--amber)"></div><div class="city-name">New York City<small>NYC Open Data &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">273,484</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">777</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">26,986</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">777</div><div class="cs-lbl">deaths</div></div>
+                <div class="cs-cell"><div class="cs-val">26,986</div><div class="cs-lbl">pedestrian</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -517,8 +521,8 @@ footer a:hover{color:var(--text)}
             <div class="city-hdr"><div class="city-dot" style="background:#a78bfa"></div><div class="city-name">Oakland Metro<small>CHP CCRS &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">58,372</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">314</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">2,174</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">314</div><div class="cs-lbl">deaths</div></div>
+                <div class="cs-cell"><div class="cs-val">2,174</div><div class="cs-lbl">pedestrian</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -526,8 +530,8 @@ footer a:hover{color:var(--text)}
             <div class="city-hdr"><div class="city-dot" style="background:#06b6d4"></div><div class="city-name">Philadelphia<small>PennDOT &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">18,062</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">330</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">2,864</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">330</div><div class="cs-lbl">deaths</div></div>
+                <div class="cs-cell"><div class="cs-val">2,864</div><div class="cs-lbl">pedestrian</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -535,8 +539,8 @@ footer a:hover{color:var(--text)}
             <div class="city-hdr"><div class="city-dot" style="background:#f87171"></div><div class="city-name">Riverside Metro<small>CHP CCRS &middot; 2022&ndash;2024</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">82,153</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">952</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">2,119</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">952</div><div class="cs-lbl">deaths</div></div>
+                <div class="cs-cell"><div class="cs-val">2,119</div><div class="cs-lbl">pedestrian</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -544,8 +548,8 @@ footer a:hover{color:var(--text)}
             <div class="city-hdr"><div class="city-dot" style="background:#fbbf24"></div><div class="city-name">Sacramento<small>CHP CCRS &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">61,183</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">520</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">2,116</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">520</div><div class="cs-lbl">deaths</div></div>
+                <div class="cs-cell"><div class="cs-val">2,116</div><div class="cs-lbl">pedestrian</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -553,8 +557,8 @@ footer a:hover{color:var(--text)}
             <div class="city-hdr"><div class="city-dot" style="background:#f97316"></div><div class="city-name">San Antonio<small>TxDOT CRIS &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">177,467</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">636</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">2,915</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">636</div><div class="cs-lbl">deaths</div></div>
+                <div class="cs-cell"><div class="cs-val">2,915</div><div class="cs-lbl">pedestrian</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -562,8 +566,8 @@ footer a:hover{color:var(--text)}
             <div class="city-hdr"><div class="city-dot" style="background:#3b82f6"></div><div class="city-name">San Diego<small>CHP CCRS &middot; 2022&ndash;2024</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">45,603</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">572</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">2,777</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">572</div><div class="cs-lbl">deaths</div></div>
+                <div class="cs-cell"><div class="cs-val">2,777</div><div class="cs-lbl">pedestrian</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -571,8 +575,8 @@ footer a:hover{color:var(--text)}
             <div class="city-hdr"><div class="city-dot" style="background:#14b8a6"></div><div class="city-name">San Francisco<small>CHP CCRS &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">18,399</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">121</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">2,010</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">121</div><div class="cs-lbl">deaths</div></div>
+                <div class="cs-cell"><div class="cs-val">2,010</div><div class="cs-lbl">pedestrian</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -580,8 +584,8 @@ footer a:hover{color:var(--text)}
             <div class="city-hdr"><div class="city-dot" style="background:#d946ef"></div><div class="city-name">San Jose Metro<small>CHP CCRS &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">42,652</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">307</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">1,793</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">307</div><div class="cs-lbl">deaths</div></div>
+                <div class="cs-cell"><div class="cs-val">1,793</div><div class="cs-lbl">pedestrian</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -589,8 +593,8 @@ footer a:hover{color:var(--text)}
             <div class="city-hdr"><div class="city-dot" style="background:#818cf8"></div><div class="city-name">Seattle<small>SDOT &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">19,599</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">87</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">1,228</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">87</div><div class="cs-lbl">deaths</div></div>
+                <div class="cs-cell"><div class="cs-val">1,228</div><div class="cs-lbl">pedestrian</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -598,8 +602,8 @@ footer a:hover{color:var(--text)}
             <div class="city-hdr"><div class="city-dot" style="background:var(--cyan)"></div><div class="city-name">Wasatch Front<small>UDOT &middot; 2022&ndash;2024</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">69,039</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">231</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">1,328</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">231</div><div class="cs-lbl">deaths</div></div>
+                <div class="cs-cell"><div class="cs-val">1,328</div><div class="cs-lbl">pedestrian</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -607,8 +611,8 @@ footer a:hover{color:var(--text)}
             <div class="city-hdr"><div class="city-dot" style="background:#10b981"></div><div class="city-name">Washington DC<small>DCGIS &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">59,209</div><div class="cs-lbl">crashes</div></div>
-                <div class="cs-cell"><div class="cs-val">121</div><div class="cs-lbl">fatal</div></div>
-                <div class="cs-cell"><div class="cs-val">2,641</div><div class="cs-lbl">ped</div></div>
+                <div class="cs-cell"><div class="cs-val">121</div><div class="cs-lbl">deaths</div></div>
+                <div class="cs-cell"><div class="cs-val">2,641</div><div class="cs-lbl">pedestrian</div></div>
             </div>
             <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -620,7 +624,7 @@ footer a:hover{color:var(--text)}
     var btn=document.getElementById('cityShowMore');
     if(!btn)return;
     var cards=document.querySelectorAll('.city-list .city-row');
-    var initial=6,step=3,shown=initial;
+    var initial=6,shown=initial;
     function apply(animate){
         if(window.innerWidth>768){
             for(var i=0;i<cards.length;i++){cards[i].classList.remove('city-hidden');cards[i].classList.remove('city-reveal');}
@@ -646,18 +650,18 @@ footer a:hover{color:var(--text)}
         }
         var remaining=cards.length-shown;
         if(remaining<=0){btn.style.display='none';}
-        else{btn.style.display='block';btn.textContent='Show '+Math.min(step,remaining)+' more metro'+(Math.min(step,remaining)===1?'':'s');}
+        else{btn.style.display='block';btn.textContent='Show all '+cards.length+' metros';}
     }
-    btn.addEventListener('click',function(){shown+=step;apply(true);});
+    btn.addEventListener('click',function(){shown=cards.length;apply(true);});
     window.addEventListener('resize',apply);
     apply();
 })();
 </script>
 
 <section class="compare" id="compare">
-    <div class="section-label">Cross-Metro Ranking &middot; Latest Year of Data</div>
+    <div class="section-label">Cross-Metro Ranking<span class="lbl-long"> &middot; Latest Year of Data</span></div>
     <div class="rank-toggle" id="rankToggle">
-        <button class="rank-btn active" data-metric="fatal">Fatality</button>
+        <button class="rank-btn active" data-metric="fatal">Deaths</button>
         <button class="rank-btn" data-metric="ped">Pedestrian</button>
         <button class="rank-btn" data-metric="cyclist">Cyclist</button>
     </div>
@@ -728,7 +732,7 @@ footer a:hover{color:var(--text)}
         <a href="https://github.com/fLu-2/crashmaps" target="_blank">GitHub</a> &nbsp;&middot;&nbsp;
         <a href="https://buymeacoffee.com/flu.2" target="_blank">Buy me a coffee</a>
     </div>
-    <div style="flex-basis:100%;width:100%;max-width:760px;margin:.9rem auto 0;font-size:.68rem;line-height:1.6;color:var(--text-faint);text-align:center">Unofficial. Built from public agency crash records, which the agencies do not guarantee to be complete or accurate; not for legal use. Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors (ODbL).<br><strong>Privacy:</strong> no ads, analytics or cookies. Loading this page fetches fonts from Google Fonts, scripts from unpkg and map tiles from CARTO, and each of those services sees your IP address. The contact form is delivered by Formspree.</div>
+    <div class="foot-note"><div style="max-width:760px;margin:0 auto;font-size:.75rem;line-height:1.6;color:var(--text-faint);text-align:center">Unofficial. Built from public agency crash records, which the agencies do not guarantee to be complete or accurate; not for legal use. Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors (ODbL).<br><strong>Privacy:</strong> no ads, analytics or cookies. Loading this page fetches fonts from Google Fonts, scripts from unpkg and map tiles from CARTO, and each of those services sees your IP address. The contact form is delivered by Formspree.</div></div>
 </footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -796,8 +800,8 @@ footer a:hover{color:var(--text)}
         marker.on('mouseout',function(){
             var el=this.getElement();if(el){var d=el.querySelector('.metro-dot');if(d){d.style.opacity='0.7';d.style.width=sz+'px';d.style.height=sz+'px';d.style.borderWidth='2px';}}
         });
-        const fmt=function(n){return n.toLocaleString()};
-        marker.bindPopup('<div class="map-popup"><div class="map-popup-name" style="color:'+m.color+'">'+m.name+'</div><div class="map-popup-src">'+m.src+' &middot; '+m.year+'</div><div class="map-popup-stats"><div class="map-popup-stat" style="grid-column:span 2"><div class="mp-val" style="color:'+m.color+';font-size:1.1rem">'+m.rate+'</div><div class="mp-lbl">fatalities per 100K residents</div></div><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.fatal)+'</div><div class="mp-lbl">people killed</div></div><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.crashes)+'</div><div class="mp-lbl">total crashes</div></div><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.ped)+'</div><div class="mp-lbl">pedestrian</div></div><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.cyclist)+'</div><div class="mp-lbl">cyclist</div></div></div><a href="'+m.href+'" class="map-popup-link">Open dashboard &rarr;</a></div>',{closeButton:false,className:'dark-popup'});
+        const fmt=function(n){return n.toLocaleString('en-US')};
+        marker.bindPopup('<div class="map-popup"><div class="map-popup-name" style="color:'+m.color+'">'+m.name+'</div><div class="map-popup-src">'+m.src+'</div><div class="mp-head"><span class="mp-num">'+m.rate.toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1})+'</span><span class="mp-unit">deaths per 100K residents</span></div><div class="mp-years">'+m.year+'</div><div class="map-popup-stats"><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.fatal)+'</div><div class="mp-lbl">people killed</div></div><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.crashes)+'</div><div class="mp-lbl">total crashes</div></div><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.ped)+'</div><div class="mp-lbl">pedestrian</div></div><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.cyclist)+'</div><div class="mp-lbl">cyclist</div></div></div><a href="'+m.href+'" class="map-popup-link">Open dashboard &rarr;</a></div>',{closeButton:false,className:'dark-popup'});
         clusters.addLayer(marker);
     });
     map.addLayer(clusters);
@@ -827,7 +831,7 @@ footer a:hover{color:var(--text)}
         {name:'Oakland Metro',color:'#a78bfa',year:2025,fatal:5.7,ped:41.1,cyclist:35.1},
         {name:'Riverside Metro',color:'#f87171',year:2024,fatal:11.3,ped:28.4,cyclist:19.7}
     ];
-    var labels={fatal:'Fatalities per 100K residents',ped:'Pedestrian crashes per 100K residents',cyclist:'Cyclist crashes per 100K residents'};
+    var labels={fatal:'Deaths per 100K residents',ped:'Pedestrian crashes per 100K residents',cyclist:'Cyclist crashes per 100K residents'};
     var units={fatal:'/100K',ped:'/100K',cyclist:'/100K'};
     var container=document.getElementById('rankRows');
     var subtitle=document.getElementById('rankSubtitle');
@@ -848,7 +852,7 @@ footer a:hover{color:var(--text)}
         var html='';
         withData.forEach(function(m,i){
             var pct=Math.round(m[metric]/maxVal*100);
-            var val=m[metric]%1===0?m[metric].toFixed(0):m[metric].toFixed(1);
+            var val=m[metric].toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1});
             var t=withData.length>1?i/(withData.length-1):0;
             var sc=sevColor(1-t);
             html+='<div class="rank-row"><div class="rank-label"><div class="rank-dot" style="background:'+m.color+'"></div><span>'+m.name+'<span class="yr-tag">'+m.year+'</span></span></div><div class="rank-bar-cell"><div class="rank-bar" style="width:'+pct+'%;background:'+sc+';opacity:0.3"></div></div><div class="rank-val" style="color:'+sc+'">'+val+units[metric]+'</div></div>';
