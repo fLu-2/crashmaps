@@ -152,11 +152,15 @@ main a:hover,footer a:hover,.meth-text a:hover,.map-card a:hover{color:var(--acc
 .lookup-map-col{min-height:240px}
 .lookup-stats-col{display:flex;flex-direction:column;justify-content:center}
 .lookup-pill{display:inline-flex;align-items:baseline;gap:.3rem;padding:4px 10px;border-radius:var(--r-ctl);background:var(--chip);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text-dim)}.lookup-pill .lp-num{font-family:'JetBrains Mono',monospace;color:var(--text)}.lookup-pill-fatal{background:rgba(229,83,75,.14)}.lookup-pill-fatal .lp-num,.lookup-pill-fatal .lp-lbl{color:var(--deaths)}
-.lookup-bar-wrap{display:flex;align-items:flex-end;gap:3px;height:36px}
-.lookup-bar{flex:1;border-radius:var(--r-bar) var(--r-bar) 0 0;min-width:0;position:relative;transition:height .3s ease}
-.lookup-bar-label{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text-faint);white-space:nowrap}
-.lookup-ctx-bar{height:6px;border-radius:3px;position:relative}
-.lookup-ctx-bar-inner{height:100%;border-radius:3px}
+/* Lookup: crashes by year as a three-bar chart, zero-based, every value labeled */
+.lk-years{display:flex;align-items:flex-end;gap:12px;height:92px;max-width:260px}
+.lk-yr{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0}
+.lk-yr-v{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text);margin-bottom:4px}
+.lk-yr-b{width:100%;max-width:44px;background:var(--accent);border-radius:var(--r-bar) var(--r-bar) 0 0}
+.lk-yr-base{width:100%;border-top:1px solid #2a2e42}
+.lk-yr-y{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-dim);margin-top:4px}
+.lk-yr-title{font-size:13px;color:var(--text-dim);margin-bottom:6px}
+.lk-note{font-size:12px;color:var(--text-dim);margin-top:2px}
 @media(max-width:768px){.lookup-cols{grid-template-columns:1fr}.lookup-map-col{min-height:200px}}
 .map-metro-select{background:#151826;color:var(--text);border:var(--b-ctl);border-radius:var(--r-ctl);padding:7px 28px 7px 10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;min-height:var(--h-compact);cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238b90a8'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;min-width:145px;transition:var(--t-color)}
 .map-metro-select:hover{border-color:var(--text-dim)}
@@ -206,14 +210,25 @@ main a:hover,footer a:hover,.meth-text a:hover,.map-card a:hover{color:var(--acc
 .leaflet-control-attribution a{color:var(--text)!important}
 .rank-table{width:100%;border-collapse:collapse;table-layout:fixed;margin-top:.5rem}
 .rank-table th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:var(--text-faint);letter-spacing:.08em;text-transform:uppercase;padding:.6rem .75rem;border-bottom:1px solid var(--border)}
-.rank-table td{padding:.75rem;font-size:.88rem;border-bottom:1px solid rgba(28,31,46,.6);vertical-align:middle;overflow:hidden}
+.rank-table td{padding:0 .75rem;height:52px;font-size:14px;border-bottom:1px solid rgba(28,31,46,.6);vertical-align:middle;overflow:hidden}
+.rank-table th.th-count{text-align:right}
+.rank-name{font-weight:500;line-height:1.3}
 .rank-table tr:last-child td{border-bottom:none}
 .rank-table tr:hover td{background:rgba(255,255,255,.015)}
 .rank-num{font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:var(--text-faint);width:32px;text-align:center}
-.crash-bar-wrap{display:grid;grid-template-columns:1fr 52px;align-items:center;gap:6px}
-.crash-bar-track{position:relative;height:8px}
-.crash-bar{position:absolute;left:0;top:0;height:100%;border-radius:var(--r-bar);background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 35%,transparent));min-width:4px;transition:width .3s ease}
-.crash-count{font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:var(--accent);text-align:right;white-space:nowrap}
+/* Top 10 (DESIGN_RULES.md, Charts: which places are worst): rank 40 px, name 38%, bar fills the rest, count 56 px */
+.crash-bar-track{position:relative;height:10px}
+.crash-bar{position:absolute;left:0;top:0;height:100%;border-radius:var(--r-bar);background:var(--accent);min-width:3px;transition:width .3s ease}
+.rank-table td.crash-count{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;color:var(--text);text-align:right;white-space:nowrap;padding-left:0}
+/* Empty states: why it is empty, and the next step */
+.empty-state{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;padding:28px 20px;font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.5;color:var(--text-dim);white-space:normal}
+.empty-state p{max-width:460px;margin:0}.empty-state strong{color:var(--text);font-weight:600}.empty-state .ico{color:var(--text-dim)}.empty-state.warn .ico{color:var(--warn)}
+.btn-secondary{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;min-height:var(--h-std);padding:0 1.1rem;border-radius:var(--r-ctl);border:var(--b-ctl);background:transparent;color:var(--text);cursor:pointer;white-space:nowrap;transition:var(--t-color)}
+.btn-secondary:hover{border-color:var(--text-dim);background:#151826}
+.rank-table tr.rank-empty td{height:auto;padding:0}.rank-table tr.rank-empty:hover td{background:transparent}
+.map-empty{position:absolute;inset:0;z-index:4;display:flex;align-items:center;justify-content:center;padding:16px;pointer-events:none}
+.map-empty[hidden]{display:none}
+.map-empty .empty-state{pointer-events:auto;max-width:420px;background:rgba(15,17,24,.95);border:var(--b-ctl);border-radius:var(--r-card);box-shadow:0 8px 30px rgba(0,0,0,.45)}
 
 main{padding-top:0;padding-bottom:6rem}
 /* Section rhythm: 72 px above each section label (48 px on phones). The margin collapses with the
@@ -290,16 +305,24 @@ main>.sec-hdr:first-child{margin-top:24px}
 .map-btn,.commute-toggle,.map-filter-toggle,.commute-go,.commute-clear,.chart-metro,.map-metro-select,.mf-select,.btn-primary,.map-search input,.commute-field input{min-height:var(--h-std)}
 .chart-box{height:220px}.chart-box.tall{height:280px}.chart-box.short{height:180px}
 .rank-table{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.rank-table td{padding:.6rem .5rem;font-size:.8rem}
-.rank-table th{padding:.5rem;font-size:.75rem}
-.crash-bar-wrap{grid-template-columns:1fr 44px;gap:4px}
-.crash-count{font-size:.75rem}
-.rank-num{font-size:.75rem}
+/* Top 10 on phones: line 1 rank + name + count, line 2 region, line 3 a full-width 6 px bar */
+.rank-table,.rank-table tbody{display:block}.rank-table colgroup,.rank-table thead{display:none}
+.rank-table tr{display:grid;grid-template-columns:24px minmax(0,1fr) auto;column-gap:10px;row-gap:8px;align-items:start;padding:12px 1rem;border-bottom:1px solid rgba(28,31,46,.6)}
+.rank-table tr:last-child{border-bottom:0}
+.rank-table td{display:block;height:auto;padding:0;border:0;font-size:14px}
+.rank-table td.rank-num{grid-column:1;grid-row:1;width:auto;text-align:left;line-height:1.3}
+.rank-table td.rank-name{grid-column:2;grid-row:1}
+.rank-table td.crash-count{grid-column:3;grid-row:1;line-height:1.3}
+.rank-table td.rank-bar{grid-column:1/-1;grid-row:2}
+.crash-bar-track{height:6px}
+.rank-table tr.rank-empty{display:block;padding:0}
 .card-top{padding:.85rem 1rem .4rem}
 .sec-desc{font-size:.88rem}
 }
 .card{background:var(--card);border:var(--b-card);border-radius:var(--r-card);overflow:hidden;margin-bottom:1rem}
-.card-top{display:flex;justify-content:space-between;align-items:flex-start;padding:1rem 1.25rem .5rem;gap:.75rem}.card-top>div:first-child{min-width:0}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;padding:1rem 1.25rem .5rem;gap:.75rem;flex-wrap:wrap}
+/* A card with a dropdown or a % change keeps it top right; other controls (year buttons) wrap under the title */
+.card-top:has(>.chart-metro),.card-top:has(>.yoy-chg),.card-top:has(>.cmp-pick){flex-wrap:nowrap}.card-top>div:first-child{min-width:0}
 .card:has(>.chart-box){display:flex;flex-direction:column}.card>.chart-box{flex:1 1 auto}
 /* Severity: labeled rows with count, %, and a thin bar (DESIGN_RULES.md, Charts: what share is each part) */
 .share-rows{padding:.25rem 1.25rem 1rem}
@@ -315,7 +338,21 @@ main>.sec-hdr:first-child{margin-top:24px}
 .city-table{width:100%;border-collapse:collapse;font-size:.8rem}.city-table th{text-align:left;padding:.55rem 1rem;color:var(--text-dim);font-weight:500;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid var(--border)}
 .city-table td{padding:.55rem 1rem;border-bottom:1px solid rgba(28,31,46,.5)}.city-table tr:hover{background:rgba(255,255,255,.02)}
 .city-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-@media(max-width:768px){.city-table{border-collapse:separate;border-spacing:0}.city-table th,.city-table td{padding:.5rem .65rem;white-space:nowrap}.city-table th:first-child,.city-table td:first-child{position:sticky;left:0;z-index:1;background:var(--card);white-space:normal;min-width:7.5rem;max-width:42vw;box-shadow:inset -1px 0 0 var(--border)}}
+.city-table th.num,.city-table td.num{text-align:right;font-family:'JetBrains Mono',monospace}.city-table th.num{font-family:'DM Sans',sans-serif}
+.city-table tr.cmp-total td{font-weight:600;border-bottom:0}
+.city-table .cmp-bar{display:none}
+.cmp-pick{display:none;align-items:center;gap:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text-dim)}
+.cmp-pick .chart-metro{max-width:none}
+@media(max-width:768px){
+.cmp-pick{display:inline-flex}
+.city-table{border-collapse:separate;border-spacing:0}.city-table th,.city-table td{padding:.5rem .65rem;white-space:nowrap}
+.city-table th:first-child,.city-table td:first-child{position:sticky;left:0;z-index:1;background:var(--card);white-space:normal;width:120px;min-width:120px;max-width:120px;box-shadow:inset -1px 0 0 var(--border)}
+.city-table .num{display:none}
+.city-table .cmp-bar{display:table-cell;width:45%;padding-left:0}
+.cmp-bar-track{height:6px;border-radius:var(--r-bar);background:#151826;overflow:hidden}.cmp-bar-fill{height:100%;border-radius:var(--r-bar);background:var(--accent);min-width:2px}
+.city-table[data-show="total"] .m-total{display:table-cell}.city-table[data-show="deaths"] .m-deaths{display:table-cell}.city-table[data-show="impaired"] .m-impaired{display:table-cell}.city-table[data-show="speed"] .m-speed{display:table-cell}.city-table[data-show="hitrun"] .m-hitrun{display:table-cell}.city-table[data-show="pedestrian"] .m-pedestrian{display:table-cell}
+.city-table-wrap.can-scroll{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 28px),transparent)}
+}
 .mono{font-family:'JetBrains Mono',monospace}
 .callout{display:flex;flex-direction:column;justify-content:center;padding:2rem}
 .callout-val{font-family:'JetBrains Mono',monospace;font-size:clamp(2.5rem,5vw,3.5rem);font-weight:700;line-height:1}
@@ -451,6 +488,7 @@ footer{text-align:center;padding:2rem 1rem;font-size:.75rem;color:var(--text-fai
             <div class="lg-item"><svg width="28" height="18" aria-hidden="true"><circle cx="5" cy="12" r="3" fill="#06b6d4" fill-opacity=".85" stroke="#fff" stroke-width="1"/><circle cx="19" cy="9" r="7.5" fill="#06b6d4" fill-opacity=".85" stroke="#fff" stroke-width="1"/></svg>Larger dot, more crashes</div>
         </div>
         <div class="map-hint" id="mapHint" aria-hidden="true"></div>
+        <div class="map-empty" id="mapEmpty" hidden></div>
         <div class="map-fallback" id="mapFallback">
             <h3>Map tiles blocked in this preview</h3>
             <p>This interactive map renders fully when deployed to GitHub Pages or opened locally. All crash data, markers, corridors, and tools are loaded &mdash; they just need a basemap.</p>
@@ -499,18 +537,9 @@ footer{text-align:center;padding:2rem 1rem;font-size:.75rem;color:var(--text-fai
                 </div>
             </div>
         </div>
-        <div id="lookupEmpty" style="display:none;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border);text-align:center;padding-bottom:.5rem">
-            <div style="font-size:.85rem;color:var(--text-dim);margin-bottom:.25rem">No crashes recorded within this radius</div>
-            <div style="font-size:.75rem;color:var(--text-faint)">Try a wider radius or a different address</div>
-        </div>
-        <div id="lookupError" role="status" style="display:none;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border);text-align:center;padding-bottom:.5rem">
-            <div style="font-size:.85rem;color:var(--text-dim);margin-bottom:.25rem">Address search is unavailable right now</div>
-            <div style="font-size:.75rem;color:var(--text-faint)">The lookup service did not respond. Please try again in a minute.</div>
-        </div>
-        <div id="lookupNotFound" style="display:none;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border);text-align:center;padding-bottom:.5rem">
-            <div style="font-size:.85rem;color:var(--text-dim);margin-bottom:.25rem">Address not found within Philadelphia</div>
-            <div style="font-size:.75rem;color:var(--text-faint)">This dashboard only covers Philadelphia. Try an address inside that area.</div>
-        </div>
+        <div id="lookupEmpty" style="display:none;margin-top:1.25rem;border-top:1px solid var(--border)"><div class="empty-state" role="status"><svg class="ico" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5v.01"/></svg><p><strong id="lookupEmptyMsg">No crashes found within this radius.</strong> <span id="lookupEmptyHint">The lookup counts spots with two or more crashes in 2023&ndash;2025, so a single crash would not show here.</span></p><button type="button" class="btn-secondary" id="lookupEmptyBtn">Try 0.5 mi</button></div></div>
+        <div id="lookupError" style="display:none;margin-top:1.25rem;border-top:1px solid var(--border)"><div class="empty-state warn" role="status"><svg class="ico" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4M12 17.5v.01"/></svg><p><strong>Address search is unavailable right now.</strong> The lookup service did not respond.</p><button type="button" class="btn-secondary" data-lookup-retry>Try again</button></div></div>
+        <div id="lookupNotFound" style="display:none;margin-top:1.25rem;border-top:1px solid var(--border)"><div class="empty-state warn" role="status"><svg class="ico" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4M12 17.5v.01"/></svg><p><strong>Address not found within Philadelphia.</strong> This dashboard covers Philadelphia only. A street corner often works when an address does not.</p><button type="button" class="btn-secondary" data-lookup-focus>Search a nearby intersection</button></div></div>
     </div>
 </div>
 
@@ -530,16 +559,16 @@ footer{text-align:center;padding:2rem 1rem;font-size:.75rem;color:var(--text-fai
         </div>
     </div>
     <table class="rank-table" id="intersectionTable">
-        <colgroup><col style="width:40px"><col><col style="width:45%"></colgroup>
-        <thead><tr><th>#</th><th>Intersection</th><th><span class="th-hi">Crashes &darr;</span></th></tr></thead>
+        <colgroup><col style="width:40px"><col style="width:38%"><col><col style="width:56px"></colgroup>
+        <thead><tr><th>#</th><th>Intersection</th><th class="th-count" colspan="2"><span class="th-hi">Crashes &darr;</span></th></tr></thead>
         <tbody id="intersectionBody"></tbody>
     </table>
 </div>
 
 <!-- 04 CITY OVERVIEW -->
 <div class="sec-hdr" id="sec-04"><div class="sec-num">04 &mdash; <span class="lbl-long">Area Overview</span><span class="lbl-short">By Area</span></div><h2 class="sec-title">Crash Rates Across the Metro</h2><p class="sec-desc">How each area in Philadelphia compares on total crashes, deaths, and behavioral factors.</p></div>
-<div class="card"><div class="card-top"><div><div class="card-title">Area Comparison</div><div class="card-sub">All areas &middot; PennDOT 2025</div></div></div>
-<div class="city-table-wrap" tabindex="0" role="region" aria-label="Area comparison table"><table class="city-table"><thead><tr><th>Area</th><th>Crashes</th><th>Deaths</th><th>DUI</th><th>Speed</th><th>Hit &amp; Run</th><th>Ped</th></tr></thead><tbody id="cityTableBody"></tbody></table></div><div style="padding:.6rem 1.25rem .85rem;font-size:.75rem;line-height:1.6;color:var(--text-dim);font-family:DM Sans,sans-serif;border-top:1px solid var(--border)">These are approximate areas drawn as boxes around crash coordinates, not official planning district or neighborhood boundaries.</div></div>
+<div class="card"><div class="card-top"><div><div class="card-title">Area Comparison</div><div class="card-sub">All areas &middot; PennDOT 2025</div></div><label class="cmp-pick">Show:<select class="chart-metro" id="cmpPick" aria-label="Measure shown in the comparison table"><option value="total">Crashes</option><option value="deaths" selected>Deaths</option><option value="impaired">DUI</option><option value="speed">Speed</option><option value="hitrun">Hit &amp; Run</option><option value="pedestrian">Ped</option></select></label></div>
+<div class="city-table-wrap" id="cmpWrap" tabindex="0" role="region" aria-label="Area comparison table"><table class="city-table" id="cmpTable" data-show="deaths"><thead><tr><th>Area</th><th class="num m-total">Crashes</th><th class="num m-deaths">Deaths</th><th class="num m-impaired">DUI</th><th class="num m-speed">Speed</th><th class="num m-hitrun">Hit &amp; Run</th><th class="num m-pedestrian">Ped</th><th class="cmp-bar" aria-hidden="true"></th></tr></thead><tbody id="cityTableBody"></tbody></table></div><div style="padding:.6rem 1.25rem .85rem;font-size:.75rem;line-height:1.6;color:var(--text-dim);font-family:DM Sans,sans-serif;border-top:1px solid var(--border)">These are approximate areas drawn as boxes around crash coordinates, not official planning district or neighborhood boundaries.</div></div>
 <div class="card"><div class="card-top"><div><div class="card-title">Crashes Per 1,000 Residents</div><div class="card-sub">Population-adjusted crash rate &middot; PennDOT 2025</div></div></div><div class="chart-box"><canvas id="perCapitaChart"></canvas></div><details class="chart-notes"><summary>About this chart</summary><div class="chart-notes-body">Populations are estimates: 2020 Census block groups, placed in each area by the same boundaries that assign crashes, scaled to the Census Bureau estimate for City of Philadelphia (Philadelphia County) on July 1, 2025. Crashes outside the eight areas are grouped under Philadelphia, which has no defined population and no per-resident rate.</div></details></div>
 
 <!-- 05 WHEN IT HAPPENS -->
@@ -784,14 +813,31 @@ function agg(fn){ return cities.map(c=>fn(c)).reduce((a,b)=>a.map((v,i)=>v+(b[i]
 
 
 // === TABLE ===
-const tbody=document.getElementById('cityTableBody');
-cities.forEach(c=>{const d=cityData[c];if(!d)return;const tr=document.createElement('tr');
-tr.innerHTML=`<td>${c}</td><td class="mono">${fmtN(d.total)}</td><td class="mono">${fmtN(d.deaths)}</td><td class="mono">${fmtN(d.impaired)}</td><td class="mono">${fmtN(d.speed)}</td><td class="mono">${fmtN(d.hitrun)}</td><td class="mono">${fmtN(d.pedestrian)}</td>`;
-tbody.appendChild(tr)});
-const totRow=document.createElement('tr');totRow.style.fontWeight='600';
-const _t=5507,_f=89,_i=201,_sp=510,_hr=1459,_p=917;
-totRow.innerHTML=`<td>All Metro</td><td class="mono">${fmtN(_t)}</td><td class="mono">${fmtN(_f)}</td><td class="mono">${fmtN(_i)}</td><td class="mono">${fmtN(_sp)}</td><td class="mono">${fmtN(_hr)}</td><td class="mono">${fmtN(_p)}</td>`;
-tbody.appendChild(totRow);
+// === REGION COMPARISON TABLE ===
+(function(){
+const COLS=["total", "deaths", "impaired", "speed", "hitrun", "pedestrian"],TOT={"total": 5507, "deaths": 89, "impaired": 201, "speed": 510, "hitrun": 1459, "pedestrian": 917};
+const tbody=document.getElementById('cityTableBody'),table=document.getElementById('cmpTable'),wrap=document.getElementById('cmpWrap'),pick=document.getElementById('cmpPick');
+const phone=window.matchMedia('(max-width:768px)');
+const rows=cities.filter(c=>cityData[c]).map(c=>{const tr=document.createElement('tr');tr._c=c;
+  tr.innerHTML='<td></td>'+COLS.map(k=>'<td class="num m-'+k+'">'+fmtN(cityData[c][k])+'</td>').join('')+'<td class="cmp-bar" aria-hidden="true"><div class="cmp-bar-track"><div class="cmp-bar-fill"></div></div></td>';
+  tr.firstChild.textContent=c;return tr});
+const tot=document.createElement('tr');tot.className='cmp-total';
+tot.innerHTML='<td>All Metro</td>'+COLS.map(k=>'<td class="num m-'+k+'">'+fmtN(TOT[k])+'</td>').join('')+'<td class="cmp-bar"></td>';
+function fade(){wrap.classList.toggle('can-scroll',wrap.scrollLeft+wrap.clientWidth<wrap.scrollWidth-2)}
+// Rows sort by the measure on screen: crashes on desktop, the picked measure on phones
+function render(){
+  const k=phone.matches&&pick?pick.value:'total';table.dataset.show=pick?pick.value:'deaths';
+  const mx=Math.max(1,...rows.map(r=>cityData[r._c][k]||0));
+  rows.sort((a,b)=>(cityData[b._c][k]||0)-(cityData[a._c][k]||0));
+  // Fixed colors for deaths and pedestrians (DESIGN_RULES.md, Color); the accent for the other counts
+  const col=chartColor(k==='deaths'?'deaths':k==='pedestrian'?'ped':'count');
+  rows.forEach(r=>{const f=r.querySelector('.cmp-bar-fill');f.style.width=((cityData[r._c][k]||0)/mx*100)+'%';f.style.background=col;tbody.appendChild(r)});
+  tbody.appendChild(tot);fade();
+}
+if(pick)pick.addEventListener('change',render);
+phone.addEventListener('change',render);wrap.addEventListener('scroll',fade,{passive:true});window.addEventListener('resize',fade);
+render();
+})();
 
 // === HOURLY ===
 let chHourly;
@@ -1197,6 +1243,8 @@ function renderMarkers(){
         const marker=L.circleMarker([s.lat,s.lon],{radius:radius,fillColor:chartColor('count'),fillOpacity:0.85,color:'#ffffff',weight:1,opacity:1}).addTo(markerLayer);
         marker.on('click',()=>openSpot(s,html,marker,false,false));
     });
+    const me=document.getElementById('mapEmpty');
+    if(me){const none=currentCity!=='all'&&!spots.some(s=>s.city===currentCity);me.hidden=!none;me.innerHTML=none?emptyHTML(currentCity):''}
     renderIntersectionTable();
 }
 renderMarkers();
@@ -1255,6 +1303,8 @@ document.getElementById('yearGroup').addEventListener('click',function(e){
     setYear(btn.dataset.year);applyFilters();
 });
 document.getElementById('cityFilter').addEventListener('change',function(){setCity(this.value);applyFilters();});
+document.addEventListener('click',e=>{if(!e.target.closest('[data-show-all]'))return;setCity('all');applyFilters();
+    const f=phoneMQ.matches?document.getElementById('filterToggle'):document.getElementById('cityFilter');if(f)f.focus({preventScroll:true});});
 
 // === TABLE YEAR TOGGLE ===
 document.getElementById('tableYearGroup').addEventListener('click',function(e){
@@ -1264,8 +1314,6 @@ document.getElementById('tableYearGroup').addEventListener('click',function(e){
     btn.classList.add('active-blue');
     currentTableYear=btn.dataset.year;
     renderIntersectionTable();
-    const sub=document.getElementById('tableSub');
-    if(sub) sub.textContent='PennDOT '+(currentTableYear==='all'?yrRange:currentTableYear)+' · 117 locations tracked';
 });
 
 // === ADDRESS SEARCH (Nominatim) ===
@@ -1421,6 +1469,7 @@ const searchAppend='Philadelphia PA';
 const searchKw=["philadelphia", "philly"];
 const totalCrashesAllYears=18062;
 const gridCellCount=grid.length;
+const gridTotal=grid.reduce(function(a,g){return a+g[2]},0);
 
 const input=document.getElementById('lookupInput');
 const lookupBtn=document.getElementById('lookupBtn');
@@ -1472,27 +1521,39 @@ function doLookup(query){
     if(!searchKw.some(function(k){return lower.includes(k)})){
         query+=' '+searchAppend;
     }
-    fetch('https://nominatim.openstreetmap.org/search?format=json&q='+encodeURIComponent(query)+'&viewbox='+searchViewbox+'&bounded=1&limit=1')
+    fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&q='+encodeURIComponent(query)+'&viewbox='+searchViewbox+'&bounded=1&limit=1')
     .then(function(r){if(!r.ok)throw new Error(r.status);return r.json()}).then(function(data){
         lookupBtn.textContent='Search';
         if(errorDiv)errorDiv.style.display='none';
-        if(!data.length){
-            resultDiv.style.display='none';
-            emptyDiv.style.display='none';
-            notFoundDiv.style.display='block';
-            return;
-        }
+        if(!data.length){showState('notfound');return;}
         const lat=parseFloat(data[0].lat),lon=parseFloat(data[0].lon);
-        const addr=data[0].display_name.split(',').slice(0,3).join(', ');
+        const addr=fmtAddr(data[0]);
         lastLat=lat;lastLon=lon;lastAddr=addr;
         showReport(lat,lon,addr);
     }).catch(function(){
         lookupBtn.textContent='Search';
-        resultDiv.style.display='none';emptyDiv.style.display='none';notFoundDiv.style.display='none';
-        if(errorDiv)errorDiv.style.display='block';
+        showState('error');
     });
 }
 
+// "1701 Wynkoop St (Union Station)": number and street first, street types abbreviated, the place's name in brackets
+const ABBR={Street:'St',Avenue:'Ave',Boulevard:'Blvd',Road:'Rd',Drive:'Dr',Parkway:'Pkwy',Highway:'Hwy',Expressway:'Expy',Place:'Pl',Court:'Ct',Lane:'Ln',Terrace:'Ter',Circle:'Cir'};
+function fmtAddr(d){
+    const a=d.address||{},road=a.road||a.pedestrian||a.footway||a.cycleway||'';
+    const st=road?((a.house_number?a.house_number+' ':'')+road.split(' ').map((w,i)=>i&&ABBR[w]?ABBR[w]:w).join(' ')):'';
+    const nm=d.name&&d.name!==road&&d.name!==a.house_number?d.name:'';
+    if(!st)return nm||d.display_name.split(',')[0];
+    return nm?st+' ('+nm+')':st;
+}
+function showState(which){resultDiv.style.display=which==='result'?'block':'none';emptyDiv.style.display=which==='empty'?'block':'none';
+    notFoundDiv.style.display=which==='notfound'?'block':'none';if(errorDiv)errorDiv.style.display=which==='error'?'block':'none'}
+function setRadius(v){radiusBtns.forEach(function(x){x.classList.toggle('active-blue',parseFloat(x.dataset.radius)===v)});currentRadius=v}
+document.getElementById('lookupEmptyBtn').addEventListener('click',function(){
+    if(currentRadius<0.008){setRadius(0.008);if(lastLat!==null)showReport(lastLat,lastLon,lastAddr)}
+    else{input.focus();input.select()}
+});
+document.querySelectorAll('[data-lookup-focus]').forEach(function(b){b.addEventListener('click',function(){input.focus();input.select()})});
+document.querySelectorAll('[data-lookup-retry]').forEach(function(b){b.addEventListener('click',triggerLookup)});
 function showReport(lat,lon,addr){
     const r=currentRadius;
     const radiusMi=r<=0.002?'0.1 mi':r<=0.005?'0.25 mi':'0.5 mi';
@@ -1522,19 +1583,15 @@ function showReport(lat,lon,addr){
             if(cd>0.02||cd<-0.02||ce>0.02||ce<-0.02)continue;
             anyCells=true;break;
         }
-        resultDiv.style.display='none';
         if(anyCells){
-            notFoundDiv.style.display='none';
-            emptyDiv.style.display='block';
-        }else{
-            emptyDiv.style.display='none';
-            notFoundDiv.style.display='block';
-        }
+            document.getElementById('lookupEmptyMsg').textContent='No crashes found within '+radiusMi+' of '+addr+'.';
+            const wide=currentRadius<0.008;
+            document.getElementById('lookupEmptyBtn').textContent=wide?'Try 0.5 mi':'Search a nearby intersection';
+            showState('empty');
+        }else showState('notfound');
         return;
     }
-    emptyDiv.style.display='none';
-    notFoundDiv.style.display='none';
-    resultDiv.style.display='block';
+    showState('result');
 
     addrDiv.textContent='Within '+radiusMi+' of '+addr;
     totalEl.textContent=total.toLocaleString();
@@ -1591,17 +1648,12 @@ function showReport(lat,lon,addr){
         pill(hitrun,'hit-and-run')
     ].join('');
 
-    // Year-by-year — inline text
+    // Crashes by year: a small bar chart, zero-based, every value labeled
     const yrKeys=Object.keys(byYear).sort();
     if(yrKeys.length>=2){
-        let yhtml='<div style="font-family:JetBrains Mono,monospace;font-size:.75rem;color:var(--text-faint);display:flex;align-items:center;gap:.35rem;flex-wrap:wrap">';
-        yrKeys.forEach(function(y,i){
-            const isLast=i===yrKeys.length-1;
-            if(i>0) yhtml+='<span style="color:var(--border);font-size:.75rem">&#9654;</span>';
-            yhtml+='<span style="color:'+(isLast?'var(--text)':'var(--text-faint)')+'">'+y+': <span style="font-weight:'+(isLast?'600':'400')+'">'+byYear[y]+'</span></span>';
-        });
-        yhtml+='</div>';
-        yearsDiv.innerHTML=yhtml;
+        const ymx=Math.max(1,...yrKeys.map(function(y){return byYear[y]}));
+        yearsDiv.innerHTML='<div class="lk-yr-title">Crashes by year</div><div class="lk-years" role="img" aria-label="Crashes by year: '+yrKeys.map(function(y){return y+' '+fmtN(byYear[y])}).join(', ')+'">'
+            +yrKeys.map(function(y){return '<div class="lk-yr"><span class="lk-yr-v">'+fmtN(byYear[y])+'</span><div class="lk-yr-b" style="height:'+(byYear[y]/ymx*52)+'px"></div><div class="lk-yr-base"></div><span class="lk-yr-y">'+y+'</span></div>'}).join('')+'</div>';
     }else{
         yearsDiv.innerHTML='';
     }
@@ -1623,12 +1675,12 @@ function showReport(lat,lon,addr){
     }
 
     // Metro context
-    const avgPerCell=totalCrashesAllYears/Math.max(gridCellCount,1);
-    if(avgPerCell>0){
-        const ratio=Math.round(total/avgPerCell*10)/10;
-        const color='#e8eaf0';
-        const desc=ratio>=1.5?'above':ratio<=0.5?'below':'near';
-        contextDiv.innerHTML='<span style="font-size:13px;color:var(--text-dim)"><span style="font-family:JetBrains Mono,monospace;color:'+color+';font-weight:600">'+fmtR1(ratio)+'&times;</span> '+desc+' metro average crash density</span>';
+    // Both sides per street-grid cell (cells are the same size, so this is crashes per square mile),
+    // counting only the cells where crashes are recorded (audit M2: it used to compare a whole circle with one cell)
+    const avgPerCell=gridTotal/Math.max(gridCellCount,1);
+    if(avgPerCell>0&&matched.length){
+        const ratio=Math.round(total/matched.length/avgPerCell*10)/10;
+        contextDiv.innerHTML='<div style="font-size:13px;color:var(--text-dim)"><span style="font-family:JetBrains Mono,monospace;color:var(--text);font-weight:600">'+fmtR1(ratio)+'&times;</span> the metro&rsquo;s crash density</div><div class="lk-note">Crashes per square mile here vs. the metro as a whole.</div>';
     }else{
         contextDiv.innerHTML='';
     }
@@ -1658,20 +1710,26 @@ function showReport(lat,lon,addr){
 })();
 
 // === INTERSECTION TABLE ===
+// A region with none of the tracked hotspots says why and offers the way back (DESIGN_RULES.md, States: empty states)
+function emptyHTML(region){
+    const METRO="Philadelphia",NSPOTS=spots.length;
+    return '<div class="empty-state" role="status"><svg class="ico" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><p><strong>None of the '+NSPOTS+' tracked hotspots are in '+escH(region)+'.</strong> Hotspots are the '+NSPOTS+' busiest crash locations across '+escH(METRO)+', so some areas have none.</p><button type="button" class="btn-secondary" data-show-all>Show all '+escH(METRO)+'</button></div>';
+}
+function escH(t){return String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c])}
 function renderIntersectionTable(){
-    const yr=currentTableYear;
+    const yr=currentTableYear,NSPOTS=spots.length;
     const cityFiltered=currentCity==='all'?spots:spots.filter(s=>s.city===currentCity);
+    const sub=document.getElementById('tableSub');
+    if(sub)sub.textContent='PennDOT '+(yr==='all'?yrRange:yr)+' · '+(currentCity==='all'?NSPOTS+' locations tracked':cityFiltered.length+' of '+NSPOTS+' locations');
+    const body=document.getElementById('intersectionBody');
+    if(!cityFiltered.length){body.innerHTML='<tr class="rank-empty"><td colspan="4">'+emptyHTML(currentCity)+'</td></tr>';return}
     const all=cityFiltered.map(s=>{
         const c=yr==='all'?s.count:((s.by_year&&s.by_year[yr])?s.by_year[yr]:0);
         return {n:s.name,c,city:s.city};
     }).sort((a,b)=>b.c-a.c).slice(0,10);
-
     const maxCrash=Math.max(...all.map(i=>i.c),1);
-
-    document.getElementById('intersectionBody').innerHTML=all.map((i,idx)=>{
-        const crashPct=i.c/maxCrash*100;
-        const cityLabel=currentCity==='all'?'<span class="region-name">'+i.city+'</span>':'';
-        return '<tr><td class="rank-num">'+(idx+1)+'</td><td style="font-weight:500">'+i.n+cityLabel+'</td><td><div class="crash-bar-wrap"><div class="crash-bar-track"><div class="crash-bar" style="width:'+crashPct+'%"></div></div><span class="crash-count">'+i.c+'</span></div></td></tr>';
+    body.innerHTML=all.map((i,idx)=>{
+        return '<tr><td class="rank-num">'+(idx+1)+'</td><td class="rank-name">'+escH(i.n)+'<span class="region-name">'+escH(i.city)+'</span></td><td class="rank-bar"><div class="crash-bar-track"><div class="crash-bar" style="width:'+(i.c/maxCrash*100)+'%"></div></div></td><td class="crash-count">'+fmtN(i.c)+'</td></tr>';
     }).join('');
 }
 renderIntersectionTable();
