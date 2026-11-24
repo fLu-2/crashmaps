@@ -754,7 +754,8 @@ function regionBar(id,labels,datasets,o){
   cv.parentNode.style.height=(rows*rowH+28+24+(o.axisTitle?20:0)+(legend?34:0))+'px';
   datasets.forEach(d=>{d.borderRadius=3;d.borderSkipped='start';d.maxBarThickness=legend&&!o.stacked?10:18;
     if(legend&&!o.stacked){d.categoryPercentage=.84;d.barPercentage=.96}});
-  const xt={maxRotation:0,minRotation:0};if(o.count)xt.precision=0;xt.callback=o.tick||(o.count?(v=>fmtN(v)):undefined);if(!xt.callback)delete xt.callback;
+  // One value tick per ~72 px of plot width, so counts like 35,000 never run together in a half-width card
+  const xt={maxRotation:0,minRotation:0,maxTicksLimit:Math.max(2,Math.floor((cv.parentNode.clientWidth-COL_W()-40)/72))};if(o.count)xt.precision=0;xt.callback=o.tick||(o.count?(v=>fmtN(v)):undefined);if(!xt.callback)delete xt.callback;
   return new Chart(cv,{type:'bar',data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',
     plugins:{legend:legend?{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'rectRounded',padding:12}}:{display:false},
       tooltip:{...TT,callbacks:{title:c=>[(o.titles||labels)[c[0].dataIndex]],label:c=>(legend?c.dataset.label+': ':'')+(o.tip?o.tip(c.raw):c.raw)}}},
