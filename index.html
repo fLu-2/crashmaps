@@ -16,8 +16,8 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="crashmaps: traffic crash dashboards for US metros">
 <meta name="twitter:description" content="Interactive traffic crash dashboards for 20 US metro areas, built from public agency crash records.">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--accent:#ff4d4d;--accent-ink:#08090d;--deaths:#e5534b;--ped:#e0a23c;--cyclist:#4f9cf0;--fell:#22a565;--flat:#6b7280;--rose:#e5534b;--warn:#e0a23c;--ok:#22a565;--link-line:#4a4f66;--r-card:12px;--r-ctl:8px;--r-bar:3px;--b-card:1px solid #1c1f2e;--b-ctl:1px solid #2a2e42;--h-compact:36px;--h-std:44px;--h-hero:48px;--ease:150ms ease-out;--t-color:color var(--ease),border-color var(--ease),background-color var(--ease),opacity var(--ease);--bg:#08090d;--bg-card:#0f1118;--fill:#151826;--border:#1c1f2e;--border-hover:#2a2e42;--text:#e8eaf0;--text-dim:#8b90a8;--text-faint:#8b90a8;--gutter:2rem}
@@ -916,9 +916,10 @@ var PLACES={"metros":[{"slug":"austin","name":"Austin","state":"TX","color":"#0e
 })();
 </script>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-(function(){
+/* The map loads as the reader nears it (DESIGN_RULES.md, craft standard 9): Leaflet is fetched
+   only when the map section is within 800 px of the screen, so it never blocks the first paint. */
+function initMap(){
     const metros=[
         {name:'Denver Metro',src:'CDOT',lat:39.7392,lng:-104.9903,color:'#ff4d4d',fatal:281,pop:3028122,crashes:49021,ped:1049,cyclist:657,year:2025,href:'denver/'},
         {name:'New York City',src:'NYC Open Data',lat:40.7128,lng:-74.006,color:'#ffb347',fatal:229,pop:8584629,crashes:85559,ped:8888,cyclist:4514,year:2025,href:'nyc/'},
@@ -981,6 +982,16 @@ var PLACES={"metros":[{"slug":"austin","name":"Austin","state":"TX","color":"#0e
         marker.bindPopup('<div class="map-popup"><div class="map-popup-name">'+m.name+'</div><div class="map-popup-src">'+m.src+'</div><div class="mp-head"><span class="mp-num">'+rateTxt+'</span><span class="mp-unit">deaths per 100K residents</span></div><div class="mp-years">'+m.year+'</div><div class="map-popup-stats"><div class="map-popup-stat"><div class="mp-val">'+fmt(m.fatal)+'</div><div class="mp-lbl">people killed</div></div><div class="map-popup-stat"><div class="mp-val">'+fmt(m.crashes)+'</div><div class="mp-lbl">total crashes</div></div><div class="map-popup-stat"><div class="mp-val">'+fmt(m.ped)+'</div><div class="mp-lbl">pedestrian</div></div><div class="map-popup-stat"><div class="mp-val">'+fmt(m.cyclist)+'</div><div class="mp-lbl">cyclist</div></div></div><a href="'+m.href+'" class="map-popup-link">Open dashboard &rarr;</a></div>',{closeButton:false,className:'dark-popup',maxWidth:260});
         marker.addTo(map);
     });
+}
+(function(){
+    var started=false,el=document.getElementById('map');
+    function load(){
+        if(started)return;started=true;
+        var css=document.createElement('link');css.rel='stylesheet';css.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';document.head.appendChild(css);
+        var js=document.createElement('script');js.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';js.onload=initMap;document.body.appendChild(js);
+    }
+    if('IntersectionObserver' in window){new IntersectionObserver(function(e,o){if(e[0].isIntersecting){o.disconnect();load()}},{rootMargin:'800px 0px'}).observe(el)}
+    else load();
 })();
 </script>
 <script>
