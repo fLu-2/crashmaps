@@ -17,7 +17,6 @@
 <meta name="twitter:title" content="crashmaps: traffic crash dashboards for US metros">
 <meta name="twitter:description" content="Interactive traffic crash dashboards for 20 US metro areas, built from public agency crash records.">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -142,35 +141,38 @@ header nav a{transition:var(--t-color)}header nav a:hover{color:var(--text)}
 .overview-map{max-width:1200px;margin:4rem auto 0;padding:0 2rem 0}
 .overview-map .section-label{margin-bottom:1.25rem}
 .map-container{border:var(--b-card);border-radius:var(--r-card);overflow:hidden;height:420px;position:relative}
-.map-container .leaflet-container{height:100%;width:100%;background:var(--bg-card)}
+.map-container .leaflet-container{height:100%;width:100%;background:#0e0f13}
 .map-container .leaflet-control-zoom{border:none}
-.map-container .leaflet-control-zoom a{background:rgba(15,17,24,.92);color:var(--text-dim);border:1px solid var(--border);width:30px;height:30px;line-height:30px;font-size:14px;backdrop-filter:blur(8px)}
-.map-container .leaflet-control-zoom a:hover{background:rgba(15,17,24,1);color:var(--text)}
+.map-container .leaflet-control-zoom{border:1px solid #2a2e42;border-radius:8px;overflow:hidden}
+.map-container .leaflet-control-zoom a{background:rgba(15,17,24,.92);color:var(--text);border-color:#2a2e42;width:44px;height:44px;line-height:44px;font-size:20px;transition:var(--t-color)}
+.map-container .leaflet-control-zoom a:hover{background:#1a1d2b;color:var(--text)}
 .map-container .leaflet-control-attribution{background:rgba(15,17,24,.8);color:var(--text-faint);font-size:.75rem;font-family:'DM Sans',sans-serif}
 .map-container .leaflet-control-attribution a{color:var(--text-dim)}
 .map-container .leaflet-popup-content-wrapper{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;color:var(--text);box-shadow:0 8px 32px rgba(0,0,0,.5)}
 .map-container .leaflet-popup-tip{background:var(--bg-card);border:1px solid var(--border)}
 .map-container .leaflet-popup-content{margin:0;padding:0;font-family:'DM Sans',sans-serif}
 .map-popup{padding:.75rem 1rem;min-width:180px}
-.map-popup-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:.1rem}
+.map-popup-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:.1rem;color:var(--text)}
 .map-popup-src{font-size:.75rem;color:var(--text-faint);margin-bottom:.4rem;font-family:'DM Sans',sans-serif}
 .map-popup-stats{display:grid;grid-template-columns:1fr 1fr;gap:.35rem .75rem}
 .map-popup-stat .mp-val{font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:500}
 .map-popup-stat .mp-lbl{font-size:.75rem;color:var(--text-faint)}
 .map-popup-link{display:block;margin-top:.6rem;padding-top:.5rem;border-top:1px solid var(--border);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text-dim);text-align:center}
 .map-popup-link:hover{color:var(--text)}
-.mp-head{display:flex;align-items:baseline;gap:6px;white-space:nowrap}.mp-num{font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:700;line-height:1.1}.mp-unit{font-size:12px;color:var(--text)}
+.mp-head{display:flex;align-items:baseline;gap:6px;white-space:nowrap}.mp-num{font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:700;line-height:1.1;color:var(--red)}.mp-unit{font-size:12px;color:var(--text)}
 .mp-years{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-dim);white-space:nowrap;margin:2px 0 .6rem}
-.marker-cluster{background:transparent!important}
-.marker-cluster div{background:rgba(15,17,24,.92);border:2px solid var(--border-hover);border-radius:50%;width:40px!important;height:40px!important;margin-left:-4px!important;margin-top:-4px!important;display:flex;align-items:center;justify-content:center;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;box-shadow:0 4px 20px rgba(0,0,0,.5);backdrop-filter:blur(8px)}
-.marker-cluster:hover div{border-color:var(--text-dim);background:rgba(15,17,24,1)}
-.metro-dot{border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
-@media(max-width:768px){.overview-map{padding:0 1rem}.map-container{height:320px}}
+.metro-dot{border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(255,77,77,.55);border:1px solid #fff;box-sizing:border-box;transition:var(--t-color)}
+.leaflet-marker-icon:hover .metro-dot{background:rgba(255,77,77,.85)}
+.map-size-key{background:rgba(15,17,24,.9);border:var(--b-card);border-radius:8px;padding:8px 10px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);pointer-events:none}
+.map-size-key .sk-row{display:flex;align-items:flex-end;gap:10px;margin-top:4px}
+.map-size-key.below{display:flex;align-items:flex-end;justify-content:center;gap:12px;background:transparent;border:0;margin-top:.5rem;color:var(--text-dim)}.map-size-key.below .sk-row{margin:0}
+.map-size-key .sk-item{display:flex;flex-direction:column;align-items:center;gap:2px;font-family:'JetBrains Mono',monospace}
+@media(max-width:768px){.overview-map{padding:0 1rem}.map-container{height:260px}.map-size-key{padding:6px 8px}}
 /* Trend row tooltips */
 .trend-row{cursor:pointer;position:relative;transition:var(--t-color);border-radius:6px;padding:2px 6px;margin:0 -6px}
 .trend-row:hover{background:rgba(255,255,255,.03)}
 a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible,[tabindex]:focus-visible,[role=button]:focus-visible{outline:2px solid var(--accent)!important;outline-offset:2px}
-.leaflet-marker-icon:focus-visible{outline:none!important}.leaflet-marker-icon:focus-visible .metro-dot,.leaflet-marker-icon:focus-visible.marker-cluster div{box-shadow:0 0 0 3px #fff,0 0 0 5px var(--accent)!important}
+.leaflet-marker-icon:focus-visible{outline:none!important}.leaflet-marker-icon:focus-visible .metro-dot{box-shadow:0 0 0 3px #fff,0 0 0 5px var(--accent)!important}
 .trend-tip{overflow:hidden;max-height:0;opacity:0;transition:max-height .3s ease,opacity .25s ease,margin .3s ease;margin:0 -6px}
 .trend-tip.open{max-height:200px;opacity:1;margin:2px -6px 4px}
 .trend-tip-inner{padding:.5rem .65rem;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:6px;font-size:.75rem;color:var(--text-dim);line-height:1.55}
@@ -246,7 +248,7 @@ footer a:hover{color:var(--text)}
 <section class="overview-map" id="map">
     <div class="section-label">Deaths per 100K Residents<span class="lbl-long"> &middot; Latest Year of Data</span></div>
     <div class="map-container"><div id="overviewMap"></div></div>
-    <div style="text-align:center;margin-top:.5rem;font-size:.75rem;color:var(--text-faint);font-family:'DM Sans',sans-serif">Hold <kbd style="background:var(--bg-card);border:1px solid var(--border);border-radius:3px;padding:.1em .35em;font-family:'JetBrains Mono',monospace;font-size:.75rem">Ctrl</kbd> + scroll to zoom the map</div>
+    <div id="mapZoomHint" style="text-align:center;margin-top:.5rem;font-size:.75rem;color:var(--text-faint);font-family:'DM Sans',sans-serif">Hold <kbd style="background:var(--bg-card);border:1px solid var(--border);border-radius:3px;padding:.1em .35em;font-family:'JetBrains Mono',monospace;font-size:.75rem">Ctrl</kbd> + scroll to zoom the map</div>
 </section>
 
 <section class="trend-context" style="max-width:1200px;margin:4rem auto 0;padding:0 2rem">
@@ -742,7 +744,6 @@ footer a:hover{color:var(--text)}
 </footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 <script>
 (function(){
     const metros=[
@@ -768,49 +769,45 @@ footer a:hover{color:var(--text)}
         {name:'Riverside Metro',src:'CHP CCRS',lat:33.9533,lng:-117.3962,color:'#f87171',fatal:284,pop:2508066,crashes:27823,ped:713,cyclist:494,year:2024,href:'riverside/'}
     ];
     metros.forEach(m=>{m.rate=Math.round(m.fatal/m.pop*100000*10)/10});
-    var initZoom=window.innerWidth<=768?3:4;
-    const map=L.map('overviewMap',{zoomControl:false,scrollWheelZoom:false,attributionControl:true}).setView([39.5,-98.0],initZoom);
+    // No clustering: all 20 metros, fitted to the lower 48. Circle area scales with deaths per 100K; one fill, brand red
+    var coarse=window.matchMedia('(pointer:coarse)').matches;
+    const map=L.map('overviewMap',{zoomControl:false,scrollWheelZoom:false,dragging:!coarse,attributionControl:true,zoomSnap:0.25});
+    map.attributionControl.setPrefix(false);
     L.control.zoom({position:'bottomright'}).addTo(map);
+    map.fitBounds([[24.5,-124.8],[49.4,-66.9]],{padding:[12,12],animate:false});
+    // Desktop: Ctrl + scroll zooms. Touch: one finger scrolls the page, two fingers move and zoom the map
     document.getElementById('overviewMap').addEventListener('wheel',function(e){if(e.ctrlKey){e.preventDefault();if(e.deltaY<0)map.zoomIn();else map.zoomOut();}},{passive:false});
+    if(coarse)document.getElementById('mapZoomHint').textContent='Use two fingers to move the map';
     // CARTO key must match CARTO_API_KEY in build.py (landing page is hand-built, not generated)
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=cb1_5d5k_1_728050e3f77e99607f59bc94',{
+    map.createPane('labels');map.getPane('labels').style.zIndex=350;map.getPane('labels').style.pointerEvents='none';
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png?key=cb1_5d5k_1_728050e3f77e99607f59bc94',{
         attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains:'abcd',maxZoom:18
     }).addTo(map);
-    const maxRate=Math.max(...metros.map(m=>m.rate));
-    const minRate=Math.min(...metros.map(m=>m.rate));
-    const clusters=L.markerClusterGroup({
-        maxClusterRadius:45,
-        spiderfyOnMaxZoom:true,
-        showCoverageOnHover:false,
-        zoomToBoundsOnClick:true,
-        iconCreateFunction:function(cluster){
-            var count=cluster.getChildCount();
-            return L.divIcon({html:'<div>'+count+'</div>',className:'marker-cluster',iconSize:L.point(48,48)});
-        }
-    });
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png?key=cb1_5d5k_1_728050e3f77e99607f59bc94',{subdomains:'abcd',maxZoom:18,pane:'labels'}).addTo(map);
+    const K=15/Math.sqrt(15);  // radius in px: 15 per 100K draws a 15 px radius; area is proportional to the rate
+    const rad=rate=>K*Math.sqrt(Math.max(rate,0));
+    // Size key: on the map at top right (over Canada and the Atlantic) on desktop; under the map on phones, where no corner is clear
+    function sizeKey(){
+        const d=document.createElement('div');d.className='map-size-key';
+        d.innerHTML='Deaths per 100K<div class="sk-row">'+[3,9,15].map(v=>{const r=rad(v);return '<div class="sk-item"><svg width="'+Math.ceil(2*r+2)+'" height="'+Math.ceil(2*r+2)+'" aria-hidden="true"><circle cx="'+(r+1)+'" cy="'+(r+1)+'" r="'+r+'" fill="rgba(255,77,77,.55)" stroke="#fff" stroke-width="1"/></svg>'+v+'</div>'}).join('')+'</div>';
+        return d;
+    }
+    if(window.matchMedia('(max-width:768px)').matches){const d=sizeKey();d.classList.add('below');document.querySelector('.map-container').after(d);}
+    else{const key=L.control({position:'topright'});key.onAdd=sizeKey;key.addTo(map);}
+    const fmt=function(n){return n.toLocaleString('en-US')};
     metros.forEach(function(m){
-        const r=6+Math.sqrt((m.rate-minRate)/(maxRate-minRate))*24;
-        const sz=r*2;
+        const r=rad(m.rate),sz=Math.round(r*2);
+        const rateTxt=m.rate.toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1});
         const marker=L.marker([m.lat,m.lng],{
-            icon:L.divIcon({
-                className:'',
-                iconSize:[sz,sz],
-                iconAnchor:[r,r],
-                html:'<div class="metro-dot" style="width:'+sz+'px;height:'+sz+'px;background:'+m.color+';opacity:0.7;border:2px solid '+m.color+';"></div>'
-            })
+            title:m.name,alt:m.name+': '+rateTxt+' deaths per 100K residents, '+m.year,
+            zIndexOffset:Math.round(1000-m.rate*10),  // smaller circles sit on top so every metro stays visible
+            icon:L.divIcon({className:'',iconSize:[sz,sz],iconAnchor:[sz/2,sz/2],
+                html:'<div class="metro-dot" style="width:'+sz+'px;height:'+sz+'px"></div>'})
         });
-        marker.on('mouseover',function(){
-            var el=this.getElement();if(el){var d=el.querySelector('.metro-dot');if(d){d.style.opacity='1';d.style.width=(sz+6)+'px';d.style.height=(sz+6)+'px';d.style.borderWidth='3px';}}
-        });
-        marker.on('mouseout',function(){
-            var el=this.getElement();if(el){var d=el.querySelector('.metro-dot');if(d){d.style.opacity='0.7';d.style.width=sz+'px';d.style.height=sz+'px';d.style.borderWidth='2px';}}
-        });
-        const fmt=function(n){return n.toLocaleString('en-US')};
-        marker.bindPopup('<div class="map-popup"><div class="map-popup-name" style="color:'+m.color+'">'+m.name+'</div><div class="map-popup-src">'+m.src+'</div><div class="mp-head"><span class="mp-num">'+m.rate.toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1})+'</span><span class="mp-unit">deaths per 100K residents</span></div><div class="mp-years">'+m.year+'</div><div class="map-popup-stats"><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.fatal)+'</div><div class="mp-lbl">people killed</div></div><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.crashes)+'</div><div class="mp-lbl">total crashes</div></div><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.ped)+'</div><div class="mp-lbl">pedestrian</div></div><div class="map-popup-stat"><div class="mp-val" style="color:'+m.color+'">'+fmt(m.cyclist)+'</div><div class="mp-lbl">cyclist</div></div></div><a href="'+m.href+'" class="map-popup-link">Open dashboard &rarr;</a></div>',{closeButton:false,className:'dark-popup'});
-        clusters.addLayer(marker);
+        marker.bindPopup('<div class="map-popup"><div class="map-popup-name">'+m.name+'</div><div class="map-popup-src">'+m.src+'</div><div class="mp-head"><span class="mp-num">'+rateTxt+'</span><span class="mp-unit">deaths per 100K residents</span></div><div class="mp-years">'+m.year+'</div><div class="map-popup-stats"><div class="map-popup-stat"><div class="mp-val">'+fmt(m.fatal)+'</div><div class="mp-lbl">people killed</div></div><div class="map-popup-stat"><div class="mp-val">'+fmt(m.crashes)+'</div><div class="mp-lbl">total crashes</div></div><div class="map-popup-stat"><div class="mp-val">'+fmt(m.ped)+'</div><div class="mp-lbl">pedestrian</div></div><div class="map-popup-stat"><div class="mp-val">'+fmt(m.cyclist)+'</div><div class="mp-lbl">cyclist</div></div></div><a href="'+m.href+'" class="map-popup-link">Open dashboard &rarr;</a></div>',{closeButton:false,className:'dark-popup',maxWidth:260});
+        marker.addTo(map);
     });
-    map.addLayer(clusters);
 })();
 </script>
 <script>
