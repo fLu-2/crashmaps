@@ -343,6 +343,8 @@ main>.sec-hdr:first-child{margin-top:24px}
 .card:has(>.chart-box){display:flex;flex-direction:column}.card>.chart-box{flex:1 1 auto}
 /* Severity: labeled rows with count, %, and a thin bar (DESIGN_RULES.md, Charts: what share is each part) */
 .share-rows{padding:.25rem 1.25rem 1rem}
+.rn-list{display:grid;grid-template-columns:minmax(160px,max-content) 1fr;column-gap:16px;row-gap:6px}.rn-row{display:contents}.rn-name{color:var(--text);font-weight:500}.rn-foot{margin-top:10px}.rn-list+.rn-foot{padding-top:10px;border-top:1px solid var(--border)}
+@media(max-width:768px){.rn-list{grid-template-columns:1fr;row-gap:0}.rn-name{margin-top:8px}.rn-row:first-child .rn-name{margin-top:0}}
 .share-row{display:grid;grid-template-columns:minmax(0,1fr) auto 4.5rem;column-gap:16px;row-gap:6px;align-items:baseline;padding:10px 0;border-bottom:1px solid rgba(28,31,46,.6)}.share-row:last-child{border-bottom:0}
 .share-name{font-size:14px;font-weight:500;color:var(--text)}.share-num,.share-pct{font-family:'JetBrains Mono','JetBrains Mono Fallback',monospace;font-size:14px;text-align:right;color:var(--text)}.share-pct{color:var(--text-dim)}
 .share-bar{grid-column:1/-1;height:6px;border-radius:var(--r-bar);background:#151826;overflow:hidden}.share-bar>span{display:block;height:100%;min-width:2px;border-radius:var(--r-bar)}
