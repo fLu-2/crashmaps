@@ -18,7 +18,9 @@
 <meta name="twitter:description" content="Interactive traffic crash dashboards for 20 US metro areas, built from public agency crash records.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<!-- Fonts load without blocking the first paint; text shows in the fallback font until they arrive -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap"></noscript>
 <style>
 :root{--accent:#ff4d4d;--accent-ink:#08090d;--deaths:#e5534b;--ped:#e0a23c;--cyclist:#4f9cf0;--fell:#22a565;--flat:#6b7280;--rose:#e5534b;--warn:#e0a23c;--ok:#22a565;--link-line:#4a4f66;--r-card:12px;--r-ctl:8px;--r-bar:3px;--b-card:1px solid #1c1f2e;--b-ctl:1px solid #2a2e42;--h-compact:36px;--h-std:44px;--h-hero:48px;--ease:150ms ease-out;--t-color:color var(--ease),border-color var(--ease),background-color var(--ease),opacity var(--ease);--bg:#08090d;--bg-card:#0f1118;--fill:#151826;--border:#1c1f2e;--border-hover:#2a2e42;--text:#e8eaf0;--text-dim:#8b90a8;--text-faint:#8b90a8;--gutter:2rem}
 @media(max-width:768px){:root{--gutter:1rem}}
