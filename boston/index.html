@@ -21,7 +21,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-:root{--bg:#08090d;--bg-card:#0f1118;--card:#0f1118;--border:#1c1f2e;--text:#e8eaf0;--text-dim:#8b90a8;--text-faint:#8b90a8;--accent:#ff4d4d;--accent-dim:rgba(255,77,77,.12);--deaths:#e5534b;--ped:#e0a23c;--cyclist:#4f9cf0;--fell:#22a565;--flat:#6b7280;--rose:#e5534b;--chip:#1a1d2b;--link-line:#4a4f66;--r-card:12px;--r-ctl:8px;--r-bar:3px;--b-card:1px solid #1c1f2e;--b-ctl:1px solid #2a2e42;--h-compact:36px;--h-std:44px;--h-hero:48px;--ease:150ms ease-out;--t-color:color var(--ease),border-color var(--ease),background-color var(--ease),opacity var(--ease);--warn:#e0a23c;--ok:#22a565;--gutter:2rem;--frame-h:101px}
+:root{--bg:#08090d;--bg-card:#0f1118;--card:#0f1118;--border:#1c1f2e;--text:#e8eaf0;--text-dim:#8b90a8;--text-faint:#8b90a8;--accent:#ec4899;--accent-dim:rgba(236,72,153,.12);--deaths:#e5534b;--ped:#e0a23c;--cyclist:#4f9cf0;--fell:#22a565;--flat:#6b7280;--rose:#e5534b;--chip:#1a1d2b;--link-line:#4a4f66;--r-card:12px;--r-ctl:8px;--r-bar:3px;--b-card:1px solid #1c1f2e;--b-ctl:1px solid #2a2e42;--h-compact:36px;--h-std:44px;--h-hero:48px;--ease:150ms ease-out;--t-color:color var(--ease),border-color var(--ease),background-color var(--ease),opacity var(--ease);--warn:#e0a23c;--ok:#22a565;--gutter:2rem;--frame-h:101px}
 @media(max-width:768px){:root{--gutter:1rem;--frame-h:57px}}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
@@ -38,10 +38,10 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .wordmark{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px;letter-spacing:-.01em;color:var(--text);text-decoration:none;white-space:nowrap;flex-shrink:0}
 .wordmark span{color:#ff4d4d}
 .hdr-right{display:flex;align-items:center;gap:8px;min-width:0}
-.hdr-link{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text-dim);text-decoration:none;padding:0 12px;min-height:var(--h-compact);display:inline-flex;align-items:center;border-radius:var(--r-ctl);transition:var(--t-color);white-space:nowrap}
+.hdr-link{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--text-dim);text-decoration:none;padding:0 12px;min-height:var(--h-std);display:inline-flex;align-items:center;border-radius:var(--r-ctl);transition:var(--t-color);white-space:nowrap}
 .hdr-link:hover{color:var(--text);background:#151826}
 .menu{position:relative;min-width:0}
-.hdr-btn{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text);background:transparent;border:var(--b-ctl);border-radius:var(--r-ctl);min-height:var(--h-compact);padding:0 10px 0 12px;display:inline-flex;align-items:center;gap:8px;cursor:pointer;max-width:100%;transition:var(--t-color)}
+.hdr-btn{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--text);background:transparent;border:var(--b-ctl);border-radius:var(--r-ctl);min-height:var(--h-std);padding:0 10px 0 12px;display:inline-flex;align-items:center;gap:8px;cursor:pointer;max-width:100%;transition:var(--t-color)}
 .hdr-btn:hover{background:#151826;border-color:var(--text-dim)}
 .hdr-btn[aria-expanded=true]{border-color:var(--accent)}
 .hdr-btn[aria-expanded=true] .ico{transform:rotate(180deg)}
@@ -51,7 +51,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .menu-pop{position:absolute;right:0;top:calc(100% + 8px);min-width:260px;max-height:calc(100vh - 80px);overflow-y:auto;background:#0f1118;border:var(--b-ctl);border-radius:var(--r-card);padding:8px;box-shadow:0 12px 40px rgba(0,0,0,.5);z-index:1200}
 .menu-pop[hidden]{display:none}
 .menu-pop ul{list-style:none}
-.menu-pop a{display:flex;align-items:center;gap:10px;min-height:var(--h-compact);padding:6px 10px;border-radius:var(--r-ctl);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text);text-decoration:none;transition:var(--t-color)}
+.menu-pop a{display:flex;align-items:center;gap:10px;min-height:var(--h-std);padding:6px 10px;border-radius:var(--r-ctl);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--text);text-decoration:none;transition:var(--t-color)}
 .menu-pop a:hover,.menu-pop a:focus-visible{background:#1a1d2b}
 .menu-pop a[aria-current]{background:#1a1d2b}
 .m-name{flex:1;white-space:nowrap}
@@ -68,13 +68,13 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .sec-menu .menu-pop a[aria-current]{color:var(--text);box-shadow:inset 2px 0 0 var(--accent)}
 .sec-hdr{scroll-margin-top:calc(var(--frame-h) + 16px)}
 .hero{position:relative;padding:64px 0 40px;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(255,77,77,.12),transparent 60%)}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(236,72,153,.12),transparent 60%)}
 .hero::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.015) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black,transparent)}
 .hero-inner{position:relative;z-index:2}
-.hero-label{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;padding:6px 14px;background:var(--accent-dim);border:1px solid rgba(255,77,77,.2);border-radius:100px;margin-bottom:16px;animation:fadeIn .6s ease}
+.hero-label{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;padding:6px 14px;background:var(--accent-dim);border:1px solid rgba(236,72,153,0.3);border-radius:100px;margin-bottom:16px;animation:fadeIn .6s ease}
 .hero-label::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 2s ease infinite}
 .hero h1{font-family:'DM Sans',serif;font-size:clamp(2.5rem,5vw,4rem);font-weight:700;line-height:1.08;margin-bottom:16px;animation:fadeUp .8s ease .1s both}
-.hero h1 em{font-style:normal;background:linear-gradient(135deg, #ff4d4d, color-mix(in srgb, #ff4d4d 55%, #ffffff));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero h1 em{font-style:normal;background:linear-gradient(135deg, #ec4899, color-mix(in srgb, #ec4899 55%, #ffffff));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero-sub{font-size:clamp(.95rem,2.5vw,1.1rem);font-weight:300;color:var(--text-dim);max-width:720px;margin-bottom:24px;animation:fadeUp .8s ease .25s both}
 .stats-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden;animation:fadeUp .8s ease .4s both}
 .stat-cell{padding:1.2rem 1.4rem;background:var(--bg-card)}
@@ -117,7 +117,7 @@ main a:hover,footer a:hover,.meth-text a:hover,.map-card a:hover{color:var(--acc
 .map-hint.show{opacity:1}
 .map-chips{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:.6rem 1rem;border-bottom:1px solid var(--border);background:#151826}
 .map-chips[hidden]{display:none}
-.map-chip{display:inline-flex;align-items:center;gap:2px;min-height:var(--h-compact);padding:0 0 0 12px;border-radius:var(--r-ctl);border:1px solid rgba(255,77,77,.2);background:rgba(255,77,77,.12);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text)}
+.map-chip{display:inline-flex;align-items:center;gap:2px;min-height:var(--h-compact);padding:0 0 0 12px;border-radius:var(--r-ctl);border:1px solid rgba(236,72,153,0.3);background:rgba(236,72,153,.12);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text)}
 .map-chip .chip-k{color:var(--text-dim);margin-right:4px}
 .map-chip button{display:inline-flex;align-items:center;justify-content:center;width:34px;min-height:calc(var(--h-compact) - 2px);background:transparent;border:0;border-radius:var(--r-ctl);color:var(--text-dim);cursor:pointer;transition:var(--t-color)}
 .map-chip button:hover{color:var(--text)}
@@ -172,13 +172,13 @@ main a:hover,footer a:hover,.meth-text a:hover,.map-card a:hover{color:var(--acc
 .map-filter-sep{width:1px;height:20px;background:rgba(255,255,255,.08);margin:0 10px;flex-shrink:0}
 .map-btn{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;min-height:var(--h-compact);padding:6px 12px;border-radius:var(--r-ctl);border:var(--b-ctl);background:transparent;color:var(--text-dim);cursor:pointer;transition:var(--t-color);white-space:nowrap}
 .map-btn:hover{border-color:var(--text-dim);color:var(--text)}
-.map-btn.active{background:rgba(255,77,77,.12);border-color:rgba(255,77,77,.2);color:var(--accent)}
-.map-btn.active-blue{background:rgba(255,77,77,.12);border-color:rgba(255,77,77,.2);color:var(--accent)}
+.map-btn.active{background:rgba(236,72,153,.12);border-color:rgba(236,72,153,0.3);color:var(--accent)}
+.map-btn.active-blue{background:rgba(236,72,153,.12);border-color:rgba(236,72,153,0.3);color:var(--accent)}
 .commute-toggle{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;min-height:var(--h-compact);padding:6px 14px;border-radius:var(--r-ctl);border:var(--b-ctl);background:transparent;color:var(--text-dim);cursor:pointer;transition:var(--t-color);white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
 .map-filter-toggle{display:none}
 .map-filter-mobile{display:none}
 .commute-toggle:hover{border-color:var(--text-dim);color:var(--text)}
-.commute-toggle.open{background:rgba(255,77,77,.12);border-color:var(--accent);color:var(--accent)}
+.commute-toggle.open{background:rgba(236,72,153,.12);border-color:var(--accent);color:var(--accent)}
 .commute-panel{display:none;padding:.85rem 1rem;background:#151826;border-bottom:1px solid var(--border);gap:.6rem;align-items:flex-end;flex-wrap:wrap}
 .commute-panel.show{display:flex}
 .commute-field{display:flex;flex-direction:column;gap:3px;flex:1;min-width:180px}
@@ -196,9 +196,9 @@ main a:hover,footer a:hover,.meth-text a:hover,.map-card a:hover{color:var(--acc
 .crash-popup .leaflet-popup-content{margin:14px 18px;font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.5}
 .crash-popup .leaflet-popup-close-button{color:#6b7094!important;font-size:20px!important;padding:4px 6px 0 0!important;line-height:1!important;width:24px!important;height:24px!important}
 .crash-popup .leaflet-popup-close-button:hover{color:#e8eaf0!important;background:transparent!important}
-.popup-rank{font-family:'JetBrains Mono',monospace;font-size:12px;color:#ff4d4d;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px}
+.popup-rank{font-family:'JetBrains Mono',monospace;font-size:12px;color:#ec4899;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px}
 .popup-name{font-weight:600;font-size:15px;margin-bottom:6px}
-.popup-count{display:flex;align-items:baseline;gap:6px;white-space:nowrap}.popup-num{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;line-height:1.1;color:#ff4d4d}.popup-unit{font-family:'DM Sans',sans-serif;font-size:13px;color:#e8eaf0}.popup-years{font-family:'JetBrains Mono',monospace;font-size:12px;color:#8b90a8;white-space:nowrap;margin:2px 0 6px}
+.popup-count{display:flex;align-items:baseline;gap:6px;white-space:nowrap}.popup-num{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;line-height:1.1;color:#ec4899}.popup-unit{font-family:'DM Sans',sans-serif;font-size:13px;color:#e8eaf0}.popup-years{font-family:'JetBrains Mono',monospace;font-size:12px;color:#8b90a8;white-space:nowrap;margin:2px 0 6px}
 .popup-trend{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;margin-bottom:6px}
 .popup-note{font-size:12px;color:#8b90a8;line-height:1.45}
 .popup-tags{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap}
@@ -379,8 +379,8 @@ footer{text-align:center;padding:2rem 1rem;font-size:.75rem;color:var(--text-fai
         </div>
         <a class="hdr-link" href="../#cities">All cities</a>
         <div class="menu city-menu" id="cityMenu">
-            <button type="button" class="hdr-btn" id="cityMenuBtn" aria-expanded="false" aria-controls="cityMenuPop" aria-label="Boston: switch city"><span class="m-dot" style="background:#ff4d4d"></span><span class="hdr-btn-text">Boston</span><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg></button>
-            <div class="menu-pop" id="cityMenuPop" hidden><a class="menu-all" href="../#cities">All cities</a><ul aria-label="All metros"><li><a href="../austin/"><span class="m-dot" style="background:#0ea5e9"></span><span class="m-name">Austin</span><span class="m-state">Texas</span></a></li><li><a href="../boston/" aria-current="page"><span class="m-dot" style="background:#8b90a8"></span><span class="m-name">Boston</span><span class="m-state">Massachusetts</span></a></li><li><a href="../chicago/"><span class="m-dot" style="background:#a855f7"></span><span class="m-name">Chicago</span><span class="m-state">Illinois</span></a></li><li><a href="../dallas/"><span class="m-dot" style="background:#eab308"></span><span class="m-name">Dallas</span><span class="m-state">Texas</span></a></li><li><a href="../denver/"><span class="m-dot" style="background:#ff4d4d"></span><span class="m-name">Denver Metro</span><span class="m-state">Colorado</span></a></li><li><a href="../detroit/"><span class="m-dot" style="background:#f43f5e"></span><span class="m-name">Detroit</span><span class="m-state">Michigan</span></a></li><li><a href="../fort-worth/"><span class="m-dot" style="background:#84cc16"></span><span class="m-name">Fort Worth</span><span class="m-state">Texas</span></a></li><li><a href="../houston/"><span class="m-dot" style="background:#14b8a6"></span><span class="m-name">Houston Metro</span><span class="m-state">Texas</span></a></li><li><a href="../nyc/"><span class="m-dot" style="background:#f59e0b"></span><span class="m-name">New York City</span><span class="m-state">New York</span></a></li><li><a href="../oakland/"><span class="m-dot" style="background:#a78bfa"></span><span class="m-name">Oakland Metro</span><span class="m-state">California</span></a></li><li><a href="../philadelphia/"><span class="m-dot" style="background:#06b6d4"></span><span class="m-name">Philadelphia</span><span class="m-state">Pennsylvania</span></a></li><li><a href="../riverside/"><span class="m-dot" style="background:#f87171"></span><span class="m-name">Riverside Metro</span><span class="m-state">California</span></a></li><li><a href="../sacramento/"><span class="m-dot" style="background:#fbbf24"></span><span class="m-name">Sacramento</span><span class="m-state">California</span></a></li><li><a href="../san-antonio/"><span class="m-dot" style="background:#f97316"></span><span class="m-name">San Antonio</span><span class="m-state">Texas</span></a></li><li><a href="../san-diego/"><span class="m-dot" style="background:#3b82f6"></span><span class="m-name">San Diego</span><span class="m-state">California</span></a></li><li><a href="../sf/"><span class="m-dot" style="background:#14b8a6"></span><span class="m-name">San Francisco</span><span class="m-state">California</span></a></li><li><a href="../san-jose/"><span class="m-dot" style="background:#d946ef"></span><span class="m-name">San Jose Metro</span><span class="m-state">California</span></a></li><li><a href="../seattle/"><span class="m-dot" style="background:#818cf8"></span><span class="m-name">Seattle</span><span class="m-state">Washington</span></a></li><li><a href="../salt-lake-city/"><span class="m-dot" style="background:#67e8f9"></span><span class="m-name">Wasatch Front</span><span class="m-state">Utah</span></a></li><li><a href="../dc/"><span class="m-dot" style="background:#10b981"></span><span class="m-name">Washington DC</span><span class="m-state">District of Columbia</span></a></li></ul></div>
+            <button type="button" class="hdr-btn" id="cityMenuBtn" aria-expanded="false" aria-controls="cityMenuPop" aria-label="Boston: switch city"><span class="m-dot" style="background:#ec4899"></span><span class="hdr-btn-text">Boston</span><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="menu-pop" id="cityMenuPop" hidden><a class="menu-all" href="../#cities">All cities</a><ul aria-label="All metros"><li><a href="../austin/"><span class="m-dot" style="background:#0ea5e9"></span><span class="m-name">Austin</span><span class="m-state">Texas</span></a></li><li><a href="../boston/" aria-current="page"><span class="m-dot" style="background:#ec4899"></span><span class="m-name">Boston</span><span class="m-state">Massachusetts</span></a></li><li><a href="../chicago/"><span class="m-dot" style="background:#a855f7"></span><span class="m-name">Chicago</span><span class="m-state">Illinois</span></a></li><li><a href="../dallas/"><span class="m-dot" style="background:#eab308"></span><span class="m-name">Dallas</span><span class="m-state">Texas</span></a></li><li><a href="../denver/"><span class="m-dot" style="background:#ff4d4d"></span><span class="m-name">Denver Metro</span><span class="m-state">Colorado</span></a></li><li><a href="../detroit/"><span class="m-dot" style="background:#f43f5e"></span><span class="m-name">Detroit</span><span class="m-state">Michigan</span></a></li><li><a href="../fort-worth/"><span class="m-dot" style="background:#84cc16"></span><span class="m-name">Fort Worth</span><span class="m-state">Texas</span></a></li><li><a href="../houston/"><span class="m-dot" style="background:#14b8a6"></span><span class="m-name">Houston Metro</span><span class="m-state">Texas</span></a></li><li><a href="../nyc/"><span class="m-dot" style="background:#f59e0b"></span><span class="m-name">New York City</span><span class="m-state">New York</span></a></li><li><a href="../oakland/"><span class="m-dot" style="background:#a78bfa"></span><span class="m-name">Oakland Metro</span><span class="m-state">California</span></a></li><li><a href="../philadelphia/"><span class="m-dot" style="background:#06b6d4"></span><span class="m-name">Philadelphia</span><span class="m-state">Pennsylvania</span></a></li><li><a href="../riverside/"><span class="m-dot" style="background:#f87171"></span><span class="m-name">Riverside Metro</span><span class="m-state">California</span></a></li><li><a href="../sacramento/"><span class="m-dot" style="background:#fbbf24"></span><span class="m-name">Sacramento</span><span class="m-state">California</span></a></li><li><a href="../san-antonio/"><span class="m-dot" style="background:#f97316"></span><span class="m-name">San Antonio</span><span class="m-state">Texas</span></a></li><li><a href="../san-diego/"><span class="m-dot" style="background:#3b82f6"></span><span class="m-name">San Diego</span><span class="m-state">California</span></a></li><li><a href="../sf/"><span class="m-dot" style="background:#14b8a6"></span><span class="m-name">San Francisco</span><span class="m-state">California</span></a></li><li><a href="../san-jose/"><span class="m-dot" style="background:#d946ef"></span><span class="m-name">San Jose Metro</span><span class="m-state">California</span></a></li><li><a href="../seattle/"><span class="m-dot" style="background:#818cf8"></span><span class="m-name">Seattle</span><span class="m-state">Washington</span></a></li><li><a href="../salt-lake-city/"><span class="m-dot" style="background:#67e8f9"></span><span class="m-name">Wasatch Front</span><span class="m-state">Utah</span></a></li><li><a href="../dc/"><span class="m-dot" style="background:#10b981"></span><span class="m-name">Washington DC</span><span class="m-state">District of Columbia</span></a></li></ul></div>
         </div>
     </div>
 </div></header>
@@ -490,10 +490,10 @@ footer{text-align:center;padding:2rem 1rem;font-size:.75rem;color:var(--text-fai
         <div id="crashMap" role="region" aria-label="Boston crash map. The Top 10 table below lists the same hotspots."></div>
         <div class="map-legend" id="mapLegend">
             <div class="lg-item"><span class="lg-top" aria-hidden="true">1</span>Top 10</div>
-            <div class="lg-item"><svg width="16" height="16" aria-hidden="true"><circle cx="8" cy="8" r="5" fill="#ff4d4d" fill-opacity=".85" stroke="#fff" stroke-width="1"/></svg>Hotspot</div>
+            <div class="lg-item"><svg width="16" height="16" aria-hidden="true"><circle cx="8" cy="8" r="5" fill="#ec4899" fill-opacity=".85" stroke="#fff" stroke-width="1"/></svg>Hotspot</div>
             <div class="lg-item"><svg width="20" height="8" aria-hidden="true"><line x1="1" y1="4" x2="19" y2="4" stroke="#9aa3b8" stroke-width="2" stroke-opacity=".55"/></svg>Highway</div><div class="lg-item"><svg width="20" height="8" aria-hidden="true"><line x1="1" y1="4" x2="19" y2="4" stroke="#5b6174" stroke-width="2" stroke-opacity=".55"/></svg>Arterial</div>
             <div class="lg-item" id="lgCommute" hidden><svg width="20" height="8" aria-hidden="true"><line x1="1" y1="4" x2="19" y2="4" stroke="#fff" stroke-width="3" stroke-dasharray="5 4"/></svg>Commute</div>
-            <div class="lg-item"><svg width="28" height="18" aria-hidden="true"><circle cx="5" cy="12" r="3" fill="#ff4d4d" fill-opacity=".85" stroke="#fff" stroke-width="1"/><circle cx="19" cy="9" r="7.5" fill="#ff4d4d" fill-opacity=".85" stroke="#fff" stroke-width="1"/></svg>Larger dot, more crashes</div>
+            <div class="lg-item"><svg width="28" height="18" aria-hidden="true"><circle cx="5" cy="12" r="3" fill="#ec4899" fill-opacity=".85" stroke="#fff" stroke-width="1"/><circle cx="19" cy="9" r="7.5" fill="#ec4899" fill-opacity=".85" stroke="#fff" stroke-width="1"/></svg>Larger dot, more crashes</div>
         </div>
         <div class="map-hint" id="mapHint" aria-hidden="true"></div>
         <div class="map-empty" id="mapEmpty" hidden></div>
@@ -761,7 +761,7 @@ const fmtN=v=>Number(v||0).toLocaleString('en-US');
 // One place decides chart colors (DESIGN_RULES.md, Color). 'count' = any single series of crash counts
 // = the city accent. Fixed meanings only for deaths, pedestrians and cyclists. Trend directions
 // (fell/flat/rose) only on trend indicators, always with an arrow. 'neutral' = everything else.
-const PAL={count:'#ff4d4d',deaths:'#e5534b',ped:'#e0a23c',cyclist:'#4f9cf0',fell:'#22a565',flat:'#6b7280',rose:'#e5534b',neutral:'#8b90a8',muted:'#3a3f55'};
+const PAL={count:'#ec4899',deaths:'#e5534b',ped:'#e0a23c',cyclist:'#4f9cf0',fell:'#22a565',flat:'#6b7280',rose:'#e5534b',neutral:'#8b90a8',muted:'#3a3f55'};
 function chartColor(measure,alpha){const h=PAL[measure]||PAL.count;if(alpha==null)return h;const n=parseInt(h.slice(1),16);return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+alpha+')';}
 if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)Chart.defaults.animation=false;const fmtR1=v=>Number(v||0).toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1});
 
@@ -1695,7 +1695,7 @@ function showReport(lat,lon,addr){
         }
         miniLayers.clearLayers();
         const radiusM=r<=0.002?161:r<=0.005?402:805;
-        L.circle([lat,lon],{radius:radiusM,color:'#ff4d4d',fillColor:'#ff4d4d',fillOpacity:0.04,weight:1.5,opacity:0.4,dashArray:'6,4'}).addTo(miniLayers);
+        L.circle([lat,lon],{radius:radiusM,color:'#ec4899',fillColor:'#ec4899',fillOpacity:0.04,weight:1.5,opacity:0.4,dashArray:'6,4'}).addTo(miniLayers);
         const maxCount=Math.max.apply(null,matched.map(function(g){return g[2]}));
         matched.forEach(function(g){
             const intensity=Math.min(g[2]/Math.max(maxCount,1),1);

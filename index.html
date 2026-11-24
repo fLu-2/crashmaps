@@ -20,728 +20,901 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--accent:#ff4d4d;--deaths:#e5534b;--ped:#e0a23c;--cyclist:#4f9cf0;--link-line:#4a4f66;--r-card:12px;--r-ctl:8px;--r-bar:3px;--b-card:1px solid #1c1f2e;--b-ctl:1px solid #2a2e42;--h-compact:36px;--h-std:44px;--h-hero:48px;--ease:150ms ease-out;--t-color:color var(--ease),border-color var(--ease),background-color var(--ease),opacity var(--ease);--bg:#08090d;--bg-card:#0f1118;--border:#1c1f2e;--border-hover:#2a2e42;--text:#e8eaf0;--text-dim:#8b90a8;--text-faint:#8b90a8;--red:#ff4d4d;--red-dim:rgba(255,77,77,0.12);--amber:#ffb347;--blue:#4da6ff;--green:#4dff91;--purple:#b07dff;--cyan:#67e8f9}
+:root{--accent:#ff4d4d;--accent-ink:#08090d;--deaths:#e5534b;--ped:#e0a23c;--cyclist:#4f9cf0;--fell:#22a565;--flat:#6b7280;--rose:#e5534b;--warn:#e0a23c;--ok:#22a565;--link-line:#4a4f66;--r-card:12px;--r-ctl:8px;--r-bar:3px;--b-card:1px solid #1c1f2e;--b-ctl:1px solid #2a2e42;--h-compact:36px;--h-std:44px;--h-hero:48px;--ease:150ms ease-out;--t-color:color var(--ease),border-color var(--ease),background-color var(--ease),opacity var(--ease);--bg:#08090d;--bg-card:#0f1118;--fill:#151826;--border:#1c1f2e;--border-hover:#2a2e42;--text:#e8eaf0;--text-dim:#8b90a8;--text-faint:#8b90a8;--gutter:2rem}
+@media(max-width:768px){:root{--gutter:1rem}}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 /* One link style (DESIGN_RULES.md): text color, 1 px #4a4f66 underline, accent on hover */
-.about-col p a,.cf-note a,.cf-faq a,footer .foot-note a,.nc-card a{color:var(--text);text-decoration:underline;text-decoration-color:var(--link-line);text-decoration-thickness:1px;text-underline-offset:2px;border-bottom:none;transition:var(--t-color)}
-.about-col p a:hover,.cf-note a:hover,.cf-faq a:hover,footer .foot-note a:hover,.nc-card a:hover{color:#fff;text-decoration-color:var(--accent)}
+.about-col p a,.cf-note a,.cf-callout a,.cf-faq a,footer .foot-note a,.nc-card a,.finder-panel .txt-link{color:var(--text);text-decoration:underline;text-decoration-color:var(--link-line);text-decoration-thickness:1px;text-underline-offset:2px;transition:var(--t-color)}
+.about-col p a:hover,.cf-note a:hover,.cf-callout a:hover,.cf-faq a:hover,footer .foot-note a:hover,.nc-card a:hover,.finder-panel .txt-link:hover{color:#fff;text-decoration-color:var(--accent)}
+a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible,[tabindex]:focus-visible,[role=button]:focus-visible{outline:2px solid var(--accent)!important;outline-offset:2px}
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+.ico{width:16px;height:16px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-
-/* Header */
-header{padding:1.25rem 2rem;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
-.logo{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.95rem;letter-spacing:-.01em}
-.logo span{color:var(--red)}
-header nav{display:flex;gap:1.5rem;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text-dim)}
-header nav a{transition:var(--t-color)}header nav a:hover{color:var(--text)}
-
-/* Hero */
-.hero{position:relative;min-height:90vh;display:flex;align-items:center;justify-content:center;padding:4rem 2rem;overflow:hidden;text-align:center}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(255,77,77,0.05),transparent 60%)}
-.hero::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.015) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black,transparent)}
-.hero-inner{position:relative;z-index:2;max-width:860px}
-.hero-label{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:var(--text-dim);letter-spacing:.08em;text-transform:uppercase;padding:6px 14px;background:var(--bg-card);border:var(--b-ctl);border-radius:100px;margin-bottom:2rem;animation:fadeIn .6s ease}
-.hero-label::before{content:'';width:6px;height:6px;background:var(--text-dim);border-radius:50%;animation:blink 2s ease infinite}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,7vw,5.2rem);font-weight:700;line-height:1.08;margin-bottom:1.5rem;animation:fadeUp .8s ease .1s both}
-.hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 55%,#ffffff));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{max-width:560px;margin:0 auto 3rem;color:var(--text-dim);font-size:clamp(.95rem,2.5vw,1.1rem);font-weight:300;line-height:1.7;animation:fadeUp .8s ease .25s both}
-.hero-sub strong{color:var(--text);font-weight:500}
-
-/* Stat bar */
-.stat-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:var(--b-card);border-radius:var(--r-card);overflow:hidden;max-width:700px;margin:0 auto;animation:fadeUp .8s ease .4s both}
-.stat-bar .sb-cell{padding:1.2rem 1.4rem;background:var(--bg-card);text-align:center}
-.stat-bar .sb-val{font-family:'JetBrains Mono',monospace;font-size:clamp(1.1rem,3vw,1.5rem);font-weight:500;color:var(--text)}.stat-bar .sb-val.deaths{color:var(--deaths)}
-.stat-bar .sb-lbl{font-size:.75rem;color:var(--text-faint);margin-top:4px;line-height:1.4}
-
-/* City list */
-.cities{max-width:1200px;margin:4rem auto 0;padding:0 2rem 0}
-.section-label{font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint);margin-bottom:1.25rem}
-@media(max-width:768px){.section-label{white-space:nowrap}.section-label .lbl-long{display:none}}
-@media(max-width:768px){.hero{min-height:auto;padding:2rem 1.25rem}.stat-bar{grid-template-columns:repeat(2,1fr)}.hero::before,.hero::after{display:none}.hero-label{margin-bottom:1.25rem}.hero h1{margin-bottom:1rem}.hero-sub{margin-bottom:2rem}}
-.city-list{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.city-row{display:flex;flex-direction:column;gap:.6rem;padding:1rem 1.15rem;background:var(--bg-card);border:var(--b-card);border-radius:var(--r-card);transition:var(--t-color);text-decoration:none;color:inherit;position:relative}
-.city-row:hover{background:#13141f;border-color:var(--border-hover)}
-.city-hdr{display:flex;align-items:center;gap:.6rem}
-.city-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.city-name{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;line-height:1.15;flex:1}
-.city-name small{display:block;font-family:'DM Sans',sans-serif;font-size:.75rem;color:var(--text-dim);font-weight:400;margin-top:.12rem}
-.city-stats{display:flex;gap:1.25rem}
-.cs-cell{display:flex;align-items:baseline;gap:.3rem}
-.cs-cell .cs-val{font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:500;color:var(--text)}
-.cs-cell .cs-lbl{font-size:.75rem;color:var(--text-faint)}
-.city-arrow{position:absolute;top:1rem;right:1rem;color:var(--text-faint);transition:color var(--ease),transform var(--ease)}
-.city-row:hover .city-arrow{color:var(--text);transform:translateX(3px)}
-@media(max-width:1024px){.city-list{grid-template-columns:repeat(2,1fr)}}
-.city-show-more{display:none}
+/* Frame (DESIGN_RULES.md, Layout and spacing): one 1136 px container; the same 56 px sticky header as the dashboards */
+.wrap{max-width:calc(1136px + 2 * var(--gutter));margin-left:auto;margin-right:auto;padding-left:var(--gutter);padding-right:var(--gutter);width:100%}
+.frame{position:sticky;top:0;z-index:1100;background:rgba(8,9,13,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.site-hdr{height:56px;border-bottom:1px solid var(--border)}
+.hdr-inner{height:100%;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.wordmark{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px;letter-spacing:-.01em;color:var(--text);text-decoration:none;white-space:nowrap;flex-shrink:0}
+.wordmark span{color:#ff4d4d}
+.hdr-right{display:flex;align-items:center;gap:8px;min-width:0}
+.hdr-nav{display:flex;align-items:center;gap:2px}
+.hdr-link{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--text-dim);text-decoration:none;padding:0 12px;min-height:var(--h-std);display:inline-flex;align-items:center;border-radius:var(--r-ctl);transition:var(--t-color);white-space:nowrap}
+.hdr-link:hover{color:var(--text);background:var(--fill)}
+.menu{position:relative;min-width:0}
+.hdr-btn{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--text);background:transparent;border:var(--b-ctl);border-radius:var(--r-ctl);min-height:var(--h-std);padding:0 10px 0 14px;display:inline-flex;align-items:center;gap:8px;cursor:pointer;max-width:100%;transition:var(--t-color)}
+.hdr-btn:hover{background:var(--fill);border-color:var(--text-dim)}
+.hdr-btn[aria-expanded=true]{border-color:var(--accent)}
+.hdr-btn[aria-expanded=true] .ico{transform:rotate(180deg)}
+.hdr-btn .ico{color:var(--text-dim);transition:transform var(--ease)}
+.m-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;display:inline-block}
+.menu-pop{position:absolute;right:0;top:calc(100% + 8px);min-width:260px;max-height:calc(100vh - 80px);overflow-y:auto;background:var(--bg-card);border:var(--b-ctl);border-radius:var(--r-card);padding:8px;box-shadow:0 12px 40px rgba(0,0,0,.5);z-index:1200}
+.menu-pop[hidden]{display:none}
+.menu-pop ul{list-style:none}
+.menu-pop a{display:flex;align-items:center;gap:10px;min-height:var(--h-std);padding:6px 10px;border-radius:var(--r-ctl);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--text);text-decoration:none;transition:var(--t-color)}
+.menu-pop a:hover,.menu-pop a:focus-visible{background:#1a1d2b}
+.m-name{flex:1;white-space:nowrap}
+.m-state{color:var(--text-dim);font-weight:400;white-space:nowrap}
+.menu-page{display:none}
 @media(max-width:768px){
-    button,select,.rank-btn,.city-show-more{min-height:var(--h-std)}
-    .city-list{grid-template-columns:1fr}
-    .city-row{padding:.85rem 1rem}
-    .city-row.city-hidden{display:none}
-    @keyframes cityReveal{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
-    .city-row.city-reveal{animation:cityReveal .35s ease both}
-    .city-arrow{display:none}
-    .cs-cell .cs-val{font-size:.78rem}
-    .cs-cell .cs-lbl{font-size:.75rem}
-    .city-name small{font-size:.75rem}
-    .city-show-more{display:block;width:100%;padding:.7rem;margin-top:8px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-ctl);color:var(--text-dim);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;min-height:var(--h-std);cursor:pointer;transition:var(--t-color)}
-    .city-show-more:hover{background:#13141f;border-color:var(--border-hover);color:var(--text)}
-    header{padding:1rem 1.25rem}
-    header nav{gap:.75rem;font-size:.75rem}
-    header nav a{min-height:44px;display:inline-flex;align-items:center}
-    .cities{padding:0 1rem}
-    .compare{padding:0 1rem}
-    .about{padding:0 1.25rem}
-    footer{padding:2rem 1.25rem 3rem}
+    .hdr-nav{display:none}
+    .menu-page{display:block;border-bottom:1px solid var(--border);margin-bottom:4px;padding-bottom:4px}
+    .menu-pop{position:fixed;left:var(--gutter);right:var(--gutter);top:64px;min-width:0;max-height:calc(100vh - 80px)}
 }
 
-/* Compare section */
-.compare{max-width:1200px;margin:4rem auto 0;padding:0 2rem}
-.rank-toggle{display:flex;gap:6px;margin-bottom:1.25rem;flex-wrap:wrap}
-.rank-btn{white-space:nowrap}
-.rank-btn{padding:.45rem .9rem;min-height:var(--h-compact);border-radius:var(--r-ctl);border:var(--b-ctl);background:var(--bg-card);color:var(--text-dim);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:var(--t-color)}
-.rank-btn:hover{border-color:var(--border-hover);color:var(--text)}
-.rank-btn.active{background:rgba(255,255,255,.06);border-color:var(--text-dim);color:var(--text)}
-.rank-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem}
-.rank-subtitle{font-size:.75rem;color:var(--text-faint);font-family:'DM Sans',sans-serif;margin-bottom:1.25rem}
-.rank-rows{display:flex;flex-direction:column;gap:.5rem}
-.rank-row{display:grid;grid-template-columns:130px 1fr 62px;align-items:center;gap:.5rem}
-.rank-label{display:flex;align-items:center;gap:.4rem}
-.rank-label .rank-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.rank-label span{font-size:.75rem;color:var(--text-dim)}
-.rank-label .yr-tag,.yr-tag{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text-faint);margin-left:.35rem}
-.rank-bar{height:18px;border-radius:var(--r-bar);transition:width 200ms ease-out}
-.rank-val{font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;text-align:right;color:var(--text)}
-.rank-na{font-size:.75rem;color:var(--text-faint);font-family:'DM Sans',sans-serif;font-style:italic}
-.rank-divider{height:1px;background:var(--border);margin:.15rem 0}
-@media(max-width:768px){.compare{padding:0 1rem}.rank-card{padding:1rem}.rank-row{grid-template-columns:1fr auto!important;gap:.25rem}.rank-row .rank-bar-cell{display:none}.rank-toggle{gap:4px}.rank-btn{padding:.35rem .7rem;min-height:var(--h-std)}}
-.cmp-sub{font-size:.75rem;color:var(--text-faint);margin-top:.2rem}
-.denver-col .cmp-val{color:var(--red)}
-.slc-col .cmp-val{color:var(--cyan)}
+/* Section pattern (DESIGN_RULES.md): small mono label, Playfair title, one line of description */
+.sec{margin-top:72px;scroll-margin-top:72px}
+.sec-label{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.sec-title{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;line-height:1.2;margin-bottom:8px}
+.sec-desc{font-size:16px;font-weight:300;color:var(--text-dim);max-width:720px;margin-bottom:24px}
+@media(max-width:768px){.sec{margin-top:48px}.sec-title{font-size:26px}.sec-desc{font-size:15px}}
+.card{background:var(--bg-card);border:var(--b-card);border-radius:var(--r-card);padding:20px}
+.card-sub{font-size:13px;color:var(--text-dim);line-height:1.5}
+.src-tag,.yr-tag{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-faint)}
 
-/* National context */
-.nc-wrap{max-width:1200px;margin:3rem auto 0;padding:0 2rem}
-.nc-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem 1.75rem}
-.nc-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1.5rem}
-.nc-val{font-family:'JetBrains Mono',monospace;font-size:clamp(1.15rem,2.5vw,1.4rem);font-weight:600;color:var(--text);margin-bottom:.25rem}
-.nc-lbl{font-size:.75rem;color:var(--text-faint);line-height:1.45}
-.nc-footer{margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap}
-.nc-connect{font-size:.78rem;color:var(--text-dim);font-weight:300}
-.nc-sources{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text-faint);flex-shrink:0}
-@media(max-width:1024px){.nc-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:768px){.nc-wrap{padding:0 1rem}.nc-card{padding:1.15rem 1rem}.nc-grid{grid-template-columns:repeat(2,1fr);gap:1.15rem}.nc-footer{flex-direction:column;gap:.5rem}}
+/* Hero */
+.hero{position:relative;padding:64px 0 40px}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 30% 0%,rgba(255,77,77,0.06),transparent 60%);pointer-events:none}
+.hero-inner{position:relative;z-index:2}
+.hero h1{font-family:'Playfair Display',serif;font-size:64px;font-weight:700;line-height:1.08;margin-bottom:16px}
+.hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 55%,#ffffff));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{max-width:620px;color:var(--text-dim);font-size:17px;font-weight:300;line-height:1.6;margin-bottom:32px}
+.hero-sub strong{color:var(--text);font-weight:500}
+@media(max-width:768px){.hero{padding:40px 0 24px}.hero h1{font-size:40px;margin-bottom:12px}.hero-sub{font-size:16px;margin-bottom:24px}}
+
+/* City search (redesign bucket 7) */
+.finder{position:relative;max-width:640px;margin-bottom:40px}
+.finder-lbl{display:block;font-size:15px;font-weight:500;color:var(--text);margin-bottom:8px}
+.finder-box{position:relative;display:flex;align-items:center}
+.finder-box .ico-search{position:absolute;left:18px;width:20px;height:20px;color:var(--text-dim);pointer-events:none}
+#cityQ{width:100%;height:56px;padding:0 52px 0 50px;background:var(--fill);border:1px solid #3a3f55;border-radius:var(--r-ctl);color:var(--text);font-family:'DM Sans',sans-serif;font-size:18px;box-shadow:0 8px 32px rgba(0,0,0,.35);transition:var(--t-color)}
+#cityQ::placeholder{color:var(--text-dim)}
+#cityQ:hover{border-color:var(--text-dim)}
+#cityQ:focus{border-color:var(--accent)}
+.finder-key{position:absolute;right:14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-dim);border:var(--b-ctl);border-radius:4px;padding:1px 7px;pointer-events:none}
+@media(pointer:coarse){.finder-key{display:none}}
+.finder-panel{position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:50;background:var(--bg-card);border:var(--b-ctl);border-radius:var(--r-card);box-shadow:0 16px 48px rgba(0,0,0,.6);overflow:hidden}
+.finder-panel[hidden],.finder-panel [hidden]{display:none!important}
+#finderList{list-style:none;max-height:min(420px,60vh);overflow-y:auto;padding:6px}
+#finderList li a{display:flex;align-items:center;gap:12px;min-height:56px;padding:8px 12px;border-radius:var(--r-ctl);color:var(--text);transition:var(--t-color)}
+#finderList li a:hover,#finderList li[aria-selected=true] a{background:#1a1d2b}
+#finderList li[aria-selected=true] .ico{color:#fff;transform:translateX(2px)}
+.fo-text{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.35}
+.fo-name{font-size:16px;font-weight:500}
+.fo-meta{font-size:13px;color:var(--text-dim)}
+#finderList .ico{color:var(--text-dim);transition:color var(--ease),transform var(--ease)}
+.finder-foot{border-top:1px solid var(--border);padding:12px 18px;font-size:13px;color:var(--text-dim)}
+.txt-btn{background:none;border:0;padding:0;font:inherit;cursor:pointer}
+.finder-panel .pad{padding:20px}
+.fe-title{font-size:17px;font-weight:600;color:var(--text);margin-bottom:6px}
+.fe-text{font-size:14px;color:var(--text-dim);line-height:1.6;margin-bottom:16px}
+.fe-actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:var(--h-hero);padding:0 20px;background:var(--accent);color:var(--accent-ink);border:0;border-radius:var(--r-ctl);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:var(--t-color)}
+.btn-primary:hover{background:#ff6b6b}
+.btn-primary[disabled]{opacity:.5;cursor:default}
+.fe-actions .txt-link{font-size:14px;min-height:var(--h-std);display:inline-flex;align-items:center}
+.req-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}
+.icon-btn{width:44px;height:44px;margin:-10px -10px 0 0;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:var(--r-ctl);color:var(--text-dim);cursor:pointer;transition:var(--t-color)}
+.icon-btn:hover{background:var(--fill);color:var(--text)}
+.req-form{display:flex;flex-direction:column;gap:14px}
+.fld-lbl{display:block;font-size:12px;font-weight:500;color:var(--text-dim);margin-bottom:6px;letter-spacing:.01em}
+.fld{width:100%;display:block;background:var(--bg);border:var(--b-ctl);border-radius:var(--r-ctl);padding:0 14px;min-height:var(--h-std);color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;transition:var(--t-color)}
+textarea.fld{padding:10px 14px;min-height:88px;resize:vertical;line-height:1.5}
+.fld:hover{border-color:var(--text-dim)}.fld:focus{border-color:var(--accent)}
+.msg{display:flex;align-items:flex-start;gap:8px;font-size:14px;line-height:1.5}
+.msg[hidden]{display:none}
+.msg .ico{margin-top:3px}
+.msg.warn{color:var(--warn)}.msg.ok{color:var(--ok)}
+.req-done{display:flex;flex-direction:column;gap:8px}
+.req-done .msg{font-size:16px;font-weight:500}
+
+/* Stat bar */
+.stat-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:var(--b-card);border-radius:var(--r-card);overflow:hidden;max-width:760px}
+.stat-bar .sb-cell{padding:16px 20px;background:var(--bg-card)}
+.stat-bar .sb-val{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:500;color:var(--text);line-height:1.3}.stat-bar .sb-val.deaths{color:var(--deaths)}
+.stat-bar .sb-lbl{font-size:12px;color:var(--text-faint);margin-top:4px;line-height:1.4}
+.hero-note{max-width:760px;margin-top:16px;font-size:13px;color:var(--text-dim);font-weight:300;line-height:1.6}
+@media(max-width:768px){.stat-bar{grid-template-columns:repeat(2,1fr)}.stat-bar .sb-val{font-size:20px}.stat-bar .sb-cell{padding:12px 16px}}
+
+/* City cards */
+.city-list{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.city-row{--c:#8b90a8;display:flex;flex-direction:column;gap:10px;padding:16px 20px;background:var(--bg-card);border:var(--b-card);border-radius:var(--r-card);transition:var(--t-color);color:inherit;position:relative}
+.city-row:hover{background:#141725;border-color:var(--c)}
+.city-hdr{display:flex;align-items:center;gap:10px;padding-right:24px}
+.city-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;background:var(--c)}
+.city-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;line-height:1.2;flex:1}
+.city-name small{display:block;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text-dim);font-weight:400;margin-top:2px}
+.city-stats{display:flex;gap:20px}
+.cs-cell{display:flex;align-items:baseline;gap:5px}
+.cs-cell .cs-val{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;color:var(--text)}
+.cs-cell .cs-lbl{font-size:12px;color:var(--text-dim)}
+.city-arrow{position:absolute;top:18px;right:18px;color:var(--text-dim);transition:color var(--ease),transform var(--ease)}
+.city-row:hover .city-arrow,.city-row:focus-visible .city-arrow{color:#fff;transform:translateX(4px)}
+@media(max-width:1024px){.city-list{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){
+    .city-list{grid-template-columns:1fr;gap:0;background:var(--bg-card);border:var(--b-card);border-radius:var(--r-card);overflow:hidden}
+    .city-row{flex-direction:row;align-items:center;justify-content:space-between;gap:12px;min-height:48px;padding:6px 16px;border:0;border-radius:0;border-top:1px solid var(--border)}
+    .city-row:first-child{border-top:0}
+    .city-row:hover{border-color:var(--border)}
+    .city-hdr{padding-right:0;min-width:0}
+    .city-name{font-size:15px}
+    .city-stats .cs-cell:not(:nth-child(2)){display:none}
+    .city-arrow{display:none}
+}
 
 /* Overview map */
-.overview-map{max-width:1200px;margin:4rem auto 0;padding:0 2rem 0}
-.overview-map .section-label{margin-bottom:1.25rem}
 .map-container{border:var(--b-card);border-radius:var(--r-card);overflow:hidden;height:420px;position:relative}
 .map-container .leaflet-container{height:100%;width:100%;background:#0e0f13}
-.map-container .leaflet-control-zoom{border:none}
 .map-container .leaflet-control-zoom{border:1px solid #2a2e42;border-radius:8px;overflow:hidden}
 .map-container .leaflet-control-zoom a{background:rgba(15,17,24,.92);color:var(--text);border-color:#2a2e42;width:44px;height:44px;line-height:44px;font-size:20px;transition:var(--t-color)}
 .map-container .leaflet-control-zoom a:hover{background:#1a1d2b;color:var(--text)}
-.map-container .leaflet-control-attribution{background:rgba(15,17,24,.8);color:var(--text-faint);font-size:.75rem;font-family:'DM Sans',sans-serif}
+.map-container .leaflet-control-attribution{background:rgba(15,17,24,.8);color:var(--text-faint);font-size:12px;font-family:'DM Sans',sans-serif}
 .map-container .leaflet-control-attribution a{color:var(--text-dim)}
 .map-container .leaflet-popup-content-wrapper{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;color:var(--text);box-shadow:0 8px 32px rgba(0,0,0,.5)}
 .map-container .leaflet-popup-tip{background:var(--bg-card);border:1px solid var(--border)}
 .map-container .leaflet-popup-content{margin:0;padding:0;font-family:'DM Sans',sans-serif}
 .map-popup{padding:.75rem 1rem;min-width:180px}
 .map-popup-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:.1rem;color:var(--text)}
-.map-popup-src{font-size:.75rem;color:var(--text-faint);margin-bottom:.4rem;font-family:'DM Sans',sans-serif}
+.map-popup-src{font-size:12px;color:var(--text-faint);margin-bottom:.4rem;font-family:'DM Sans',sans-serif}
 .map-popup-stats{display:grid;grid-template-columns:1fr 1fr;gap:.35rem .75rem}
 .map-popup-stat .mp-val{font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:500}
-.map-popup-stat .mp-lbl{font-size:.75rem;color:var(--text-faint)}
+.map-popup-stat .mp-lbl{font-size:12px;color:var(--text-faint)}
 .map-popup-link{display:block;margin-top:.6rem;padding-top:.5rem;border-top:1px solid var(--border);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text-dim);text-align:center}
 .map-popup-link:hover{color:var(--text)}
-.mp-head{display:flex;align-items:baseline;gap:6px;white-space:nowrap}.mp-num{font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:700;line-height:1.1;color:var(--red)}.mp-unit{font-size:12px;color:var(--text)}
+.mp-head{display:flex;align-items:baseline;gap:6px;white-space:nowrap}.mp-num{font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:700;line-height:1.1;color:var(--accent)}.mp-unit{font-size:12px;color:var(--text)}
 .mp-years{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-dim);white-space:nowrap;margin:2px 0 .6rem}
 .metro-dot{border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(255,77,77,.55);border:1px solid #fff;box-sizing:border-box;transition:var(--t-color)}
 .leaflet-marker-icon:hover .metro-dot{background:rgba(255,77,77,.85)}
+.leaflet-marker-icon:focus-visible{outline:none!important}.leaflet-marker-icon:focus-visible .metro-dot{box-shadow:0 0 0 3px #fff,0 0 0 5px var(--accent)!important}
 .map-size-key{background:rgba(15,17,24,.9);border:var(--b-card);border-radius:8px;padding:8px 10px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);pointer-events:none}
 .map-size-key .sk-row{display:flex;align-items:flex-end;gap:10px;margin-top:4px}
 .map-size-key.below{display:flex;align-items:flex-end;justify-content:center;gap:12px;background:transparent;border:0;margin-top:.5rem;color:var(--text-dim)}.map-size-key.below .sk-row{margin:0}
 .map-size-key .sk-item{display:flex;flex-direction:column;align-items:center;gap:2px;font-family:'JetBrains Mono',monospace}
-@media(max-width:768px){.overview-map{padding:0 1rem}.map-container{height:260px}.map-size-key{padding:6px 8px}}
-/* Trend row tooltips */
-.trend-row{cursor:pointer;position:relative;transition:var(--t-color);border-radius:6px;padding:2px 6px;margin:0 -6px}
-.trend-row:hover{background:rgba(255,255,255,.03)}
-a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible,[tabindex]:focus-visible,[role=button]:focus-visible{outline:2px solid var(--accent)!important;outline-offset:2px}
-.leaflet-marker-icon:focus-visible{outline:none!important}.leaflet-marker-icon:focus-visible .metro-dot{box-shadow:0 0 0 3px #fff,0 0 0 5px var(--accent)!important}
-.trend-tip{overflow:hidden;max-height:0;opacity:0;transition:max-height .3s ease,opacity .25s ease,margin .3s ease;margin:0 -6px}
-.trend-tip.open{max-height:200px;opacity:1;margin:2px -6px 4px}
-.trend-tip-inner{padding:.5rem .65rem;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:6px;font-size:.75rem;color:var(--text-dim);line-height:1.55}
-.trend-tip-inner .tip-src{display:block;margin-top:.25rem;font-family:'DM Sans',sans-serif;font-size:.75rem;color:var(--text-faint)}
+.map-hint{text-align:center;margin-top:8px;font-size:12px;color:var(--text-faint)}
+.map-hint kbd{background:var(--bg-card);border:1px solid var(--border);border-radius:3px;padding:.1em .35em;font-family:'JetBrains Mono',monospace;font-size:12px}
+@media(max-width:768px){.map-container{height:260px}.map-size-key{padding:6px 8px}}
+
+/* Ranking */
+.rank-toggle{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.rank-btn{white-space:nowrap;padding:0 14px;min-height:var(--h-compact);border-radius:var(--r-ctl);border:var(--b-ctl);background:var(--bg-card);color:var(--text-dim);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:var(--t-color)}
+.rank-btn:hover{border-color:var(--text-dim);color:var(--text)}
+.rank-btn.active{background:rgba(255,255,255,.06);border-color:var(--text-dim);color:var(--text)}
+.rank-subtitle{margin-bottom:16px}
+.rank-rows{display:flex;flex-direction:column;gap:8px}
+.rank-row{display:grid;grid-template-columns:170px 1fr 76px;grid-template-areas:"name bar val";align-items:center;gap:12px}
+.rank-label{grid-area:name;display:flex;align-items:center;gap:8px;min-width:0}
+.rank-label .rank-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.rank-label>span{font-size:13px;color:var(--text)}
+.rank-label .yr-tag{margin-left:6px}
+.rank-bar-cell{grid-area:bar}
+.rank-bar{height:16px;border-radius:var(--r-bar);transition:width 200ms ease-out}
+.rank-val{grid-area:val;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;text-align:right;color:var(--text)}
+.rank-na{grid-area:val;font-size:12px;color:var(--text-faint);text-align:right}
+.rank-divider{height:1px;background:var(--border);margin:2px 0}
 @media(max-width:768px){
-    .trend-row{grid-template-columns:1fr auto!important;gap:.25rem .5rem!important}
-    .trend-row>:nth-child(2){display:none}
-    .trend-context-card{padding:1.25rem 1rem!important}
-    .trend-context{padding:0 1rem!important}
+    .rank-btn{min-height:var(--h-std)}
+    .rank-row{grid-template-columns:1fr auto;grid-template-areas:"name val" "bar bar";gap:4px 12px}
+    .rank-bar{height:8px}
+    .rank-rows{gap:12px}
 }
 
-/* About + Contact section */
-.about-contact{max-width:1200px;margin:4rem auto 0;padding:0 2rem}
-.about-contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;background:var(--bg-card);border:var(--b-card);border-radius:var(--r-card);padding:2.5rem}
-.about-col h2,.contact-col h2{font-family:'Playfair Display',serif;font-size:clamp(1.3rem,3vw,1.6rem);font-weight:700;margin-bottom:1rem}
-.about-col p{color:var(--text-dim);font-size:.85rem;font-weight:300;line-height:1.8;margin-bottom:.85rem}
+/* Death trends (rows generated by update_landing.py) */
+.trend-hint{font-size:13px;color:var(--text-dim);margin:4px 0 16px}
+.trend-rows{display:flex;flex-direction:column;gap:2px}
+.trend-row{display:grid;grid-template-columns:150px 1fr 64px 20px;grid-template-areas:"name bar val chev";align-items:center;gap:12px;padding:6px 8px;border-radius:var(--r-ctl);cursor:pointer;transition:var(--t-color)}
+.trend-row:hover{background:#141725}
+.trend-row[aria-expanded=true]{background:#141725}
+.tr-name{grid-area:name;display:flex;align-items:center;gap:8px;min-width:0}
+.tr-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.tr-label{font-size:13px;color:var(--text);line-height:1.2}
+.tr-label .yr-tag{display:block}
+.tr-bar-cell{grid-area:bar}
+.tr-bar{height:16px;border-radius:var(--r-bar)}
+.tr-bar.fell{background:var(--fell)}.tr-bar.flat{background:var(--flat)}.tr-bar.rose{background:var(--rose)}
+.tr-val{grid-area:val;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;text-align:right}
+.tr-val.fell{color:var(--fell)}.tr-val.flat{color:var(--text-dim);font-weight:500}.tr-val.rose{color:var(--rose)}
+.tr-chev{grid-area:chev;color:var(--text-dim);transition:transform 200ms ease-out,color var(--ease)}
+.trend-row:hover .tr-chev{color:var(--text)}
+.trend-row[aria-expanded=true] .tr-chev{transform:rotate(180deg);color:var(--text)}
+.trend-divider{height:1px;background:var(--border);margin:4px 0}
+.trend-tip{display:grid;grid-template-rows:0fr;transition:grid-template-rows 200ms ease-out}
+.trend-tip.open{grid-template-rows:1fr}
+.trend-tip>div{overflow:hidden}
+.trend-tip-inner{margin:2px 0 6px;padding:10px 8px 10px 22px;border-left:2px solid var(--border-hover);font-size:13px;color:var(--text-dim);line-height:1.6}
+.trend-tip-inner .tip-src{display:block;margin-top:4px;font-size:12px;color:var(--text-faint)}
+.trend-legend{margin-top:12px;font-size:12px;color:var(--text-dim);line-height:1.6}
+.trend-legend .lg{display:flex;gap:20px;flex-wrap:wrap;align-items:center;margin-bottom:6px}
+.trend-legend .lg span{display:inline-flex;align-items:center;gap:6px}
+.trend-legend .sw{width:18px;height:8px;border-radius:var(--r-bar);display:inline-block}
+@media(max-width:768px){
+    .trend-row{grid-template-columns:1fr auto 20px;grid-template-areas:"name val chev" "bar bar bar";gap:4px 12px;padding:8px}
+    .tr-label .yr-tag{display:inline;margin-left:6px}
+    .tr-bar{height:8px}
+    .trend-tip-inner{padding-left:8px}
+}
+
+/* National facts */
+.nc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.nc-head{display:flex;align-items:baseline;gap:8px;margin-bottom:4px}
+.nc-val{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:600;color:var(--text)}
+.nc-lbl{font-size:13px;color:var(--text-dim);line-height:1.5}
+.nc-footer{margin-top:20px;padding-top:16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+.nc-connect{font-size:13px;color:var(--text-dim)}
+.nc-sources{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-faint)}
+@media(max-width:768px){.nc-grid{grid-template-columns:repeat(2,1fr);gap:20px}.nc-val{font-size:20px}.nc-footer{flex-direction:column;gap:8px}}
+
+/* About + contact */
+.about-contact-inner{display:grid;grid-template-columns:1fr 1fr;background:var(--bg-card);border:var(--b-card);border-radius:var(--r-card)}
+.about-col{padding:40px}
+.contact-col{padding:40px;border-left:1px solid var(--border);display:flex;flex-direction:column}
+.about-col h2,.contact-col h2{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:16px}
+.about-col p{color:var(--text-dim);font-size:15px;font-weight:300;line-height:1.75;margin-bottom:14px}
 .about-col p strong{color:var(--text);font-weight:500}
-.about-col p:last-child{margin-bottom:0}
-.contact-col{display:flex;flex-direction:column}
-.contact-col #contactForm{flex:1}
-.contact-col .cf-input{background:var(--bg);border:var(--b-ctl);border-radius:var(--r-ctl);padding:.75rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;transition:var(--t-color);min-height:var(--h-hero);width:100%;display:block}
-
-.contact-col .cf-input::placeholder{color:var(--text-faint)}
-.contact-col select.cf-input{color:var(--text-dim);cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%236e7290%22 stroke-width=%222%22><path d=%22M6 9l6 6 6-6%22/></svg>');background-repeat:no-repeat;background-position:right .75rem center}
-.contact-col textarea.cf-input{resize:vertical;min-height:100px;flex:1}
-.contact-col .cf-btn{background:#e5534b;border:none;border-radius:8px;padding:0 1rem;color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:background .15s ease-out;height:48px;min-height:48px;width:100%;-webkit-tap-highlight-color:transparent}
-.contact-col .cf-btn:hover{background:#ec6a62}
+.about-col .fine{color:var(--text-faint);font-size:12px;margin-top:24px;line-height:1.6;margin-bottom:0}
+.contact-intro{color:var(--text-dim);font-size:15px;font-weight:300;line-height:1.6;margin-bottom:16px}
+#contactForm{display:flex;flex-direction:column;gap:14px;flex:1}
 .contact-col [hidden]{display:none!important}
-.contact-col .cf-note{color:var(--text-dim);font-size:.78rem;font-weight:300;line-height:1.6;margin:0}
-#cfCityWrap .cf-note{margin-top:.5rem}
+select.fld{cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%238b90a8%22 stroke-width=%222%22><path d=%22M6 9l6 6 6-6%22/></svg>');background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+#contactForm textarea.fld{min-height:110px}
+.cf-note{color:var(--text-dim);font-size:13px;line-height:1.6;margin-top:6px}
+.cf-callout{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border:var(--b-ctl);border-radius:var(--r-ctl);background:rgba(140,148,175,.05);font-size:13px;color:var(--text-dim);line-height:1.6}
+.cf-callout .ico{margin-top:3px;color:var(--text-dim)}
+#contactForm .btn-primary{width:100%}
+.cf-sent{padding:20px;background:var(--bg);border:var(--b-card);border-radius:var(--r-ctl)}
+@media(max-width:768px){.about-contact-inner{grid-template-columns:1fr}.about-col,.contact-col{padding:24px 16px}.contact-col{border-left:0;border-top:1px solid var(--border)}}
 
-.cf-faq{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;padding-top:2rem;border-top:1px solid var(--border)}
-.cf-faq-item{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1.25rem}
-.cf-faq h3{font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;color:var(--text);margin:0 0 .35rem}
-.cf-faq p{color:var(--text-dim);font-size:.8rem;font-weight:300;line-height:1.65;margin:0}
-@media(max-width:480px){.contact-col input[type=email].cf-input::placeholder{font-size:13px}}
-@media(max-width:768px){.about-contact-inner{grid-template-columns:1fr;gap:2rem;padding:1.5rem}.cf-faq{grid-template-columns:1fr;gap:.75rem;padding-top:1.5rem}}
+/* FAQ */
+.cf-faq{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.cf-faq h3{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;color:var(--text);margin:0 0 6px}
+.cf-faq p{color:var(--text-dim);font-size:14px;font-weight:300;line-height:1.65}
+@media(max-width:768px){.cf-faq{grid-template-columns:1fr;gap:12px}}
 
 /* Footer */
-footer{max-width:1200px;margin:4rem auto 0;padding:2rem 2rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:.75rem;color:var(--text-faint);flex-wrap:wrap;gap:1rem}
+footer{margin-top:72px;padding-top:32px;padding-bottom:48px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--text-faint);flex-wrap:wrap;gap:16px}
 footer a{color:var(--text-dim);transition:var(--t-color)}
 footer a:hover{color:var(--text)}
-.foot-note{flex:0 0 100%;width:100%;margin-top:.9rem}
+.foot-note{flex:0 0 100%;width:100%;margin-top:8px}
 </style>
 </head>
 <body>
 
-<header>
-    <div class="logo">crash<span>maps</span></div>
-    <nav>
-        <a href="#map">Map</a>
-        <a href="#cities">Cities</a>
-        <a href="#compare">Rankings</a>
-        <a href="#about">About</a>
-    </nav>
-</header>
+<div class="frame" id="frame">
+<header class="site-hdr"><div class="wrap hdr-inner">
+    <a class="wordmark" href="./" aria-label="crashmaps home">crash<span>maps</span></a>
+    <div class="hdr-right">
+        <nav class="hdr-nav" aria-label="On this page">
+            <a class="hdr-link" href="#cities">Cities</a>
+            <a class="hdr-link" href="#map">Map</a>
+            <a class="hdr-link" href="#compare">Rankings</a>
+            <a class="hdr-link" href="#trends">Trends</a>
+            <a class="hdr-link" href="#about">About</a>
+        </nav>
+        <div class="menu city-menu" id="cityMenu">
+            <button type="button" class="hdr-btn" id="cityMenuBtn" aria-expanded="false" aria-controls="cityMenuPop">Choose a city<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="menu-pop" id="cityMenuPop" hidden>
+                <nav class="menu-page" aria-label="On this page"><ul><li><a href="#cities">All cities</a></li><li><a href="#map">Map</a></li><li><a href="#compare">Rankings</a></li><li><a href="#trends">Trends</a></li><li><a href="#about">About</a></li></ul></nav>
+                <ul aria-label="All metros"><!-- switcher:start --><li><a href="austin/"><span class="m-dot" style="background:#0ea5e9"></span><span class="m-name">Austin</span><span class="m-state">Texas</span></a></li><li><a href="boston/"><span class="m-dot" style="background:#ec4899"></span><span class="m-name">Boston</span><span class="m-state">Massachusetts</span></a></li><li><a href="chicago/"><span class="m-dot" style="background:#a855f7"></span><span class="m-name">Chicago</span><span class="m-state">Illinois</span></a></li><li><a href="dallas/"><span class="m-dot" style="background:#eab308"></span><span class="m-name">Dallas</span><span class="m-state">Texas</span></a></li><li><a href="denver/"><span class="m-dot" style="background:#ff4d4d"></span><span class="m-name">Denver Metro</span><span class="m-state">Colorado</span></a></li><li><a href="detroit/"><span class="m-dot" style="background:#f43f5e"></span><span class="m-name">Detroit</span><span class="m-state">Michigan</span></a></li><li><a href="fort-worth/"><span class="m-dot" style="background:#84cc16"></span><span class="m-name">Fort Worth</span><span class="m-state">Texas</span></a></li><li><a href="houston/"><span class="m-dot" style="background:#14b8a6"></span><span class="m-name">Houston Metro</span><span class="m-state">Texas</span></a></li><li><a href="nyc/"><span class="m-dot" style="background:#f59e0b"></span><span class="m-name">New York City</span><span class="m-state">New York</span></a></li><li><a href="oakland/"><span class="m-dot" style="background:#a78bfa"></span><span class="m-name">Oakland Metro</span><span class="m-state">California</span></a></li><li><a href="philadelphia/"><span class="m-dot" style="background:#06b6d4"></span><span class="m-name">Philadelphia</span><span class="m-state">Pennsylvania</span></a></li><li><a href="riverside/"><span class="m-dot" style="background:#f87171"></span><span class="m-name">Riverside Metro</span><span class="m-state">California</span></a></li><li><a href="sacramento/"><span class="m-dot" style="background:#fbbf24"></span><span class="m-name">Sacramento</span><span class="m-state">California</span></a></li><li><a href="san-antonio/"><span class="m-dot" style="background:#f97316"></span><span class="m-name">San Antonio</span><span class="m-state">Texas</span></a></li><li><a href="san-diego/"><span class="m-dot" style="background:#3b82f6"></span><span class="m-name">San Diego</span><span class="m-state">California</span></a></li><li><a href="sf/"><span class="m-dot" style="background:#14b8a6"></span><span class="m-name">San Francisco</span><span class="m-state">California</span></a></li><li><a href="san-jose/"><span class="m-dot" style="background:#d946ef"></span><span class="m-name">San Jose Metro</span><span class="m-state">California</span></a></li><li><a href="seattle/"><span class="m-dot" style="background:#818cf8"></span><span class="m-name">Seattle</span><span class="m-state">Washington</span></a></li><li><a href="salt-lake-city/"><span class="m-dot" style="background:#67e8f9"></span><span class="m-name">Wasatch Front</span><span class="m-state">Utah</span></a></li><li><a href="dc/"><span class="m-dot" style="background:#10b981"></span><span class="m-name">Washington DC</span><span class="m-state">District of Columbia</span></a></li><!-- switcher:end --></ul>
+            </div>
+        </div>
+    </div>
+</div></header>
+</div>
 
+<main>
 <section class="hero">
-    <div class="hero-inner">
-        <div class="hero-label">Free crash dashboards &middot; open data</div>
+    <div class="wrap hero-inner">
         <h1>Every crash on <em>every road</em></h1>
         <p class="hero-sub">Interactive, verifiable traffic crash dashboards built from <strong>public DOT data</strong>. No ads. No law firms. No affiliation. Just the numbers.</p>
+        <div class="finder" id="finder">
+            <label class="finder-lbl" for="cityQ">Find your city</label>
+            <div class="finder-box">
+                <svg class="ico ico-search" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+                <input id="cityQ" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="finderList" autocomplete="off" autocapitalize="words" spellcheck="false" enterkeyhint="go" placeholder="Search a city, town or metro">
+                <kbd class="finder-key" aria-hidden="true" title="Press / to search">/</kbd>
+            </div>
+            <div class="finder-panel" id="finderPanel" hidden>
+                <div id="finderResults" hidden>
+                    <ul id="finderList" role="listbox" aria-label="Dashboards"></ul>
+                    <div class="finder-foot">Looking for a different <span id="finderOther"></span>? <button type="button" class="txt-btn txt-link" data-request>Request a city</button></div>
+                </div>
+                <div class="pad" id="finderEmpty" hidden>
+                    <p class="fe-title">No dashboard for <span id="feQuery"></span> yet</p>
+                    <p class="fe-text">I add cities where the state or city publishes crash records with locations. Requests help me decide which one comes next.</p>
+                    <div class="fe-actions">
+                        <button type="button" class="btn-primary" data-request id="feQuery2">Request</button>
+                        <a class="txt-link" href="#cities" data-close>See all 20 cities</a>
+                    </div>
+                </div>
+                <div class="pad" id="finderReq" hidden>
+                    <div class="req-head"><p class="fe-title">Request a city</p><button type="button" class="icon-btn" data-close-panel aria-label="Close"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+                    <form class="req-form" id="reqForm" action="https://formspree.io/f/mlgobolb" method="POST" novalidate>
+                        <input type="text" name="_gotcha" style="position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0" tabindex="-1" autocomplete="off" aria-hidden="true">
+                        <input type="hidden" name="type" value="city">
+                        <div><label class="fld-lbl" for="reqCity">City</label><input class="fld" id="reqCity" name="city" type="text" autocomplete="off"></div>
+                        <div><label class="fld-lbl" for="reqEmail">Email (optional, to hear when it&rsquo;s live)</label><input class="fld" id="reqEmail" name="email" type="email" autocomplete="email"></div>
+                        <div><label class="fld-lbl" for="reqMsg">Anything I should know (optional)</label><textarea class="fld" id="reqMsg" name="message" rows="3"></textarea></div>
+                        <p class="msg warn" id="reqErr" role="alert" hidden></p>
+                        <div><button type="submit" class="btn-primary" id="reqSend">Send request</button></div>
+                    </form>
+                </div>
+                <div class="pad req-done" id="finderDone" hidden>
+                    <p class="msg ok" role="status"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Thanks. <span id="doneCity"></span> is on the list.</span></p>
+                    <a class="txt-link" href="#map" data-close>See the national map</a>
+                </div>
+            </div>
+            <div class="sr-only" id="finderStatus" aria-live="polite"></div>
+        </div>
         <div class="stat-bar">
             <div class="sb-cell"><div class="sb-val">2.22M</div><div class="sb-lbl">Crash records processed</div></div>
             <div class="sb-cell"><div class="sb-val deaths">3,084</div><div class="sb-lbl">Deaths (latest year)</div></div>
             <div class="sb-cell"><div class="sb-val">20</div><div class="sb-lbl">Metro areas</div></div>
             <div class="sb-cell"><div class="sb-val">$0</div><div class="sb-lbl">Cost to access</div></div>
         </div>
-        <p style="max-width:560px;margin:1.5rem auto 0;font-size:.8rem;color:var(--text-faint);font-weight:300;line-height:1.6;animation:fadeUp .8s ease .55s both">36,640 people were killed in U.S. traffic crashes in 2025, and the death rate fell to 1.10 deaths per 100 million vehicle miles traveled, the second-lowest on record. The 15 metros with 2025 data account for roughly 7% of that national toll; the other 5 are still on 2024 data. <span style="font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text-faint)">NHTSA 2025 Early Estimate</span></p>
+        <p class="hero-note">36,640 people were killed in U.S. traffic crashes in 2025, and the death rate fell to 1.10 deaths per 100 million vehicle miles traveled, the second-lowest on record. The 15 metros with 2025 data account for roughly 7% of that national toll; the other 5 are still on 2024 data. <span class="src-tag">NHTSA 2025 Early Estimate</span></p>
     </div>
 </section>
 
-<section class="overview-map" id="map">
-    <div class="section-label">Deaths per 100K Residents<span class="lbl-long"> &middot; Latest Year of Data</span></div>
-    <div class="map-container"><div id="overviewMap"></div></div>
-    <div id="mapZoomHint" style="text-align:center;margin-top:.5rem;font-size:.75rem;color:var(--text-faint);font-family:'DM Sans',sans-serif">Hold <kbd style="background:var(--bg-card);border:1px solid var(--border);border-radius:3px;padding:.1em .35em;font-family:'JetBrains Mono',monospace;font-size:.75rem">Ctrl</kbd> + scroll to zoom the map</div>
-</section>
-
-<section class="trend-context" style="max-width:1200px;margin:4rem auto 0;padding:0 2rem">
-    <div class="section-label">Death Trends<span class="lbl-long"> &middot; Latest 3 Years of Data</span></div>
-    <div class="trend-context-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem 1.75rem">
-        <!-- Narrative headline -->
-        <div style="font-family:'Playfair Display',serif;font-size:clamp(1.1rem,2.5vw,1.35rem);font-weight:700;color:var(--text);line-height:1.4;margin-bottom:.35rem">17 of 20 metros had fewer traffic deaths in their latest year than two years earlier</div>
-        <div style="font-size:.8rem;color:var(--text-dim);margin-bottom:1.5rem">Nationally, traffic deaths fell 10.7% from 2023 to 2025 &mdash; from 41,025 to 36,640. 2025 is an early estimate. <span style="font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text-faint)">NHTSA FARS 2023 Final &middot; 2025 Early Estimate</span></div>
-        <!-- Horizontal bar chart (generated by update_landing.py) -->
-        <div style="display:flex;flex-direction:column;gap:.45rem">
-            <!-- Washington DC -55.1% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="49 people were killed in 2023 and 22 in 2025, in DC Open Data records. With counts this small, the percentage swings widely from year to year. The Metropolitan Police Department counted 25 traffic deaths in 2025 and 52 in 2024." data-src="DC Open Data; MPD traffic fatality statistics">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#10b981;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Washington DC<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(34,165,101,.45);width:100.0%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#22a565;text-align:right">&darr;55.1%</div>
-            </div>
-            <!-- Chicago -38.0% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="150 people were killed in 2023 and 93 in 2025, in Chicago Open Data records." data-src="Chicago Open Data">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#b07dff;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Chicago<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(34,165,101,.45);width:69.0%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#22a565;text-align:right">&darr;38.0%</div>
-            </div>
-            <!-- San Jose Metro -33.9% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="124 people were killed in 2023 and 82 in 2025, in CHP CCRS records." data-src="CHP CCRS">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#d946ef;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">San Jose Metro<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(34,165,101,.45);width:61.5%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#22a565;text-align:right">&darr;33.9%</div>
-            </div>
-            <!-- Sacramento -28.4% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="211 people were killed in 2023 and 151 in 2025, in CHP CCRS records." data-src="CHP CCRS">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#fbbf24;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Sacramento<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(34,165,101,.45);width:51.5%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#22a565;text-align:right">&darr;28.4%</div>
-            </div>
-            <!-- Philadelphia -27.0% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="122 people were killed in 2023 and 89 in 2025, in PennDOT records. The city&rsquo;s Vision Zero report counts 89 traffic deaths in 2025, down 26% from 2024." data-src="PennDOT; City of Philadelphia Vision Zero report, Nov 2026">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#06b6d4;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Philadelphia<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(34,165,101,.45);width:49.0%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#22a565;text-align:right">&darr;27.0%</div>
-            </div>
-            <!-- Wasatch Front -19.8% (2022&ndash;2024) -->
-            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="91 people were killed in 2022 and 73 in 2024, in UDOT records." data-src="UDOT">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#67e8f9;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Wasatch Front<span class="yr-tag" style="display:block;margin-left:0">2022&ndash;24</span></span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(34,165,101,.45);width:35.9%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#22a565;text-align:right">&darr;19.8%</div>
-            </div>
-            <!-- Dallas -18.4% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="342 people were killed in 2023 and 279 in 2025, in TxDOT CRIS records." data-src="TxDOT CRIS">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#eab308;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Dallas<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(34,165,101,.45);width:33.4%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#22a565;text-align:right">&darr;18.4%</div>
-            </div>
-            <!-- New York City -18.2% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="280 people were killed in 2023 and 229 in 2025, in NYC Open Data records. NYC DOT counted 205 traffic deaths in 2025 and 253 in 2024 in its own reconciled database; the figure here sums NYPD&rsquo;s preliminary police reports." data-src="NYC Open Data; NYC DOT year-end release, 2026">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#ffb347;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">New York City<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(34,165,101,.45);width:33.0%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#22a565;text-align:right">&darr;18.2%</div>
-            </div>
-            <!-- Riverside Metro -15.7% (2022&ndash;2024) -->
-            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="337 people were killed in 2022 and 284 in 2024, in CHP CCRS records." data-src="CHP CCRS">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#f87171;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Riverside Metro<span class="yr-tag" style="display:block;margin-left:0">2022&ndash;24</span></span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(34,165,101,.45);width:28.5%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#22a565;text-align:right">&darr;15.7%</div>
-            </div>
-            <!-- Oakland Metro -15.3% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="111 people were killed in 2023 and 94 in 2025, in CHP CCRS records." data-src="CHP CCRS">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#a78bfa;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Oakland Metro<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(34,165,101,.45);width:27.8%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#22a565;text-align:right">&darr;15.3%</div>
-            </div>
-            <!-- Fort Worth -13.6% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="221 people were killed in 2023 and 191 in 2025, in TxDOT CRIS records." data-src="TxDOT CRIS">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#84cc16;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Fort Worth<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(34,165,101,.45);width:24.7%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#22a565;text-align:right">&darr;13.6%</div>
-            </div>
-            <!-- Detroit -13.3% (2022&ndash;2024) -->
-            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="120 people were killed in 2022 and 104 in 2024, in Detroit Open Data records." data-src="Detroit Open Data">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#f43f5e;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Detroit<span class="yr-tag" style="display:block;margin-left:0">2022&ndash;24</span></span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(34,165,101,.45);width:24.1%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#22a565;text-align:right">&darr;13.3%</div>
-            </div>
-            <!-- San Francisco -10.8% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="37 people were killed in 2023 and 33 in 2025, in CHP CCRS records. With counts this small, the percentage swings widely from year to year. SFMTA counted 25 traffic deaths in 2025 and 43 in 2024; its count leaves out some freeway deaths that CHP records include." data-src="CHP CCRS; SFMTA Vision Zero release, 2026">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#14b8a6;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">San Francisco<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(34,165,101,.45);width:19.6%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#22a565;text-align:right">&darr;10.8%</div>
-            </div>
-            <!-- San Antonio -10.1% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="217 people were killed in 2023 and 195 in 2025, in TxDOT CRIS records." data-src="TxDOT CRIS">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#f97316;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">San Antonio<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(34,165,101,.45);width:18.3%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#22a565;text-align:right">&darr;10.1%</div>
-            </div>
-            <!-- Houston Metro -6.0% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="550 people were killed in 2023 and 517 in 2025, in TxDOT CRIS records." data-src="TxDOT CRIS">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#14b8a6;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Houston Metro<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(34,165,101,.45);width:10.9%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#22a565;text-align:right">&darr;6.0%</div>
-            </div>
-            <!-- Divider -->
-            <div style="height:1px;background:var(--border);margin:.2rem 0"></div>
-            <!-- Denver Metro -2.1% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="287 people were killed in 2023 and 281 in 2025, in CDOT records." data-src="CDOT">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#ff4d4d;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Denver Metro<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(107,114,128,.45);width:3.8%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:#8b90a8;text-align:right">&darr;2.1%</div>
-            </div>
-            <!-- San Diego -2.0% (2022&ndash;2024) -->
-            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="199 people were killed in 2022 and 195 in 2024, in CHP CCRS records." data-src="CHP CCRS">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#3b82f6;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">San Diego<span class="yr-tag" style="display:block;margin-left:0">2022&ndash;24</span></span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(107,114,128,.45);width:3.6%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:#8b90a8;text-align:right">&darr;2.0%</div>
-            </div>
-            <!-- Boston +2.4% (2022&ndash;2024) -->
-            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="42 people were killed in 2022 and 43 in 2024, in MassDOT records. With counts this small, the percentage swings widely from year to year." data-src="MassDOT">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#ec4899;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Boston<span class="yr-tag" style="display:block;margin-left:0">2022&ndash;24</span></span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(229,83,75,.45);width:4.4%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#e5534b;text-align:right">&uarr;2.4%</div>
-            </div>
-            <!-- Austin +10.0% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="90 people were killed in 2023 and 99 in 2025, in Austin Open Data records. The City of Austin&rsquo;s preliminary count for 2025 is 99 deaths." data-src="Austin Open Data; City of Austin Transportation and Public Works, Feb 2026">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#0ea5e9;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Austin<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(229,83,75,.45);width:18.1%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#e5534b;text-align:right">&uarr;10.0%</div>
-            </div>
-            <!-- Seattle +11.1% (2023&ndash;2025) -->
-            <div style="display:grid;grid-template-columns:130px 1fr 58px;align-items:center;gap:.5rem" class="trend-row" data-tip="27 people were killed in 2023 and 30 in 2025, in SDOT records. With counts this small, the percentage swings widely from year to year." data-src="SDOT">
-                <div style="display:flex;align-items:center;gap:.4rem"><div style="width:6px;height:6px;border-radius:50%;background:#818cf8;flex-shrink:0"></div><span style="font-size:.75rem;color:var(--text-dim);line-height:1.15">Seattle<span class="yr-tag" style="display:block;margin-left:0">2023&ndash;25</span></span></div>
-                <div style="height:16px;border-radius:3px;background:rgba(229,83,75,.45);width:20.1%"></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:#e5534b;text-align:right">&uarr;11.1%</div>
-            </div>
-        </div>
-    </div>
-    <div style="margin-top:.75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.65rem 1rem;font-size:.75rem;color:var(--text-faint);line-height:1.5">
-        <div style="display:flex;gap:1.25rem;flex-wrap:wrap;align-items:center;margin-bottom:.4rem">
-            <span style="display:inline-flex;align-items:center;gap:.35rem"><span style="width:18px;height:8px;border-radius:3px;background:rgba(34,165,101,.45);display:inline-block"></span><span style="color:var(--text-dim)">&darr; Fell more than 5%</span></span>
-            <span style="display:inline-flex;align-items:center;gap:.35rem"><span style="width:18px;height:8px;border-radius:3px;background:rgba(107,114,128,.45);display:inline-block"></span><span style="color:var(--text-dim)">Roughly flat</span></span>
-            <span style="display:inline-flex;align-items:center;gap:.35rem"><span style="width:18px;height:8px;border-radius:3px;background:rgba(229,83,75,.45);display:inline-block"></span><span style="color:var(--text-dim)">&uarr; Rose</span></span>
-        </div>
-        <div>% change in traffic deaths (people killed) from the first to the last year in each metro&rsquo;s data range (2023&ndash;2025 or 2022&ndash;2024, shown under each name). A metro stays on its older range until its agency&rsquo;s next year of records is complete. Local agency records only (not full states). National baseline: NHTSA FARS 2023 Final &middot; 2025 Early Estimate.</div>
-    </div>
-    <div style="text-align:center;margin-top:.5rem;font-size:.75rem;color:var(--text-faint);font-family:'DM Sans',sans-serif">Tap a metro to see the counts behind its bar</div>
-</section>
-<script>
-(function(){
-    var rows=document.querySelectorAll('.trend-row[data-tip]');
-    function collapseAll(){document.querySelectorAll('.trend-row[aria-expanded="true"]').forEach(function(r){r.setAttribute('aria-expanded','false')})}
-    rows.forEach(function(row){
-        // Each row is a button: reachable with Tab, opened with Enter or Space
-        row.setAttribute('role','button');row.setAttribute('tabindex','0');row.setAttribute('aria-expanded','false');
-        row.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();row.click()}});
-        row.addEventListener('click',function(e){
-            var existing=row.nextElementSibling;
-            if(existing&&existing.classList.contains('trend-tip')){
-                if(existing.classList.contains('open')){existing.classList.remove('open');row.setAttribute('aria-expanded','false');setTimeout(function(){existing.remove()},300);return}
-            }
-            document.querySelectorAll('.trend-tip.open').forEach(function(t){t.classList.remove('open');setTimeout(function(){t.remove()},300)});
-            collapseAll();row.setAttribute('aria-expanded','true');
-            var tip=document.createElement('div');
-            tip.className='trend-tip';tip.setAttribute('role','status');
-            tip.innerHTML='<div class="trend-tip-inner">'+row.getAttribute('data-tip')+'<span class="tip-src">'+row.getAttribute('data-src')+'</span></div>';
-            row.after(tip);
-            requestAnimationFrame(function(){requestAnimationFrame(function(){tip.classList.add('open')})});
-        });
-    });
-    document.addEventListener('click',function(e){
-        if(!e.target.closest('.trend-row')&&!e.target.closest('.trend-tip')){
-            collapseAll();
-            document.querySelectorAll('.trend-tip.open').forEach(function(t){t.classList.remove('open');setTimeout(function(){t.remove()},300)});
-        }
-    });
-})();
-</script>
-
-<div class="nc-wrap">
-    <div class="nc-card">
-        <div class="nc-grid">
-            <div class="nc-stat"><div class="nc-val">$340B</div><div class="nc-lbl">Annual direct economic cost of U.S. traffic crashes (2019, NHTSA)</div></div>
-            <div class="nc-stat"><div class="nc-val">6,732</div><div class="nc-lbl">Pedestrians struck and killed in 2025 (GHSA projection)</div></div>
-            <div class="nc-stat"><div class="nc-val">76%</div><div class="nc-lbl">of pedestrian deaths occur after dark (2024)</div></div>
-            <div class="nc-stat"><div class="nc-val">87%</div><div class="nc-lbl">of speed-related deaths on non-interstate roads (2024)</div></div>
-            <div class="nc-stat"><div class="nc-val">24%</div><div class="nc-lbl">of pedestrian deaths involve a hit-and-run driver (2024)</div></div>
-        </div>
-        <div class="nc-footer">
-            <div class="nc-connect">These national patterns play out differently in every metro. The dashboards below show how.</div>
-            <div class="nc-sources">NHTSA &middot; GHSA &middot; 2019&ndash;2025 data</div>
-        </div>
-    </div>
-</div>
-
-<section class="cities" id="cities">
-    <div class="section-label">Active Dashboards<span class="lbl-long"> &middot; 3-Year Totals</span></div>
+<section class="sec wrap" id="cities">
+    <div class="sec-label">20 dashboards &middot; 3-year totals</div>
+    <h2 class="sec-title">Pick a city</h2>
+    <p class="sec-desc">Each dashboard maps one metro&rsquo;s crashes over its latest three years of agency records.</p>
     <!-- Alphabetical by display name -->
     <div class="city-list">
-        <a href="austin/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:#0ea5e9"></div><div class="city-name">Austin<small>Austin Open Data &middot; 2023&ndash;2025</small></div></div>
+        <a href="austin/" class="city-row" style="--c:#0ea5e9">
+            <div class="city-hdr"><div class="city-dot"></div><div class="city-name">Austin<small>Austin Open Data &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">37,136</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">286</div><div class="cs-lbl">deaths</div></div>
                 <div class="cs-cell"><div class="cs-val">961</div><div class="cs-lbl">pedestrian</div></div>
             </div>
-            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg class="city-arrow" width="16" height="16" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="boston/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:#ec4899"></div><div class="city-name">Boston<small>MassDOT &middot; 2022&ndash;2024</small></div></div>
+        <a href="boston/" class="city-row" style="--c:#ec4899">
+            <div class="city-hdr"><div class="city-dot"></div><div class="city-name">Boston<small>MassDOT &middot; 2022&ndash;2024</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">55,049</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">123</div><div class="cs-lbl">deaths</div></div>
                 <div class="cs-cell"><div class="cs-val">1,666</div><div class="cs-lbl">pedestrian</div></div>
             </div>
-            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg class="city-arrow" width="16" height="16" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="chicago/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:var(--purple)"></div><div class="city-name">Chicago<small>Chicago Data Portal &middot; 2023&ndash;2025</small></div></div>
+        <a href="chicago/" class="city-row" style="--c:#b07dff">
+            <div class="city-hdr"><div class="city-dot"></div><div class="city-name">Chicago<small>Chicago Data Portal &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">331,034</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">366</div><div class="cs-lbl">deaths</div></div>
                 <div class="cs-cell"><div class="cs-val">8,734</div><div class="cs-lbl">pedestrian</div></div>
             </div>
-            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg class="city-arrow" width="16" height="16" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="dallas/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:#eab308"></div><div class="city-name">Dallas<small>TxDOT CRIS &middot; 2023&ndash;2025</small></div></div>
+        <a href="dallas/" class="city-row" style="--c:#eab308">
+            <div class="city-hdr"><div class="city-dot"></div><div class="city-name">Dallas<small>TxDOT CRIS &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">159,284</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">953</div><div class="cs-lbl">deaths</div></div>
                 <div class="cs-cell"><div class="cs-val">3,021</div><div class="cs-lbl">pedestrian</div></div>
             </div>
-            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg class="city-arrow" width="16" height="16" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="denver/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:var(--red)"></div><div class="city-name">Denver Metro<small>CDOT &middot; 2023&ndash;2025</small></div></div>
+        <a href="denver/" class="city-row" style="--c:#ff4d4d">
+            <div class="city-hdr"><div class="city-dot"></div><div class="city-name">Denver Metro<small>CDOT &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">151,463</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">847</div><div class="cs-lbl">deaths</div></div>
                 <div class="cs-cell"><div class="cs-val">3,222</div><div class="cs-lbl">pedestrian</div></div>
             </div>
-            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg class="city-arrow" width="16" height="16" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="detroit/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:#f43f5e"></div><div class="city-name">Detroit<small>Detroit Open Data &middot; 2022&ndash;2024</small></div></div>
+        <a href="detroit/" class="city-row" style="--c:#f43f5e">
+            <div class="city-hdr"><div class="city-dot"></div><div class="city-name">Detroit<small>Detroit Open Data &middot; 2022&ndash;2024</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">70,731</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">354</div><div class="cs-lbl">deaths</div></div>
                 <div class="cs-cell"><div class="cs-val">1,230</div><div class="cs-lbl">pedestrian</div></div>
             </div>
-            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg class="city-arrow" width="16" height="16" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="fort-worth/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:#84cc16"></div><div class="city-name">Fort Worth<small>TxDOT CRIS &middot; 2023&ndash;2025</small></div></div>
+        <a href="fort-worth/" class="city-row" style="--c:#84cc16">
+            <div class="city-hdr"><div class="city-dot"></div><div class="city-name">Fort Worth<small>TxDOT CRIS &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">98,560</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">619</div><div class="cs-lbl">deaths</div></div>
                 <div class="cs-cell"><div class="cs-val">1,684</div><div class="cs-lbl">pedestrian</div></div>
             </div>
-            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg class="city-arrow" width="16" height="16" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="houston/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:#14b8a6"></div><div class="city-name">Houston Metro<small>TxDOT CRIS &middot; 2023&ndash;2025</small></div></div>
+        <a href="houston/" class="city-row" style="--c:#14b8a6">
+            <div class="city-hdr"><div class="city-dot"></div><div class="city-name">Houston Metro<small>TxDOT CRIS &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">392,792</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">1,658</div><div class="cs-lbl">deaths</div></div>
                 <div class="cs-cell"><div class="cs-val">6,144</div><div class="cs-lbl">pedestrian</div></div>
             </div>
-            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg class="city-arrow" width="16" height="16" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="nyc/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:var(--amber)"></div><div class="city-name">New York City<small>NYC Open Data &middot; 2023&ndash;2025</small></div></div>
+        <a href="nyc/" class="city-row" style="--c:#ffb347">
+            <div class="city-hdr"><div class="city-dot"></div><div class="city-name">New York City<small>NYC Open Data &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">273,484</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">777</div><div class="cs-lbl">deaths</div></div>
                 <div class="cs-cell"><div class="cs-val">26,986</div><div class="cs-lbl">pedestrian</div></div>
             </div>
-            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg class="city-arrow" width="16" height="16" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="oakland/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:#a78bfa"></div><div class="city-name">Oakland Metro<small>CHP CCRS &middot; 2023&ndash;2025</small></div></div>
+        <a href="oakland/" class="city-row" style="--c:#a78bfa">
+            <div class="city-hdr"><div class="city-dot"></div><div class="city-name">Oakland Metro<small>CHP CCRS &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">58,372</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">314</div><div class="cs-lbl">deaths</div></div>
                 <div class="cs-cell"><div class="cs-val">2,174</div><div class="cs-lbl">pedestrian</div></div>
             </div>
-            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg class="city-arrow" width="16" height="16" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="philadelphia/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:#06b6d4"></div><div class="city-name">Philadelphia<small>PennDOT &middot; 2023&ndash;2025</small></div></div>
+        <a href="philadelphia/" class="city-row" style="--c:#06b6d4">
+            <div class="city-hdr"><div class="city-dot"></div><div class="city-name">Philadelphia<small>PennDOT &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">18,062</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">330</div><div class="cs-lbl">deaths</div></div>
                 <div class="cs-cell"><div class="cs-val">2,864</div><div class="cs-lbl">pedestrian</div></div>
             </div>
-            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg class="city-arrow" width="16" height="16" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="riverside/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:#f87171"></div><div class="city-name">Riverside Metro<small>CHP CCRS &middot; 2022&ndash;2024</small></div></div>
+        <a href="riverside/" class="city-row" style="--c:#f87171">
+            <div class="city-hdr"><div class="city-dot"></div><div class="city-name">Riverside Metro<small>CHP CCRS &middot; 2022&ndash;2024</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">82,153</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">952</div><div class="cs-lbl">deaths</div></div>
                 <div class="cs-cell"><div class="cs-val">2,119</div><div class="cs-lbl">pedestrian</div></div>
             </div>
-            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg class="city-arrow" width="16" height="16" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="sacramento/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:#fbbf24"></div><div class="city-name">Sacramento<small>CHP CCRS &middot; 2023&ndash;2025</small></div></div>
+        <a href="sacramento/" class="city-row" style="--c:#fbbf24">
+            <div class="city-hdr"><div class="city-dot"></div><div class="city-name">Sacramento<small>CHP CCRS &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">61,183</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">520</div><div class="cs-lbl">deaths</div></div>
                 <div class="cs-cell"><div class="cs-val">2,116</div><div class="cs-lbl">pedestrian</div></div>
             </div>
-            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg class="city-arrow" width="16" height="16" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="san-antonio/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:#f97316"></div><div class="city-name">San Antonio<small>TxDOT CRIS &middot; 2023&ndash;2025</small></div></div>
+        <a href="san-antonio/" class="city-row" style="--c:#f97316">
+            <div class="city-hdr"><div class="city-dot"></div><div class="city-name">San Antonio<small>TxDOT CRIS &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">177,467</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">636</div><div class="cs-lbl">deaths</div></div>
                 <div class="cs-cell"><div class="cs-val">2,915</div><div class="cs-lbl">pedestrian</div></div>
             </div>
-            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg class="city-arrow" width="16" height="16" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="san-diego/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:#3b82f6"></div><div class="city-name">San Diego<small>CHP CCRS &middot; 2022&ndash;2024</small></div></div>
+        <a href="san-diego/" class="city-row" style="--c:#3b82f6">
+            <div class="city-hdr"><div class="city-dot"></div><div class="city-name">San Diego<small>CHP CCRS &middot; 2022&ndash;2024</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">45,603</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">572</div><div class="cs-lbl">deaths</div></div>
                 <div class="cs-cell"><div class="cs-val">2,777</div><div class="cs-lbl">pedestrian</div></div>
             </div>
-            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg class="city-arrow" width="16" height="16" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="sf/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:#14b8a6"></div><div class="city-name">San Francisco<small>CHP CCRS &middot; 2023&ndash;2025</small></div></div>
+        <a href="sf/" class="city-row" style="--c:#14b8a6">
+            <div class="city-hdr"><div class="city-dot"></div><div class="city-name">San Francisco<small>CHP CCRS &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">18,399</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">121</div><div class="cs-lbl">deaths</div></div>
                 <div class="cs-cell"><div class="cs-val">2,010</div><div class="cs-lbl">pedestrian</div></div>
             </div>
-            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg class="city-arrow" width="16" height="16" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="san-jose/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:#d946ef"></div><div class="city-name">San Jose Metro<small>CHP CCRS &middot; 2023&ndash;2025</small></div></div>
+        <a href="san-jose/" class="city-row" style="--c:#d946ef">
+            <div class="city-hdr"><div class="city-dot"></div><div class="city-name">San Jose Metro<small>CHP CCRS &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">42,652</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">307</div><div class="cs-lbl">deaths</div></div>
                 <div class="cs-cell"><div class="cs-val">1,793</div><div class="cs-lbl">pedestrian</div></div>
             </div>
-            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg class="city-arrow" width="16" height="16" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="seattle/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:#818cf8"></div><div class="city-name">Seattle<small>SDOT &middot; 2023&ndash;2025</small></div></div>
+        <a href="seattle/" class="city-row" style="--c:#818cf8">
+            <div class="city-hdr"><div class="city-dot"></div><div class="city-name">Seattle<small>SDOT &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">19,599</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">87</div><div class="cs-lbl">deaths</div></div>
                 <div class="cs-cell"><div class="cs-val">1,228</div><div class="cs-lbl">pedestrian</div></div>
             </div>
-            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg class="city-arrow" width="16" height="16" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="salt-lake-city/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:var(--cyan)"></div><div class="city-name">Wasatch Front<small>UDOT &middot; 2022&ndash;2024</small></div></div>
+        <a href="salt-lake-city/" class="city-row" style="--c:#67e8f9">
+            <div class="city-hdr"><div class="city-dot"></div><div class="city-name">Wasatch Front<small>UDOT &middot; 2022&ndash;2024</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">69,039</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">231</div><div class="cs-lbl">deaths</div></div>
                 <div class="cs-cell"><div class="cs-val">1,328</div><div class="cs-lbl">pedestrian</div></div>
             </div>
-            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg class="city-arrow" width="16" height="16" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="dc/" class="city-row">
-            <div class="city-hdr"><div class="city-dot" style="background:#10b981"></div><div class="city-name">Washington DC<small>DCGIS &middot; 2023&ndash;2025</small></div></div>
+        <a href="dc/" class="city-row" style="--c:#10b981">
+            <div class="city-hdr"><div class="city-dot"></div><div class="city-name">Washington DC<small>DCGIS &middot; 2023&ndash;2025</small></div></div>
             <div class="city-stats">
                 <div class="cs-cell"><div class="cs-val">59,209</div><div class="cs-lbl">crashes</div></div>
                 <div class="cs-cell"><div class="cs-val">121</div><div class="cs-lbl">deaths</div></div>
                 <div class="cs-cell"><div class="cs-val">2,641</div><div class="cs-lbl">pedestrian</div></div>
             </div>
-            <svg class="city-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg class="city-arrow" width="16" height="16" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
     </div>
-    <button class="city-show-more" id="cityShowMore"></button>
 </section>
-<script>
-(function(){
-    var btn=document.getElementById('cityShowMore');
-    if(!btn)return;
-    var cards=document.querySelectorAll('.city-list .city-row');
-    var initial=6,shown=initial;
-    function apply(animate){
-        if(window.innerWidth>768){
-            for(var i=0;i<cards.length;i++){cards[i].classList.remove('city-hidden');cards[i].classList.remove('city-reveal');}
-            btn.style.display='none';
-            return;
-        }
-        var prevShown=0;
-        for(var i=0;i<cards.length;i++){if(!cards[i].classList.contains('city-hidden'))prevShown=i+1;}
-        for(var i=0;i<cards.length;i++){
-            if(i<shown){
-                var wasHidden=cards[i].classList.contains('city-hidden');
-                cards[i].classList.remove('city-hidden');
-                if(animate&&wasHidden){
-                    cards[i].classList.remove('city-reveal');
-                    void cards[i].offsetWidth;
-                    cards[i].classList.add('city-reveal');
-                    cards[i].style.animationDelay=(i-prevShown)*60+'ms';
-                }
-            }else{
-                cards[i].classList.add('city-hidden');
-                cards[i].classList.remove('city-reveal');
-            }
-        }
-        var remaining=cards.length-shown;
-        if(remaining<=0){btn.style.display='none';}
-        else{btn.style.display='block';btn.textContent='Show all '+cards.length+' metros';}
-    }
-    btn.addEventListener('click',function(){shown=cards.length;apply(true);});
-    window.addEventListener('resize',apply);
-    apply();
-})();
-</script>
 
-<section class="compare" id="compare">
-    <div class="section-label">Cross-Metro Ranking<span class="lbl-long"> &middot; Latest Year of Data</span></div>
+<section class="sec wrap" id="map">
+    <div class="sec-label">Deaths per 100K residents &middot; latest year</div>
+    <h2 class="sec-title">Where the deaths are</h2>
+    <p class="sec-desc">Each circle&rsquo;s size is the metro&rsquo;s traffic deaths per 100,000 residents in its latest year of data. Select one for the numbers.</p>
+    <div class="map-container"><div id="overviewMap"></div></div>
+    <div class="map-hint" id="mapZoomHint">Hold <kbd>Ctrl</kbd> + scroll to zoom the map</div>
+</section>
+
+<section class="sec wrap" id="compare">
+    <div class="sec-label">Cross-metro ranking &middot; latest year</div>
+    <h2 class="sec-title">How the metros compare</h2>
+    <p class="sec-desc">Rates per 100,000 residents, so large and small metros sit on one scale. Speed and DUI are left out because agencies define them differently.</p>
     <div class="rank-toggle" id="rankToggle">
         <button class="rank-btn active" data-metric="fatal">Deaths</button>
         <button class="rank-btn" data-metric="ped">Pedestrian</button>
         <button class="rank-btn" data-metric="cyclist">Cyclist</button>
     </div>
-    <div class="rank-card">
-        <div class="rank-subtitle" id="rankSubtitle"></div>
+    <div class="card">
+        <div class="card-sub rank-subtitle" id="rankSubtitle"></div>
         <div class="rank-rows" id="rankRows"></div>
     </div>
-<!-- rank-by JS below -->
 </section>
 
-<section class="about-contact" id="about">
+<section class="trend-context sec wrap" id="trends">
+    <div class="sec-label">Death trends &middot; latest 3 years</div>
+    <h2 class="sec-title">Are deaths going down?</h2>
+    <p class="sec-desc">17 of 20 metros had fewer traffic deaths in their latest year than two years earlier.</p>
+    <div class="card trend-context-card">
+        <div class="card-sub">Nationally, traffic deaths fell 10.7% from 2023 to 2025, from 41,025 to 36,640. 2025 is an early estimate. <span class="src-tag">NHTSA FARS 2023 Final &middot; 2025 Early Estimate</span></div>
+        <p class="trend-hint">Select a metro to see the counts behind its bar.</p>
+        <!-- Rows generated by update_landing.py -->
+        <div class="trend-rows">
+            <!-- Washington DC -55.1% (2023&ndash;2025) -->
+            <div class="trend-row" data-tip="49 people were killed in 2023 and 22 in 2025, in DC Open Data records. With counts this small, the percentage swings widely from year to year. The Metropolitan Police Department counted 25 traffic deaths in 2025 and 52 in 2024." data-src="DC Open Data; MPD traffic fatality statistics"><div class="tr-name"><span class="tr-dot" style="background:#10b981"></span><span class="tr-label">Washington DC<span class="yr-tag">2023&ndash;25</span></span></div><div class="tr-bar-cell"><div class="tr-bar fell" style="width:100.0%"></div></div><div class="tr-val fell">&darr;55.1%</div><svg class="ico tr-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+            <!-- Chicago -38.0% (2023&ndash;2025) -->
+            <div class="trend-row" data-tip="150 people were killed in 2023 and 93 in 2025, in Chicago Open Data records." data-src="Chicago Open Data"><div class="tr-name"><span class="tr-dot" style="background:#b07dff"></span><span class="tr-label">Chicago<span class="yr-tag">2023&ndash;25</span></span></div><div class="tr-bar-cell"><div class="tr-bar fell" style="width:69.0%"></div></div><div class="tr-val fell">&darr;38.0%</div><svg class="ico tr-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+            <!-- San Jose Metro -33.9% (2023&ndash;2025) -->
+            <div class="trend-row" data-tip="124 people were killed in 2023 and 82 in 2025, in CHP CCRS records." data-src="CHP CCRS"><div class="tr-name"><span class="tr-dot" style="background:#d946ef"></span><span class="tr-label">San Jose Metro<span class="yr-tag">2023&ndash;25</span></span></div><div class="tr-bar-cell"><div class="tr-bar fell" style="width:61.5%"></div></div><div class="tr-val fell">&darr;33.9%</div><svg class="ico tr-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+            <!-- Sacramento -28.4% (2023&ndash;2025) -->
+            <div class="trend-row" data-tip="211 people were killed in 2023 and 151 in 2025, in CHP CCRS records." data-src="CHP CCRS"><div class="tr-name"><span class="tr-dot" style="background:#fbbf24"></span><span class="tr-label">Sacramento<span class="yr-tag">2023&ndash;25</span></span></div><div class="tr-bar-cell"><div class="tr-bar fell" style="width:51.5%"></div></div><div class="tr-val fell">&darr;28.4%</div><svg class="ico tr-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+            <!-- Philadelphia -27.0% (2023&ndash;2025) -->
+            <div class="trend-row" data-tip="122 people were killed in 2023 and 89 in 2025, in PennDOT records. The city&rsquo;s Vision Zero report counts 89 traffic deaths in 2025, down 26% from 2024." data-src="PennDOT; City of Philadelphia Vision Zero report, Nov 2026"><div class="tr-name"><span class="tr-dot" style="background:#06b6d4"></span><span class="tr-label">Philadelphia<span class="yr-tag">2023&ndash;25</span></span></div><div class="tr-bar-cell"><div class="tr-bar fell" style="width:49.0%"></div></div><div class="tr-val fell">&darr;27.0%</div><svg class="ico tr-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+            <!-- Wasatch Front -19.8% (2022&ndash;2024) -->
+            <div class="trend-row" data-tip="91 people were killed in 2022 and 73 in 2024, in UDOT records." data-src="UDOT"><div class="tr-name"><span class="tr-dot" style="background:#67e8f9"></span><span class="tr-label">Wasatch Front<span class="yr-tag">2022&ndash;24</span></span></div><div class="tr-bar-cell"><div class="tr-bar fell" style="width:35.9%"></div></div><div class="tr-val fell">&darr;19.8%</div><svg class="ico tr-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+            <!-- Dallas -18.4% (2023&ndash;2025) -->
+            <div class="trend-row" data-tip="342 people were killed in 2023 and 279 in 2025, in TxDOT CRIS records." data-src="TxDOT CRIS"><div class="tr-name"><span class="tr-dot" style="background:#eab308"></span><span class="tr-label">Dallas<span class="yr-tag">2023&ndash;25</span></span></div><div class="tr-bar-cell"><div class="tr-bar fell" style="width:33.4%"></div></div><div class="tr-val fell">&darr;18.4%</div><svg class="ico tr-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+            <!-- New York City -18.2% (2023&ndash;2025) -->
+            <div class="trend-row" data-tip="280 people were killed in 2023 and 229 in 2025, in NYC Open Data records. NYC DOT counted 205 traffic deaths in 2025 and 253 in 2024 in its own reconciled database; the figure here sums NYPD&rsquo;s preliminary police reports." data-src="NYC Open Data; NYC DOT year-end release, 2026"><div class="tr-name"><span class="tr-dot" style="background:#ffb347"></span><span class="tr-label">New York City<span class="yr-tag">2023&ndash;25</span></span></div><div class="tr-bar-cell"><div class="tr-bar fell" style="width:33.0%"></div></div><div class="tr-val fell">&darr;18.2%</div><svg class="ico tr-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+            <!-- Riverside Metro -15.7% (2022&ndash;2024) -->
+            <div class="trend-row" data-tip="337 people were killed in 2022 and 284 in 2024, in CHP CCRS records." data-src="CHP CCRS"><div class="tr-name"><span class="tr-dot" style="background:#f87171"></span><span class="tr-label">Riverside Metro<span class="yr-tag">2022&ndash;24</span></span></div><div class="tr-bar-cell"><div class="tr-bar fell" style="width:28.5%"></div></div><div class="tr-val fell">&darr;15.7%</div><svg class="ico tr-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+            <!-- Oakland Metro -15.3% (2023&ndash;2025) -->
+            <div class="trend-row" data-tip="111 people were killed in 2023 and 94 in 2025, in CHP CCRS records." data-src="CHP CCRS"><div class="tr-name"><span class="tr-dot" style="background:#a78bfa"></span><span class="tr-label">Oakland Metro<span class="yr-tag">2023&ndash;25</span></span></div><div class="tr-bar-cell"><div class="tr-bar fell" style="width:27.8%"></div></div><div class="tr-val fell">&darr;15.3%</div><svg class="ico tr-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+            <!-- Fort Worth -13.6% (2023&ndash;2025) -->
+            <div class="trend-row" data-tip="221 people were killed in 2023 and 191 in 2025, in TxDOT CRIS records." data-src="TxDOT CRIS"><div class="tr-name"><span class="tr-dot" style="background:#84cc16"></span><span class="tr-label">Fort Worth<span class="yr-tag">2023&ndash;25</span></span></div><div class="tr-bar-cell"><div class="tr-bar fell" style="width:24.7%"></div></div><div class="tr-val fell">&darr;13.6%</div><svg class="ico tr-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+            <!-- Detroit -13.3% (2022&ndash;2024) -->
+            <div class="trend-row" data-tip="120 people were killed in 2022 and 104 in 2024, in Detroit Open Data records." data-src="Detroit Open Data"><div class="tr-name"><span class="tr-dot" style="background:#f43f5e"></span><span class="tr-label">Detroit<span class="yr-tag">2022&ndash;24</span></span></div><div class="tr-bar-cell"><div class="tr-bar fell" style="width:24.1%"></div></div><div class="tr-val fell">&darr;13.3%</div><svg class="ico tr-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+            <!-- San Francisco -10.8% (2023&ndash;2025) -->
+            <div class="trend-row" data-tip="37 people were killed in 2023 and 33 in 2025, in CHP CCRS records. With counts this small, the percentage swings widely from year to year. SFMTA counted 25 traffic deaths in 2025 and 43 in 2024; its count leaves out some freeway deaths that CHP records include." data-src="CHP CCRS; SFMTA Vision Zero release, 2026"><div class="tr-name"><span class="tr-dot" style="background:#14b8a6"></span><span class="tr-label">San Francisco<span class="yr-tag">2023&ndash;25</span></span></div><div class="tr-bar-cell"><div class="tr-bar fell" style="width:19.6%"></div></div><div class="tr-val fell">&darr;10.8%</div><svg class="ico tr-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+            <!-- San Antonio -10.1% (2023&ndash;2025) -->
+            <div class="trend-row" data-tip="217 people were killed in 2023 and 195 in 2025, in TxDOT CRIS records." data-src="TxDOT CRIS"><div class="tr-name"><span class="tr-dot" style="background:#f97316"></span><span class="tr-label">San Antonio<span class="yr-tag">2023&ndash;25</span></span></div><div class="tr-bar-cell"><div class="tr-bar fell" style="width:18.3%"></div></div><div class="tr-val fell">&darr;10.1%</div><svg class="ico tr-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+            <!-- Houston Metro -6.0% (2023&ndash;2025) -->
+            <div class="trend-row" data-tip="550 people were killed in 2023 and 517 in 2025, in TxDOT CRIS records." data-src="TxDOT CRIS"><div class="tr-name"><span class="tr-dot" style="background:#14b8a6"></span><span class="tr-label">Houston Metro<span class="yr-tag">2023&ndash;25</span></span></div><div class="tr-bar-cell"><div class="tr-bar fell" style="width:10.9%"></div></div><div class="tr-val fell">&darr;6.0%</div><svg class="ico tr-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+            <div class="trend-divider" role="presentation"></div>
+            <!-- Denver Metro -2.1% (2023&ndash;2025) -->
+            <div class="trend-row" data-tip="287 people were killed in 2023 and 281 in 2025, in CDOT records." data-src="CDOT"><div class="tr-name"><span class="tr-dot" style="background:#ff4d4d"></span><span class="tr-label">Denver Metro<span class="yr-tag">2023&ndash;25</span></span></div><div class="tr-bar-cell"><div class="tr-bar flat" style="width:3.8%"></div></div><div class="tr-val flat">&darr;2.1%</div><svg class="ico tr-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+            <!-- San Diego -2.0% (2022&ndash;2024) -->
+            <div class="trend-row" data-tip="199 people were killed in 2022 and 195 in 2024, in CHP CCRS records." data-src="CHP CCRS"><div class="tr-name"><span class="tr-dot" style="background:#3b82f6"></span><span class="tr-label">San Diego<span class="yr-tag">2022&ndash;24</span></span></div><div class="tr-bar-cell"><div class="tr-bar flat" style="width:3.6%"></div></div><div class="tr-val flat">&darr;2.0%</div><svg class="ico tr-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+            <!-- Boston +2.4% (2022&ndash;2024) -->
+            <div class="trend-row" data-tip="42 people were killed in 2022 and 43 in 2024, in MassDOT records. With counts this small, the percentage swings widely from year to year." data-src="MassDOT"><div class="tr-name"><span class="tr-dot" style="background:#ec4899"></span><span class="tr-label">Boston<span class="yr-tag">2022&ndash;24</span></span></div><div class="tr-bar-cell"><div class="tr-bar rose" style="width:4.4%"></div></div><div class="tr-val rose">&uarr;2.4%</div><svg class="ico tr-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+            <!-- Austin +10.0% (2023&ndash;2025) -->
+            <div class="trend-row" data-tip="90 people were killed in 2023 and 99 in 2025, in Austin Open Data records. The City of Austin&rsquo;s preliminary count for 2025 is 99 deaths." data-src="Austin Open Data; City of Austin Transportation and Public Works, Feb 2026"><div class="tr-name"><span class="tr-dot" style="background:#0ea5e9"></span><span class="tr-label">Austin<span class="yr-tag">2023&ndash;25</span></span></div><div class="tr-bar-cell"><div class="tr-bar rose" style="width:18.1%"></div></div><div class="tr-val rose">&uarr;10.0%</div><svg class="ico tr-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+            <!-- Seattle +11.1% (2023&ndash;2025) -->
+            <div class="trend-row" data-tip="27 people were killed in 2023 and 30 in 2025, in SDOT records. With counts this small, the percentage swings widely from year to year." data-src="SDOT"><div class="tr-name"><span class="tr-dot" style="background:#818cf8"></span><span class="tr-label">Seattle<span class="yr-tag">2023&ndash;25</span></span></div><div class="tr-bar-cell"><div class="tr-bar rose" style="width:20.1%"></div></div><div class="tr-val rose">&uarr;11.1%</div><svg class="ico tr-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="trend-legend">
+            <div class="lg"><span><span class="sw" style="background:var(--fell)"></span>&darr; Fell more than 5%</span><span><span class="sw" style="background:var(--flat)"></span>Roughly flat</span><span><span class="sw" style="background:var(--rose)"></span>&uarr; Rose</span></div>
+            <div>% change in traffic deaths (people killed) from the first to the last year in each metro&rsquo;s data range (2023&ndash;2025 or 2022&ndash;2024, shown under each name). A metro stays on its older range until its agency&rsquo;s next year of records is complete. Local agency records only (not full states). National baseline: NHTSA FARS 2023 Final &middot; 2025 Early Estimate.</div>
+        </div>
+    </div>
+</section>
+
+<section class="sec wrap" id="national">
+    <div class="sec-label">National &middot; NHTSA and GHSA</div>
+    <h2 class="sec-title">The national picture</h2>
+    <p class="sec-desc">Patterns across the whole country, each with the year it describes.</p>
+    <div class="card nc-card">
+        <div class="nc-grid">
+        </div>
+        <div class="nc-footer">
+            <div class="nc-connect">These national patterns play out differently in every metro. The dashboards show how.</div>
+            <div class="nc-sources">NHTSA &middot; GHSA &middot; 2024&ndash;2025 data</div>
+        </div>
+    </div>
+</section>
+
+<section class="sec wrap" id="about">
     <div class="about-contact-inner">
         <div class="about-col">
+            <div class="sec-label">About</div>
             <h2>What this is</h2>
             <p>I turn official crash records from state and city transportation agencies into interactive dashboards for 20 US metros. Every figure traces back to a public dataset, linked from each dashboard's Sources section.</p>
             <p>Each dashboard maps crash hotspots and breaks crashes down by timing, severity, impairment, speed, hit-and-run, and pedestrian and cyclist safety. Its Methodology section explains how the data was processed.</p>
             <p>The dashboards show summaries. Individual crash records stay with the agencies that publish them, and the Sources links lead there.</p>
-            <p>I built crashmaps so the people who drive, walk, and bike these roads can see what happens on them. If your city publishes crash records, <a href="#contact" style="color:var(--text);font-weight:500;border-bottom:1px solid var(--text-faint)">use the form</a> to request it.</p>
-            <p>If you find the dashboards useful, you can <a href="https://buymeacoffee.com/flu.2" target="_blank" rel="noopener noreferrer" style="color:var(--text);font-weight:500;border-bottom:1px solid var(--text-faint)">buy me a coffee</a>.</p>
-            <p style="color:var(--text-faint);font-size:.75rem;margin-top:1.5rem;font-weight:300;line-height:1.6">No affiliation with any law firm, insurance company, or government agency. No ads, analytics, or cookies.</p>
+            <p>I built crashmaps so the people who drive, walk, and bike these roads can see what happens on them. If your city publishes crash records, <a href="#contact">use the form</a> to request it.</p>
+            <p>If you find the dashboards useful, you can <a href="https://buymeacoffee.com/flu.2" target="_blank" rel="noopener noreferrer">buy me a coffee</a>.</p>
+            <p class="fine">No affiliation with any law firm, insurance company, or government agency. No ads, analytics, or cookies.</p>
         </div>
-        <div class="contact-col" id="contact" style="scroll-margin-top:5rem">
+        <div class="contact-col" id="contact" style="scroll-margin-top:72px">
+            <div class="sec-label">Contact</div>
             <h2>Get in touch</h2>
-            <p style="color:var(--text-dim);font-size:.85rem;font-weight:300;line-height:1.6;margin-bottom:1rem">Request a city, report a data issue, suggest a feature, or just say hello. You don&rsquo;t have to give a name or email. Messages are delivered by Formspree, which logs the request.</p>
-            <form id="contactForm" action="https://formspree.io/f/mlgobolb" method="POST" style="display:flex;flex-direction:column;gap:.75rem">
-                <input type="text" name="_gotcha" style="position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0" tabindex="-1" autocomplete="off">
-                <input type="email" name="email" placeholder="Email (optional, needed for a reply)" aria-label="Email (optional, needed for a reply)" class="cf-input">
-                <select name="type" id="cfType" class="cf-input" aria-label="Message type">
+            <p class="contact-intro">Request a city, report a data issue, suggest a feature, or just say hello. You don&rsquo;t have to give a name or email. Messages are delivered by Formspree, which logs the request.</p>
+            <form id="contactForm" action="https://formspree.io/f/mlgobolb" method="POST">
+                <input type="text" name="_gotcha" style="position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0" tabindex="-1" autocomplete="off" aria-hidden="true">
+                <div><label class="fld-lbl" for="cfEmail">Email (optional, needed for a reply)</label><input type="email" name="email" id="cfEmail" class="fld" autocomplete="email"></div>
+                <div><label class="fld-lbl" for="cfType">Message type</label>
+                <select name="type" id="cfType" class="fld">
                     <option value="general">General feedback</option>
                     <option value="city">Request a city</option>
                     <option value="research">Research or data access</option>
                     <option value="bug">Report a data issue</option>
                     <option value="feature">Suggest a feature</option>
-                </select>
+                </select></div>
                 <div id="cfCityWrap" hidden>
-                    <input type="text" name="city" id="cfCity" placeholder="City and state" aria-label="City and state" class="cf-input" disabled>
+                    <label class="fld-lbl" for="cfCity">City and state</label>
+                    <input type="text" name="city" id="cfCity" class="fld" disabled>
                     <p class="cf-note">Some states restrict access to their crash data, so not every city can be added.</p>
                 </div>
-                <p class="cf-note" id="cfResearchNote" hidden>The dashboards show summaries. Each dashboard's Sources section links to the original agency data. NHTSA's <a href="https://www.nhtsa.gov/research-data/fatality-analysis-reporting-system-fars" target="_blank" rel="noopener noreferrer">FARS</a> covers every fatal crash nationwide, and GHSA's <a href="https://www.ghsa.org/state-highway-safety-offices" target="_blank" rel="noopener noreferrer">State Highway Safety Office directory</a> lists who to contact in each state.</p>
-                <textarea name="message" placeholder="Your message" aria-label="Your message" required rows="4" class="cf-input"></textarea>
-                <button type="submit" class="cf-btn">Send</button>
+                <div class="cf-callout" id="cfResearchNote" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><p>The dashboards show summaries. Each dashboard's Sources section links to the original agency data. NHTSA's <a href="https://www.nhtsa.gov/research-data/fatality-analysis-reporting-system-fars" target="_blank" rel="noopener noreferrer">FARS</a> covers every fatal crash nationwide, and GHSA's <a href="https://www.ghsa.org/state-highway-safety-offices" target="_blank" rel="noopener noreferrer">State Highway Safety Office directory</a> lists who to contact in each state.</p></div>
+                <div><label class="fld-lbl" for="cfMsg">Message</label><textarea name="message" id="cfMsg" required rows="4" class="fld"></textarea></div>
+                <p class="msg warn" id="cfErr" role="alert" hidden></p>
+                <button type="submit" class="btn-primary">Send</button>
             </form>
-            <div id="contactSuccess" style="display:none;padding:1.25rem;background:var(--bg);border:1px solid var(--border);border-radius:8px;text-align:center">
-                <p style="font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--text);margin-bottom:.35rem">Message sent. Thank you.</p>
-                <p style="font-size:.78rem;color:var(--text-faint)">I read every submission.</p>
-            </div>
-        </div>
-        <div class="cf-faq">
-            <div class="cf-faq-item">
-                <h3>Can I download the raw data?</h3>
-                <p>The dashboards show summaries only. Each dashboard's Sources section (for example, <a href="denver/#sec-13">Denver's</a>) links to the agency dataset where the full records are published.</p>
-            </div>
-            <div class="cf-faq-item">
-                <h3>Can you add my city?</h3>
-                <p>Possibly, if its city or state publishes crash records with locations through at least 2024. Send a "Request a city" message above; some states restrict access to crash data, so not every city can be added.</p>
-            </div>
-            <div class="cf-faq-item">
-                <h3>How is the data processed?</h3>
-                <p>Each agency's records are mapped to a common schema, aggregated, and built into a standalone page. Each dashboard's Methodology section (for example, <a href="denver/#sec-14">Denver's</a>) explains that source's quirks and exclusions.</p>
+            <div id="contactSuccess" class="cf-sent" hidden>
+                <p class="msg ok" role="status"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Message sent. Thank you. I read every submission.</span></p>
             </div>
         </div>
     </div>
 </section>
 
-<footer>
+<section class="sec wrap" id="faq">
+    <div class="sec-label">FAQ</div>
+    <h2 class="sec-title">Common questions</h2>
+    <p class="sec-desc">About the data, and about adding a city.</p>
+    <div class="cf-faq">
+        <div class="card">
+            <h3>Can I download the raw data?</h3>
+            <p>The dashboards show summaries only. Each dashboard's Sources section (for example, <a href="denver/#section=sources">Denver's</a>) links to the agency dataset where the full records are published.</p>
+        </div>
+        <div class="card">
+            <h3>Can you add my city?</h3>
+            <p>Possibly, if its city or state publishes crash records with locations through at least 2024. Search for it at the top of this page and send a request, or <a href="#contact">use the contact form</a>. Some states restrict access to crash data, so not every city can be added.</p>
+        </div>
+        <div class="card">
+            <h3>How is the data processed?</h3>
+            <p>Each agency's records are mapped to a common schema, aggregated, and built into a standalone page. Each dashboard's Methodology section (for example, <a href="denver/#section=methodology">Denver's</a>) explains that source's quirks and exclusions.</p>
+        </div>
+    </div>
+</section>
+</main>
+
+<footer class="wrap">
     <div style="font-family:'JetBrains Mono',monospace">crashmaps</div>
     <div>
-        <a href="https://github.com/fLu-2/crashmaps" target="_blank">GitHub</a> &nbsp;&middot;&nbsp;
-        <a href="https://buymeacoffee.com/flu.2" target="_blank">Buy me a coffee</a>
+        <a href="https://github.com/fLu-2/crashmaps" target="_blank" rel="noopener noreferrer">GitHub</a> &nbsp;&middot;&nbsp;
+        <a href="https://buymeacoffee.com/flu.2" target="_blank" rel="noopener noreferrer">Buy me a coffee</a>
     </div>
-    <div class="foot-note"><div style="max-width:760px;margin:0 auto;font-size:.75rem;line-height:1.6;color:var(--text-faint);text-align:center">Unofficial. Built from public agency crash records, which the agencies do not guarantee to be complete or accurate; not for legal use. Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors (ODbL).<br><strong>Privacy:</strong> no ads, analytics or cookies. Loading this page fetches fonts from Google Fonts, scripts from unpkg and map tiles from CARTO, and each of those services sees your IP address. The contact form is delivered by Formspree.</div></div>
+    <div class="foot-note"><div style="max-width:760px;margin:0 auto;line-height:1.6;text-align:center">Unofficial. Built from public agency crash records, which the agencies do not guarantee to be complete or accurate; not for legal use. Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors (ODbL).<br><strong>Privacy:</strong> no ads, analytics or cookies. Loading this page fetches fonts from Google Fonts, scripts from unpkg and map tiles from CARTO, and each of those services sees your IP address. The contact and request forms are delivered by Formspree.</div></div>
 </footer>
+
+<script>
+/* Header city switcher: same behaviour as the dashboards (disclosure button, arrows, Escape) */
+(function(){
+    var btn=document.getElementById('cityMenuBtn'),pop=document.getElementById('cityMenuPop'),box=btn.parentNode;
+    function items(){return [].slice.call(pop.querySelectorAll('a')).filter(function(a){return a.offsetParent!==null})}
+    function open(){pop.hidden=false;btn.setAttribute('aria-expanded','true');var it=items();if(it[0])it[0].focus()}
+    function close(ret){if(pop.hidden)return;pop.hidden=true;btn.setAttribute('aria-expanded','false');if(ret)btn.focus()}
+    btn.addEventListener('click',function(){pop.hidden?open():close(true)});
+    btn.addEventListener('keydown',function(e){if(e.key==='ArrowDown'&&pop.hidden){e.preventDefault();open()}});
+    pop.addEventListener('keydown',function(e){
+        var it=items(),i=it.indexOf(document.activeElement),n=it.length;if(!n)return;
+        var k={ArrowDown:(i+1)%n,ArrowUp:(i-1+n)%n,Home:0,End:n-1}[e.key];
+        if(k!=null){e.preventDefault();it[k].focus()}
+        if(e.key==='Escape'){e.preventDefault();close(true)}
+    });
+    pop.addEventListener('click',function(e){if(e.target.closest('a[href^="#"]'))close(false)});
+    box.addEventListener('focusout',function(e){if(e.relatedTarget&&!box.contains(e.relatedTarget))close(false)});
+    document.addEventListener('click',function(e){if(!box.contains(e.target))close(false)});
+})();
+</script>
+<script>
+/* City search (redesign bucket 7). PLACES is generated by update_landing.py from
+   configs/landing_places.json and each city's config and data.json. */
+/* places:start */
+var PLACES={"metros":[{"slug":"austin","name":"Austin","state":"TX","color":"#0ea5e9","src":"Austin Open Data","years":"2023–2025"},{"slug":"boston","name":"Boston","state":"MA","color":"#ec4899","src":"MassDOT","years":"2022–2024"},{"slug":"chicago","name":"Chicago","state":"IL","color":"#a855f7","src":"Chicago Open Data","years":"2023–2025"},{"slug":"dallas","name":"Dallas","state":"TX","color":"#eab308","src":"TxDOT CRIS","years":"2023–2025"},{"slug":"denver","name":"Denver Metro","state":"CO","color":"#ff4d4d","src":"CDOT","years":"2023–2025"},{"slug":"detroit","name":"Detroit","state":"MI","color":"#f43f5e","src":"Detroit Open Data","years":"2022–2024"},{"slug":"fort-worth","name":"Fort Worth","state":"TX","color":"#84cc16","src":"TxDOT CRIS","years":"2023–2025"},{"slug":"houston","name":"Houston Metro","state":"TX","color":"#14b8a6","src":"TxDOT CRIS","years":"2023–2025"},{"slug":"nyc","name":"New York City","state":"NY","color":"#f59e0b","src":"NYC Open Data","years":"2023–2025"},{"slug":"oakland","name":"Oakland Metro","state":"CA","color":"#a78bfa","src":"CHP CCRS","years":"2023–2025"},{"slug":"philadelphia","name":"Philadelphia","state":"PA","color":"#06b6d4","src":"PennDOT","years":"2023–2025"},{"slug":"riverside","name":"Riverside Metro","state":"CA","color":"#f87171","src":"CHP CCRS","years":"2022–2024"},{"slug":"sacramento","name":"Sacramento","state":"CA","color":"#fbbf24","src":"CHP CCRS","years":"2023–2025"},{"slug":"san-antonio","name":"San Antonio","state":"TX","color":"#f97316","src":"TxDOT CRIS","years":"2023–2025"},{"slug":"san-diego","name":"San Diego","state":"CA","color":"#3b82f6","src":"CHP CCRS","years":"2022–2024"},{"slug":"sf","name":"San Francisco","state":"CA","color":"#14b8a6","src":"CHP CCRS","years":"2023–2025"},{"slug":"san-jose","name":"San Jose Metro","state":"CA","color":"#d946ef","src":"CHP CCRS","years":"2023–2025"},{"slug":"seattle","name":"Seattle","state":"WA","color":"#818cf8","src":"SDOT","years":"2023–2025"},{"slug":"salt-lake-city","name":"Wasatch Front","state":"UT","color":"#67e8f9","src":"UDOT","years":"2022–2024"},{"slug":"dc","name":"Washington DC","state":"DC","color":"#10b981","src":"DC Open Data","years":"2023–2025"}],"entries":[{"n":"Austin","k":"metro","m":0},{"n":"Boston","k":"metro","m":1},{"n":"Cambridge","k":"town","m":1},{"n":"Quincy","k":"town","m":1},{"n":"Newton","k":"town","m":1},{"n":"Somerville","k":"town","m":1},{"n":"Malden","k":"town","m":1},{"n":"Waltham","k":"town","m":1},{"n":"Revere","k":"town","m":1},{"n":"Medford","k":"town","m":1},{"n":"Everett","k":"town","m":1},{"n":"Chelsea","k":"town","m":1},{"n":"Brookline","k":"town","m":1},{"n":"Watertown","k":"town","m":1},{"n":"Chicago","k":"metro","m":2},{"n":"Dallas","k":"metro","m":3},{"n":"Irving","k":"town","m":3},{"n":"Coppell","k":"town","m":3},{"n":"Garland","k":"town","m":3},{"n":"Rowlett","k":"town","m":3},{"n":"Sachse","k":"town","m":3},{"n":"Wylie","k":"town","m":3},{"n":"Grand Prairie","k":"town","m":3},{"n":"Mesquite","k":"town","m":3},{"n":"Balch Springs","k":"town","m":3},{"n":"Sunnyvale","k":"town","m":3},{"n":"Seagoville","k":"town","m":3},{"n":"Combine","k":"town","m":3},{"n":"Carrollton","k":"town","m":3},{"n":"Farmers Branch","k":"town","m":3},{"n":"Addison","k":"town","m":3},{"n":"Richardson","k":"town","m":3},{"n":"University Park","k":"town","m":3},{"n":"Highland Park","k":"town","m":3},{"n":"Duncanville","k":"town","m":3},{"n":"Lancaster","k":"town","m":3},{"n":"Cedar Hill","k":"town","m":3},{"n":"DeSoto","k":"town","m":3},{"n":"Glenn Heights","k":"town","m":3},{"n":"Wilmer","k":"town","m":3},{"n":"Hutchins","k":"town","m":3},{"n":"Cockrell Hill","k":"town","m":3},{"n":"Dallas County","k":"county","c":"all","m":3},{"n":"Denver Metro","k":"metro","m":4},{"n":"Aurora","k":"town","m":4},{"n":"Thornton","k":"town","m":4},{"n":"Northglenn","k":"town","m":4},{"n":"Westminster","k":"town","m":4},{"n":"Lakewood","k":"town","m":4},{"n":"Arvada","k":"town","m":4},{"n":"Brighton","k":"town","m":4},{"n":"Centennial","k":"town","m":4},{"n":"Littleton","k":"town","m":4},{"n":"Golden","k":"town","m":4},{"n":"Castle Rock","k":"town","m":4},{"n":"Lone Tree","k":"town","m":4},{"n":"Commerce City","k":"town","m":4},{"n":"Federal Heights","k":"town","m":4},{"n":"Bennett","k":"town","m":4},{"n":"Welby","k":"town","m":4},{"n":"Lochbuie","k":"town","m":4},{"n":"Englewood","k":"town","m":4},{"n":"Sheridan","k":"town","m":4},{"n":"Glendale","k":"town","m":4},{"n":"Cherry Hills Village","k":"town","m":4},{"n":"Greenwood Village","k":"town","m":4},{"n":"Foxfield","k":"town","m":4},{"n":"Deer Trail","k":"town","m":4},{"n":"Wheat Ridge","k":"town","m":4},{"n":"Edgewater","k":"town","m":4},{"n":"Lakeside","k":"town","m":4},{"n":"Morrison","k":"town","m":4},{"n":"Mountain View","k":"town","m":4},{"n":"Evergreen","k":"town","m":4},{"n":"Conifer","k":"town","m":4},{"n":"Aspen Park","k":"town","m":4},{"n":"Columbine","k":"town","m":4},{"n":"Indian Hills","k":"town","m":4},{"n":"Broomfield","k":"town","m":4},{"n":"Parker","k":"town","m":4},{"n":"Highlands Ranch","k":"town","m":4},{"n":"Castle Pines","k":"town","m":4},{"n":"Larkspur","k":"town","m":4},{"n":"Denver County","k":"county","c":"part","m":4},{"n":"Adams County","k":"county","c":"part","m":4},{"n":"Arapahoe County","k":"county","c":"part","m":4},{"n":"Jefferson County","k":"county","c":"part","m":4},{"n":"Douglas County","k":"county","c":"part","m":4},{"n":"Broomfield County","k":"county","c":"part","m":4},{"n":"Detroit","k":"metro","m":5},{"n":"Fort Worth","k":"metro","m":6},{"n":"Arlington","k":"town","m":6},{"n":"Dalworthington Gardens","k":"town","m":6},{"n":"Pantego","k":"town","m":6},{"n":"Mansfield","k":"town","m":6},{"n":"Kennedale","k":"town","m":6},{"n":"Crowley","k":"town","m":6},{"n":"Burleson","k":"town","m":6},{"n":"North Richland Hills","k":"town","m":6},{"n":"Bedford","k":"town","m":6},{"n":"Euless","k":"town","m":6},{"n":"Hurst","k":"town","m":6},{"n":"Richland Hills","k":"town","m":6},{"n":"Watauga","k":"town","m":6},{"n":"Haltom City","k":"town","m":6},{"n":"River Oaks","k":"town","m":6},{"n":"Westworth Village","k":"town","m":6},{"n":"Saginaw","k":"town","m":6},{"n":"Lake Worth","k":"town","m":6},{"n":"Haslet","k":"town","m":6},{"n":"Grapevine","k":"town","m":6},{"n":"Southlake","k":"town","m":6},{"n":"Colleyville","k":"town","m":6},{"n":"Westlake","k":"town","m":6},{"n":"Keller","k":"town","m":6},{"n":"Tarrant County","k":"county","c":"all","m":6},{"n":"Houston Metro","k":"metro","m":7},{"n":"Pasadena","k":"town","m":7},{"n":"South Houston","k":"town","m":7},{"n":"Baytown","k":"town","m":7},{"n":"Humble","k":"town","m":7},{"n":"Katy","k":"town","m":7},{"n":"Jersey Village","k":"town","m":7},{"n":"Hedwig Village","k":"town","m":7},{"n":"Hunters Creek Village","k":"town","m":7},{"n":"Piney Point Village","k":"town","m":7},{"n":"Webster","k":"town","m":7},{"n":"Nassau Bay","k":"town","m":7},{"n":"Seabrook","k":"town","m":7},{"n":"Friendswood","k":"town","m":7},{"n":"La Porte","k":"town","m":7},{"n":"Deer Park","k":"town","m":7},{"n":"Bellaire","k":"town","m":7},{"n":"West University Place","k":"town","m":7},{"n":"Tomball","k":"town","m":7},{"n":"Harris County","k":"county","c":"all","m":7},{"n":"New York City","k":"metro","m":8},{"n":"New York","k":"alias","m":8},{"n":"NYC","k":"alias","m":8},{"n":"Manhattan","k":"town","m":8},{"n":"Brooklyn","k":"town","m":8},{"n":"Queens","k":"town","m":8},{"n":"Bronx","k":"town","m":8},{"n":"Staten Island","k":"town","m":8},{"n":"New York County (Manhattan)","k":"county","c":"part","m":8},{"n":"Kings County (Brooklyn)","k":"county","c":"part","m":8},{"n":"Queens County","k":"county","c":"part","m":8},{"n":"Bronx County","k":"county","c":"part","m":8},{"n":"Richmond County (Staten Island)","k":"county","c":"part","m":8},{"n":"Oakland Metro","k":"metro","m":9},{"n":"Fremont","k":"town","m":9},{"n":"Hayward","k":"town","m":9},{"n":"Berkeley","k":"town","m":9},{"n":"San Leandro","k":"town","m":9},{"n":"Livermore","k":"town","m":9},{"n":"Pleasanton","k":"town","m":9},{"n":"Alameda","k":"town","m":9},{"n":"Union City","k":"town","m":9},{"n":"Dublin","k":"town","m":9},{"n":"Newark","k":"town","m":9},{"n":"Emeryville","k":"town","m":9},{"n":"Albany","k":"town","m":9},{"n":"Piedmont","k":"town","m":9},{"n":"Castro Valley","k":"town","m":9},{"n":"San Lorenzo","k":"town","m":9},{"n":"Alameda County","k":"county","c":"all","m":9},{"n":"Philadelphia","k":"metro","m":10},{"n":"Philadelphia County","k":"county","c":"all","m":10},{"n":"Riverside Metro","k":"metro","m":11},{"n":"Moreno Valley","k":"town","m":11},{"n":"Corona","k":"town","m":11},{"n":"Murrieta","k":"town","m":11},{"n":"Temecula","k":"town","m":11},{"n":"Menifee","k":"town","m":11},{"n":"Jurupa Valley","k":"town","m":11},{"n":"Hemet","k":"town","m":11},{"n":"Perris","k":"town","m":11},{"n":"Lake Elsinore","k":"town","m":11},{"n":"Indio","k":"town","m":11},{"n":"Cathedral City","k":"town","m":11},{"n":"Palm Springs","k":"town","m":11},{"n":"Palm Desert","k":"town","m":11},{"n":"Beaumont","k":"town","m":11},{"n":"San Jacinto","k":"town","m":11},{"n":"Wildomar","k":"town","m":11},{"n":"Eastvale","k":"town","m":11},{"n":"Coachella","k":"town","m":11},{"n":"Banning","k":"town","m":11},{"n":"Calimesa","k":"town","m":11},{"n":"Canyon Lake","k":"town","m":11},{"n":"Desert Hot Springs","k":"town","m":11},{"n":"Indian Wells","k":"town","m":11},{"n":"La Quinta","k":"town","m":11},{"n":"Norco","k":"town","m":11},{"n":"Rancho Mirage","k":"town","m":11},{"n":"Riverside County","k":"county","c":"most","m":11},{"n":"Sacramento","k":"metro","m":12},{"n":"Elk Grove","k":"town","m":12},{"n":"Citrus Heights","k":"town","m":12},{"n":"Folsom","k":"town","m":12},{"n":"Rancho Cordova","k":"town","m":12},{"n":"Galt","k":"town","m":12},{"n":"Isleton","k":"town","m":12},{"n":"Sacramento County","k":"county","c":"all","m":12},{"n":"San Antonio","k":"metro","m":13},{"n":"Leon Valley","k":"town","m":13},{"n":"Castle Hills","k":"town","m":13},{"n":"Balcones Heights","k":"town","m":13},{"n":"Shavano Park","k":"town","m":13},{"n":"Hollywood Park","k":"town","m":13},{"n":"Hill Country Village","k":"town","m":13},{"n":"Live Oak","k":"town","m":13},{"n":"Universal City","k":"town","m":13},{"n":"Converse","k":"town","m":13},{"n":"Selma","k":"town","m":13},{"n":"Schertz","k":"town","m":13},{"n":"Windcrest","k":"town","m":13},{"n":"Alamo Heights","k":"town","m":13},{"n":"Olmos Park","k":"town","m":13},{"n":"Terrell Hills","k":"town","m":13},{"n":"Helotes","k":"town","m":13},{"n":"Fair Oaks Ranch","k":"town","m":13},{"n":"Grey Forest","k":"town","m":13},{"n":"San Geronimo","k":"town","m":13},{"n":"Bexar County","k":"county","c":"all","m":13},{"n":"San Diego","k":"metro","m":14},{"n":"Chula Vista","k":"town","m":14},{"n":"El Cajon","k":"town","m":14},{"n":"National City","k":"town","m":14},{"n":"La Mesa","k":"town","m":14},{"n":"Lemon Grove","k":"town","m":14},{"n":"Coronado","k":"town","m":14},{"n":"Santee","k":"town","m":14},{"n":"Poway","k":"town","m":14},{"n":"Solana Beach","k":"town","m":14},{"n":"Del Mar","k":"town","m":14},{"n":"Imperial Beach","k":"town","m":14},{"n":"San Francisco","k":"metro","m":15},{"n":"SF","k":"alias","m":15},{"n":"San Francisco County","k":"county","c":"all","m":15},{"n":"San Jose Metro","k":"metro","m":16},{"n":"Sunnyvale","k":"town","m":16},{"n":"Santa Clara","k":"town","m":16},{"n":"Mountain View","k":"town","m":16},{"n":"Milpitas","k":"town","m":16},{"n":"Palo Alto","k":"town","m":16},{"n":"Los Altos Hills","k":"town","m":16},{"n":"Cupertino","k":"town","m":16},{"n":"Campbell","k":"town","m":16},{"n":"Monte Sereno","k":"town","m":16},{"n":"Gilroy","k":"town","m":16},{"n":"Morgan Hill","k":"town","m":16},{"n":"Los Gatos","k":"town","m":16},{"n":"Saratoga","k":"town","m":16},{"n":"Los Altos","k":"town","m":16},{"n":"Santa Clara County","k":"county","c":"all","m":16},{"n":"Seattle","k":"metro","m":17},{"n":"Wasatch Front","k":"metro","m":18},{"n":"Salt Lake","k":"alias","m":18},{"n":"Salt Lake City","k":"town","m":18},{"n":"West Valley City","k":"town","m":18},{"n":"West Jordan","k":"town","m":18},{"n":"Sandy","k":"town","m":18},{"n":"South Jordan","k":"town","m":18},{"n":"Taylorsville","k":"town","m":18},{"n":"Murray","k":"town","m":18},{"n":"Draper","k":"town","m":18},{"n":"Riverton","k":"town","m":18},{"n":"Herriman","k":"town","m":18},{"n":"South Salt Lake","k":"town","m":18},{"n":"Midvale","k":"town","m":18},{"n":"Millcreek","k":"town","m":18},{"n":"Holladay","k":"town","m":18},{"n":"Cottonwood Heights","k":"town","m":18},{"n":"Kearns","k":"town","m":18},{"n":"Magna","k":"town","m":18},{"n":"Salt Lake County","k":"county","c":"all","m":18},{"n":"Washington DC","k":"metro","m":19},{"n":"Washington","k":"alias","m":19},{"n":"District of Columbia","k":"alias","m":19},{"n":"DC","k":"alias","m":19}]};
+/* places:end */
+(function(){
+    var M=PLACES.metros,E=PLACES.entries;
+    var q=document.getElementById('cityQ'),panel=document.getElementById('finderPanel'),finder=document.getElementById('finder');
+    var vRes=document.getElementById('finderResults'),list=document.getElementById('finderList'),vEmpty=document.getElementById('finderEmpty'),
+        vReq=document.getElementById('finderReq'),vDone=document.getElementById('finderDone'),status=document.getElementById('finderStatus');
+    var form=document.getElementById('reqForm'),fCity=document.getElementById('reqCity'),err=document.getElementById('reqErr'),send=document.getElementById('reqSend');
+    var mode='closed',results=[],active=-1,requestName='';
+    function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+    function norm(s){return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,' ').trim()}
+    var STATES={};M.forEach(function(m){STATES[m.state.toLowerCase()]=1});
+    E.forEach(function(e){e.key=norm(e.n);e.words=e.key.split(' ')});
+    function score(e,t){
+        if(e.key===t)return 0;
+        if(e.key.indexOf(t)===0)return 1;
+        for(var i=1;i<e.words.length;i++){if(e.words.slice(i).join(' ').indexOf(t)===0)return 2}
+        if(t.length>=3&&e.key.indexOf(t)>0)return 3;
+        return -1;
+    }
+    function search(raw){
+        var t=norm(raw),st=null;if(!t)return [];
+        var mm=t.match(/^(.+?) ([a-z]{2})$/);
+        function run(text){
+            var out=[],seen={};
+            E.forEach(function(e){
+                if(st&&M[e.m].state.toLowerCase()!==st)return;
+                var s=score(e,text);if(s<0)return;
+                var id=e.k==='alias'?'m'+e.m:e.k+e.n+e.m;
+                if(seen[id]!=null){if(s<out[seen[id]].s)out[seen[id]].s=s;return}
+                seen[id]=out.length;out.push({e:e.k==='alias'?E.filter(function(x){return x.k==='metro'&&x.m===e.m})[0]:e,s:s});
+            });
+            var rank={metro:0,town:1,county:2};
+            out.sort(function(a,b){return a.s-b.s||rank[a.e.k]-rank[b.e.k]||a.e.n.localeCompare(b.e.n)});
+            return out.slice(0,8).map(function(o){return o.e});
+        }
+        var r=run(t);
+        if(!r.length&&mm&&STATES[mm[2]]){st=mm[2];r=run(mm[1])}
+        return r;
+    }
+    function lines(e){
+        var m=M[e.m],dash=m.name+' dashboard',tail=' &middot; '+esc(m.src)+' '+m.years;
+        var name=e.k==='metro'?(m.name.slice(-3)===' '+m.state?m.name:m.name+', '+m.state):e.n+', '+m.state;
+        var meta=e.k==='metro'?'Dashboard':e.c==='all'?'Covered by the '+dash:e.c==='most'?'Most of it is in the '+dash:'Part of the '+dash;
+        return {name:esc(name),meta:esc(meta)+tail};
+    }
+    function show(v){
+        mode=v;[vRes,vEmpty,vReq,vDone].forEach(function(x){x.hidden=true});
+        if(v==='closed'){panel.hidden=true;q.setAttribute('aria-expanded','false');q.removeAttribute('aria-activedescendant');return}
+        panel.hidden=false;
+        ({results:vRes,empty:vEmpty,request:vReq,done:vDone})[v].hidden=false;
+        q.setAttribute('aria-expanded',v==='results'?'true':'false');
+    }
+    function setActive(i){
+        var lis=list.children;active=i;
+        for(var j=0;j<lis.length;j++)lis[j].setAttribute('aria-selected',j===i?'true':'false');
+        if(i>=0&&lis[i]){q.setAttribute('aria-activedescendant',lis[i].id);lis[i].scrollIntoView({block:'nearest'})}else q.removeAttribute('aria-activedescendant');
+    }
+    function place(s){return s.replace(/\s+/g,' ').trim()}
+    function update(){
+        var raw=place(q.value);
+        if(!raw){show('closed');status.textContent='';return}
+        results=search(raw);
+        if(!results.length){
+            requestName=raw;
+            document.getElementById('feQuery').textContent=raw;document.getElementById('feQuery2').textContent='Request '+raw;
+            show('empty');status.textContent='No dashboard for '+raw+' yet.';return;
+        }
+        list.innerHTML=results.map(function(e,i){var l=lines(e),m=M[e.m];
+            return '<li role="option" id="fo-'+i+'" aria-selected="false"><a href="'+m.slug+'/" tabindex="-1"><span class="m-dot" style="background:'+m.color+'"></span><span class="fo-text"><span class="fo-name">'+l.name+'</span><span class="fo-meta">'+l.meta+'</span></span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></li>'}).join('');
+        var top=results[0];requestName=top.k==='metro'?M[top.m].name.replace(/ Metro$/,''):top.n.replace(/ \(.*\)$/,'');
+        document.getElementById('finderOther').textContent=requestName;
+        show('results');setActive(-1);
+        status.textContent=results.length+(results.length===1?' dashboard matches.':' dashboards match.')+' Use the arrow keys to choose, Enter to open.';
+    }
+    function openRequest(name){
+        err.hidden=true;send.disabled=false;send.textContent='Send request';
+        fCity.value=name||'';show('request');fCity.focus();if(fCity.value)fCity.select();
+    }
+    q.addEventListener('input',update);
+    q.addEventListener('focus',function(){if(mode==='closed'&&q.value.trim())update()});
+    q.addEventListener('keydown',function(e){
+        if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+            if(mode!=='results'){if(q.value.trim())update();if(mode!=='results')return}
+            e.preventDefault();var n=results.length;
+            setActive(e.key==='ArrowDown'?(active+1)%n:(active<=0?n-1:active-1));
+        }else if(e.key==='Enter'){
+            if(mode==='results'){e.preventDefault();var i=active<0?0:active;location.href=M[results[i].m].slug+'/'}
+            else if(mode==='empty'){e.preventDefault();openRequest(requestName)}
+        }else if(e.key==='Escape'){
+            if(mode!=='closed'){e.preventDefault();show('closed')}else if(q.value){q.value=''}
+        }
+    });
+    list.addEventListener('mousemove',function(e){var li=e.target.closest('li');if(li)setActive([].indexOf.call(list.children,li))});
+    panel.addEventListener('click',function(e){
+        if(e.target.closest('[data-request]')){openRequest(requestName);return}
+        if(e.target.closest('[data-close-panel]')){show('closed');q.focus();return}
+        if(e.target.closest('[data-close]'))show('closed');
+    });
+    panel.addEventListener('keydown',function(e){if(e.key==='Escape'){e.preventDefault();show('closed');q.focus()}});
+    document.addEventListener('click',function(e){if(!finder.contains(e.target)&&(mode==='results'||mode==='empty'))show('closed')});
+    // "/" focuses the search from anywhere on the page
+    document.addEventListener('keydown',function(e){
+        if(e.key!=='/'||e.ctrlKey||e.metaKey||e.altKey)return;
+        var t=e.target;if(t.closest&&t.closest('input,textarea,select,[contenteditable]'))return;
+        e.preventDefault();q.focus();q.select();
+    });
+    function fail(text){err.innerHTML='<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v4M12 17h.01"/></svg><span>'+esc(text)+'</span>';err.hidden=false}
+    var loaded=Date.now();
+    form.addEventListener('submit',function(e){
+        e.preventDefault();err.hidden=true;
+        var city=place(fCity.value),mail=document.getElementById('reqEmail');
+        if(!city){fail('Enter the city you would like added.');fCity.focus();return}
+        if(mail.value&&!mail.checkValidity()){fail('That email address doesn’t look right. Fix it or leave it empty.');mail.focus();return}
+        if(form.querySelector('input[name="_gotcha"]').value)return;
+        if(Date.now()-loaded<2000){fail('Please wait a moment and send again.');return}
+        send.disabled=true;send.textContent='Sending…';
+        fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}})
+        .then(function(r){
+            if(!r.ok)throw new Error(r.status);
+            document.getElementById('doneCity').textContent=city;form.reset();show('done');
+            vDone.querySelector('a').focus();
+        })
+        .catch(function(){send.disabled=false;send.textContent='Send request';fail('The request didn’t go through. Check your connection and try again.')});
+    });
+})();
+</script>
+<script>
+/* Trend rows: each opens a panel under it with the counts behind its bar */
+(function(){
+    var rows=document.querySelectorAll('.trend-row[data-tip]');
+    function closeTip(row){
+        var t=row.nextElementSibling;row.setAttribute('aria-expanded','false');
+        if(t&&t.classList.contains('trend-tip')){t.classList.remove('open');setTimeout(function(){t.remove()},220)}
+    }
+    rows.forEach(function(row){
+        row.setAttribute('role','button');row.setAttribute('tabindex','0');row.setAttribute('aria-expanded','false');
+        row.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();row.click()}});
+        row.addEventListener('click',function(){
+            var wasOpen=row.getAttribute('aria-expanded')==='true';
+            document.querySelectorAll('.trend-row[aria-expanded="true"]').forEach(closeTip);
+            if(wasOpen)return;
+            row.setAttribute('aria-expanded','true');
+            var tip=document.createElement('div');
+            tip.className='trend-tip';tip.setAttribute('role','status');
+            tip.innerHTML='<div><div class="trend-tip-inner">'+row.getAttribute('data-tip')+'<span class="tip-src">'+row.getAttribute('data-src')+'</span></div></div>';
+            row.after(tip);
+            requestAnimationFrame(function(){requestAnimationFrame(function(){tip.classList.add('open')})});
+        });
+    });
+    document.addEventListener('click',function(e){
+        if(!e.target.closest('.trend-row')&&!e.target.closest('.trend-tip'))document.querySelectorAll('.trend-row[aria-expanded="true"]').forEach(closeTip);
+    });
+})();
+</script>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
@@ -835,11 +1008,10 @@ footer a:hover{color:var(--text)}
         {name:'Riverside Metro',color:'#f87171',year:2024,fatal:11.3,ped:28.4,cyclist:19.7}
     ];
     var labels={fatal:'Deaths per 100K residents',ped:'Pedestrian crashes per 100K residents',cyclist:'Cyclist crashes per 100K residents'};
-    var units={fatal:'/100K',ped:'/100K',cyclist:'/100K'};
     var container=document.getElementById('rankRows');
     var subtitle=document.getElementById('rankSubtitle');
     var btns=document.querySelectorAll('#rankToggle .rank-btn');
-    /* One color per measure (DESIGN_RULES.md, Color): deaths, pedestrians and cyclists keep their fixed colors. No rank ramps. */
+    /* One color per measure (DESIGN_RULES.md, Color): deaths, pedestrians and cyclists keep their fixed colors. No rank ramps. Solid bars. */
     var measureColor={fatal:'#e5534b',ped:'#e0a23c',cyclist:'#4f9cf0'};
     function render(metric){
         var withData=[];var noData=[];
@@ -848,11 +1020,10 @@ footer a:hover{color:var(--text)}
         var maxVal=withData.length?withData[0][metric]:1;
         subtitle.textContent=labels[metric]+' · each metro’s latest year of data';
         var html='';
-        withData.forEach(function(m,i){
+        withData.forEach(function(m){
             var pct=Math.round(m[metric]/maxVal*100);
             var val=m[metric].toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1});
-            var sc=measureColor[metric];
-            html+='<div class="rank-row"><div class="rank-label"><div class="rank-dot" style="background:'+m.color+'"></div><span>'+m.name+'<span class="yr-tag">'+m.year+'</span></span></div><div class="rank-bar-cell"><div class="rank-bar" style="width:'+pct+'%;background:'+sc+';opacity:0.7"></div></div><div class="rank-val">'+val+units[metric]+'</div></div>';
+            html+='<div class="rank-row"><div class="rank-label"><div class="rank-dot" style="background:'+m.color+'"></div><span>'+m.name+'<span class="yr-tag">'+m.year+'</span></span></div><div class="rank-bar-cell"><div class="rank-bar" style="width:'+pct+'%;background:'+measureColor[metric]+'"></div></div><div class="rank-val">'+val+'</div></div>';
         });
         if(noData.length){
             html+='<div class="rank-divider"></div>';
@@ -863,9 +1034,10 @@ footer a:hover{color:var(--text)}
         container.innerHTML=html;
     }
     btns.forEach(function(btn){
+        btn.setAttribute('aria-pressed',btn.classList.contains('active')?'true':'false');
         btn.addEventListener('click',function(){
-            btns.forEach(function(b){b.classList.remove('active')});
-            btn.classList.add('active');
+            btns.forEach(function(b){b.classList.remove('active');b.setAttribute('aria-pressed','false')});
+            btn.classList.add('active');btn.setAttribute('aria-pressed','true');
             render(btn.getAttribute('data-metric'));
         });
     });
@@ -876,7 +1048,7 @@ footer a:hover{color:var(--text)}
 (function(){
     var form=document.getElementById('contactForm');
     var success=document.getElementById('contactSuccess');
-    if(!form)return;
+    var err=document.getElementById('cfErr');
     var btn=form.querySelector('button[type="submit"]');
     var typeSel=document.getElementById('cfType');
     var cityWrap=document.getElementById('cfCityWrap');
@@ -884,44 +1056,21 @@ footer a:hover{color:var(--text)}
     var researchNote=document.getElementById('cfResearchNote');
     function syncType(){
         var isCity=typeSel.value==='city';
-        cityWrap.hidden=!isCity;
-        cityInput.disabled=!isCity;
-        cityInput.required=isCity;
+        cityWrap.hidden=!isCity;cityInput.disabled=!isCity;cityInput.required=isCity;
         researchNote.hidden=typeSel.value!=='research';
     }
-    typeSel.addEventListener('change',syncType);
-    syncType();
-    var ready=false;
-    btn.disabled=true;
-    btn.style.opacity='.4';
-    btn.style.cursor='not-allowed';
-    setTimeout(function(){
-        ready=true;
-        btn.disabled=false;
-        btn.style.opacity='';
-        btn.style.cursor='';
-    },3000);
+    typeSel.addEventListener('change',syncType);syncType();
+    var loaded=Date.now();
+    function fail(text){err.innerHTML='<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v4M12 17h.01"/></svg><span>'+text+'</span>';err.hidden=false}
     form.addEventListener('submit',function(e){
-        e.preventDefault();
-        if(!ready)return;
-        var hp=form.querySelector('input[name="_gotcha"]');
-        if(hp&&hp.value){return;}
-        btn.textContent='Sending\u2026';
-        btn.disabled=true;
+        e.preventDefault();err.hidden=true;
+        if(!form.checkValidity()){form.reportValidity();return}
+        var hp=form.querySelector('input[name="_gotcha"]');if(hp&&hp.value)return;
+        if(Date.now()-loaded<3000){fail('Please wait a moment and send again.');return}
+        btn.textContent='Sending…';btn.disabled=true;
         fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}})
-        .then(function(r){
-            if(r.ok){
-                form.style.display='none';
-                success.style.display='block';
-            }else{
-                btn.textContent='Error \u2014 try again';
-                btn.disabled=false;
-            }
-        })
-        .catch(function(){
-            btn.textContent='Error \u2014 try again';
-            btn.disabled=false;
-        });
+        .then(function(r){if(!r.ok)throw new Error(r.status);form.hidden=true;success.hidden=false})
+        .catch(function(){btn.textContent='Send';btn.disabled=false;fail('The message didn’t go through. Check your connection and try again.')});
     });
 })();
 </script>
