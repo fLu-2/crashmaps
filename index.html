@@ -16,17 +16,16 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="crashmaps: traffic crash dashboards for US metros">
 <meta name="twitter:description" content="Interactive traffic crash dashboards for 20 US metro areas, built from public agency crash records.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Fonts load without blocking the first paint; text shows in the fallback font until they arrive -->
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap"></noscript>
+<!-- Fonts are hosted on crashmaps.org (fonts/); the two above the fold are preloaded. Same faces as build.py font_css() -->
+<link rel="preload" href="fonts/playfair-display-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+@font-face{font-family:'DM Sans Fallback';src:local('Arial'),local('ArialMT');size-adjust:106.69%;ascent-override:92.98%;descent-override:29.06%;line-gap-override:0%}@font-face{font-family:'Playfair Display Fallback';font-weight:700;src:local('Times New Roman Bold'),local('TimesNewRomanPS-BoldMT');size-adjust:107.78%;ascent-override:100.39%;descent-override:23.29%;line-gap-override:0%}@font-face{font-family:'JetBrains Mono Fallback';src:local('Courier New'),local('CourierNewPSMT');size-adjust:99.98%;ascent-override:102.02%;descent-override:30%;line-gap-override:0%}@font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/playfair-display-700-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'DM Sans';font-style:normal;font-weight:300 700;font-display:swap;src:url(fonts/dm-sans-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 700;font-display:swap;src:url(fonts/jetbrains-mono-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 :root{--accent:#ff4d4d;--accent-ink:#08090d;--deaths:#e5534b;--ped:#e0a23c;--cyclist:#4f9cf0;--fell:#22a565;--flat:#6b7280;--rose:#e5534b;--warn:#e0a23c;--ok:#22a565;--link-line:#4a4f66;--r-card:12px;--r-ctl:8px;--r-bar:3px;--b-card:1px solid #1c1f2e;--b-ctl:1px solid #2a2e42;--h-compact:36px;--h-std:44px;--h-hero:48px;--ease:150ms ease-out;--t-color:color var(--ease),border-color var(--ease),background-color var(--ease),opacity var(--ease);--bg:#08090d;--bg-card:#0f1118;--fill:#151826;--border:#1c1f2e;--border-hover:#2a2e42;--text:#e8eaf0;--text-dim:#8b90a8;--text-faint:#8b90a8;--gutter:2rem}
 @media(max-width:768px){:root{--gutter:1rem}}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{font-family:'DM Sans','DM Sans Fallback',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 /* One link style (DESIGN_RULES.md): text color, 1 px #4a4f66 underline, accent on hover */
@@ -41,14 +40,14 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,te
 .frame{position:sticky;top:0;z-index:1100;background:rgba(8,9,13,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
 .site-hdr{height:56px;border-bottom:1px solid var(--border)}
 .hdr-inner{height:100%;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.wordmark{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px;letter-spacing:-.01em;color:var(--text);text-decoration:none;white-space:nowrap;flex-shrink:0}
+.wordmark{font-family:'JetBrains Mono','JetBrains Mono Fallback',monospace;font-weight:700;font-size:15px;letter-spacing:-.01em;color:var(--text);text-decoration:none;white-space:nowrap;flex-shrink:0}
 .wordmark span{color:#ff4d4d}
 .hdr-right{display:flex;align-items:center;gap:8px;min-width:0}
 .hdr-nav{display:flex;align-items:center;gap:2px}
-.hdr-link{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--text-dim);text-decoration:none;padding:0 12px;min-height:var(--h-std);display:inline-flex;align-items:center;border-radius:var(--r-ctl);transition:var(--t-color);white-space:nowrap}
+.hdr-link{font-family:'DM Sans','DM Sans Fallback',sans-serif;font-size:14px;font-weight:500;color:var(--text-dim);text-decoration:none;padding:0 12px;min-height:var(--h-std);display:inline-flex;align-items:center;border-radius:var(--r-ctl);transition:var(--t-color);white-space:nowrap}
 .hdr-link:hover{color:var(--text);background:var(--fill)}
 .menu{position:relative;min-width:0}
-.hdr-btn{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--text);background:transparent;border:var(--b-ctl);border-radius:var(--r-ctl);min-height:var(--h-std);padding:0 10px 0 14px;display:inline-flex;align-items:center;gap:8px;cursor:pointer;max-width:100%;transition:var(--t-color)}
+.hdr-btn{font-family:'DM Sans','DM Sans Fallback',sans-serif;font-size:14px;font-weight:500;color:var(--text);background:transparent;border:var(--b-ctl);border-radius:var(--r-ctl);min-height:var(--h-std);padding:0 10px 0 14px;display:inline-flex;align-items:center;gap:8px;cursor:pointer;max-width:100%;transition:var(--t-color)}
 .hdr-btn:hover{background:var(--fill);border-color:var(--text-dim)}
 .hdr-btn[aria-expanded=true]{border-color:var(--accent)}
 .hdr-btn[aria-expanded=true] .ico{transform:rotate(180deg)}
@@ -56,8 +55,13 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,te
 .m-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;display:inline-block}
 .menu-pop{position:absolute;right:0;top:calc(100% + 8px);min-width:260px;max-height:calc(100vh - 80px);overflow-y:auto;background:var(--bg-card);border:var(--b-ctl);border-radius:var(--r-card);padding:8px;box-shadow:0 12px 40px rgba(0,0,0,.5);z-index:1200}
 .menu-pop[hidden]{display:none}
+/* Motion (DESIGN_RULES.md, craft standard 10): menus and panels ease open and shut in 150 ms; off under reduced motion */
+.menu-pop,.finder-panel{transition:opacity 150ms ease-out,transform 150ms ease-out,display 150ms allow-discrete}
+.menu-pop[hidden],.finder-panel[hidden]{opacity:0;transform:translateY(-4px)}
+@starting-style{.menu-pop:not([hidden]),.finder-panel:not([hidden]){opacity:0;transform:translateY(-4px)}}
+.leaflet-fade-anim .leaflet-popup{transition:opacity 150ms ease-out}
 .menu-pop ul{list-style:none}
-.menu-pop a{display:flex;align-items:center;gap:10px;min-height:var(--h-std);padding:6px 10px;border-radius:var(--r-ctl);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--text);text-decoration:none;transition:var(--t-color)}
+.menu-pop a{display:flex;align-items:center;gap:10px;min-height:var(--h-std);padding:6px 10px;border-radius:var(--r-ctl);font-family:'DM Sans','DM Sans Fallback',sans-serif;font-size:14px;font-weight:500;color:var(--text);text-decoration:none;transition:var(--t-color)}
 .menu-pop a:hover,.menu-pop a:focus-visible{background:#1a1d2b}
 .m-name{flex:1;white-space:nowrap}
 .m-state{color:var(--text-dim);font-weight:400;white-space:nowrap}
@@ -70,34 +74,34 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,te
 
 /* Section pattern (DESIGN_RULES.md): small mono label, Playfair title, one line of description */
 .sec{margin-top:72px;scroll-margin-top:72px}
-.sec-label{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
-.sec-title{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;line-height:1.2;margin-bottom:8px}
+.sec-label{font-family:'JetBrains Mono','JetBrains Mono Fallback',monospace;font-size:12px;font-weight:500;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.sec-title{font-family:'Playfair Display','Playfair Display Fallback',serif;font-size:32px;font-weight:700;line-height:1.2;margin-bottom:8px}
 .sec-desc{font-size:16px;font-weight:300;color:var(--text-dim);max-width:720px;margin-bottom:24px}
 @media(max-width:768px){.sec{margin-top:48px}.sec-title{font-size:26px}.sec-desc{font-size:15px}}
 .card{background:var(--bg-card);border:var(--b-card);border-radius:var(--r-card);padding:20px}
 .card-sub{font-size:13px;color:var(--text-dim);line-height:1.5}
-.src-tag,.yr-tag{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-faint)}
+.src-tag,.yr-tag{font-family:'JetBrains Mono','JetBrains Mono Fallback',monospace;font-size:12px;color:var(--text-faint)}
 
 /* Hero */
 .hero{position:relative;padding:64px 0 40px}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 30% 0%,rgba(255,77,77,0.06),transparent 60%);pointer-events:none}
 .hero-inner{position:relative;z-index:2}
-.hero h1{font-family:'Playfair Display',serif;font-size:64px;font-weight:700;line-height:1.08;margin-bottom:16px}
+.hero h1{font-family:'Playfair Display','Playfair Display Fallback',serif;font-size:64px;font-weight:700;line-height:1.08;margin-bottom:24px}
 .hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 55%,#ffffff));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero-sub{max-width:620px;color:var(--text-dim);font-size:17px;font-weight:300;line-height:1.6;margin-bottom:32px}
 .hero-sub strong{color:var(--text);font-weight:500}
-@media(max-width:768px){.hero{padding:40px 0 24px}.hero h1{font-size:40px;margin-bottom:12px}.hero-sub{font-size:16px;margin-bottom:24px}}
+@media(max-width:768px){.hero{padding:40px 0 24px}.hero h1{font-size:40px;margin-bottom:16px}.hero-sub{font-size:16px;margin-bottom:24px}}
 
 /* City search (redesign bucket 7) */
-.finder{position:relative;max-width:640px;margin-bottom:40px}
+.finder{position:relative;max-width:640px;margin-bottom:24px}
 .finder-lbl{display:block;font-size:15px;font-weight:500;color:var(--text);margin-bottom:8px}
 .finder-box{position:relative;display:flex;align-items:center}
 .finder-box .ico-search{position:absolute;left:18px;width:20px;height:20px;color:var(--text-dim);pointer-events:none}
-#cityQ{width:100%;height:56px;padding:0 52px 0 50px;background:var(--fill);border:1px solid #3a3f55;border-radius:var(--r-ctl);color:var(--text);font-family:'DM Sans',sans-serif;font-size:18px;box-shadow:0 8px 32px rgba(0,0,0,.35);transition:var(--t-color)}
+#cityQ{width:100%;height:56px;padding:0 52px 0 50px;background:var(--fill);border:1px solid #3a3f55;border-radius:var(--r-ctl);color:var(--text);font-family:'DM Sans','DM Sans Fallback',sans-serif;font-size:18px;box-shadow:0 8px 32px rgba(0,0,0,.35);transition:var(--t-color)}
 #cityQ::placeholder{color:var(--text-dim)}
 #cityQ:hover{border-color:var(--text-dim)}
 #cityQ:focus{border-color:var(--accent)}
-.finder-key{position:absolute;right:14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-dim);border:var(--b-ctl);border-radius:4px;padding:1px 7px;pointer-events:none}
+.finder-key{position:absolute;right:14px;font-family:'JetBrains Mono','JetBrains Mono Fallback',monospace;font-size:12px;color:var(--text-dim);border:var(--b-ctl);border-radius:4px;padding:1px 7px;pointer-events:none}
 @media(pointer:coarse){.finder-key{display:none}}
 .finder-panel{position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:50;background:var(--bg-card);border:var(--b-ctl);border-radius:var(--r-card);box-shadow:0 16px 48px rgba(0,0,0,.6);overflow:hidden}
 .finder-panel[hidden],.finder-panel [hidden]{display:none!important}
@@ -115,7 +119,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,te
 .fe-title{font-size:17px;font-weight:600;color:var(--text);margin-bottom:6px}
 .fe-text{font-size:14px;color:var(--text-dim);line-height:1.6;margin-bottom:16px}
 .fe-actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-.btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:var(--h-hero);padding:0 20px;background:var(--accent);color:var(--accent-ink);border:0;border-radius:var(--r-ctl);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:var(--t-color)}
+.btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:var(--h-hero);padding:0 20px;background:var(--accent);color:var(--accent-ink);border:0;border-radius:var(--r-ctl);font-family:'DM Sans','DM Sans Fallback',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:var(--t-color)}
 .btn-primary:hover{background:#ff6b6b}
 .btn-primary[disabled]{opacity:.5;cursor:default}
 .fe-actions .txt-link{font-size:14px;min-height:var(--h-std);display:inline-flex;align-items:center}
@@ -124,7 +128,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,te
 .icon-btn:hover{background:var(--fill);color:var(--text)}
 .req-form{display:flex;flex-direction:column;gap:14px}
 .fld-lbl{display:block;font-size:12px;font-weight:500;color:var(--text-dim);margin-bottom:6px;letter-spacing:.01em}
-.fld{width:100%;display:block;background:var(--bg);border:var(--b-ctl);border-radius:var(--r-ctl);padding:0 14px;min-height:var(--h-std);color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;transition:var(--t-color)}
+.fld{width:100%;display:block;background:var(--bg);border:var(--b-ctl);border-radius:var(--r-ctl);padding:0 14px;min-height:var(--h-std);color:var(--text);font-family:'DM Sans','DM Sans Fallback',sans-serif;font-size:16px;transition:var(--t-color)}
 textarea.fld{padding:10px 14px;min-height:88px;resize:vertical;line-height:1.5}
 .fld:hover{border-color:var(--text-dim)}.fld:focus{border-color:var(--accent)}
 .msg{display:flex;align-items:flex-start;gap:8px;font-size:14px;line-height:1.5}
@@ -137,7 +141,7 @@ textarea.fld{padding:10px 14px;min-height:88px;resize:vertical;line-height:1.5}
 /* Stat bar */
 .stat-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:var(--b-card);border-radius:var(--r-card);overflow:hidden;max-width:760px}
 .stat-bar .sb-cell{padding:16px 20px;background:var(--bg-card)}
-.stat-bar .sb-val{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:500;color:var(--text);line-height:1.3}.stat-bar .sb-val.deaths{color:var(--deaths)}
+.stat-bar .sb-val{font-family:'JetBrains Mono','JetBrains Mono Fallback',monospace;font-size:24px;font-weight:500;color:var(--text);line-height:1.3}.stat-bar .sb-val.deaths{color:var(--deaths)}
 .stat-bar .sb-lbl{font-size:12px;color:var(--text-faint);margin-top:4px;line-height:1.4}
 .hero-note{max-width:760px;margin-top:16px;font-size:13px;color:var(--text-dim);font-weight:300;line-height:1.6}
 @media(max-width:768px){.stat-bar{grid-template-columns:repeat(2,1fr)}.stat-bar .sb-val{font-size:20px}.stat-bar .sb-cell{padding:12px 16px}}
@@ -148,11 +152,11 @@ textarea.fld{padding:10px 14px;min-height:88px;resize:vertical;line-height:1.5}
 .city-row:hover{background:#141725;border-color:var(--c)}
 .city-hdr{display:flex;align-items:center;gap:10px;padding-right:24px}
 .city-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;background:var(--c)}
-.city-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;line-height:1.2;flex:1}
-.city-name small{display:block;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text-dim);font-weight:400;margin-top:2px}
+.city-name{font-family:'Playfair Display','Playfair Display Fallback',serif;font-size:17px;font-weight:700;line-height:1.2;flex:1}
+.city-name small{display:block;font-family:'DM Sans','DM Sans Fallback',sans-serif;font-size:12px;color:var(--text-dim);font-weight:400;margin-top:2px}
 .city-stats{display:flex;gap:20px}
 .cs-cell{display:flex;align-items:baseline;gap:5px}
-.cs-cell .cs-val{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;color:var(--text)}
+.cs-cell .cs-val{font-family:'JetBrains Mono','JetBrains Mono Fallback',monospace;font-size:13px;font-weight:500;color:var(--text)}
 .cs-cell .cs-lbl{font-size:12px;color:var(--text-dim)}
 .city-arrow{position:absolute;top:18px;right:18px;color:var(--text-dim);transition:color var(--ease),transform var(--ease)}
 .city-row:hover .city-arrow,.city-row:focus-visible .city-arrow{color:#fff;transform:translateX(4px)}
@@ -174,37 +178,37 @@ textarea.fld{padding:10px 14px;min-height:88px;resize:vertical;line-height:1.5}
 .map-container .leaflet-control-zoom{border:1px solid #2a2e42;border-radius:8px;overflow:hidden}
 .map-container .leaflet-control-zoom a{background:rgba(15,17,24,.92);color:var(--text);border-color:#2a2e42;width:44px;height:44px;line-height:44px;font-size:20px;transition:var(--t-color)}
 .map-container .leaflet-control-zoom a:hover{background:#1a1d2b;color:var(--text)}
-.map-container .leaflet-control-attribution{background:rgba(15,17,24,.8);color:var(--text-faint);font-size:12px;font-family:'DM Sans',sans-serif}
+.map-container .leaflet-control-attribution{background:rgba(15,17,24,.8);color:var(--text-faint);font-size:12px;font-family:'DM Sans','DM Sans Fallback',sans-serif}
 .map-container .leaflet-control-attribution a{color:var(--text-dim)}
 .map-container .leaflet-popup-content-wrapper{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;color:var(--text);box-shadow:0 8px 32px rgba(0,0,0,.5)}
 .map-container .leaflet-popup-tip{background:var(--bg-card);border:1px solid var(--border)}
-.map-container .leaflet-popup-content{margin:0;padding:0;font-family:'DM Sans',sans-serif}
+.map-container .leaflet-popup-content{margin:0;padding:0;font-family:'DM Sans','DM Sans Fallback',sans-serif}
 .map-popup{padding:.75rem 1rem;min-width:180px}
-.map-popup-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:.1rem;color:var(--text)}
-.map-popup-src{font-size:12px;color:var(--text-faint);margin-bottom:.4rem;font-family:'DM Sans',sans-serif}
+.map-popup-name{font-family:'Playfair Display','Playfair Display Fallback',serif;font-size:1rem;font-weight:700;margin-bottom:.1rem;color:var(--text)}
+.map-popup-src{font-size:12px;color:var(--text-faint);margin-bottom:.4rem;font-family:'DM Sans','DM Sans Fallback',sans-serif}
 .map-popup-stats{display:grid;grid-template-columns:1fr 1fr;gap:.35rem .75rem}
-.map-popup-stat .mp-val{font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:500}
+.map-popup-stat .mp-val{font-family:'JetBrains Mono','JetBrains Mono Fallback',monospace;font-size:.82rem;font-weight:500}
 .map-popup-stat .mp-lbl{font-size:12px;color:var(--text-faint)}
-.map-popup-link{display:block;margin-top:.6rem;padding-top:.5rem;border-top:1px solid var(--border);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text-dim);text-align:center}
+.map-popup-link{display:block;margin-top:.6rem;padding-top:.5rem;border-top:1px solid var(--border);font-family:'DM Sans','DM Sans Fallback',sans-serif;font-size:13px;font-weight:500;color:var(--text-dim);text-align:center}
 .map-popup-link:hover{color:var(--text)}
-.mp-head{display:flex;align-items:baseline;gap:6px;white-space:nowrap}.mp-num{font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:700;line-height:1.1;color:var(--accent)}.mp-unit{font-size:12px;color:var(--text)}
-.mp-years{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-dim);white-space:nowrap;margin:2px 0 .6rem}
+.mp-head{display:flex;align-items:baseline;gap:6px;white-space:nowrap}.mp-num{font-family:'JetBrains Mono','JetBrains Mono Fallback',monospace;font-size:1.5rem;font-weight:700;line-height:1.1;color:var(--accent)}.mp-unit{font-size:12px;color:var(--text)}
+.mp-years{font-family:'JetBrains Mono','JetBrains Mono Fallback',monospace;font-size:12px;color:var(--text-dim);white-space:nowrap;margin:2px 0 .6rem}
 .metro-dot{border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(255,77,77,.55);border:1px solid #fff;box-sizing:border-box;transition:var(--t-color)}
 .leaflet-marker-icon:hover .metro-dot{background:rgba(255,77,77,.85)}
 .leaflet-marker-icon:focus-visible{outline:none!important}.leaflet-marker-icon:focus-visible .metro-dot{box-shadow:0 0 0 3px #fff,0 0 0 5px var(--accent)!important}
-.map-size-key{background:rgba(15,17,24,.9);border:var(--b-card);border-radius:8px;padding:8px 10px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);pointer-events:none}
+.map-size-key{background:rgba(15,17,24,.9);border:var(--b-card);border-radius:8px;padding:8px 10px;font-family:'DM Sans','DM Sans Fallback',sans-serif;font-size:12px;color:var(--text);pointer-events:none}
 .map-size-key .sk-row{display:flex;align-items:flex-end;gap:10px;margin-top:4px}
 .map-size-key.below{display:flex;align-items:flex-end;justify-content:center;gap:12px;background:transparent;border:0;margin-top:.5rem;color:var(--text-dim)}.map-size-key.below .sk-row{margin:0}
-.map-size-key .sk-item{display:flex;flex-direction:column;align-items:center;gap:2px;font-family:'JetBrains Mono',monospace}
+.map-size-key .sk-item{display:flex;flex-direction:column;align-items:center;gap:2px;font-family:'JetBrains Mono','JetBrains Mono Fallback',monospace}
 .map-hint{text-align:center;margin-top:8px;font-size:12px;color:var(--text-faint)}
-.map-hint kbd{background:var(--bg-card);border:1px solid var(--border);border-radius:3px;padding:.1em .35em;font-family:'JetBrains Mono',monospace;font-size:12px}
+.map-hint kbd{background:var(--bg-card);border:1px solid var(--border);border-radius:3px;padding:.1em .35em;font-family:'JetBrains Mono','JetBrains Mono Fallback',monospace;font-size:12px}
 @media(max-width:768px){.map-container{height:260px}.map-size-key{padding:6px 8px}}
 
 /* Ranking */
 .rank-toggle{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
-.rank-btn{white-space:nowrap;padding:0 14px;min-height:var(--h-compact);border-radius:var(--r-ctl);border:var(--b-ctl);background:var(--bg-card);color:var(--text-dim);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:var(--t-color)}
+.rank-btn{white-space:nowrap;padding:0 14px;min-height:var(--h-compact);border-radius:var(--r-ctl);border:var(--b-ctl);background:var(--bg-card);color:var(--text-dim);font-family:'DM Sans','DM Sans Fallback',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:var(--t-color)}
 .rank-btn:hover{border-color:var(--text-dim);color:var(--text)}
-.rank-btn.active{background:rgba(255,255,255,.06);border-color:var(--text-dim);color:var(--text)}
+.rank-btn.active{background:rgba(255,77,77,.14);border-color:var(--accent);color:var(--text)}
 .rank-subtitle{margin-bottom:16px}
 .rank-rows{display:flex;flex-direction:column;gap:8px}
 .rank-row{display:grid;grid-template-columns:170px 1fr 76px;grid-template-areas:"name bar val";align-items:center;gap:12px}
@@ -214,7 +218,7 @@ textarea.fld{padding:10px 14px;min-height:88px;resize:vertical;line-height:1.5}
 .rank-label .yr-tag{margin-left:6px}
 .rank-bar-cell{grid-area:bar}
 .rank-bar{height:16px;border-radius:var(--r-bar);transition:width 200ms ease-out}
-.rank-val{grid-area:val;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;text-align:right;color:var(--text)}
+.rank-val{grid-area:val;font-family:'JetBrains Mono','JetBrains Mono Fallback',monospace;font-size:13px;font-weight:500;text-align:right;color:var(--text)}
 .rank-na{grid-area:val;font-size:12px;color:var(--text-faint);text-align:right}
 .rank-divider{height:1px;background:var(--border);margin:2px 0}
 @media(max-width:768px){
@@ -237,7 +241,7 @@ textarea.fld{padding:10px 14px;min-height:88px;resize:vertical;line-height:1.5}
 .tr-bar-cell{grid-area:bar}
 .tr-bar{height:16px;border-radius:var(--r-bar)}
 .tr-bar.fell{background:var(--fell)}.tr-bar.flat{background:var(--flat)}.tr-bar.rose{background:var(--rose)}
-.tr-val{grid-area:val;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;text-align:right}
+.tr-val{grid-area:val;font-family:'JetBrains Mono','JetBrains Mono Fallback',monospace;font-size:13px;font-weight:600;text-align:right}
 .tr-val.fell{color:var(--fell)}.tr-val.flat{color:var(--text-dim);font-weight:500}.tr-val.rose{color:var(--rose)}
 .tr-chev{grid-area:chev;color:var(--text-dim);transition:transform 200ms ease-out,color var(--ease)}
 .trend-row:hover .tr-chev{color:var(--text)}
@@ -262,18 +266,18 @@ textarea.fld{padding:10px 14px;min-height:88px;resize:vertical;line-height:1.5}
 /* National facts */
 .nc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
 .nc-head{display:flex;align-items:baseline;gap:8px;margin-bottom:4px}
-.nc-val{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:600;color:var(--text)}
+.nc-val{font-family:'JetBrains Mono','JetBrains Mono Fallback',monospace;font-size:24px;font-weight:600;color:var(--text)}
 .nc-lbl{font-size:13px;color:var(--text-dim);line-height:1.5}
 .nc-footer{margin-top:20px;padding-top:16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
 .nc-connect{font-size:13px;color:var(--text-dim)}
-.nc-sources{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-faint)}
+.nc-sources{font-family:'JetBrains Mono','JetBrains Mono Fallback',monospace;font-size:12px;color:var(--text-faint)}
 @media(max-width:768px){.nc-grid{grid-template-columns:repeat(2,1fr);gap:20px}.nc-val{font-size:20px}.nc-footer{flex-direction:column;gap:8px}}
 
 /* About + contact */
 .about-contact-inner{display:grid;grid-template-columns:1fr 1fr;background:var(--bg-card);border:var(--b-card);border-radius:var(--r-card)}
 .about-col{padding:40px}
 .contact-col{padding:40px;border-left:1px solid var(--border);display:flex;flex-direction:column}
-.about-col h2,.contact-col h2{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:16px}
+.about-col h2,.contact-col h2{font-family:'Playfair Display','Playfair Display Fallback',serif;font-size:26px;font-weight:700;margin-bottom:16px}
 .about-col p{color:var(--text-dim);font-size:15px;font-weight:300;line-height:1.75;margin-bottom:14px}
 .about-col p strong{color:var(--text);font-weight:500}
 .about-col .fine{color:var(--text-faint);font-size:12px;margin-top:24px;line-height:1.6;margin-bottom:0}
@@ -291,7 +295,7 @@ select.fld{cursor:pointer;-webkit-appearance:none;appearance:none;background-ima
 
 /* FAQ */
 .cf-faq{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.cf-faq h3{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;color:var(--text);margin:0 0 6px}
+.cf-faq h3{font-family:'DM Sans','DM Sans Fallback',sans-serif;font-size:15px;font-weight:600;color:var(--text);margin:0 0 6px}
 .cf-faq p{color:var(--text-dim);font-size:14px;font-weight:300;line-height:1.65}
 @media(max-width:768px){.cf-faq{grid-template-columns:1fr;gap:12px}}
 
@@ -330,7 +334,6 @@ footer a:hover{color:var(--text)}
 <section class="hero">
     <div class="wrap hero-inner">
         <h1>Every crash on <em>every road</em></h1>
-        <p class="hero-sub">Interactive, verifiable traffic crash dashboards built from <strong>public DOT data</strong>. No ads. No law firms. No affiliation. Just the numbers.</p>
         <div class="finder" id="finder">
             <label class="finder-lbl" for="cityQ">Find your city</label>
             <div class="finder-box">
@@ -370,6 +373,7 @@ footer a:hover{color:var(--text)}
             </div>
             <div class="sr-only" id="finderStatus" aria-live="polite"></div>
         </div>
+        <p class="hero-sub">Interactive, verifiable traffic crash dashboards built from <strong>public DOT data</strong>. No ads. No law firms. No affiliation. Just the numbers.</p>
         <div class="stat-bar">
             <div class="sb-cell"><div class="sb-val">2.22M</div><div class="sb-lbl">Crash records processed</div></div>
             <div class="sb-cell"><div class="sb-val deaths">3,084</div><div class="sb-lbl">Deaths (latest year)</div></div>
@@ -734,12 +738,12 @@ footer a:hover{color:var(--text)}
 </main>
 
 <footer class="wrap">
-    <div style="font-family:'JetBrains Mono',monospace">crashmaps</div>
+    <div style="font-family:'JetBrains Mono','JetBrains Mono Fallback',monospace">crashmaps</div>
     <div>
         <a href="https://github.com/fLu-2/crashmaps" target="_blank" rel="noopener noreferrer">GitHub</a> &nbsp;&middot;&nbsp;
         <a href="https://buymeacoffee.com/flu.2" target="_blank" rel="noopener noreferrer">Buy me a coffee</a>
     </div>
-    <div class="foot-note"><div style="max-width:760px;margin:0 auto;line-height:1.6;text-align:center">Unofficial. Built from public agency crash records, which the agencies do not guarantee to be complete or accurate; not for legal use. Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors (ODbL).<br><strong>Privacy:</strong> no ads, analytics or cookies. Loading this page fetches fonts from Google Fonts, scripts from unpkg and map tiles from CARTO, and each of those services sees your IP address. The contact and request forms are delivered by Formspree.</div></div>
+    <div class="foot-note"><div style="max-width:760px;margin:0 auto;line-height:1.6;text-align:center">Unofficial. Built from public agency crash records, which the agencies do not guarantee to be complete or accurate; not for legal use. Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors (ODbL).<br><strong>Privacy:</strong> no ads, analytics or cookies. Fonts come from crashmaps.org itself. Loading the map fetches scripts from unpkg and map tiles from CARTO, and each of those services sees your IP address. The contact and request forms are delivered by Formspree.</div></div>
 </footer>
 
 <script>
@@ -766,7 +770,7 @@ footer a:hover{color:var(--text)}
 /* City search (redesign bucket 7). PLACES is generated by update_landing.py from
    configs/landing_places.json and each city's config and data.json. */
 /* places:start */
-var PLACES={"metros":[{"slug":"austin","name":"Austin","state":"TX","color":"#0ea5e9","src":"Austin Open Data","years":"2023–2025"},{"slug":"boston","name":"Boston","state":"MA","color":"#ec4899","src":"MassDOT","years":"2022–2024"},{"slug":"chicago","name":"Chicago","state":"IL","color":"#a855f7","src":"Chicago Open Data","years":"2023–2025"},{"slug":"dallas","name":"Dallas","state":"TX","color":"#eab308","src":"TxDOT CRIS","years":"2023–2025"},{"slug":"denver","name":"Denver Metro","state":"CO","color":"#ff4d4d","src":"CDOT","years":"2023–2025"},{"slug":"detroit","name":"Detroit","state":"MI","color":"#f43f5e","src":"Detroit Open Data","years":"2022–2024"},{"slug":"fort-worth","name":"Fort Worth","state":"TX","color":"#84cc16","src":"TxDOT CRIS","years":"2023–2025"},{"slug":"houston","name":"Houston Metro","state":"TX","color":"#14b8a6","src":"TxDOT CRIS","years":"2023–2025"},{"slug":"nyc","name":"New York City","state":"NY","color":"#f59e0b","src":"NYC Open Data","years":"2023–2025"},{"slug":"oakland","name":"Oakland Metro","state":"CA","color":"#a78bfa","src":"CHP CCRS","years":"2023–2025"},{"slug":"philadelphia","name":"Philadelphia","state":"PA","color":"#06b6d4","src":"PennDOT","years":"2023–2025"},{"slug":"riverside","name":"Riverside Metro","state":"CA","color":"#f87171","src":"CHP CCRS","years":"2022–2024"},{"slug":"sacramento","name":"Sacramento","state":"CA","color":"#fbbf24","src":"CHP CCRS","years":"2023–2025"},{"slug":"san-antonio","name":"San Antonio","state":"TX","color":"#f97316","src":"TxDOT CRIS","years":"2023–2025"},{"slug":"san-diego","name":"San Diego","state":"CA","color":"#3b82f6","src":"CHP CCRS","years":"2022–2024"},{"slug":"sf","name":"San Francisco","state":"CA","color":"#14b8a6","src":"CHP CCRS","years":"2023–2025"},{"slug":"san-jose","name":"San Jose Metro","state":"CA","color":"#d946ef","src":"CHP CCRS","years":"2023–2025"},{"slug":"seattle","name":"Seattle","state":"WA","color":"#818cf8","src":"SDOT","years":"2023–2025"},{"slug":"salt-lake-city","name":"Wasatch Front","state":"UT","color":"#67e8f9","src":"UDOT","years":"2022–2024"},{"slug":"dc","name":"Washington DC","state":"DC","color":"#10b981","src":"DC Open Data","years":"2023–2025"}],"entries":[{"n":"Austin","k":"metro","m":0},{"n":"Boston","k":"metro","m":1},{"n":"Cambridge","k":"town","m":1},{"n":"Quincy","k":"town","m":1},{"n":"Newton","k":"town","m":1},{"n":"Somerville","k":"town","m":1},{"n":"Malden","k":"town","m":1},{"n":"Waltham","k":"town","m":1},{"n":"Revere","k":"town","m":1},{"n":"Medford","k":"town","m":1},{"n":"Everett","k":"town","m":1},{"n":"Chelsea","k":"town","m":1},{"n":"Brookline","k":"town","m":1},{"n":"Watertown","k":"town","m":1},{"n":"Chicago","k":"metro","m":2},{"n":"Dallas","k":"metro","m":3},{"n":"Irving","k":"town","m":3},{"n":"Coppell","k":"town","m":3},{"n":"Garland","k":"town","m":3},{"n":"Rowlett","k":"town","m":3},{"n":"Sachse","k":"town","m":3},{"n":"Wylie","k":"town","m":3},{"n":"Grand Prairie","k":"town","m":3},{"n":"Mesquite","k":"town","m":3},{"n":"Balch Springs","k":"town","m":3},{"n":"Sunnyvale","k":"town","m":3},{"n":"Seagoville","k":"town","m":3},{"n":"Combine","k":"town","m":3},{"n":"Carrollton","k":"town","m":3},{"n":"Farmers Branch","k":"town","m":3},{"n":"Addison","k":"town","m":3},{"n":"Richardson","k":"town","m":3},{"n":"University Park","k":"town","m":3},{"n":"Highland Park","k":"town","m":3},{"n":"Duncanville","k":"town","m":3},{"n":"Lancaster","k":"town","m":3},{"n":"Cedar Hill","k":"town","m":3},{"n":"DeSoto","k":"town","m":3},{"n":"Glenn Heights","k":"town","m":3},{"n":"Wilmer","k":"town","m":3},{"n":"Hutchins","k":"town","m":3},{"n":"Cockrell Hill","k":"town","m":3},{"n":"Dallas County","k":"county","c":"all","m":3},{"n":"Denver Metro","k":"metro","m":4},{"n":"Aurora","k":"town","m":4},{"n":"Thornton","k":"town","m":4},{"n":"Northglenn","k":"town","m":4},{"n":"Westminster","k":"town","m":4},{"n":"Lakewood","k":"town","m":4},{"n":"Arvada","k":"town","m":4},{"n":"Brighton","k":"town","m":4},{"n":"Centennial","k":"town","m":4},{"n":"Littleton","k":"town","m":4},{"n":"Golden","k":"town","m":4},{"n":"Castle Rock","k":"town","m":4},{"n":"Lone Tree","k":"town","m":4},{"n":"Commerce City","k":"town","m":4},{"n":"Federal Heights","k":"town","m":4},{"n":"Bennett","k":"town","m":4},{"n":"Welby","k":"town","m":4},{"n":"Lochbuie","k":"town","m":4},{"n":"Englewood","k":"town","m":4},{"n":"Sheridan","k":"town","m":4},{"n":"Glendale","k":"town","m":4},{"n":"Cherry Hills Village","k":"town","m":4},{"n":"Greenwood Village","k":"town","m":4},{"n":"Foxfield","k":"town","m":4},{"n":"Deer Trail","k":"town","m":4},{"n":"Wheat Ridge","k":"town","m":4},{"n":"Edgewater","k":"town","m":4},{"n":"Lakeside","k":"town","m":4},{"n":"Morrison","k":"town","m":4},{"n":"Mountain View","k":"town","m":4},{"n":"Evergreen","k":"town","m":4},{"n":"Conifer","k":"town","m":4},{"n":"Aspen Park","k":"town","m":4},{"n":"Columbine","k":"town","m":4},{"n":"Indian Hills","k":"town","m":4},{"n":"Broomfield","k":"town","m":4},{"n":"Parker","k":"town","m":4},{"n":"Highlands Ranch","k":"town","m":4},{"n":"Castle Pines","k":"town","m":4},{"n":"Larkspur","k":"town","m":4},{"n":"Denver County","k":"county","c":"part","m":4},{"n":"Adams County","k":"county","c":"part","m":4},{"n":"Arapahoe County","k":"county","c":"part","m":4},{"n":"Jefferson County","k":"county","c":"part","m":4},{"n":"Douglas County","k":"county","c":"part","m":4},{"n":"Broomfield County","k":"county","c":"part","m":4},{"n":"Detroit","k":"metro","m":5},{"n":"Fort Worth","k":"metro","m":6},{"n":"Arlington","k":"town","m":6},{"n":"Dalworthington Gardens","k":"town","m":6},{"n":"Pantego","k":"town","m":6},{"n":"Mansfield","k":"town","m":6},{"n":"Kennedale","k":"town","m":6},{"n":"Crowley","k":"town","m":6},{"n":"Burleson","k":"town","m":6},{"n":"North Richland Hills","k":"town","m":6},{"n":"Bedford","k":"town","m":6},{"n":"Euless","k":"town","m":6},{"n":"Hurst","k":"town","m":6},{"n":"Richland Hills","k":"town","m":6},{"n":"Watauga","k":"town","m":6},{"n":"Haltom City","k":"town","m":6},{"n":"River Oaks","k":"town","m":6},{"n":"Westworth Village","k":"town","m":6},{"n":"Saginaw","k":"town","m":6},{"n":"Lake Worth","k":"town","m":6},{"n":"Haslet","k":"town","m":6},{"n":"Grapevine","k":"town","m":6},{"n":"Southlake","k":"town","m":6},{"n":"Colleyville","k":"town","m":6},{"n":"Westlake","k":"town","m":6},{"n":"Keller","k":"town","m":6},{"n":"Tarrant County","k":"county","c":"all","m":6},{"n":"Houston Metro","k":"metro","m":7},{"n":"Pasadena","k":"town","m":7},{"n":"South Houston","k":"town","m":7},{"n":"Baytown","k":"town","m":7},{"n":"Humble","k":"town","m":7},{"n":"Katy","k":"town","m":7},{"n":"Jersey Village","k":"town","m":7},{"n":"Hedwig Village","k":"town","m":7},{"n":"Hunters Creek Village","k":"town","m":7},{"n":"Piney Point Village","k":"town","m":7},{"n":"Webster","k":"town","m":7},{"n":"Nassau Bay","k":"town","m":7},{"n":"Seabrook","k":"town","m":7},{"n":"Friendswood","k":"town","m":7},{"n":"La Porte","k":"town","m":7},{"n":"Deer Park","k":"town","m":7},{"n":"Bellaire","k":"town","m":7},{"n":"West University Place","k":"town","m":7},{"n":"Tomball","k":"town","m":7},{"n":"Harris County","k":"county","c":"all","m":7},{"n":"New York City","k":"metro","m":8},{"n":"New York","k":"alias","m":8},{"n":"NYC","k":"alias","m":8},{"n":"Manhattan","k":"town","m":8},{"n":"Brooklyn","k":"town","m":8},{"n":"Queens","k":"town","m":8},{"n":"Bronx","k":"town","m":8},{"n":"Staten Island","k":"town","m":8},{"n":"New York County (Manhattan)","k":"county","c":"part","m":8},{"n":"Kings County (Brooklyn)","k":"county","c":"part","m":8},{"n":"Queens County","k":"county","c":"part","m":8},{"n":"Bronx County","k":"county","c":"part","m":8},{"n":"Richmond County (Staten Island)","k":"county","c":"part","m":8},{"n":"Oakland Metro","k":"metro","m":9},{"n":"Fremont","k":"town","m":9},{"n":"Hayward","k":"town","m":9},{"n":"Berkeley","k":"town","m":9},{"n":"San Leandro","k":"town","m":9},{"n":"Livermore","k":"town","m":9},{"n":"Pleasanton","k":"town","m":9},{"n":"Alameda","k":"town","m":9},{"n":"Union City","k":"town","m":9},{"n":"Dublin","k":"town","m":9},{"n":"Newark","k":"town","m":9},{"n":"Emeryville","k":"town","m":9},{"n":"Albany","k":"town","m":9},{"n":"Piedmont","k":"town","m":9},{"n":"Castro Valley","k":"town","m":9},{"n":"San Lorenzo","k":"town","m":9},{"n":"Alameda County","k":"county","c":"all","m":9},{"n":"Philadelphia","k":"metro","m":10},{"n":"Philadelphia County","k":"county","c":"all","m":10},{"n":"Riverside Metro","k":"metro","m":11},{"n":"Moreno Valley","k":"town","m":11},{"n":"Corona","k":"town","m":11},{"n":"Murrieta","k":"town","m":11},{"n":"Temecula","k":"town","m":11},{"n":"Menifee","k":"town","m":11},{"n":"Jurupa Valley","k":"town","m":11},{"n":"Hemet","k":"town","m":11},{"n":"Perris","k":"town","m":11},{"n":"Lake Elsinore","k":"town","m":11},{"n":"Indio","k":"town","m":11},{"n":"Cathedral City","k":"town","m":11},{"n":"Palm Springs","k":"town","m":11},{"n":"Palm Desert","k":"town","m":11},{"n":"Beaumont","k":"town","m":11},{"n":"San Jacinto","k":"town","m":11},{"n":"Wildomar","k":"town","m":11},{"n":"Eastvale","k":"town","m":11},{"n":"Coachella","k":"town","m":11},{"n":"Banning","k":"town","m":11},{"n":"Calimesa","k":"town","m":11},{"n":"Canyon Lake","k":"town","m":11},{"n":"Desert Hot Springs","k":"town","m":11},{"n":"Indian Wells","k":"town","m":11},{"n":"La Quinta","k":"town","m":11},{"n":"Norco","k":"town","m":11},{"n":"Rancho Mirage","k":"town","m":11},{"n":"Riverside County","k":"county","c":"most","m":11},{"n":"Sacramento","k":"metro","m":12},{"n":"Elk Grove","k":"town","m":12},{"n":"Citrus Heights","k":"town","m":12},{"n":"Folsom","k":"town","m":12},{"n":"Rancho Cordova","k":"town","m":12},{"n":"Galt","k":"town","m":12},{"n":"Isleton","k":"town","m":12},{"n":"Sacramento County","k":"county","c":"all","m":12},{"n":"San Antonio","k":"metro","m":13},{"n":"Leon Valley","k":"town","m":13},{"n":"Castle Hills","k":"town","m":13},{"n":"Balcones Heights","k":"town","m":13},{"n":"Shavano Park","k":"town","m":13},{"n":"Hollywood Park","k":"town","m":13},{"n":"Hill Country Village","k":"town","m":13},{"n":"Live Oak","k":"town","m":13},{"n":"Universal City","k":"town","m":13},{"n":"Converse","k":"town","m":13},{"n":"Selma","k":"town","m":13},{"n":"Schertz","k":"town","m":13},{"n":"Windcrest","k":"town","m":13},{"n":"Alamo Heights","k":"town","m":13},{"n":"Olmos Park","k":"town","m":13},{"n":"Terrell Hills","k":"town","m":13},{"n":"Helotes","k":"town","m":13},{"n":"Fair Oaks Ranch","k":"town","m":13},{"n":"Grey Forest","k":"town","m":13},{"n":"San Geronimo","k":"town","m":13},{"n":"Bexar County","k":"county","c":"all","m":13},{"n":"San Diego","k":"metro","m":14},{"n":"Chula Vista","k":"town","m":14},{"n":"El Cajon","k":"town","m":14},{"n":"National City","k":"town","m":14},{"n":"La Mesa","k":"town","m":14},{"n":"Lemon Grove","k":"town","m":14},{"n":"Coronado","k":"town","m":14},{"n":"Santee","k":"town","m":14},{"n":"Poway","k":"town","m":14},{"n":"Solana Beach","k":"town","m":14},{"n":"Del Mar","k":"town","m":14},{"n":"Imperial Beach","k":"town","m":14},{"n":"San Francisco","k":"metro","m":15},{"n":"SF","k":"alias","m":15},{"n":"San Francisco County","k":"county","c":"all","m":15},{"n":"San Jose Metro","k":"metro","m":16},{"n":"Sunnyvale","k":"town","m":16},{"n":"Santa Clara","k":"town","m":16},{"n":"Mountain View","k":"town","m":16},{"n":"Milpitas","k":"town","m":16},{"n":"Palo Alto","k":"town","m":16},{"n":"Los Altos Hills","k":"town","m":16},{"n":"Cupertino","k":"town","m":16},{"n":"Campbell","k":"town","m":16},{"n":"Monte Sereno","k":"town","m":16},{"n":"Gilroy","k":"town","m":16},{"n":"Morgan Hill","k":"town","m":16},{"n":"Los Gatos","k":"town","m":16},{"n":"Saratoga","k":"town","m":16},{"n":"Los Altos","k":"town","m":16},{"n":"Santa Clara County","k":"county","c":"all","m":16},{"n":"Seattle","k":"metro","m":17},{"n":"Wasatch Front","k":"metro","m":18},{"n":"Salt Lake","k":"alias","m":18},{"n":"Salt Lake City","k":"town","m":18},{"n":"West Valley City","k":"town","m":18},{"n":"West Jordan","k":"town","m":18},{"n":"Sandy","k":"town","m":18},{"n":"South Jordan","k":"town","m":18},{"n":"Taylorsville","k":"town","m":18},{"n":"Murray","k":"town","m":18},{"n":"Draper","k":"town","m":18},{"n":"Riverton","k":"town","m":18},{"n":"Herriman","k":"town","m":18},{"n":"South Salt Lake","k":"town","m":18},{"n":"Midvale","k":"town","m":18},{"n":"Millcreek","k":"town","m":18},{"n":"Holladay","k":"town","m":18},{"n":"Cottonwood Heights","k":"town","m":18},{"n":"Kearns","k":"town","m":18},{"n":"Magna","k":"town","m":18},{"n":"Salt Lake County","k":"county","c":"all","m":18},{"n":"Washington DC","k":"metro","m":19},{"n":"Washington","k":"alias","m":19},{"n":"District of Columbia","k":"alias","m":19},{"n":"DC","k":"alias","m":19}]};
+var PLACES={"metros":[{"slug":"austin","name":"Austin","state":"TX","color":"#0ea5e9","src":"Austin Open Data","years":"2023–2025"},{"slug":"boston","name":"Boston","state":"MA","color":"#ec4899","src":"MassDOT","years":"2022–2024"},{"slug":"chicago","name":"Chicago","state":"IL","color":"#a855f7","src":"Chicago Open Data","years":"2023–2025"},{"slug":"dallas","name":"Dallas","state":"TX","color":"#eab308","src":"TxDOT CRIS","years":"2023–2025"},{"slug":"denver","name":"Denver Metro","state":"CO","color":"#ff4d4d","src":"CDOT","years":"2023–2025"},{"slug":"detroit","name":"Detroit","state":"MI","color":"#f43f5e","src":"Detroit Open Data","years":"2022–2024"},{"slug":"fort-worth","name":"Fort Worth","state":"TX","color":"#84cc16","src":"TxDOT CRIS","years":"2023–2025"},{"slug":"houston","name":"Houston Metro","state":"TX","color":"#14b8a6","src":"TxDOT CRIS","years":"2023–2025"},{"slug":"nyc","name":"New York City","state":"NY","color":"#f59e0b","src":"NYC Open Data","years":"2023–2025"},{"slug":"oakland","name":"Oakland Metro","state":"CA","color":"#a78bfa","src":"CHP CCRS","years":"2023–2025"},{"slug":"philadelphia","name":"Philadelphia","state":"PA","color":"#06b6d4","src":"PennDOT","years":"2023–2025"},{"slug":"riverside","name":"Riverside Metro","state":"CA","color":"#f87171","src":"CHP CCRS","years":"2022–2024"},{"slug":"sacramento","name":"Sacramento","state":"CA","color":"#fbbf24","src":"CHP CCRS","years":"2023–2025"},{"slug":"san-antonio","name":"San Antonio","state":"TX","color":"#f97316","src":"TxDOT CRIS","years":"2023–2025"},{"slug":"san-diego","name":"San Diego","state":"CA","color":"#3b82f6","src":"CHP CCRS","years":"2022–2024"},{"slug":"sf","name":"San Francisco","state":"CA","color":"#14b8a6","src":"CHP CCRS","years":"2023–2025"},{"slug":"san-jose","name":"San Jose Metro","state":"CA","color":"#d946ef","src":"CHP CCRS","years":"2023–2025"},{"slug":"seattle","name":"Seattle","state":"WA","color":"#818cf8","src":"SDOT","years":"2023–2025"},{"slug":"salt-lake-city","name":"Wasatch Front","state":"UT","color":"#67e8f9","src":"UDOT","years":"2022–2024"},{"slug":"dc","name":"Washington DC","state":"DC","color":"#10b981","src":"DC Open Data","years":"2023–2025"}],"entries":[{"n":"Austin","k":"metro","m":0},{"n":"Boston","k":"metro","m":1},{"n":"Cambridge","k":"town","m":1},{"n":"Quincy","k":"town","m":1},{"n":"Newton","k":"town","m":1},{"n":"Somerville","k":"town","m":1},{"n":"Malden","k":"town","m":1},{"n":"Waltham","k":"town","m":1},{"n":"Revere","k":"town","m":1},{"n":"Medford","k":"town","m":1},{"n":"Everett","k":"town","m":1},{"n":"Chelsea","k":"town","m":1},{"n":"Brookline","k":"town","m":1},{"n":"Watertown","k":"town","m":1},{"n":"Chicago","k":"metro","m":2},{"n":"Dallas","k":"metro","m":3},{"n":"Irving","k":"town","m":3},{"n":"Coppell","k":"town","m":3},{"n":"Garland","k":"town","m":3},{"n":"Rowlett","k":"town","m":3},{"n":"Sachse","k":"town","m":3},{"n":"Wylie","k":"town","m":3},{"n":"Grand Prairie","k":"town","m":3},{"n":"Mesquite","k":"town","m":3},{"n":"Balch Springs","k":"town","m":3},{"n":"Sunnyvale","k":"town","m":3},{"n":"Seagoville","k":"town","m":3},{"n":"Combine","k":"town","m":3},{"n":"Carrollton","k":"town","m":3},{"n":"Farmers Branch","k":"town","m":3},{"n":"Addison","k":"town","m":3},{"n":"Richardson","k":"town","m":3},{"n":"University Park","k":"town","m":3},{"n":"Highland Park","k":"town","m":3},{"n":"Duncanville","k":"town","m":3},{"n":"Lancaster","k":"town","m":3},{"n":"Cedar Hill","k":"town","m":3},{"n":"DeSoto","k":"town","m":3},{"n":"Glenn Heights","k":"town","m":3},{"n":"Wilmer","k":"town","m":3},{"n":"Hutchins","k":"town","m":3},{"n":"Cockrell Hill","k":"town","m":3},{"n":"Dallas County","k":"county","c":"all","m":3},{"n":"Denver Metro","k":"metro","m":4},{"n":"Aurora","k":"town","m":4},{"n":"Thornton","k":"town","m":4},{"n":"Northglenn","k":"town","m":4},{"n":"Westminster","k":"town","m":4},{"n":"Lakewood","k":"town","m":4},{"n":"Arvada","k":"town","m":4},{"n":"Brighton","k":"town","m":4},{"n":"Centennial","k":"town","m":4},{"n":"Littleton","k":"town","m":4},{"n":"Golden","k":"town","m":4},{"n":"Castle Rock","k":"town","m":4},{"n":"Lone Tree","k":"town","m":4},{"n":"Commerce City","k":"town","m":4},{"n":"Federal Heights","k":"town","m":4},{"n":"Bennett","k":"town","m":4},{"n":"Welby","k":"town","m":4},{"n":"Lochbuie","k":"town","m":4},{"n":"Englewood","k":"town","m":4},{"n":"Sheridan","k":"town","m":4},{"n":"Glendale","k":"town","m":4},{"n":"Cherry Hills Village","k":"town","m":4},{"n":"Greenwood Village","k":"town","m":4},{"n":"Foxfield","k":"town","m":4},{"n":"Deer Trail","k":"town","m":4},{"n":"Wheat Ridge","k":"town","m":4},{"n":"Edgewater","k":"town","m":4},{"n":"Lakeside","k":"town","m":4},{"n":"Morrison","k":"town","m":4},{"n":"Mountain View","k":"town","m":4},{"n":"Evergreen","k":"town","m":4},{"n":"Conifer","k":"town","m":4},{"n":"Aspen Park","k":"town","m":4},{"n":"Columbine","k":"town","m":4},{"n":"Indian Hills","k":"town","m":4},{"n":"Broomfield","k":"town","m":4},{"n":"Parker","k":"town","m":4},{"n":"Highlands Ranch","k":"town","m":4},{"n":"Castle Pines","k":"town","m":4},{"n":"Larkspur","k":"town","m":4},{"n":"Denver County","k":"county","c":"part","m":4},{"n":"Adams County","k":"county","c":"part","m":4},{"n":"Arapahoe County","k":"county","c":"part","m":4},{"n":"Jefferson County","k":"county","c":"part","m":4},{"n":"Douglas County","k":"county","c":"part","m":4},{"n":"Broomfield County","k":"county","c":"part","m":4},{"n":"Detroit","k":"metro","m":5},{"n":"Fort Worth","k":"metro","m":6},{"n":"Arlington","k":"town","m":6},{"n":"Dalworthington Gardens","k":"town","m":6},{"n":"Pantego","k":"town","m":6},{"n":"Mansfield","k":"town","m":6},{"n":"Kennedale","k":"town","m":6},{"n":"Crowley","k":"town","m":6},{"n":"Burleson","k":"town","m":6},{"n":"North Richland Hills","k":"town","m":6},{"n":"Bedford","k":"town","m":6},{"n":"Euless","k":"town","m":6},{"n":"Hurst","k":"town","m":6},{"n":"Richland Hills","k":"town","m":6},{"n":"Watauga","k":"town","m":6},{"n":"Haltom City","k":"town","m":6},{"n":"River Oaks","k":"town","m":6},{"n":"Westworth Village","k":"town","m":6},{"n":"Saginaw","k":"town","m":6},{"n":"Lake Worth","k":"town","m":6},{"n":"Haslet","k":"town","m":6},{"n":"Grapevine","k":"town","m":6},{"n":"Southlake","k":"town","m":6},{"n":"Colleyville","k":"town","m":6},{"n":"Westlake","k":"town","m":6},{"n":"Keller","k":"town","m":6},{"n":"Tarrant County","k":"county","c":"all","m":6},{"n":"Houston Metro","k":"metro","m":7},{"n":"Pasadena","k":"town","m":7},{"n":"South Houston","k":"town","m":7},{"n":"Baytown","k":"town","m":7},{"n":"Humble","k":"town","m":7},{"n":"Katy","k":"town","m":7},{"n":"Jersey Village","k":"town","m":7},{"n":"Hedwig Village","k":"town","m":7},{"n":"Hunters Creek Village","k":"town","m":7},{"n":"Piney Point Village","k":"town","m":7},{"n":"Webster","k":"town","m":7},{"n":"Nassau Bay","k":"town","m":7},{"n":"Seabrook","k":"town","m":7},{"n":"Friendswood","k":"town","m":7},{"n":"La Porte","k":"town","m":7},{"n":"Deer Park","k":"town","m":7},{"n":"Bellaire","k":"town","m":7},{"n":"West University Place","k":"town","m":7},{"n":"Tomball","k":"town","m":7},{"n":"Harris County","k":"county","c":"all","m":7},{"n":"New York","k":"alias","m":8},{"n":"NYC","k":"alias","m":8},{"n":"New York City","k":"metro","m":8},{"n":"Manhattan","k":"town","m":8,"a":"New York County"},{"n":"Brooklyn","k":"town","m":8,"a":"Kings County"},{"n":"Queens","k":"town","m":8,"a":"Queens County"},{"n":"Bronx","k":"town","m":8,"a":"Bronx County"},{"n":"Staten Island","k":"town","m":8,"a":"Richmond County"},{"n":"Oakland Metro","k":"metro","m":9},{"n":"Fremont","k":"town","m":9},{"n":"Hayward","k":"town","m":9},{"n":"Berkeley","k":"town","m":9},{"n":"San Leandro","k":"town","m":9},{"n":"Livermore","k":"town","m":9},{"n":"Pleasanton","k":"town","m":9},{"n":"Alameda","k":"town","m":9},{"n":"Union City","k":"town","m":9},{"n":"Dublin","k":"town","m":9},{"n":"Newark","k":"town","m":9},{"n":"Emeryville","k":"town","m":9},{"n":"Albany","k":"town","m":9},{"n":"Piedmont","k":"town","m":9},{"n":"Castro Valley","k":"town","m":9},{"n":"San Lorenzo","k":"town","m":9},{"n":"Alameda County","k":"county","c":"all","m":9},{"n":"Philadelphia","k":"metro","m":10,"a":"Philadelphia County"},{"n":"Riverside Metro","k":"metro","m":11},{"n":"Moreno Valley","k":"town","m":11},{"n":"Corona","k":"town","m":11},{"n":"Murrieta","k":"town","m":11},{"n":"Temecula","k":"town","m":11},{"n":"Menifee","k":"town","m":11},{"n":"Jurupa Valley","k":"town","m":11},{"n":"Hemet","k":"town","m":11},{"n":"Perris","k":"town","m":11},{"n":"Lake Elsinore","k":"town","m":11},{"n":"Indio","k":"town","m":11},{"n":"Cathedral City","k":"town","m":11},{"n":"Palm Springs","k":"town","m":11},{"n":"Palm Desert","k":"town","m":11},{"n":"Beaumont","k":"town","m":11},{"n":"San Jacinto","k":"town","m":11},{"n":"Wildomar","k":"town","m":11},{"n":"Eastvale","k":"town","m":11},{"n":"Coachella","k":"town","m":11},{"n":"Banning","k":"town","m":11},{"n":"Calimesa","k":"town","m":11},{"n":"Canyon Lake","k":"town","m":11},{"n":"Desert Hot Springs","k":"town","m":11},{"n":"Indian Wells","k":"town","m":11},{"n":"La Quinta","k":"town","m":11},{"n":"Norco","k":"town","m":11},{"n":"Rancho Mirage","k":"town","m":11},{"n":"Riverside County","k":"county","c":"most","m":11},{"n":"Sacramento","k":"metro","m":12},{"n":"Elk Grove","k":"town","m":12},{"n":"Citrus Heights","k":"town","m":12},{"n":"Folsom","k":"town","m":12},{"n":"Rancho Cordova","k":"town","m":12},{"n":"Galt","k":"town","m":12},{"n":"Isleton","k":"town","m":12},{"n":"Sacramento County","k":"county","c":"all","m":12},{"n":"San Antonio","k":"metro","m":13},{"n":"Leon Valley","k":"town","m":13},{"n":"Castle Hills","k":"town","m":13},{"n":"Balcones Heights","k":"town","m":13},{"n":"Shavano Park","k":"town","m":13},{"n":"Hollywood Park","k":"town","m":13},{"n":"Hill Country Village","k":"town","m":13},{"n":"Live Oak","k":"town","m":13},{"n":"Universal City","k":"town","m":13},{"n":"Converse","k":"town","m":13},{"n":"Selma","k":"town","m":13},{"n":"Schertz","k":"town","m":13},{"n":"Windcrest","k":"town","m":13},{"n":"Alamo Heights","k":"town","m":13},{"n":"Olmos Park","k":"town","m":13},{"n":"Terrell Hills","k":"town","m":13},{"n":"Helotes","k":"town","m":13},{"n":"Fair Oaks Ranch","k":"town","m":13},{"n":"Grey Forest","k":"town","m":13},{"n":"San Geronimo","k":"town","m":13},{"n":"Bexar County","k":"county","c":"all","m":13},{"n":"San Diego","k":"metro","m":14},{"n":"Chula Vista","k":"town","m":14},{"n":"El Cajon","k":"town","m":14},{"n":"National City","k":"town","m":14},{"n":"La Mesa","k":"town","m":14},{"n":"Lemon Grove","k":"town","m":14},{"n":"Coronado","k":"town","m":14},{"n":"Santee","k":"town","m":14},{"n":"Poway","k":"town","m":14},{"n":"Solana Beach","k":"town","m":14},{"n":"Del Mar","k":"town","m":14},{"n":"Imperial Beach","k":"town","m":14},{"n":"SF","k":"alias","m":15},{"n":"San Francisco","k":"metro","m":15,"a":"San Francisco County"},{"n":"San Jose Metro","k":"metro","m":16},{"n":"Sunnyvale","k":"town","m":16},{"n":"Santa Clara","k":"town","m":16},{"n":"Mountain View","k":"town","m":16},{"n":"Milpitas","k":"town","m":16},{"n":"Palo Alto","k":"town","m":16},{"n":"Los Altos Hills","k":"town","m":16},{"n":"Cupertino","k":"town","m":16},{"n":"Campbell","k":"town","m":16},{"n":"Monte Sereno","k":"town","m":16},{"n":"Gilroy","k":"town","m":16},{"n":"Morgan Hill","k":"town","m":16},{"n":"Los Gatos","k":"town","m":16},{"n":"Saratoga","k":"town","m":16},{"n":"Los Altos","k":"town","m":16},{"n":"Santa Clara County","k":"county","c":"all","m":16},{"n":"Seattle","k":"metro","m":17},{"n":"Salt Lake","k":"alias","m":18},{"n":"Wasatch Front","k":"metro","m":18},{"n":"Salt Lake City","k":"town","m":18},{"n":"West Valley City","k":"town","m":18},{"n":"West Jordan","k":"town","m":18},{"n":"Sandy","k":"town","m":18},{"n":"South Jordan","k":"town","m":18},{"n":"Taylorsville","k":"town","m":18},{"n":"Murray","k":"town","m":18},{"n":"Draper","k":"town","m":18},{"n":"Riverton","k":"town","m":18},{"n":"Herriman","k":"town","m":18},{"n":"South Salt Lake","k":"town","m":18},{"n":"Midvale","k":"town","m":18},{"n":"Millcreek","k":"town","m":18},{"n":"Holladay","k":"town","m":18},{"n":"Cottonwood Heights","k":"town","m":18},{"n":"Kearns","k":"town","m":18},{"n":"Magna","k":"town","m":18},{"n":"Salt Lake County","k":"county","c":"all","m":18},{"n":"Washington","k":"alias","m":19},{"n":"District of Columbia","k":"alias","m":19},{"n":"DC","k":"alias","m":19},{"n":"Washington DC","k":"metro","m":19}]};
 /* places:end */
 (function(){
     var M=PLACES.metros,E=PLACES.entries;
@@ -778,14 +782,16 @@ var PLACES={"metros":[{"slug":"austin","name":"Austin","state":"TX","color":"#0e
     function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
     function norm(s){return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,' ').trim()}
     var STATES={};M.forEach(function(m){STATES[m.state.toLowerCase()]=1});
-    E.forEach(function(e){e.key=norm(e.n);e.words=e.key.split(' ')});
-    function score(e,t){
+    // An entry can carry a second name for the same place ("a": Brooklyn and Kings County); both are searched
+    E.forEach(function(e){e.keys=[e.n].concat(e.a?[e.a]:[]).map(function(n){var k=norm(n);return {key:k,words:k.split(' ')}})});
+    function score1(e,t){
         if(e.key===t)return 0;
         if(e.key.indexOf(t)===0)return 1;
         for(var i=1;i<e.words.length;i++){if(e.words.slice(i).join(' ').indexOf(t)===0)return 2}
         if(t.length>=3&&e.key.indexOf(t)>0)return 3;
         return -1;
     }
+    function score(e,t){var best=-1;e.keys.forEach(function(k){var s=score1(k,t);if(s>=0&&(best<0||s<best))best=s});return best}
     function search(raw){
         var t=norm(raw),st=null;if(!t)return [];
         var mm=t.match(/^(.+?) ([a-z]{2})$/);
@@ -808,7 +814,8 @@ var PLACES={"metros":[{"slug":"austin","name":"Austin","state":"TX","color":"#0e
     }
     function lines(e){
         var m=M[e.m],dash=m.name+' dashboard',tail=' &middot; '+esc(m.src)+' '+m.years;
-        var name=e.k==='metro'?(m.name.slice(-3)===' '+m.state?m.name:m.name+', '+m.state):e.n+', '+m.state;
+        var also=e.a?' ('+e.a+')':'';
+        var name=e.k==='metro'?(m.name.slice(-3)===' '+m.state&&!also?m.name:m.name+also+', '+m.state):e.n+also+', '+m.state;
         var meta=e.k==='metro'?'Dashboard':e.c==='all'?'Covered by the '+dash:e.c==='most'?'Most of it is in the '+dash:'Part of the '+dash;
         return {name:esc(name),meta:esc(meta)+tail};
     }
