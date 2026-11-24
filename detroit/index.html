@@ -1907,14 +1907,14 @@ return {trigger:triggerLookup,rerender:()=>{if(lastLat!==null)showReport(lastLat
     navLinks.concat(menuLinks).forEach(a=>a.addEventListener('click',e=>{
         e.preventDefault();closeAll();const id=a.getAttribute('href').slice(1);
         if(window.stateSection)stateSection(a.dataset.key,true);
-        current=id;go(id,'smooth',e.detail===0)}));
+        go(id,'smooth',e.detail===0)}));
     // #section=severity, or a number (#section=7), or an older alias (#section=yoy)
     function sectionId(v){v=String(v).toLowerCase();if(/^\d+$/.test(v))return 'sec-'+v.padStart(2,'0');v=ALIAS[v]||v;return KEYS[v]||null}
     window.sectionKey=v=>{const id=sectionId(v);const a=id&&navLinks.find(x=>x.getAttribute('href')==='#'+id);return a?a.dataset.key:''};
     // Opening a link or moving back and forward: go to the section, then re-align once if the
     // page above it settled while the reader has not scrolled
     window.goSection=function(key,how){
-        const id=sectionId(key);if(!id)return;current=id;go(id,how||'instant',false);const y=scrollY;
+        const id=sectionId(key);if(!id)return;go(id,how||'instant',false);const y=scrollY;
         setTimeout(()=>{const t=document.getElementById(id);if(scrollY===y&&t&&Math.abs(t.getBoundingClientRect().top-frameH()-16)>4)go(id,'instant',false)},600);
     };
     window.currentSection=()=>{const a=navLinks.find(x=>x.getAttribute('href')==='#'+current);return a?a.dataset.key:''};
