@@ -782,7 +782,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 // The page's data is in dashboard.json, fetched after the first paint; the street-lookup grid (grid.json)
 // only when someone uses the lookup. Chart.js loads when the first chart nears the screen, Leaflet when the
 // map does, and each chart is built only as it nears the screen, in a box whose size is already set.
-const PAGE_DATA='dashboard.json?v=d281e43f39',GRID_DATA='grid.json?v=58ce6bb976';
+const PAGE_DATA='dashboard.json?v=448e17178e',GRID_DATA='grid.json?v=58ce6bb976';
 const _scripts={};
 function loadScript(src){return _scripts[src]||(_scripts[src]=new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=()=>{delete _scripts[src];no(new Error('load '+src))};document.head.appendChild(s)}))}
 function loadCSS(href){if(document.querySelector('link[href="'+href+'"]'))return;const l=document.createElement('link');l.rel='stylesheet';l.href=href;document.head.appendChild(l)}

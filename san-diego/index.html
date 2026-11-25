@@ -564,7 +564,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
     </div>
     <div class="map-panel" id="mapPanel" hidden tabindex="-1" role="region" aria-label="Hotspot details"></div>
     <p class="map-nc"><strong>Not on the map:</strong> 3,497 of 45,603 crashes (7.7%) have no usable coordinates in the CHP CCRS records. They are counted in every total and chart on this page.</p>
-    <details class="chart-notes map-notes"><summary>About this map and your privacy</summary><div class="chart-notes-body"><p><strong class="lead-in">Privacy:</strong> This page has no backend, no analytics, and no cookies, and nothing you type is stored by crashmaps. Fonts and data come from crashmaps.org itself. Loading the map and charts fetches scripts from cdnjs (Cloudflare) and map tiles from CARTO, and each of those services sees your IP address. An address you search is sent to <a href="https://nominatim.openstreetmap.org/" target="_blank" rel="noopener noreferrer">OpenStreetMap Nominatim</a>, and commute start and end points are sent to the public <a href="https://project-osrm.org/" target="_blank" rel="noopener noreferrer">OSRM</a> routing server. Those requests are subject to each service&rsquo;s privacy policy.</p></div></details>
+    <details class="chart-notes map-notes"><summary>About this map and your privacy</summary><div class="chart-notes-body"><p><strong class="lead-in">Not shown as hotspots:</strong> crashes that the source placed far from the address on the report (Market St, blocks 100 to 5,300 placed on one point: 33; University Ave, blocks 100 to 6,000 placed on one point: 32; E Plaza Blvd, blocks 925 to 3,100 placed on one point: 26; El Cajon Blvd, blocks 2,800 to 7,125 placed on one point: 22; Palm Ave, blocks 1,300 to 4,600 placed on one point: 21; Imperial Ave, blocks 1,000 to 6,900 placed on one point: 20; National City Blvd, blocks 140 to 3,500 placed on one point: 20; Miramar Rd, blocks 5,000 to 9,750 placed on one point: 18; Torrey Pines Rd, blocks 1,500 to 3,900 placed on one point: 17; Balboa Ave, blocks 2,900 to 9,100 placed on one point: 17; Garnet Ave, blocks 800 to 3,000 placed on one point: 15). They are counted in every total and chart on this page.</p><p><strong class="lead-in">Privacy:</strong> This page has no backend, no analytics, and no cookies, and nothing you type is stored by crashmaps. Fonts and data come from crashmaps.org itself. Loading the map and charts fetches scripts from cdnjs (Cloudflare) and map tiles from CARTO, and each of those services sees your IP address. An address you search is sent to <a href="https://nominatim.openstreetmap.org/" target="_blank" rel="noopener noreferrer">OpenStreetMap Nominatim</a>, and commute start and end points are sent to the public <a href="https://project-osrm.org/" target="_blank" rel="noopener noreferrer">OSRM</a> routing server. Those requests are subject to each service&rsquo;s privacy policy.</p></div></details>
 </div>
 
 <!-- 02 LOOK UP YOUR STREET -->
@@ -730,8 +730,9 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 
 <!-- 13 METHODOLOGY -->
 <div class="sec-hdr" id="sec-13"><div class="sec-num">13 &mdash; Methodology</div><h2 class="sec-title">How I Built This</h2></div>
-<div class="meth-grid meth-grid-single">
+<div class="meth-grid">
 <div class="meth-card"><div class="meth-text">Raw CCRS crash records are queried from the CKAN DataStore API, filtered to County Code 37 (San Diego). Party-level data is joined by Collision ID to extract DUI/impairment status and speed limits. Records outside the core metro area and without valid coordinates are excluded. 15,794 records processed for 2024.</div></div>
+<div class="meth-card"><div class="meth-text"><strong class="lead-in">Misplaced records:</strong> 241 crashes carry coordinates far from the address on the report (Market St, blocks 100 to 5,300 placed on one point; University Ave, blocks 100 to 6,000 placed on one point; E Plaza Blvd, blocks 925 to 3,100 placed on one point; El Cajon Blvd, blocks 2,800 to 7,125 placed on one point; Palm Ave, blocks 1,300 to 4,600 placed on one point; Imperial Ave, blocks 1,000 to 6,900 placed on one point; National City Blvd, blocks 140 to 3,500 placed on one point; Miramar Rd, blocks 5,000 to 9,750 placed on one point; Torrey Pines Rd, blocks 1,500 to 3,900 placed on one point; Balboa Ave, blocks 2,900 to 9,100 placed on one point; Garnet Ave, blocks 800 to 3,000 placed on one point). I matched them by the address text and where the coordinates fall. They are left out of the Top 10 and the map hotspots and are counted in every total; &ldquo;About this map and your privacy&rdquo; under the map lists them.</div></div>
 </div>
 
 </main>
@@ -742,7 +743,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 // The page's data is in dashboard.json, fetched after the first paint; the street-lookup grid (grid.json)
 // only when someone uses the lookup. Chart.js loads when the first chart nears the screen, Leaflet when the
 // map does, and each chart is built only as it nears the screen, in a box whose size is already set.
-const PAGE_DATA='dashboard.json?v=32a4901fc6',GRID_DATA='grid.json?v=c4e43c16d4';
+const PAGE_DATA='dashboard.json?v=4db18a523c',GRID_DATA='grid.json?v=c4e43c16d4';
 const _scripts={};
 function loadScript(src){return _scripts[src]||(_scripts[src]=new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=()=>{delete _scripts[src];no(new Error('load '+src))};document.head.appendChild(s)}))}
 function loadCSS(href){if(document.querySelector('link[href="'+href+'"]'))return;const l=document.createElement('link');l.rel='stylesheet';l.href=href;document.head.appendChild(l)}
@@ -1262,7 +1263,7 @@ function initMap(D){
 const spots=D.spots;
 const mapCenter = [32.7157, -117.1611];
 const mapZoom = 11;
-const cityZooms = {"all": {"center": [32.7157, -117.1611], "zoom": 11}, "San Diego & nearby cities": {"center": [32.7384, -117.1201], "zoom": 13}, "La Mesa/Lemon Grove": {"center": [32.7662, -117.0119], "zoom": 13}, "El Cajon area": {"center": [32.7951, -116.9565], "zoom": 13}, "National City": {"center": [32.6781, -117.1082], "zoom": 13}, "Chula Vista area": {"center": [32.6374, -117.0736], "zoom": 13}};
+const cityZooms = {"all": {"center": [32.7157, -117.1611], "zoom": 11}, "San Diego & nearby cities": {"center": [32.7392, -117.118], "zoom": 13}, "La Mesa/Lemon Grove": {"center": [32.7662, -117.0119], "zoom": 13}, "El Cajon area": {"center": [32.7951, -116.9565], "zoom": 13}, "Chula Vista area": {"center": [32.6374, -117.0736], "zoom": 13}, "National City": {"center": [32.6691, -117.1083], "zoom": 13}};
 const corridorData=D.corridors;
 const searchViewbox = '-117.30,32.53,-116.85,33.00';
 const searchCity = 'San Diego';

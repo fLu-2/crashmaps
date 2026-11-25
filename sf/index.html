@@ -574,7 +574,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
     </div>
     <div class="map-panel" id="mapPanel" hidden tabindex="-1" role="region" aria-label="Hotspot details"></div>
     <p class="map-nc"><strong>Not on the map:</strong> 1,109 of 18,399 crashes (6.0%) have no usable coordinates in the CHP CCRS records. They are counted in every total and chart on this page.</p>
-    <details class="chart-notes map-notes"><summary>About this map and your privacy</summary><div class="chart-notes-body"><p><strong class="lead-in">Privacy:</strong> This page has no backend, no analytics, and no cookies, and nothing you type is stored by crashmaps. Fonts and data come from crashmaps.org itself. Loading the map and charts fetches scripts from cdnjs (Cloudflare) and map tiles from CARTO, and each of those services sees your IP address. An address you search is sent to <a href="https://nominatim.openstreetmap.org/" target="_blank" rel="noopener noreferrer">OpenStreetMap Nominatim</a>, and commute start and end points are sent to the public <a href="https://project-osrm.org/" target="_blank" rel="noopener noreferrer">OSRM</a> routing server. Those requests are subject to each service&rsquo;s privacy policy.</p></div></details>
+    <details class="chart-notes map-notes"><summary>About this map and your privacy</summary><div class="chart-notes-body"><p><strong class="lead-in">Not shown as hotspots:</strong> crashes that the source placed far from the address on the report (Mission St, blocks 680 to 5,901 placed on one point: 17). They are counted in every total and chart on this page.</p><p><strong class="lead-in">Privacy:</strong> This page has no backend, no analytics, and no cookies, and nothing you type is stored by crashmaps. Fonts and data come from crashmaps.org itself. Loading the map and charts fetches scripts from cdnjs (Cloudflare) and map tiles from CARTO, and each of those services sees your IP address. An address you search is sent to <a href="https://nominatim.openstreetmap.org/" target="_blank" rel="noopener noreferrer">OpenStreetMap Nominatim</a>, and commute start and end points are sent to the public <a href="https://project-osrm.org/" target="_blank" rel="noopener noreferrer">OSRM</a> routing server. Those requests are subject to each service&rsquo;s privacy policy.</p></div></details>
 </div>
 
 <!-- 02 LOOK UP YOUR STREET -->
@@ -790,8 +790,9 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 
 <!-- 14 METHODOLOGY -->
 <div class="sec-hdr" id="sec-14"><div class="sec-num">14 &mdash; Methodology</div><h2 class="sec-title">How I Built This</h2></div>
-<div class="meth-grid meth-grid-single">
+<div class="meth-grid">
 <div class="meth-card"><div class="meth-text">Raw CCRS crash records are queried from the CKAN DataStore API, filtered to County Code 38 (San Francisco). Party-level data is joined by Collision ID to extract DUI/impairment status and speed limits. Crashes with no coordinates in CCRS are geocoded from their cross streets with the US Census geocoder. Each crash is assigned to a neighborhood by testing its coordinates against San Francisco neighborhood boundary polygons, which are grouped into 11 areas. Crashes outside every polygon, and crashes that cannot be geocoded, are counted under Other SF; they stay in every total and the ones with no coordinates are left off the map. 6,172 records processed for 2025.</div></div>
+<div class="meth-card"><div class="meth-text"><strong class="lead-in">Misplaced records:</strong> 17 crashes carry coordinates far from the address on the report (Mission St, blocks 680 to 5,901 placed on one point). I matched them by the address text and where the coordinates fall. They are left out of the Top 10 and the map hotspots and are counted in every total; &ldquo;About this map and your privacy&rdquo; under the map lists them.</div></div>
 </div>
 
 </main>
@@ -802,7 +803,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 // The page's data is in dashboard.json, fetched after the first paint; the street-lookup grid (grid.json)
 // only when someone uses the lookup. Chart.js loads when the first chart nears the screen, Leaflet when the
 // map does, and each chart is built only as it nears the screen, in a box whose size is already set.
-const PAGE_DATA='dashboard.json?v=711d57147c',GRID_DATA='grid.json?v=084ff94c9c';
+const PAGE_DATA='dashboard.json?v=aa0355f20a',GRID_DATA='grid.json?v=084ff94c9c';
 const _scripts={};
 function loadScript(src){return _scripts[src]||(_scripts[src]=new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=()=>{delete _scripts[src];no(new Error('load '+src))};document.head.appendChild(s)}))}
 function loadCSS(href){if(document.querySelector('link[href="'+href+'"]'))return;const l=document.createElement('link');l.rel='stylesheet';l.href=href;document.head.appendChild(l)}
