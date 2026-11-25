@@ -428,7 +428,7 @@ footer{text-align:center;padding:2rem 1rem;font-size:.75rem;color:var(--text-fai
 <div class="sec-hdr" id="sec-01"><div class="sec-num">01 &mdash; Crash Map</div><h2 class="sec-title">Where It Happens</h2><p class="sec-desc">Search an address, filter by crash type, compare years, or enter your commute to see every crash hotspot along your route.</p></div>
 <div class="card map-card">
     <div class="card-top">
-        <div><div class="card-title">Austin Crash Map</div><div class="card-sub">64 intersections &middot; 10 districts &middot; Austin Open Data 2023&ndash;2025</div></div>
+        <div><div class="card-title">Austin Crash Map</div><div class="card-sub">65 intersections &middot; 10 districts &middot; Austin Open Data 2023&ndash;2025</div></div>
         <button type="button" class="btn-secondary copy-link" id="copyLink" title="Copy a link to this view: region, filters and year"><svg class="ico copy-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg><span class="copy-lbl">Copy link</span></button>
         <span class="sr-only" id="copyStatus" role="status"></span>
     </div>
@@ -627,7 +627,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
     <div class="card-top">
         <div>
             <div class="card-title" id="tableTitle">Top 10 Crash Intersections &mdash; All Metro</div>
-            <div class="card-sub" id="tableSub">Austin Open Data 2023&ndash;2025 &middot; 64 locations tracked</div>
+            <div class="card-sub" id="tableSub">Austin Open Data 2023&ndash;2025 &middot; 65 locations tracked</div>
         </div>
         <div style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap">
             <div class="map-filter-group">
@@ -756,7 +756,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 <div class="meth-card"><div class="meth-text"><strong class="lead-in">Data pipeline:</strong> Crash records queried from Austin Open Data Socrata API (dataset y2wy-tgr5), paginated at 50,000 records per call. 12,018 records for 2025. Coordinates are native WGS84.</div></div>
 <div class="meth-card"><div class="meth-text"><strong class="lead-in">District assignment:</strong> Austin data includes council district via Socrata computed region field. 10 single-member districts, each with approximately 105,000 residents.</div></div>
 <div class="meth-card"><div class="meth-text"><strong class="lead-in">Data limitations:</strong> Austin Open Data does not expose DUI/impairment, hit-and-run, or speed-involved flags. Pedestrian and cyclist involvement is derived from mode-specific injury counts and the units_involved field. Sections for impaired driving, speed, and hit-and-run are limited or unavailable.</div></div>
-<div class="meth-card"><div class="meth-text"><strong class="lead-in">Hotspots:</strong> A hotspot is every crash within roughly a 200-metre area. 32 of the 64 hotspots on this page come from records that give a street with no cross street. Those are grouped by 200-metre square and labelled &ldquo;[street] near [nearest cross street]&rdquo;, with the cross street taken from OpenStreetMap. The count covers every crash in the square, including crashes on the other streets inside it. Squares next to each other are listed separately.</div></div>
+<div class="meth-card"><div class="meth-text"><strong class="lead-in">Hotspots:</strong> A hotspot is every crash within roughly a 200-metre area. 32 of the 65 hotspots on this page come from records that give a street with no cross street. Those are grouped by 200-metre square and labelled &ldquo;[street] near [nearest cross street]&rdquo;, with the cross street taken from OpenStreetMap. The count covers every crash in the square, including crashes on the other streets inside it. Squares next to each other are listed separately.</div></div>
 <div class="meth-card"><div class="meth-text"><strong class="lead-in">Intersection data:</strong> Of the 37,136 crash records in this dataset, 4 (under 0.1%) lack a complete intersection name in the Austin Open Data source records. They are included in all totals, charts and the street-level heatmap, and left out of the Top 10 and the named map markers, since they cannot be placed at a specific intersection.</div></div>
 </div>
 
@@ -768,7 +768,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 // The page's data is in dashboard.json, fetched after the first paint; the street-lookup grid (grid.json)
 // only when someone uses the lookup. Chart.js loads when the first chart nears the screen, Leaflet when the
 // map does, and each chart is built only as it nears the screen, in a box whose size is already set.
-const PAGE_DATA='dashboard.json?v=235d7acf74',GRID_DATA='grid.json?v=9d3486e02c';
+const PAGE_DATA='dashboard.json?v=e8dacf70bc',GRID_DATA='grid.json?v=9d3486e02c';
 const _scripts={};
 function loadScript(src){return _scripts[src]||(_scripts[src]=new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=()=>{delete _scripts[src];no(new Error('load '+src))};document.head.appendChild(s)}))}
 function loadCSS(href){if(document.querySelector('link[href="'+href+'"]'))return;const l=document.createElement('link');l.rel='stylesheet';l.href=href;document.head.appendChild(l)}
@@ -1226,7 +1226,7 @@ function initMap(D){
 const spots=D.spots;
 const mapCenter = [30.2672, -97.7431];
 const mapZoom = 12;
-const cityZooms = {"all": {"center": [30.2672, -97.7431], "zoom": 12}, "District 3": {"center": [30.2349, -97.742], "zoom": 13}, "District 4": {"center": [30.3416, -97.6995], "zoom": 13}, "District 1": {"center": [30.3027, -97.7076], "zoom": 13}, "District 6": {"center": [30.4632, -97.7868], "zoom": 13}, "District 7": {"center": [30.4008, -97.6954], "zoom": 13}, "District 9": {"center": [30.2478, -97.7379], "zoom": 13}, "District 2": {"center": [30.1893, -97.7579], "zoom": 13}, "District 10": {"center": [30.3573, -97.75], "zoom": 13}, "District 8": {"center": [30.2514, -97.8025], "zoom": 13}, "District 5": {"center": [30.2321, -97.7921], "zoom": 13}};
+const cityZooms = {"all": {"center": [30.2672, -97.7431], "zoom": 12}, "District 3": {"center": [30.2349, -97.742], "zoom": 13}, "District 4": {"center": [30.3416, -97.6995], "zoom": 13}, "District 1": {"center": [30.3027, -97.7076], "zoom": 13}, "District 6": {"center": [30.4632, -97.7868], "zoom": 13}, "District 7": {"center": [30.4041, -97.6956], "zoom": 13}, "District 9": {"center": [30.2478, -97.7379], "zoom": 13}, "District 2": {"center": [30.1893, -97.7579], "zoom": 13}, "District 10": {"center": [30.3573, -97.75], "zoom": 13}, "District 8": {"center": [30.2514, -97.8025], "zoom": 13}, "District 5": {"center": [30.2321, -97.7921], "zoom": 13}};
 const corridorData=D.corridors;
 const searchViewbox = '-98.10,30.55,-97.40,30.05';
 const searchCity = 'Austin TX';
