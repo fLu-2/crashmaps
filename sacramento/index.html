@@ -754,8 +754,9 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 
 <!-- 13 METHODOLOGY -->
 <div class="sec-hdr" id="sec-13"><div class="sec-num">13 &mdash; Methodology</div><h2 class="sec-title">How I Built This</h2></div>
-<div class="meth-grid meth-grid-single">
+<div class="meth-grid">
 <div class="meth-card"><div class="meth-text">Raw CCRS crash records are queried from the CKAN DataStore API, filtered to County Code 34 (Sacramento). Party-level data is joined by Collision ID to extract DUI/impairment status and speed limits. Crashes that cannot be geocoded are kept in every total and left off the map. 20,584 records processed for 2025.</div></div>
+<div class="meth-card"><div class="meth-text"><strong class="lead-in">Hotspots:</strong> Each hotspot counts every crash within 300 m of its busiest point, so a freeway interchange includes its ramps and can span up to about 600 m.</div></div>
 </div>
 
 </main>
@@ -766,7 +767,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 // The page's data is in dashboard.json, fetched after the first paint; the street-lookup grid (grid.json)
 // only when someone uses the lookup. Chart.js loads when the first chart nears the screen, Leaflet when the
 // map does, and each chart is built only as it nears the screen, in a box whose size is already set.
-const PAGE_DATA='dashboard.json?v=9f9ad2088d',GRID_DATA='grid.json?v=9424a172be';
+const PAGE_DATA='dashboard.json?v=81852b82f3',GRID_DATA='grid.json?v=9424a172be';
 const _scripts={};
 function loadScript(src){return _scripts[src]||(_scripts[src]=new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=()=>{delete _scripts[src];no(new Error('load '+src))};document.head.appendChild(s)}))}
 function loadCSS(href){if(document.querySelector('link[href="'+href+'"]'))return;const l=document.createElement('link');l.rel='stylesheet';l.href=href;document.head.appendChild(l)}
@@ -1286,7 +1287,7 @@ function initMap(D){
 const spots=D.spots;
 const mapCenter = [38.5816, -121.4944];
 const mapZoom = 11;
-const cityZooms = {"all": {"center": [38.5816, -121.4944], "zoom": 11}, "Sacramento": {"center": [38.5543, -121.4749], "zoom": 13}, "Unincorporated & freeways": {"center": [38.5962, -121.3828], "zoom": 13}, "Citrus Heights": {"center": [38.6823, -121.289], "zoom": 13}, "Elk Grove": {"center": [38.4227, -121.4121], "zoom": 13}};
+const cityZooms = {"all": {"center": [38.5816, -121.4944], "zoom": 11}, "Unincorporated & freeways": {"center": [38.6106, -121.3814], "zoom": 13}, "Sacramento": {"center": [38.5655, -121.472], "zoom": 13}, "Elk Grove": {"center": [38.4526, -121.3717], "zoom": 13}};
 const corridorData=D.corridors;
 const searchViewbox = '-121.9,38.2,-121.0,38.8';
 const searchCity = 'Sacramento';

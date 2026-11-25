@@ -826,8 +826,9 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 
 <!-- 13 METHODOLOGY -->
 <div class="sec-hdr" id="sec-13"><div class="sec-num">13 &mdash; Methodology</div><h2 class="sec-title">How I Built This</h2></div>
-<div class="meth-grid meth-grid-single">
+<div class="meth-grid">
 <div class="meth-card"><div class="meth-text">Raw CCRS crash records are queried from the CKAN DataStore API, filtered to County Code 43 (Santa Clara). Party-level data is joined by Collision ID to extract DUI/impairment status and speed limits. Crashes that cannot be geocoded are kept in every total and left off the map. 14,281 records processed for 2025.</div></div>
+<div class="meth-card"><div class="meth-text"><strong class="lead-in">Hotspots:</strong> Each hotspot counts every crash within 300 m of its busiest point, so a freeway interchange includes its ramps and can span up to about 600 m.</div></div>
 </div>
 
 </main>
@@ -838,7 +839,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 // The page's data is in dashboard.json, fetched after the first paint; the street-lookup grid (grid.json)
 // only when someone uses the lookup. Chart.js loads when the first chart nears the screen, Leaflet when the
 // map does, and each chart is built only as it nears the screen, in a box whose size is already set.
-const PAGE_DATA='dashboard.json?v=819c9e3972',GRID_DATA='grid.json?v=5f2600abe0';
+const PAGE_DATA='dashboard.json?v=393f71fe34',GRID_DATA='grid.json?v=5f2600abe0';
 const _scripts={};
 function loadScript(src){return _scripts[src]||(_scripts[src]=new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=()=>{delete _scripts[src];no(new Error('load '+src))};document.head.appendChild(s)}))}
 function loadCSS(href){if(document.querySelector('link[href="'+href+'"]'))return;const l=document.createElement('link');l.rel='stylesheet';l.href=href;document.head.appendChild(l)}
@@ -1358,7 +1359,7 @@ function initMap(D){
 const spots=D.spots;
 const mapCenter = [37.3382, -121.8863];
 const mapZoom = 11;
-const cityZooms = {"all": {"center": [37.3382, -121.8863], "zoom": 11}, "San Jose": {"center": [37.3361, -121.9053], "zoom": 13}, "Palo Alto/Los Altos Hills": {"center": [37.439, -122.1126], "zoom": 13}, "Mountain View": {"center": [37.4075, -122.0712], "zoom": 13}, "Unincorporated & freeways": {"center": [37.1275, -121.914], "zoom": 13}, "Sunnyvale": {"center": [37.3927, -122.0179], "zoom": 13}, "Santa Clara": {"center": [37.3522, -121.9781], "zoom": 13}, "Campbell/Monte Sereno": {"center": [37.294, -121.938], "zoom": 13}};
+const cityZooms = {"all": {"center": [37.3382, -121.8863], "zoom": 11}, "San Jose": {"center": [37.3323, -121.8994], "zoom": 13}, "Palo Alto/Los Altos Hills": {"center": [37.4387, -122.1124], "zoom": 13}, "Mountain View": {"center": [37.4126, -122.0733], "zoom": 13}, "Unincorporated & freeways": {"center": [37.1275, -121.914], "zoom": 13}, "Sunnyvale": {"center": [37.3982, -122.0165], "zoom": 13}, "Campbell/Monte Sereno": {"center": [37.294, -121.938], "zoom": 13}, "Milpitas": {"center": [37.451, -121.922], "zoom": 13}};
 const corridorData=D.corridors;
 const searchViewbox = '-122.2,36.9,-121.2,37.5';
 const searchCity = 'San Jose';

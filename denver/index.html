@@ -867,7 +867,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 <div class="meth-card"><div class="meth-text"><strong class="lead-in">Data pipeline:</strong> CDOT Statewide Crash Listing Excel files parsed via Python adapter. Records filtered to the six metro counties (Adams, Arapahoe, Broomfield, Denver, Douglas, Jefferson). 49,021 records for 2025.</div></div>
 <div class="meth-card"><div class="meth-text"><strong class="lead-in">City assignment:</strong> The CDOT City field maps crashes to 17 metro city groups. When City is blank (common on sheriff and State Patrol reports), the city is assigned from the crash coordinates using official DOLA municipal boundaries; crashes outside every municipality go to their county&rsquo;s catch-all city group.</div></div>
 <div class="meth-card"><div class="meth-text"><strong class="lead-in">Behavioral flags:</strong> DUI from alcohol/marijuana/drug suspected fields. Speed from contributing factor text and speed-over-limit detection (>10 mph over). Hit-and-run from TU hit-and-run boolean fields. Pedestrian and cyclist from crash type text.</div></div>
-<div class="meth-card"><div class="meth-text"><strong class="lead-in">Hotspots:</strong> A hotspot is every crash within roughly a 200-metre area. 3 of the 65 hotspots on this page come from records that give a street with no cross street. Those are grouped by 200-metre square and labelled &ldquo;[street] near [nearest cross street]&rdquo;, with the cross street taken from OpenStreetMap. The count covers every crash in the square, including crashes on the other streets inside it. Squares next to each other are listed separately.</div></div>
+<div class="meth-card"><div class="meth-text"><strong class="lead-in">Hotspots:</strong> Each hotspot counts every crash within 300 m of its busiest point, so a freeway interchange includes its ramps and can span up to about 600 m. 2 of the 65 hotspots on this page come from records that give a street with no cross street. Those are grouped by 200-metre square and labelled &ldquo;[street] near [nearest cross street]&rdquo;, with the cross street taken from OpenStreetMap. The count covers every crash in the square, including crashes on the other streets inside it. Squares next to each other are listed separately.</div></div>
 </div>
 
 </main>
@@ -878,7 +878,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 // The page's data is in dashboard.json, fetched after the first paint; the street-lookup grid (grid.json)
 // only when someone uses the lookup. Chart.js loads when the first chart nears the screen, Leaflet when the
 // map does, and each chart is built only as it nears the screen, in a box whose size is already set.
-const PAGE_DATA='dashboard.json?v=7b41faed8f',GRID_DATA='grid.json?v=9a127b76fb';
+const PAGE_DATA='dashboard.json?v=a4cbd156ec',GRID_DATA='grid.json?v=9a127b76fb';
 const _scripts={};
 function loadScript(src){return _scripts[src]||(_scripts[src]=new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=()=>{delete _scripts[src];no(new Error('load '+src))};document.head.appendChild(s)}))}
 function loadCSS(href){if(document.querySelector('link[href="'+href+'"]'))return;const l=document.createElement('link');l.rel='stylesheet';l.href=href;document.head.appendChild(l)}
@@ -1404,7 +1404,7 @@ function initMap(D){
 const spots=D.spots;
 const mapCenter = [39.7392, -104.9903];
 const mapZoom = 11;
-const cityZooms = {"all": {"center": [39.7392, -104.9903], "zoom": 11}, "Denver": {"center": [39.7447, -104.9633], "zoom": 13}, "Thornton/Northglenn": {"center": [39.8625, -104.9867], "zoom": 13}, "Aurora": {"center": [39.7197, -104.8328], "zoom": 13}, "Wheat Ridge/Jefferson Co.": {"center": [39.7841, -105.1096], "zoom": 13}, "Lakewood": {"center": [39.7181, -105.0675], "zoom": 13}, "Commerce City/Adams Co.": {"center": [39.8321, -104.9625], "zoom": 13}, "Lone Tree": {"center": [39.5363, -104.8683], "zoom": 13}, "Parker/Douglas Co.": {"center": [39.5504, -104.8588], "zoom": 13}, "Brighton": {"center": [39.9795, -104.8258], "zoom": 13}, "Englewood/Arapahoe Co.": {"center": [39.6452, -104.961], "zoom": 13}, "Castle Rock": {"center": [39.4242, -104.878], "zoom": 13}, "Centennial": {"center": [39.5804, -104.876], "zoom": 13}, "Broomfield": {"center": [39.9164, -105.0944], "zoom": 13}};
+const cityZooms = {"all": {"center": [39.7392, -104.9903], "zoom": 11}, "Denver": {"center": [39.7453, -104.9545], "zoom": 13}, "Aurora": {"center": [39.7172, -104.8329], "zoom": 13}, "Thornton/Northglenn": {"center": [39.8625, -104.9867], "zoom": 13}, "Wheat Ridge/Jefferson Co.": {"center": [39.7841, -105.1096], "zoom": 13}, "Arvada": {"center": [39.7912, -105.0814], "zoom": 13}, "Lakewood": {"center": [39.7214, -105.0735], "zoom": 13}, "Lone Tree": {"center": [39.5363, -104.8683], "zoom": 13}, "Commerce City/Adams Co.": {"center": [39.8333, -104.9437], "zoom": 13}, "Englewood/Arapahoe Co.": {"center": [39.6331, -104.936], "zoom": 13}, "Parker/Douglas Co.": {"center": [39.5508, -104.9009], "zoom": 13}, "Brighton": {"center": [39.9722, -104.8275], "zoom": 13}, "Westminster": {"center": [39.8604, -105.0543], "zoom": 13}};
 const corridorData=D.corridors;
 const searchViewbox = '-105.20,39.55,-104.70,39.95';
 const searchCity = 'Denver Metro';

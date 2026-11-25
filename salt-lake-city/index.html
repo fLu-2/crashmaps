@@ -428,7 +428,7 @@ footer{text-align:center;padding:2rem 1rem;font-size:.75rem;color:var(--text-fai
 <div class="sec-hdr" id="sec-01"><div class="sec-num">01 &mdash; Crash Map</div><h2 class="sec-title">Where It Happens</h2><p class="sec-desc">Search an address, filter by crash type, compare years, or enter your commute to see every crash hotspot along your route.</p></div>
 <div class="card map-card">
     <div class="card-top">
-        <div><div class="card-title">Wasatch Front Crash Map</div><div class="card-sub">115 intersections &middot; 17 cities &middot; UDOT 2022&ndash;2024</div></div>
+        <div><div class="card-title">Wasatch Front Crash Map</div><div class="card-sub">120 intersections &middot; 17 cities &middot; UDOT 2022&ndash;2024</div></div>
         <button type="button" class="btn-secondary copy-link" id="copyLink" title="Copy a link to this view: region, filters and year"><svg class="ico copy-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg><span class="copy-lbl">Copy link</span></button>
         <span class="sr-only" id="copyStatus" role="status"></span>
     </div>
@@ -641,7 +641,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
     <div class="card-top">
         <div>
             <div class="card-title" id="tableTitle">Top 10 Crash Intersections &mdash; All Metro</div>
-            <div class="card-sub" id="tableSub">UDOT 2022&ndash;2024 &middot; 115 locations tracked</div>
+            <div class="card-sub" id="tableSub">UDOT 2022&ndash;2024 &middot; 120 locations tracked</div>
         </div>
         <div style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap">
             <div class="map-filter-group">
@@ -863,6 +863,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 <div class="meth-card"><div class="meth-text"><strong class="lead-in">Data pipeline:</strong> Crash records queried from UDOT&rsquo;s ArcGIS REST API (one layer per crash year), paginated at 2,000 records per call. 22,871 Salt Lake County records processed. Coordinates reprojected from UTM Zone 12N (EPSG:26912) to WGS84 via pyproj.</div></div>
 <div class="meth-card"><div class="meth-text"><strong class="lead-in">City assignment:</strong> UDOT data has no city field. Cities are assigned from crash coordinates using bounding boxes. Crashes outside defined city boundaries are excluded from the dashboard.</div></div>
 <div class="meth-card"><div class="meth-text"><strong class="lead-in">Rollup fields:</strong> UDOT pre-computes behavioral flags (DUI, SPEED_RELATED, HIT_AND_RUN, etc.) at the crash level. These are used directly. Substance breakdown (alcohol vs. marijuana) requires the People table and is not included in this release.</div></div>
+<div class="meth-card"><div class="meth-text"><strong class="lead-in">Hotspots:</strong> Each hotspot counts every crash within 300 m of its busiest point, so a freeway interchange includes its ramps and can span up to about 600 m.</div></div>
 </div>
 
 </main>
@@ -873,7 +874,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 // The page's data is in dashboard.json, fetched after the first paint; the street-lookup grid (grid.json)
 // only when someone uses the lookup. Chart.js loads when the first chart nears the screen, Leaflet when the
 // map does, and each chart is built only as it nears the screen, in a box whose size is already set.
-const PAGE_DATA='dashboard.json?v=e13fc28c77',GRID_DATA='grid.json?v=10b38e6f98';
+const PAGE_DATA='dashboard.json?v=86c73a18f5',GRID_DATA='grid.json?v=10b38e6f98';
 const _scripts={};
 function loadScript(src){return _scripts[src]||(_scripts[src]=new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=()=>{delete _scripts[src];no(new Error('load '+src))};document.head.appendChild(s)}))}
 function loadCSS(href){if(document.querySelector('link[href="'+href+'"]'))return;const l=document.createElement('link');l.rel='stylesheet';l.href=href;document.head.appendChild(l)}
@@ -1370,7 +1371,7 @@ function initMap(D){
 const spots=D.spots;
 const mapCenter = [40.7608, -111.891];
 const mapZoom = 11;
-const cityZooms = {"all": {"center": [40.7608, -111.891], "zoom": 11}, "Midvale": {"center": [40.6269, -111.8888], "zoom": 13}, "Murray": {"center": [40.6623, -111.8885], "zoom": 13}, "West Valley City": {"center": [40.6983, -111.9969], "zoom": 13}, "South Salt Lake": {"center": [40.7071, -111.8955], "zoom": 13}, "Sandy": {"center": [40.5758, -111.8936], "zoom": 13}, "Taylorsville": {"center": [40.6785, -111.9544], "zoom": 13}, "Kearns": {"center": [40.6603, -111.9996], "zoom": 13}, "Other Wasatch Front": {"center": [40.4626, -111.9427], "zoom": 13}, "Salt Lake City": {"center": [40.755, -111.916], "zoom": 13}, "Riverton": {"center": [40.5222, -111.9711], "zoom": 13}, "West Jordan": {"center": [40.6208, -111.973], "zoom": 13}, "South Jordan": {"center": [40.5831, -111.9673], "zoom": 13}, "Draper": {"center": [40.5197, -111.8939], "zoom": 13}, "Cottonwood Heights": {"center": [40.629, -111.8342], "zoom": 13}, "Millcreek": {"center": [40.7196, -111.8539], "zoom": 13}, "Herriman": {"center": [40.5079, -112.0035], "zoom": 13}, "Magna": {"center": [40.6963, -112.0918], "zoom": 13}};
+const cityZooms = {"all": {"center": [40.7608, -111.891], "zoom": 11}, "Midvale": {"center": [40.6276, -111.8913], "zoom": 13}, "Draper": {"center": [40.5105, -111.8958], "zoom": 13}, "Sandy": {"center": [40.5824, -111.899], "zoom": 13}, "Taylorsville": {"center": [40.6734, -111.9545], "zoom": 13}, "Murray": {"center": [40.6654, -111.8964], "zoom": 13}, "West Valley City": {"center": [40.702, -112.0019], "zoom": 13}, "South Salt Lake": {"center": [40.7127, -111.8991], "zoom": 13}, "West Jordan": {"center": [40.6211, -111.9749], "zoom": 13}, "Salt Lake City": {"center": [40.763, -111.92], "zoom": 13}, "Kearns": {"center": [40.6591, -111.9922], "zoom": 13}, "South Jordan": {"center": [40.5879, -111.9624], "zoom": 13}, "Other Wasatch Front": {"center": [40.4626, -111.9427], "zoom": 13}, "Herriman": {"center": [40.5079, -112.0035], "zoom": 13}, "Riverton": {"center": [40.5002, -111.9579], "zoom": 13}, "Millcreek": {"center": [40.7196, -111.8539], "zoom": 13}};
 const corridorData=D.corridors;
 const searchViewbox = '-112.12,40.83,-111.78,40.48';
 const searchCity = 'Wasatch Front';

@@ -428,7 +428,7 @@ footer{text-align:center;padding:2rem 1rem;font-size:.75rem;color:var(--text-fai
 <div class="sec-hdr" id="sec-01"><div class="sec-num">01 &mdash; Crash Map</div><h2 class="sec-title">Where It Happens</h2><p class="sec-desc">Search an address, filter by crash type, compare years, or enter your commute to see every crash hotspot along your route.</p></div>
 <div class="card map-card">
     <div class="card-top">
-        <div><div class="card-title">Philadelphia Crash Map</div><div class="card-sub">117 intersections &middot; 8 areas &middot; PennDOT 2023&ndash;2025</div></div>
+        <div><div class="card-title">Philadelphia Crash Map</div><div class="card-sub">120 intersections &middot; 8 areas &middot; PennDOT 2023&ndash;2025</div></div>
         <button type="button" class="btn-secondary copy-link" id="copyLink" title="Copy a link to this view: region, filters and year"><svg class="ico copy-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg><span class="copy-lbl">Copy link</span></button>
         <span class="sr-only" id="copyStatus" role="status"></span>
     </div>
@@ -623,7 +623,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
     <div class="card-top">
         <div>
             <div class="card-title" id="tableTitle">Top 10 Crash Intersections &mdash; All Metro</div>
-            <div class="card-sub" id="tableSub">PennDOT 2023&ndash;2025 &middot; 117 locations tracked</div>
+            <div class="card-sub" id="tableSub">PennDOT 2023&ndash;2025 &middot; 120 locations tracked</div>
         </div>
         <div style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap">
             <div class="map-filter-group">
@@ -758,8 +758,9 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 
 <!-- 14 METHODOLOGY -->
 <div class="sec-hdr" id="sec-14"><div class="sec-num">14 &mdash; Methodology</div><h2 class="sec-title">How I Built This</h2></div>
-<div class="meth-grid meth-grid-single">
+<div class="meth-grid">
 <div class="meth-card"><div class="meth-text">PennDOT crash records are queried from the ArcGIS FeatureServer for Philadelphia County (code 67). This dataset includes reportable crashes (involving injury, fatality, or vehicle tow). Records are geocoded with WGS84 coordinates. Areas assigned by coordinate boundaries. 5,507 records processed for 2025. PennDOT&rsquo;s 2021&ndash;2025 crash release no longer flags some non-motorists in &ldquo;hit pedestrian&rdquo; crashes as pedestrians, so pedestrian counts here run about 11% below PennDOT&rsquo;s earlier 2020&ndash;2024 release for the same years.</div></div>
+<div class="meth-card"><div class="meth-text"><strong class="lead-in">Hotspots:</strong> Each hotspot counts every crash within 300 m of its busiest point, so a freeway interchange includes its ramps and can span up to about 600 m.</div></div>
 </div>
 
 </main>
@@ -770,7 +771,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 // The page's data is in dashboard.json, fetched after the first paint; the street-lookup grid (grid.json)
 // only when someone uses the lookup. Chart.js loads when the first chart nears the screen, Leaflet when the
 // map does, and each chart is built only as it nears the screen, in a box whose size is already set.
-const PAGE_DATA='dashboard.json?v=87f8f0dd7e',GRID_DATA='grid.json?v=2fce8ce1e8';
+const PAGE_DATA='dashboard.json?v=a1f2fa8dd0',GRID_DATA='grid.json?v=2fce8ce1e8';
 const _scripts={};
 function loadScript(src){return _scripts[src]||(_scripts[src]=new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=()=>{delete _scripts[src];no(new Error('load '+src))};document.head.appendChild(s)}))}
 function loadCSS(href){if(document.querySelector('link[href="'+href+'"]'))return;const l=document.createElement('link');l.rel='stylesheet';l.href=href;document.head.appendChild(l)}
@@ -1273,7 +1274,7 @@ function initMap(D){
 const spots=D.spots;
 const mapCenter = [39.9526, -75.1652];
 const mapZoom = 12;
-const cityZooms = {"all": {"center": [39.9526, -75.1652], "zoom": 12}, "North Philadelphia": {"center": [40.0084, -75.1479], "zoom": 13}, "Center City": {"center": [39.963, -75.1613], "zoom": 13}, "Northeast": {"center": [40.0525, -75.0456], "zoom": 13}, "Southwest": {"center": [39.92, -75.2186], "zoom": 13}, "West Philadelphia": {"center": [39.9624, -75.2142], "zoom": 13}, "Kensington/River Wards": {"center": [40.0083, -75.0712], "zoom": 13}, "Philadelphia": {"center": [40.018, -75.1556], "zoom": 13}, "South Philadelphia": {"center": [39.9241, -75.1699], "zoom": 13}, "Northwest": {"center": [40.05, -75.1739], "zoom": 13}};
+const cityZooms = {"all": {"center": [39.9526, -75.1652], "zoom": 12}, "North Philadelphia": {"center": [40.0087, -75.1494], "zoom": 13}, "Northeast": {"center": [40.0649, -75.037], "zoom": 13}, "Center City": {"center": [39.9635, -75.1595], "zoom": 13}, "Southwest": {"center": [39.9188, -75.2197], "zoom": 13}, "South Philadelphia": {"center": [39.9241, -75.1699], "zoom": 13}, "West Philadelphia": {"center": [39.9621, -75.2139], "zoom": 13}, "Kensington/River Wards": {"center": [40.0066, -75.0719], "zoom": 13}, "Philadelphia": {"center": [40.018, -75.1556], "zoom": 13}, "Northwest": {"center": [40.05, -75.1739], "zoom": 13}};
 const corridorData=D.corridors;
 const searchViewbox = '-75.29,39.87,-74.95,40.14';
 const searchCity = 'Philadelphia';
