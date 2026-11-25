@@ -343,6 +343,12 @@ main>.sec-hdr:first-child{margin-top:24px}
 .card:has(>.chart-box){display:flex;flex-direction:column}.card>.chart-box{flex:1 1 auto}
 /* Severity: labeled rows with count, %, and a thin bar (DESIGN_RULES.md, Charts: what share is each part) */
 .share-rows{padding:.25rem 1.25rem 1rem}
+/* Where pedestrians and cyclists are hit: one summary sentence, then two columns of share rows */
+.loc-summary{padding:0 1.25rem .5rem;font-size:15px;color:var(--text);line-height:1.5}
+.loc-cols{display:grid;grid-template-columns:1fr 1fr;column-gap:16px}.loc-cols .share-rows{padding-top:0}
+.loc-head{padding:.75rem 1.25rem .25rem;font-size:13px;font-weight:500;color:var(--text-dim)}.loc-head .mono{margin-left:6px}
+.loc-none{font-size:13px;color:var(--text-dim);margin:-.25rem 0 1rem}
+@media(max-width:768px){.loc-cols{grid-template-columns:1fr}}
 .rn-list{display:grid;grid-template-columns:minmax(160px,max-content) 1fr;column-gap:16px;row-gap:6px}.rn-row{display:contents}.rn-name{color:var(--text);font-weight:500}.rn-foot{margin-top:10px}.rn-list+.rn-foot{padding-top:10px;border-top:1px solid var(--border)}
 @media(max-width:768px){.rn-list{grid-template-columns:1fr;row-gap:0}.rn-name{margin-top:8px}.rn-row:first-child .rn-name{margin-top:0}}
 .share-row{display:grid;grid-template-columns:minmax(0,1fr) auto 4.5rem;column-gap:16px;row-gap:6px;align-items:baseline;padding:10px 0;border-bottom:1px solid rgba(28,31,46,.6)}.share-row:last-child{border-bottom:0}
@@ -412,7 +418,7 @@ footer{text-align:center;padding:2rem 1rem;font-size:.75rem;color:var(--text-fai
     <div class="stats-strip">
         <div class="stat-cell"><div class="stat-val">18,248</div><div class="stat-lbl">Reported crashes (metro, 2024)</div></div>
         <div class="stat-cell"><div class="stat-val deaths">43</div><div class="stat-lbl">Traffic deaths (metro, 2024)</div></div>
-        <div class="stat-cell"><div class="stat-val">543</div><div class="stat-lbl">Pedestrian crashes (metro, 2024)</div></div>
+        <div class="stat-cell"><div class="stat-val">549</div><div class="stat-lbl">Pedestrian crashes (metro, 2024)</div></div>
         <div class="stat-cell"><div class="stat-val">4.7%</div><div class="stat-lbl">Speed-related rate (metro, 2024)</div></div>
     </div>
     
@@ -477,6 +483,7 @@ footer{text-align:center;padding:2rem 1rem;font-size:.75rem;color:var(--text-fai
                     <button class="map-btn active" data-type="all">All</button>
                     <button class="map-btn" data-type="ped">Ped</button>
                     <button class="map-btn" data-type="cyclist">Bike</button>
+                    <button class="map-btn" data-type="scooter">Scooter</button>
                     <button class="map-btn" data-type="fatal">Fatal crashes</button>
                 </div>
             </div>
@@ -501,7 +508,7 @@ footer{text-align:center;padding:2rem 1rem;font-size:.75rem;color:var(--text-fai
 <option value="Chelsea">Chelsea</option>
 <option value="Brookline">Brookline</option>
 <option value="Watertown">Watertown</option></select></div>
-                <div class="mf-field"><label>Show</label><select id="typeFilterMob" class="mf-select"><option value="all" selected>All Crashes</option><option value="ped">Pedestrian</option><option value="cyclist">Cyclist</option><option value="fatal">Fatal crashes</option></select></div>
+                <div class="mf-field"><label>Show</label><select id="typeFilterMob" class="mf-select"><option value="all" selected>All Crashes</option><option value="ped">Pedestrian</option><option value="cyclist">Cyclist</option><option value="scooter">Scooter &amp; other device</option><option value="fatal">Fatal crashes</option></select></div>
                 <div class="mf-field"><label>Year</label><select id="yearFilterMob" class="mf-select"><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="all" selected>All Years</option></select></div>
             </div>
         </div>
@@ -516,7 +523,7 @@ footer{text-align:center;padding:2rem 1rem;font-size:.75rem;color:var(--text-fai
 // filters and chips are in place before the first paint.
 const ST={city:'all',show:'all',year:'all',top10:'all',section:''};
 const HASH_KEYS=['city','show','year','top10','section'];
-const TYPE_NAMES={ped:'Pedestrian',cyclist:'Cyclist',fatal:'Fatal crashes'};
+const TYPE_NAMES={ped:'Pedestrian',cyclist:'Cyclist',scooter:'Scooter & other personal device',fatal:'Fatal crashes'};
 let _lastHash=location.hash.replace(/^#/,''),_hold=false;
 function parseHash(h){const p={};String(h==null?location.hash:h).replace(/^#/,'').split('&').forEach(x=>{const i=x.indexOf('=');
   if(i>0){try{p[decodeURIComponent(x.slice(0,i))]=decodeURIComponent(x.slice(i+1).replace(/\+/g,' '))}catch(e){}}});return p}
@@ -800,7 +807,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 <option value="Watertown">Watertown</option></select></div><div class="chart-box"><canvas id="hrHourChart"></canvas></div></div><div class="card"><div class="card-top"><div><div class="card-title">Hit-and-Run Rate by City</div><div class="card-sub">% of crashes &middot; MassDOT 2024</div></div></div><div class="chart-box"><canvas id="hrCityChart"></canvas></div></div>
 
 <!-- 11 PEDESTRIANS & CYCLISTS -->
-<div class="sec-hdr" id="sec-11"><div class="sec-num">11 &mdash; <span class="lbl-long">Pedestrians &amp; Cyclists</span><span class="lbl-short">Walk &amp; Bike</span></div><h2 class="sec-title">The Most Vulnerable on Metro Streets</h2><p class="sec-desc">543 pedestrian crashes and 489 cyclist crashes across the metro in 2024. Only crashes with a police report appear here. Many crashes, especially those involving pedestrians and cyclists, are never reported, so the true numbers are higher.</p></div><div class="card"><div class="card-top"><div><div class="card-title">Pedestrian &amp; Cyclist Crashes by City</div><div class="card-sub">MassDOT 2024</div></div></div><div class="chart-box"><canvas id="pedCityChart"></canvas></div><details class="chart-notes"><summary>About this chart</summary><div class="chart-notes-body"><span class="mono" style="font-weight:600;color:var(--text)">543</span> pedestrian crashes in 2024. Boston accounts for 164 &mdash; 30% of the total, with 45% of the population.</div></details></div>
+<div class="sec-hdr" id="sec-11"><div class="sec-num">11 &mdash; <span class="lbl-long">Pedestrians &amp; Cyclists</span><span class="lbl-short">Walk &amp; Bike</span></div><h2 class="sec-title">The Most Vulnerable on Metro Streets</h2><p class="sec-desc">549 pedestrian crashes, 489 cyclist crashes and 162 crashes involving a scooter or other personal device across the metro in 2024. Only crashes with a police report appear here. Many crashes, especially those involving pedestrians and cyclists, are never reported, so the true numbers are higher.</p></div><div class="card"><div class="card-top"><div><div class="card-title">Pedestrian &amp; Cyclist Crashes by City</div><div class="card-sub">MassDOT 2024</div></div></div><div class="chart-box"><canvas id="pedCityChart"></canvas></div><details class="chart-notes"><summary>About this chart</summary><div class="chart-notes-body"><span class="mono" style="font-weight:600;color:var(--text)">549</span> pedestrian crashes in 2024. Boston accounts for 167 &mdash; 30% of the total, with 45% of the population.</div></details></div><div class="card"><div class="card-top"><div><div class="card-title">Where Pedestrians and Cyclists Are Hit</div><div class="card-sub">All Metro &middot; MassDOT 2024 &middot; location as coded by MassDOT</div></div></div><p class="loc-summary">In 2024, 36% of pedestrian crashes and 31% of cyclist crashes happened away from an intersection, counting driveways and alleys.</p><div class="loc-cols"><div class="loc-col"><div class="loc-head">Pedestrian crashes <span class="mono">549</span></div><div class="share-rows" role="list" aria-label="Pedestrian crashes by location, 2024"><div class="share-row" role="listitem"><span class="share-name">At an intersection</span><span class="share-num">300</span><span class="share-pct">54.6%</span><span class="share-bar" aria-hidden="true"><span style="width:54.64%;background:var(--ped)"></span></span></div><div class="share-row" role="listitem"><span class="share-name">Away from an intersection</span><span class="share-num">188</span><span class="share-pct">34.2%</span><span class="share-bar" aria-hidden="true"><span style="width:34.24%;background:var(--ped)"></span></span></div><div class="share-row" role="listitem"><span class="share-name">Driveway or alley</span><span class="share-num">8</span><span class="share-pct">1.5%</span><span class="share-bar" aria-hidden="true"><span style="width:1.46%;background:var(--ped)"></span></span></div><div class="share-row" role="listitem"><span class="share-name">Other place (ramp, path, parking lot)</span><span class="share-num">3</span><span class="share-pct">0.5%</span><span class="share-bar" aria-hidden="true"><span style="width:0.55%;background:var(--ped)"></span></span></div><div class="share-row" role="listitem"><span class="share-name">Not recorded</span><span class="share-num">50</span><span class="share-pct">9.1%</span><span class="share-bar" aria-hidden="true"><span style="width:9.11%;background:var(--ped)"></span></span></div></div></div><div class="loc-col"><div class="loc-head">Cyclist crashes <span class="mono">489</span></div><div class="share-rows" role="list" aria-label="Cyclist crashes by location, 2024"><div class="share-row" role="listitem"><span class="share-name">At an intersection</span><span class="share-num">303</span><span class="share-pct">62.0%</span><span class="share-bar" aria-hidden="true"><span style="width:61.96%;background:var(--cyclist)"></span></span></div><div class="share-row" role="listitem"><span class="share-name">Away from an intersection</span><span class="share-num">139</span><span class="share-pct">28.4%</span><span class="share-bar" aria-hidden="true"><span style="width:28.43%;background:var(--cyclist)"></span></span></div><div class="share-row" role="listitem"><span class="share-name">Driveway or alley</span><span class="share-num">13</span><span class="share-pct">2.7%</span><span class="share-bar" aria-hidden="true"><span style="width:2.66%;background:var(--cyclist)"></span></span></div><div class="share-row" role="listitem"><span class="share-name">Other place (ramp, path, parking lot)</span><span class="share-num">1</span><span class="share-pct">0.2%</span><span class="share-bar" aria-hidden="true"><span style="width:0.20%;background:var(--cyclist)"></span></span></div><div class="share-row" role="listitem"><span class="share-name">Not recorded</span><span class="share-num">33</span><span class="share-pct">6.7%</span><span class="share-bar" aria-hidden="true"><span style="width:6.75%;background:var(--cyclist)"></span></span></div></div></div></div></div>
 
 <!-- 12 VISION ZERO -->
 <div class="sec-hdr" id="sec-12"><div class="sec-num">12 &mdash; <span class="lbl-long">Vision Zero Boston</span><span class="lbl-short">Vision Zero</span></div><h2 class="sec-title">Vision Zero Boston: Progress Toward Zero</h2><p class="sec-desc">The City of Boston adopted Vision Zero Boston in 2015, setting a target of 0 traffic deaths by 2030. The baseline was 29 deaths in 2015. The chart counts deaths in the City of Boston only; the other sections of this dashboard cover the wider metro.</p></div>
@@ -818,6 +825,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 <div class="sec-hdr" id="sec-14"><div class="sec-num">14 &mdash; Methodology</div><h2 class="sec-title">How I Built This</h2></div>
 <div class="meth-grid">
 <div class="meth-card"><div class="meth-text"><strong class="lead-in">Underreporting:</strong> Only crashes with a police report appear here. Many crashes, especially those involving pedestrians and cyclists, are never reported, so the true numbers are higher.</div></div>
+<div class="meth-card"><div class="meth-text"><strong class="lead-in">Scooters and e-bikes:</strong> From 2024 MassDOT records e-scooter riders, e-bike riders and other personal-device users as their own non-motorist types; before 2024 scooters had no code of their own, so scooter crashes are counted from 2024 only. E-bike riders are counted as cyclists.</div></div>
 <div class="meth-card"><div class="meth-text"><strong class="lead-in">Data pipeline:</strong> Crash records queried from MassDOT IMPACT ArcGIS REST FeatureServer, paginated at 2,000 records per call. Separate service per year (e.g., MASSDOT_ODP_OPEN_2024). 18,248 records for 2024. LAT/LON coordinates are native WGS84.</div></div>
 <div class="meth-card"><div class="meth-text"><strong class="lead-in">City assignment:</strong> CITY_TOWN_NAME field (ALL CAPS) used to assign crashes to 13 metro cities. Records without a city match are excluded. Records without coordinates are kept in every total and left off the map.</div></div>
 <div class="meth-card"><div class="meth-text"><strong class="lead-in">Behavioral flags:</strong> DUI derived from DRVR_CNTRB_CIRC_CL text matching &ldquo;Physical impairment.&rdquo; Speed from &ldquo;Driving too fast.&rdquo; Hit-and-run from HIT_RUN_DESCR field. Pedestrian and cyclist involvement from NON_MTRST_TYPE_CL containing &ldquo;Pedestrian&rdquo; or &ldquo;Bicyclist.&rdquo;</div></div>
@@ -834,7 +842,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 // The page's data is in dashboard.json, fetched after the first paint; the street-lookup grid (grid.json)
 // only when someone uses the lookup. Chart.js loads when the first chart nears the screen, Leaflet when the
 // map does, and each chart is built only as it nears the screen, in a box whose size is already set.
-const PAGE_DATA='dashboard.json?v=0437a30fc0',GRID_DATA='grid.json?v=3a403b0d79';
+const PAGE_DATA='dashboard.json?v=306d7c2118',GRID_DATA='grid.json?v=68c4100d07';
 const _scripts={};
 function loadScript(src){return _scripts[src]||(_scripts[src]=new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=()=>{delete _scripts[src];no(new Error('load '+src))};document.head.appendChild(s)}))}
 function loadCSS(href){if(document.querySelector('link[href="'+href+'"]'))return;const l=document.createElement('link');l.rel='stylesheet';l.href=href;document.head.appendChild(l)}
@@ -1090,7 +1098,7 @@ function agg(fn){ return cities.map(c=>fn(c)).reduce((a,b)=>a.map((v,i)=>v+(b[i]
 // === TABLE ===
 // === REGION COMPARISON TABLE ===
 (function(){
-const COLS=["total", "deaths", "impaired", "speed", "hitrun", "pedestrian"],TOT={"total": 18248, "deaths": 43, "impaired": 120, "speed": 857, "hitrun": 2618, "pedestrian": 543};
+const COLS=["total", "deaths", "impaired", "speed", "hitrun", "pedestrian"],TOT={"total": 18248, "deaths": 43, "impaired": 120, "speed": 857, "hitrun": 2618, "pedestrian": 549};
 const tbody=document.getElementById('cityTableBody'),table=document.getElementById('cmpTable'),wrap=document.getElementById('cmpWrap'),pick=document.getElementById('cmpPick');
 const phone=window.matchMedia('(max-width:768px)');
 const rows=cities.filter(c=>cityData[c]).map(c=>{const tr=document.createElement('tr');tr._c=c;
@@ -1469,7 +1477,7 @@ function spotHTML(s,isTop10,rank,yr){
     }
     let tagHTML='';
     if(s.tags && s.tags.length){
-        const tc={ped:['Pedestrian',chartColor('ped'),chartColor('ped',.15)],cyclist:['Cyclist',chartColor('cyclist'),chartColor('cyclist',.15)],fatal:['Fatal crash',chartColor('deaths'),chartColor('deaths',.15)]};
+        const tc={ped:['Pedestrian',chartColor('ped'),chartColor('ped',.15)],cyclist:['Cyclist',chartColor('cyclist'),chartColor('cyclist',.15)],scooter:['Scooter or other device',chartColor('neutral'),chartColor('neutral',.15)],fatal:['Fatal crash',chartColor('deaths'),chartColor('deaths',.15)]};
         tagHTML='<div class="popup-tags">'+s.tags.map(t=>{
             const m=tc[t]||['','',''];
             return '<span class="popup-tag" style="color:'+m[1]+';background:'+m[2]+'">'+m[0]+'</span>';

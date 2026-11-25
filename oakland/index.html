@@ -343,6 +343,12 @@ main>.sec-hdr:first-child{margin-top:24px}
 .card:has(>.chart-box){display:flex;flex-direction:column}.card>.chart-box{flex:1 1 auto}
 /* Severity: labeled rows with count, %, and a thin bar (DESIGN_RULES.md, Charts: what share is each part) */
 .share-rows{padding:.25rem 1.25rem 1rem}
+/* Where pedestrians and cyclists are hit: one summary sentence, then two columns of share rows */
+.loc-summary{padding:0 1.25rem .5rem;font-size:15px;color:var(--text);line-height:1.5}
+.loc-cols{display:grid;grid-template-columns:1fr 1fr;column-gap:16px}.loc-cols .share-rows{padding-top:0}
+.loc-head{padding:.75rem 1.25rem .25rem;font-size:13px;font-weight:500;color:var(--text-dim)}.loc-head .mono{margin-left:6px}
+.loc-none{font-size:13px;color:var(--text-dim);margin:-.25rem 0 1rem}
+@media(max-width:768px){.loc-cols{grid-template-columns:1fr}}
 .rn-list{display:grid;grid-template-columns:minmax(160px,max-content) 1fr;column-gap:16px;row-gap:6px}.rn-row{display:contents}.rn-name{color:var(--text);font-weight:500}.rn-foot{margin-top:10px}.rn-list+.rn-foot{padding-top:10px;border-top:1px solid var(--border)}
 @media(max-width:768px){.rn-list{grid-template-columns:1fr;row-gap:0}.rn-name{margin-top:8px}.rn-row:first-child .rn-name{margin-top:0}}
 .share-row{display:grid;grid-template-columns:minmax(0,1fr) auto 4.5rem;column-gap:16px;row-gap:6px;align-items:baseline;padding:10px 0;border-bottom:1px solid rgba(28,31,46,.6)}.share-row:last-child{border-bottom:0}
@@ -410,9 +416,9 @@ footer{text-align:center;padding:2rem 1rem;font-size:.75rem;color:var(--text-fai
     <h1>Crashes, Corridors &amp;&nbsp;<em>Dangerous Streets</em></h1>
     <p class="hero-sub">Where, when, and why traffic crashes happen across Oakland, Fremont, Hayward, Berkeley, and 8 more cities &mdash; built from CHP CCRS crash records.</p>
     <div class="stats-strip">
-        <div class="stat-cell"><div class="stat-val">18,153</div><div class="stat-lbl">Reported crashes (metro, 2025)</div></div>
+        <div class="stat-cell"><div class="stat-val">18,156</div><div class="stat-lbl">Reported crashes (metro, 2025)</div></div>
         <div class="stat-cell"><div class="stat-val deaths">94</div><div class="stat-lbl">Traffic deaths (metro, 2025)</div></div>
-        <div class="stat-cell"><div class="stat-val">672</div><div class="stat-lbl">Pedestrian crashes (metro, 2025)</div></div>
+        <div class="stat-cell"><div class="stat-val">666</div><div class="stat-lbl">Pedestrian crashes (metro, 2025)</div></div>
         <div class="stat-cell"><div class="stat-val">32.5%</div><div class="stat-lbl">Speed-related rate (metro, 2025)</div></div>
     </div>
     
@@ -477,6 +483,7 @@ footer{text-align:center;padding:2rem 1rem;font-size:.75rem;color:var(--text-fai
                     <button class="map-btn active" data-type="all">All</button>
                     <button class="map-btn" data-type="ped">Ped</button>
                     <button class="map-btn" data-type="cyclist">Bike</button>
+                    <button class="map-btn" data-type="scooter">Scooter</button>
                     <button class="map-btn" data-type="fatal">Fatal crashes</button>
                 </div>
             </div>
@@ -501,7 +508,7 @@ footer{text-align:center;padding:2rem 1rem;font-size:.75rem;color:var(--text-fai
 <option value="Newark">Newark</option>
 <option value="Emeryville">Emeryville</option>
 <option value="Unincorporated & freeways">Unincorporated & freeways</option></select></div>
-                <div class="mf-field"><label>Show</label><select id="typeFilterMob" class="mf-select"><option value="all" selected>All Crashes</option><option value="ped">Pedestrian</option><option value="cyclist">Cyclist</option><option value="fatal">Fatal crashes</option></select></div>
+                <div class="mf-field"><label>Show</label><select id="typeFilterMob" class="mf-select"><option value="all" selected>All Crashes</option><option value="ped">Pedestrian</option><option value="cyclist">Cyclist</option><option value="scooter">Scooter &amp; other device</option><option value="fatal">Fatal crashes</option></select></div>
                 <div class="mf-field"><label>Year</label><select id="yearFilterMob" class="mf-select"><option value="2023">2023</option><option value="2024">2024</option><option value="2025">2025</option><option value="all" selected>All Years</option></select></div>
             </div>
         </div>
@@ -516,7 +523,7 @@ footer{text-align:center;padding:2rem 1rem;font-size:.75rem;color:var(--text-fai
 // filters and chips are in place before the first paint.
 const ST={city:'all',show:'all',year:'all',top10:'all',section:''};
 const HASH_KEYS=['city','show','year','top10','section'];
-const TYPE_NAMES={ped:'Pedestrian',cyclist:'Cyclist',fatal:'Fatal crashes'};
+const TYPE_NAMES={ped:'Pedestrian',cyclist:'Cyclist',scooter:'Scooter & other personal device',fatal:'Fatal crashes'};
 let _lastHash=location.hash.replace(/^#/,''),_hold=false;
 function parseHash(h){const p={};String(h==null?location.hash:h).replace(/^#/,'').split('&').forEach(x=>{const i=x.indexOf('=');
   if(i>0){try{p[decodeURIComponent(x.slice(0,i))]=decodeURIComponent(x.slice(i+1).replace(/\+/g,' '))}catch(e){}}});return p}
@@ -577,7 +584,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
         </div>
     </div>
     <div class="map-panel" id="mapPanel" hidden tabindex="-1" role="region" aria-label="Hotspot details"></div>
-    <p class="map-nc"><strong>Not on the map:</strong> 2,569 of 58,372 crashes (4.4%) have no usable coordinates in the CHP CCRS records. They are counted in every total and chart on this page.</p>
+    <p class="map-nc"><strong>Not on the map:</strong> 2,569 of 58,375 crashes (4.4%) have no usable coordinates in the CHP CCRS records. They are counted in every total and chart on this page.</p>
     <details class="chart-notes map-notes"><summary>About this map and your privacy</summary><div class="chart-notes-body"><p><strong class="lead-in">Privacy:</strong> This page has no backend, no analytics, and no cookies, and nothing you type is stored by crashmaps. Fonts and data come from crashmaps.org itself. Loading the map and charts fetches scripts from cdnjs (Cloudflare) and map tiles from CARTO, and each of those services sees your IP address. An address you search is sent to <a href="https://nominatim.openstreetmap.org/" target="_blank" rel="noopener noreferrer">OpenStreetMap Nominatim</a>, and commute start and end points are sent to the public <a href="https://project-osrm.org/" target="_blank" rel="noopener noreferrer">OSRM</a> routing server. Those requests are subject to each service&rsquo;s privacy policy.</p></div></details>
 </div>
 
@@ -714,7 +721,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 <div class="sec-hdr" id="sec-06"><div class="sec-num">06 &mdash; Year Over Year</div><h2 class="sec-title">Is the Metro Getting Safer?</h2><p class="sec-desc">3 years of CHP CCRS records show how crashes, deaths, and behavioral factors are trending across Oakland Metro.</p></div><div class="grid-3"><div class="card"><div class="card-top"><div><div class="card-title">Total Crashes</div><div class="card-sub">Metro-wide &middot; CHP CCRS 2023&ndash;2025</div></div><div class="yoy-chg" id="yoyTotalChartChg"></div></div><div class="chart-box short"><canvas id="yoyTotalChart"></canvas></div></div><div class="card"><div class="card-top"><div><div class="card-title">Deaths</div><div class="card-sub">Metro-wide &middot; CHP CCRS 2023&ndash;2025</div></div><div class="yoy-chg" id="yoyDeathsChartChg"></div></div><div class="chart-box short"><canvas id="yoyDeathsChart"></canvas></div></div><div class="card"><div class="card-top"><div><div class="card-title">Pedestrian Crashes</div><div class="card-sub">Metro-wide &middot; CHP CCRS 2023&ndash;2025</div></div><div class="yoy-chg" id="yoyPedChartChg"></div></div><div class="chart-box short"><canvas id="yoyPedChart"></canvas></div></div></div><div class="grid-3"><div class="card"><div class="card-top"><div><div class="card-title">DUI Crashes</div><div class="card-sub">Metro-wide &middot; CHP CCRS 2023&ndash;2025</div></div><div class="yoy-chg" id="yoyDuiChartChg"></div></div><div class="chart-box short"><canvas id="yoyDuiChart"></canvas></div></div><div class="card"><div class="card-top"><div><div class="card-title">Speed-Related Crashes</div><div class="card-sub">Metro-wide &middot; CHP CCRS 2023&ndash;2025</div></div><div class="yoy-chg" id="yoySpeedChartChg"></div></div><div class="chart-box short"><canvas id="yoySpeedChart"></canvas></div></div><div class="card"><div class="card-top"><div><div class="card-title">Hit-and-Run Crashes</div><div class="card-sub">Metro-wide &middot; CHP CCRS 2023&ndash;2025</div></div><div class="yoy-chg" id="yoyHrChartChg"></div></div><div class="chart-box short"><canvas id="yoyHrChart"></canvas></div></div></div>
 
 <!-- 07 SEVERITY -->
-<div class="sec-hdr" id="sec-07"><div class="sec-num">07 &mdash; Severity</div><h2 class="sec-title">How Bad Are the Crashes?</h2><p class="sec-desc">94 people died on Oakland Metro roads in 2025. The severity breakdown counts crashes by their worst outcome: fatal, injury, or property damage only.</p></div><div class="card"><div class="card-top"><div><div class="card-title">Severity Breakdown</div><div class="card-sub">All Metro &middot; CHP CCRS 2025 &middot; 18,153 crashes</div></div></div><div class="share-rows" role="list" aria-label="Crashes by worst outcome, 2025"><div class="share-row" role="listitem"><span class="share-name">Property damage only</span><span class="share-num">11,196</span><span class="share-pct">61.7%</span><span class="share-bar" aria-hidden="true"><span style="width:61.68%;background:var(--accent)"></span></span></div><div class="share-row" role="listitem"><span class="share-name">Injury crashes</span><span class="share-num">6,869</span><span class="share-pct">37.8%</span><span class="share-bar" aria-hidden="true"><span style="width:37.84%;background:var(--accent)"></span></span></div><div class="share-row" role="listitem"><span class="share-name">Fatal crashes</span><span class="share-num">88</span><span class="share-pct">0.5%</span><span class="share-bar" aria-hidden="true"><span style="width:0.48%;background:var(--deaths)"></span></span></div></div></div><div class="card"><div class="card-top"><div><div class="card-title">Deaths by City</div><div class="card-sub">CHP CCRS 2025</div></div></div><div class="chart-box"><canvas id="fatalCityChart"></canvas></div><details class="chart-notes" hidden><summary>About this chart</summary><div class="chart-notes-body" id="fatalCityFootnote"></div></details></div><div class="grid-2"><div class="card"><div class="card-top"><div><div class="card-title">Crash Type Breakdown</div><div class="card-sub" id="typeSub">All Metro &middot; CHP CCRS 2025</div></div><select class="chart-metro" id="selCrashType"><option value="all" selected>All Metro</option><option value="Oakland">Oakland</option>
+<div class="sec-hdr" id="sec-07"><div class="sec-num">07 &mdash; Severity</div><h2 class="sec-title">How Bad Are the Crashes?</h2><p class="sec-desc">94 people died on Oakland Metro roads in 2025. The severity breakdown counts crashes by their worst outcome: fatal, injury, or property damage only.</p></div><div class="card"><div class="card-top"><div><div class="card-title">Severity Breakdown</div><div class="card-sub">All Metro &middot; CHP CCRS 2025 &middot; 18,156 crashes</div></div></div><div class="share-rows" role="list" aria-label="Crashes by worst outcome, 2025"><div class="share-row" role="listitem"><span class="share-name">Property damage only</span><span class="share-num">11,197</span><span class="share-pct">61.7%</span><span class="share-bar" aria-hidden="true"><span style="width:61.67%;background:var(--accent)"></span></span></div><div class="share-row" role="listitem"><span class="share-name">Injury crashes</span><span class="share-num">6,871</span><span class="share-pct">37.8%</span><span class="share-bar" aria-hidden="true"><span style="width:37.84%;background:var(--accent)"></span></span></div><div class="share-row" role="listitem"><span class="share-name">Fatal crashes</span><span class="share-num">88</span><span class="share-pct">0.5%</span><span class="share-bar" aria-hidden="true"><span style="width:0.48%;background:var(--deaths)"></span></span></div></div></div><div class="card"><div class="card-top"><div><div class="card-title">Deaths by City</div><div class="card-sub">CHP CCRS 2025</div></div></div><div class="chart-box"><canvas id="fatalCityChart"></canvas></div><details class="chart-notes" hidden><summary>About this chart</summary><div class="chart-notes-body" id="fatalCityFootnote"></div></details></div><div class="grid-2"><div class="card"><div class="card-top"><div><div class="card-title">Crash Type Breakdown</div><div class="card-sub" id="typeSub">All Metro &middot; CHP CCRS 2025</div></div><select class="chart-metro" id="selCrashType"><option value="all" selected>All Metro</option><option value="Oakland">Oakland</option>
 <option value="Fremont">Fremont</option>
 <option value="Hayward">Hayward</option>
 <option value="Berkeley">Berkeley</option>
@@ -741,7 +748,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 <option value="Unincorporated & freeways">Unincorporated & freeways</option></select></div><div class="chart-box"><canvas id="factorsChart"></canvas></div><details class="chart-notes" hidden><summary>About this chart</summary><div class="chart-notes-body" id="factorCoverage"></div></details></div></div>
 
 <!-- 08 DUI -->
-<div class="sec-hdr" id="sec-08"><div class="sec-num">08 &mdash; Impaired Driving</div><h2 class="sec-title">DUI Crashes Across the Metro</h2><p class="sec-desc">1,369 crashes in 2025 involved impairment &mdash; 7.5% of the total.</p></div><div class="card"><div class="card-top"><div><div class="card-title">DUI Rate by Hour</div><div class="card-sub" id="impHourSub">% of crashes involving DUI &middot; All Metro</div></div><select class="chart-metro" id="selImpHour"><option value="all" selected>All Metro</option><option value="Oakland">Oakland</option>
+<div class="sec-hdr" id="sec-08"><div class="sec-num">08 &mdash; Impaired Driving</div><h2 class="sec-title">DUI Crashes Across the Metro</h2><p class="sec-desc">1,370 crashes in 2025 involved impairment &mdash; 7.5% of the total.</p></div><div class="card"><div class="card-top"><div><div class="card-title">DUI Rate by Hour</div><div class="card-sub" id="impHourSub">% of crashes involving DUI &middot; All Metro</div></div><select class="chart-metro" id="selImpHour"><option value="all" selected>All Metro</option><option value="Oakland">Oakland</option>
 <option value="Fremont">Fremont</option>
 <option value="Hayward">Hayward</option>
 <option value="Berkeley">Berkeley</option>
@@ -785,7 +792,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 
 
 <!-- 10 HIT-AND-RUN -->
-<div class="sec-hdr" id="sec-10"><div class="sec-num">10 &mdash; Hit-and-Run</div><h2 class="sec-title">27.6% of Crashes Are Hit-and-Runs</h2><p class="sec-desc">5,019 hit-and-run crashes across the metro. Alameda leads at 39.3%.</p></div><div class="card"><div class="card-top"><div><div class="card-title">Hit-and-Run Rate by Hour</div><div class="card-sub" id="hrHourSub">% of crashes that are H&amp;R &middot; All Metro</div></div><select class="chart-metro" id="selHrHour"><option value="all" selected>All Metro</option><option value="Oakland">Oakland</option>
+<div class="sec-hdr" id="sec-10"><div class="sec-num">10 &mdash; Hit-and-Run</div><h2 class="sec-title">27.6% of Crashes Are Hit-and-Runs</h2><p class="sec-desc">5,020 hit-and-run crashes across the metro. Alameda leads at 39.3%.</p></div><div class="card"><div class="card-top"><div><div class="card-title">Hit-and-Run Rate by Hour</div><div class="card-sub" id="hrHourSub">% of crashes that are H&amp;R &middot; All Metro</div></div><select class="chart-metro" id="selHrHour"><option value="all" selected>All Metro</option><option value="Oakland">Oakland</option>
 <option value="Fremont">Fremont</option>
 <option value="Hayward">Hayward</option>
 <option value="Berkeley">Berkeley</option>
@@ -800,7 +807,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 <option value="Unincorporated & freeways">Unincorporated & freeways</option></select></div><div class="chart-box"><canvas id="hrHourChart"></canvas></div></div><div class="card"><div class="card-top"><div><div class="card-title">Hit-and-Run Rate by City</div><div class="card-sub">% of crashes &middot; CHP CCRS 2025</div></div></div><div class="chart-box"><canvas id="hrCityChart"></canvas></div></div>
 
 <!-- 11 PEDESTRIANS & CYCLISTS -->
-<div class="sec-hdr" id="sec-11"><div class="sec-num">11 &mdash; <span class="lbl-long">Pedestrians &amp; Cyclists</span><span class="lbl-short">Walk &amp; Bike</span></div><h2 class="sec-title">The Most Vulnerable on Metro Streets</h2><p class="sec-desc">672 pedestrian crashes and 575 cyclist crashes across the metro in 2025. Only crashes with a police report appear here. Many crashes, especially those involving pedestrians and cyclists, are never reported, so the true numbers are higher.</p></div><div class="card"><div class="card-top"><div><div class="card-title">Pedestrian &amp; Cyclist Crashes by City</div><div class="card-sub">CHP CCRS 2025</div></div></div><div class="chart-box"><canvas id="pedCityChart"></canvas></div><details class="chart-notes"><summary>About this chart</summary><div class="chart-notes-body"><span class="mono" style="font-weight:600;color:var(--text)">672</span> pedestrian crashes in 2025. Oakland accounts for 282 &mdash; 42% of the total, with 27% of the population.</div></details></div>
+<div class="sec-hdr" id="sec-11"><div class="sec-num">11 &mdash; <span class="lbl-long">Pedestrians &amp; Cyclists</span><span class="lbl-short">Walk &amp; Bike</span></div><h2 class="sec-title">The Most Vulnerable on Metro Streets</h2><p class="sec-desc">666 pedestrian crashes, 573 cyclist crashes and 132 crashes involving a scooter or other personal device across the metro in 2025. Only crashes with a police report appear here. Many crashes, especially those involving pedestrians and cyclists, are never reported, so the true numbers are higher.</p></div><div class="card"><div class="card-top"><div><div class="card-title">Pedestrian &amp; Cyclist Crashes by City</div><div class="card-sub">CHP CCRS 2025</div></div></div><div class="chart-box"><canvas id="pedCityChart"></canvas></div><details class="chart-notes"><summary>About this chart</summary><div class="chart-notes-body"><span class="mono" style="font-weight:600;color:var(--text)">666</span> pedestrian crashes in 2025. Oakland accounts for 278 &mdash; 42% of the total, with 27% of the population.</div></details></div><p class="loc-none">Location type isn&rsquo;t recorded by CHP.</p>
 
 
 
@@ -809,14 +816,15 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 <!-- 12 SOURCES -->
 <div class="sec-hdr" id="sec-12"><div class="sec-num">12 &mdash; Sources</div><h2 class="sec-title">Where This Data Comes From</h2></div>
 <div class="meth-grid meth-grid-single">
-<div class="meth-card"><div class="meth-title"><div class="dot"></div>CHP CCRS</div><div class="meth-text">California Highway Patrol publishes all crash records through the Crash Records System (CCRS) on data.ca.gov. 18,153 crashes in Alameda County in 2025, with severity and behavioral flags from the Parties detail table.<br><br><a href="https://data.ca.gov/dataset/ccrs" target="_blank" rel="noopener noreferrer">CCRS Dataset on data.ca.gov</a></div></div>
+<div class="meth-card"><div class="meth-title"><div class="dot"></div>CHP CCRS</div><div class="meth-text">California Highway Patrol publishes all crash records through the Crash Records System (CCRS) on data.ca.gov. 18,156 crashes in Alameda County in 2025, with severity and behavioral flags from the Parties detail table.<br><br><a href="https://data.ca.gov/dataset/ccrs" target="_blank" rel="noopener noreferrer">CCRS Dataset on data.ca.gov</a></div></div>
 </div>
 
 <!-- 13 METHODOLOGY -->
 <div class="sec-hdr" id="sec-13"><div class="sec-num">13 &mdash; Methodology</div><h2 class="sec-title">How I Built This</h2></div>
 <div class="meth-grid">
 <div class="meth-card"><div class="meth-text"><strong class="lead-in">Underreporting:</strong> Only crashes with a police report appear here. Many crashes, especially those involving pedestrians and cyclists, are never reported, so the true numbers are higher.</div></div>
-<div class="meth-card"><div class="meth-text">Raw CCRS crash records are queried from the CKAN DataStore API, filtered to County Code 1 (Alameda). Party-level data is joined by Collision ID to extract DUI/impairment status and speed limits. Crashes that cannot be geocoded are kept in every total and left off the map. 18,153 records processed for 2025.</div></div>
+<div class="meth-card"><div class="meth-text"><strong class="lead-in">Scooters and e-bikes:</strong> CHP codes e-scooter, electric skateboard and one-wheel riders by their vehicle type, never as bicyclists; they are counted here as scooters and other personal devices, and a crash whose only &ldquo;pedestrian&rdquo; is a scooter rider is not counted as a pedestrian crash. E-bike riders are counted as cyclists; mopeds and motorized bicycles stay with motor vehicles.</div></div>
+<div class="meth-card"><div class="meth-text">Raw CCRS crash records are queried from the CKAN DataStore API, filtered to County Code 1 (Alameda). Party-level data is joined by Collision ID to extract DUI/impairment status and speed limits. Crashes that cannot be geocoded are kept in every total and left off the map. 18,156 records processed for 2025.</div></div>
 <div class="meth-card"><div class="meth-text"><strong class="lead-in">Hotspots:</strong> Each hotspot counts every crash within 300 m of its busiest point, so a freeway interchange includes its ramps and can span up to about 600 m.</div></div>
 </div>
 
@@ -828,7 +836,7 @@ Object.assign(ST,readState());_hold=!!ST.section;syncControls();
 // The page's data is in dashboard.json, fetched after the first paint; the street-lookup grid (grid.json)
 // only when someone uses the lookup. Chart.js loads when the first chart nears the screen, Leaflet when the
 // map does, and each chart is built only as it nears the screen, in a box whose size is already set.
-const PAGE_DATA='dashboard.json?v=497f30c9d3',GRID_DATA='grid.json?v=2eea9b19bc';
+const PAGE_DATA='dashboard.json?v=eb5d162e35',GRID_DATA='grid.json?v=5bbf44d094';
 const _scripts={};
 function loadScript(src){return _scripts[src]||(_scripts[src]=new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=()=>{delete _scripts[src];no(new Error('load '+src))};document.head.appendChild(s)}))}
 function loadCSS(href){if(document.querySelector('link[href="'+href+'"]'))return;const l=document.createElement('link');l.rel='stylesheet';l.href=href;document.head.appendChild(l)}
@@ -1084,7 +1092,7 @@ function agg(fn){ return cities.map(c=>fn(c)).reduce((a,b)=>a.map((v,i)=>v+(b[i]
 // === TABLE ===
 // === REGION COMPARISON TABLE ===
 (function(){
-const COLS=["total", "deaths", "impaired", "speed", "hitrun", "pedestrian"],TOT={"total": 18153, "deaths": 94, "impaired": 1369, "speed": 5899, "hitrun": 5019, "pedestrian": 672};
+const COLS=["total", "deaths", "impaired", "speed", "hitrun", "pedestrian"],TOT={"total": 18156, "deaths": 94, "impaired": 1370, "speed": 5900, "hitrun": 5020, "pedestrian": 666};
 const tbody=document.getElementById('cityTableBody'),table=document.getElementById('cmpTable'),wrap=document.getElementById('cmpWrap'),pick=document.getElementById('cmpPick');
 const phone=window.matchMedia('(max-width:768px)');
 const rows=cities.filter(c=>cityData[c]).map(c=>{const tr=document.createElement('tr');tr._c=c;
@@ -1457,7 +1465,7 @@ function spotHTML(s,isTop10,rank,yr){
     }
     let tagHTML='';
     if(s.tags && s.tags.length){
-        const tc={ped:['Pedestrian',chartColor('ped'),chartColor('ped',.15)],cyclist:['Cyclist',chartColor('cyclist'),chartColor('cyclist',.15)],fatal:['Fatal crash',chartColor('deaths'),chartColor('deaths',.15)]};
+        const tc={ped:['Pedestrian',chartColor('ped'),chartColor('ped',.15)],cyclist:['Cyclist',chartColor('cyclist'),chartColor('cyclist',.15)],scooter:['Scooter or other device',chartColor('neutral'),chartColor('neutral',.15)],fatal:['Fatal crash',chartColor('deaths'),chartColor('deaths',.15)]};
         tagHTML='<div class="popup-tags">'+s.tags.map(t=>{
             const m=tc[t]||['','',''];
             return '<span class="popup-tag" style="color:'+m[1]+';background:'+m[2]+'">'+m[0]+'</span>';
@@ -1664,7 +1672,7 @@ const spots=D.spots;
 const searchViewbox='-122.37,37.45,-121.55,37.92';
 const searchAppend='Oakland CA';
 const searchKw=["oakland", "east bay", "alameda"];
-const totalCrashesAllYears=58372;
+const totalCrashesAllYears=58375;
 const gridCellCount=grid.length;
 const gridTotal=grid.reduce(function(a,g){return a+g[2]},0);
 
