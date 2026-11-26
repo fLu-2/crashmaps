@@ -130,12 +130,6 @@ details[open]::details-content{block-size:auto}
 .pin-marker.ab{width:26px;height:26px}
 .map-hint{position:absolute;inset:0;z-index:3;display:flex;align-items:center;justify-content:center;padding:1rem;text-align:center;background:rgba(8,9,13,.6);color:#fff;font-family:'DM Sans','DM Sans Fallback',sans-serif;font-size:15px;font-weight:500;opacity:0;pointer-events:none;transition:opacity 200ms ease-out}
 .map-hint.show{opacity:1}
-.map-chips{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:.6rem 1rem;border-bottom:1px solid var(--border);background:#151826}
-.map-chips[hidden]{display:none}
-.map-chip{display:inline-flex;align-items:center;gap:2px;min-height:var(--h-compact);padding:0 0 0 12px;border-radius:var(--r-ctl);border:1px solid rgba(129,140,248,0.25);background:rgba(129,140,248,0.12);font-family:'DM Sans','DM Sans Fallback',sans-serif;font-size:13px;font-weight:500;color:var(--text)}
-.map-chip .chip-k{color:var(--text-dim);margin-right:4px}
-.map-chip button{display:inline-flex;align-items:center;justify-content:center;width:34px;min-height:calc(var(--h-compact) - 2px);background:transparent;border:0;border-radius:var(--r-ctl);color:var(--text-dim);cursor:pointer;transition:var(--t-color)}
-.map-chip button:hover{color:var(--text)}
 .map-msg{display:flex;align-items:flex-start;gap:6px;padding:0 1rem .65rem;font-family:'DM Sans','DM Sans Fallback',sans-serif;font-size:13px;line-height:1.4}
 .map-msg[hidden]{display:none}.map-msg .ico{flex-shrink:0;margin-top:1px}
 .map-msg.warn,.state-warn{color:var(--warn)}.map-msg.ok,.state-ok{color:var(--ok)}
@@ -317,7 +311,6 @@ main>.sec-hdr:first-child{margin-top:24px}
 .map-search{grid-column:1/-1;min-width:0}
 .commute-toggle,.map-filter-toggle{width:100%;justify-content:center}
 .map-msg{padding:0 .75rem .65rem}
-.map-chips{padding:.6rem .75rem}.map-chip{min-height:var(--h-std)}.map-chip button{width:44px;min-height:calc(var(--h-std) - 2px)}
 .map-legend{position:static;flex-direction:row;flex-wrap:wrap;gap:6px 16px;padding:.75rem 1rem 0;background:transparent;border:0;border-radius:0}
 .map-panel{padding:1rem 3.5rem 1rem 1rem}
 .map-nc{padding:.75rem 1rem}
@@ -517,14 +510,14 @@ footer{text-align:center;padding:2rem 1rem;font-size:.75rem;color:var(--text-fai
             </div>
         </div>
     </div>
-    <div class="map-chips" id="mapChips" hidden></div>
     <script>
 // === SHAREABLE STATE (DESIGN_RULES.md, craft standard 11: a link reproduces the view) ===
 // Map region, crash type, map year, Top 10 year and the section on screen live in the URL hash:
 // #city=Westminster&show=fatal&year=2025&top10=2024&section=map. A filter change adds a history entry,
 // so Back and Forward step through filters; scrolling only rewrites the current entry. Values at their
-// default ("all") are left out. Runs here, right after the map's filter chips, so a shared link's
-// filters and chips are in place before the first paint.
+// default ("all") are left out. Runs here, right after the map's filter controls, so a shared link's
+// filters are selected before the first paint. Active filters show only as the selected button or
+// dropdown value in their own row (DESIGN_RULES.md, Map: no separate row of active-filter chips).
 const ST={city:'all',show:'all',year:'all',top10:'all',section:''};
 const HASH_KEYS=['city','show','year','top10','section'];
 const TYPE_NAMES={ped:'Pedestrian',cyclist:'Cyclist',scooter:'Scooter & other personal device',fatal:'Fatal crashes'};
@@ -544,30 +537,13 @@ function readState(h){const p=parseHash(h);return {
   section:p.section?(window.sectionKey?sectionKey(p.section):String(p.section)):''}}
 // The section on screen (FRAME_JS calls this); push=true for a nav click
 function stateSection(key,push){if(_hold&&!push)return;ST.section=key||'';writeHash(!!push)}
-// Desktop buttons, phone dropdowns, the map dropdown, the Top 10 title and the chips all show ST
+// Desktop buttons, phone dropdowns, the map dropdown and the Top 10 title all show ST
 function syncControls(){
   const tog=(sel,attr,cls,v)=>document.querySelectorAll(sel).forEach(b=>{const on=b.dataset[attr]===v;b.classList.toggle(cls,on);b.setAttribute('aria-pressed',String(on))});
   tog('#typeFilters .map-btn','type','active',ST.show);tog('#yearGroup .map-btn','year','active-blue',ST.year);tog('#tableYearGroup .map-btn','year','active-blue',ST.top10);
   const set=(id,v)=>{const e=document.getElementById(id);if(e&&e.value!==v)e.value=v};
   set('cityFilter',ST.city);set('cityFilterMob',ST.city);set('typeFilterMob',ST.show);set('yearFilterMob',ST.year);
   const tt=document.getElementById('tableTitle');if(tt)tt.textContent='Top 10 Crash Intersections — '+(ST.city==='all'?'All Metro':ST.city);
-  updateChips();
-}
-function updateChips(){
-  const chipsEl=document.getElementById('mapChips');if(!chipsEl)return;
-  const items=[];
-  if(ST.city!=='all')items.push(['city','Neighborhood',ST.city]);
-  if(ST.show!=='all')items.push(['type','Show',TYPE_NAMES[ST.show]||ST.show]);
-  if(ST.year!=='all')items.push(['year','Year',ST.year]);
-  chipsEl.innerHTML='';
-  items.forEach(i=>{
-    const c=document.createElement('span');c.className='map-chip';
-    const k=document.createElement('span');k.className='chip-k';k.textContent=i[1]+':';
-    c.appendChild(k);c.appendChild(document.createTextNode(i[2]));
-    const b=document.createElement('button');b.type='button';b.dataset.clear=i[0];b.setAttribute('aria-label','Clear '+i[1]+' filter: '+i[2]);b.innerHTML='<svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>';
-    c.appendChild(b);chipsEl.appendChild(c);
-  });
-  chipsEl.hidden=!items.length;
 }
 Object.assign(ST,readState());_hold=!!ST.section;syncControls();
     </script>
@@ -958,18 +934,14 @@ const yoyLabels=["2023", "2024", "2025"];
 syncControls();  // again, now that the Top 10 controls below the map exist
 let MAP=null,_mapP=null,DATA=null,spots=[];
 function ensureMap(){return _mapP||(_mapP=Promise.all([dataP,loadLeaflet()]).then(r=>{MAP=initMap(r[0]);return MAP}).catch(e=>{_mapP=null;throw e}))}
-// One call after every filter change: controls, chips, Top 10, map and the URL (a new history entry unless push:false)
+// One call after every filter change: controls, Top 10, map and the URL (a new history entry unless push:false)
 function applyFilters(o){o=o||{};syncControls();if(DATA)renderIntersectionTable();if(MAP)MAP.render(o);if(o.push!==false)writeHash(true)}
 const phoneMQ=window.matchMedia('(max-width:768px)');
 function focusFilters(){const f=phoneMQ.matches?document.getElementById('filterToggle'):document.getElementById('cityFilter');if(f)f.focus({preventScroll:true})}
-document.getElementById('mapChips').addEventListener('click',e=>{
-  const b=e.target.closest('[data-clear]');if(!b)return;
-  const k=b.dataset.clear;if(k==='city')ST.city='all';else if(k==='type')ST.show='all';else if(k==='year')ST.year='all';
-  applyFilters({fly:k==='city'});
-  const next=document.querySelector('#mapChips button');if(next)next.focus();else focusFilters();
-});
-document.getElementById('typeFilters').addEventListener('click',e=>{const b=e.target.closest('.map-btn');if(!b)return;ST.show=b.dataset.type;applyFilters()});
-document.getElementById('yearGroup').addEventListener('click',e=>{const b=e.target.closest('.map-btn');if(!b)return;ST.year=b.dataset.year;applyFilters()});
+// Show and Year: tapping the selected button again, or tapping All, returns that row to All
+const pickOrClear=(v,cur)=>v===cur?'all':v;
+document.getElementById('typeFilters').addEventListener('click',e=>{const b=e.target.closest('.map-btn');if(!b)return;ST.show=pickOrClear(b.dataset.type,ST.show);applyFilters()});
+document.getElementById('yearGroup').addEventListener('click',e=>{const b=e.target.closest('.map-btn');if(!b)return;ST.year=pickOrClear(b.dataset.year,ST.year);applyFilters()});
 document.getElementById('cityFilter').addEventListener('change',function(){ST.city=this.value;applyFilters({fly:true})});
 document.getElementById('tableYearGroup').addEventListener('click',e=>{const b=e.target.closest('.map-btn');if(!b)return;ST.top10=b.dataset.year;syncControls();if(DATA)renderIntersectionTable();writeHash(true)});
 document.addEventListener('click',e=>{if(!e.target.closest('[data-show-all]'))return;ST.city='all';applyFilters({fly:true});focusFilters()});
