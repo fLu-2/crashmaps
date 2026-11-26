@@ -151,11 +151,15 @@ details[open]::details-content{block-size:auto}
 .map-toolbar-row+.map-toolbar-row{border-top:1px solid rgba(255,255,255,.04)}
 .map-search{display:flex;flex:1;min-width:200px;position:relative;gap:8px}
 .map-search input{flex:1;min-width:0}
+.map-search-field{position:relative;display:flex;flex:1;min-width:0}
+.map-search-x{position:absolute;right:4px;top:50%;transform:translateY(-50%);display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;padding:0;background:transparent;border:0;border-radius:var(--r-ctl);color:var(--text-dim);cursor:pointer;transition:var(--t-color)}
+.map-search-x:hover{color:var(--text);background:#1d2133}
+.map-search-x[hidden]{display:none}
 @media(max-width:400px){.map-search{min-width:0}}
-.map-search input{width:100%;background:#151826;border:var(--b-ctl);color:var(--text);font-family:'DM Sans','DM Sans Fallback',sans-serif;font-size:15px;min-height:var(--h-std);padding:8px 12px 8px 34px;border-radius:var(--r-ctl);transition:var(--t-color)}
+.map-search input{width:100%;background:#151826;border:var(--b-ctl);color:var(--text);font-family:'DM Sans','DM Sans Fallback',sans-serif;font-size:15px;min-height:var(--h-std);padding:8px 44px 8px 34px;border-radius:var(--r-ctl);transition:var(--t-color)}
 
 .map-search input::placeholder{color:var(--text-faint)}
-.map-search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--text-dim);line-height:0;pointer-events:none}
+.map-search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);z-index:1;color:var(--text-dim);line-height:0;pointer-events:none}
 .lookup-cols{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
 #lookupMapWrap .leaflet-container,#lookupMapWrap.leaflet-container{cursor:default!important}
 .lookup-map-col{min-height:240px}
@@ -299,7 +303,8 @@ main>.sec-hdr:first-child{margin-top:24px}
 
 .map-filter-toggle{display:inline-flex;align-items:center;gap:6px;font-family:'DM Sans','DM Sans Fallback',sans-serif;font-size:13px;font-weight:500;padding:7px 12px;border-radius:var(--r-ctl);border:var(--b-ctl);background:transparent;color:var(--text-dim);cursor:pointer;white-space:nowrap}
 .map-filter-toggle.open{border-color:var(--accent);color:var(--accent)}
-.map-search input{padding:8px 12px 8px 34px}
+.map-search input{padding:8px 48px 8px 34px}
+.map-search-x{right:0;width:44px;height:44px}
 .map-metro-select{min-width:120px;padding:6px 22px 6px 8px}
 .commute-panel{flex-direction:column;padding:.75rem;gap:.6rem}
 .commute-field{min-width:0;flex:none;width:100%}
@@ -439,7 +444,10 @@ footer{text-align:center;padding:2rem 1rem;font-size:.75rem;color:var(--text-fai
         <div class="map-toolbar-row">
             <div class="map-search">
                 <span class="map-search-icon"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
-                <input type="text" id="mapSearchInput" placeholder="Search an address" autocomplete="off" aria-label="Search an address on the map">
+                <span class="map-search-field">
+                    <input type="text" id="mapSearchInput" placeholder="Search an address" autocomplete="off" aria-label="Search an address on the map">
+                    <button type="button" class="map-search-x" id="mapSearchClear" aria-label="Clear search" hidden><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+                </span>
                 <button class="btn-primary map-search-go" id="mapSearchGo">Search</button>
             </div>
             <button class="commute-toggle" id="commuteToggle" aria-expanded="false" aria-controls="commutePanel"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 17h14v-5l-2-5H7l-2 5v5z"/><path d="M5 12h14"/><circle cx="8" cy="17" r="1.5"/><circle cx="16" cy="17" r="1.5"/></svg> My commute</button>
@@ -917,7 +925,17 @@ if(filterToggle&&filterMobile){
 // Address search and commute: the map library loads first if it has not yet
 const searchInput=document.getElementById('mapSearchInput');
 const runSearch=()=>{const q=searchInput.value.trim();if(q)ensureMap().then(M=>M.search(q)).catch(mapFailed)};
-searchInput.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();runSearch()}});
+// Clear (×) inside the box: shown while the box has text or a searched pin is on the map.
+// It and Escape clear the text, the pin, its rings and popup; the map keeps its zoom and position.
+const searchClear=document.getElementById('mapSearchClear');
+function syncSearchX(){searchClear.hidden=!(searchInput.value||(MAP&&MAP.hasPin()))}
+function clearSearchBox(){
+  searchInput.value='';if(MAP)MAP.resetSearch();else{const m=document.getElementById('mapSearchMsg');m.hidden=true;m.innerHTML=''}
+  syncSearchX();writeHash(false);searchInput.focus();
+}
+searchInput.addEventListener('input',syncSearchX);
+searchClear.addEventListener('click',clearSearchBox);
+searchInput.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();runSearch()}else if(e.key==='Escape'&&!searchClear.hidden){e.preventDefault();clearSearchBox()}});
 document.getElementById('mapSearchGo').addEventListener('click',runSearch);
 const runCommute=()=>ensureMap().then(M=>M.commute()).catch(mapFailed);
 document.getElementById('commuteGo').addEventListener('click',runCommute);
@@ -1461,13 +1479,17 @@ function stateMsg(el,kind,t){
     el.innerHTML=(kind==='warn'?'<svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4M12 17.5v.01"/></svg>':kind==='ok'?'<svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6L9 17l-5-5"/></svg>':'')+'<span></span>';
     el.lastChild.textContent=t;el.hidden=false;
 }
+let searchSeq=0;  // a search answered after the box was cleared drops no pin
 function clearSearch(){
     if(searchMarker){map.removeLayer(searchMarker);searchMarker=null}
     nearbyHighlights.clearLayers();map.closePopup();
 }
+// The × in the search box and Escape: pin, rings, popup and message go; zoom and position stay
+function resetSearch(){searchSeq++;clearSearch();stateMsg(searchMsgEl,'','')}
 function doSearch(query){
     if(!query) return;
     clearSearch();
+    const seq=++searchSeq;
     stateMsg(searchMsgEl,'','Searching…');
     const lower=query.toLowerCase();
     const kw=["san antonio", "leon valley", "alamo heights", "helotes", "live oak", "universal city", "converse", "schertz", "castle hills", "olmos park"];
@@ -1476,6 +1498,7 @@ function doSearch(query){
     }
     fetch('https://nominatim.openstreetmap.org/search?format=json&q='+encodeURIComponent(query)+'&viewbox='+searchViewbox+'&bounded=1&limit=1')
     .then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(data=>{
+        if(seq!==searchSeq)return;
         if(!data.length){stateMsg(searchMsgEl,'warn','No match found in this area. Try adding a cross street or the city name.');return}
         const lat=parseFloat(data[0].lat),lng=parseFloat(data[0].lon);
         const parts=data[0].display_name.split(',').map(t=>t.trim());
@@ -1485,6 +1508,7 @@ function doSearch(query){
             icon:L.divIcon({html:'<div class="pin-marker"></div>',className:'',iconSize:[20,20],iconAnchor:[10,10]})
         }).addTo(map);
         const n=highlightNearby(lat,lng,0.005);
+        if(typeof syncSearchX==='function')syncSearchX();
         stateMsg(searchMsgEl,'ok','Found '+addr+'. '+(n?n+' tracked hotspot'+(n>1?'s':'')+' nearby, outlined on the map.':'No tracked hotspots nearby.'));
     }).catch(()=>{stateMsg(searchMsgEl,'warn','Address search is unavailable right now. Please try again in a minute.')});
 }
@@ -1567,7 +1591,7 @@ function clearCommute(keepPanel){
         else {const z=cityZooms[ST.city]||cityZooms['all'];map.setView(z.center,z.zoom);}
     }
 }
-return {render,search:doSearch,commute:doCommute,clearCommute};
+return {render,search:doSearch,commute:doCommute,clearCommute,resetSearch,hasPin:()=>!!searchMarker};
 }
 
 // === STREET LOOKUP ===
